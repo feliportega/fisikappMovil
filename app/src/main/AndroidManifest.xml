@@ -12,6 +12,18 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.FisikappMovil">
         <activity
+            android:name=".ViewsLaboratorio"
+            android:exported="false" />
+        <activity
+            android:name=".Dashboard"
+            android:exported="false" />
+        <activity
+            android:name=".Login"
+            android:exported="false" />
+        <activity
+            android:name=".Register"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
