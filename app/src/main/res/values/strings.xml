@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">FisikappMovil</string>
+    <string name="label">email</string>
+
 </resources>
