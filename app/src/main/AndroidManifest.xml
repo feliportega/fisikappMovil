@@ -12,6 +12,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.FisikappMovil">
         <activity
+            android:name=".PracticaConceptos"
+            android:exported="false" />
+        <activity
+            android:name=".ConceptosBasicos"
+            android:exported="false" />
+        <activity
             android:name=".ViewsLaboratorio"
             android:exported="false" />
         <activity
