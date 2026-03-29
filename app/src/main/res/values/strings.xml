@@ -1,3 +1,16 @@
 <resources>
     <string name="app_name">FisikappMovil</string>
+    <!-- Nombre app -->
+    <string name="name">Fisikapp</string>
+    <!-- Usuario -->
+    <string name="FaUser">Usuario</string>
+    <!-- BUSCADOR -->
+    <string name="faBuscador">Buscar Lavoratorio</string>
+    <!-- texto central-->
+    <string name="faText1">Únete a un laboratorio para comenzar</string>
+    <string name="faText2">Crea un laboratorio o únete con un código para comenzar a gestionar tus experimentos.</string>
+
+    <string name="Fabutton">Unete a un laboratorio</string>
+
+
 </resources>
