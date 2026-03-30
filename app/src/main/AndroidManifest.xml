@@ -15,7 +15,7 @@
             android:name=".RecuperarCuenta"
             android:exported="false" />
         <activity
-            android:name=".UnirseLaboratorio"
+            android:name=".unirse_laboratorio"
             android:exported="false" />
         <activity
             android:name=".InformeLaboratorio"
