@@ -47,6 +47,7 @@
             android:textSize="25sp"
             android:layout_margin="15dp"
             android:textStyle="bold"
+            android:textColor="#2E2E2E"
             />
         <TextView
             android:layout_width="wrap_content"
@@ -69,6 +70,68 @@
             android:drawableLeft="@drawable/ci_email"
             android:layout_gravity="center"
             android:hint="email" />
+        <TextView
+            android:layout_marginTop="13dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Contraseña"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:textColor="#5F5F5F"
+            android:layout_marginLeft="18dp"
+            />
+
+        <EditText
+            android:background="@drawable/desing"
+            android:padding="10dp"
+            android:id="@+id/editText"
+            android:layout_width="310dp"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="text"
+            android:drawablePadding="10dp"
+            android:drawableLeft="@drawable/baseline_lock_24"
+            android:layout_gravity="center"
+            android:hint="contraseña" />
+        <TextView
+            android:layout_marginTop="17dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="¿olvidas tu contraseña?"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:textColor="#404040"
+            android:layout_gravity="right"
+            android:layout_marginRight="21dp"
+            />
+        <Button
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:text="Iniciar sesión"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:background="#1E145A"
+            />
+        <TextView
+            android:layout_marginTop="17dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="¿no tines cuenta?        REGISTRATE   "
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:textColor="#343434"
+            android:layout_gravity="right"
+            android:layout_marginRight="29dp"
+            />
+
+        <Button
+            android:background=""
+            android:layout_width="280dp"
+            android:layout_height="wrap_content"
+            android:text="Continuar con Google"
+            android:layout_gravity="center"
+            android:layout_marginTop="60dp"
+            />
 
 
     </LinearLayout>
