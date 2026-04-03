@@ -12,5 +12,11 @@
 
     <string name="Fabutton">Unete a un laboratorio</string>
 
+    <string name="Fatext">Unirte a un laboratorio</string>
+    <string name="Fatext1">Accede a nuevas experiencias de aprendizaje</string>
+    <string name="Fatext2">Ingresa el código de 6 dígitos</string>
+    <string name="Fatext3">Pide el código a tu instructor para acceder al laboratorio asignado.</string>
+    <string name="Fatext4">Unete a un laboratorio</string>
+    <string name="Fatext5">Cancelar</string>
 
 </resources>
