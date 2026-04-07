@@ -12,6 +12,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.FisikappMovil">
         <activity
+            android:name=".Mensaje_denegado"
+            android:exported="false" />
+        <activity
+            android:name=".Mensaje_confirmacion"
+            android:exported="false" />
+        <activity
             android:name=".RecuperarCuenta"
             android:exported="false" />
         <activity

@@ -19,4 +19,8 @@
     <string name="Fatext4">Unete a un laboratorio</string>
     <string name="Fatext5">Cancelar</string>
 
+    <string name="Fatext6">¡Te has unido con éxito!</string>
+    <string name="Fatext6.1">Tu inscripción al laboratorio ha sido procesada correctamente.</string>
+    <string name="Fatext7">¡ Intentalo nuevamente !</string>
+
 </resources>
