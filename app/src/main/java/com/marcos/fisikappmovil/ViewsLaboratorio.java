@@ -1,26 +1,52 @@
 package com.marcos.fisikappmovil;
 
+import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.activity.EdgeToEdge;
+import android.view.View;
+import android.widget.LinearLayout;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 public class ViewsLaboratorio extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_views_laboratorio);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });
+
+        // 1. Botón Conceptos Básicos
+        LinearLayout btnConceptos = findViewById(R.id.btnConceptos);
+        if (btnConceptos != null) {
+            btnConceptos.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(ViewsLaboratorio.this, ConceptosBasicos.class);
+                    startActivity(intent);
+                }
+            });
+        }
+
+        // 2. Botón Práctica de Conceptos
+        LinearLayout btnPractica = findViewById(R.id.btnPractica);
+        if (btnPractica != null) {
+            btnPractica.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(ViewsLaboratorio.this, PracticaConceptos.class);
+                    startActivity(intent);
+                }
+            });
+        }
+
+        // 3. Botón Informe de Laboratorio (opcional, por si ya tienes la actividad)
+        LinearLayout btnInforme = findViewById(R.id.btnInforme);
+        if (btnInforme != null) {
+            btnInforme.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(ViewsLaboratorio.this, InformeLaboratorio.class);
+                    startActivity(intent);
+                }
+            });
+        }
     }
 }
-
-//YANDY---------------------------------------
