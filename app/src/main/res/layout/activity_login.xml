@@ -125,7 +125,7 @@
             />
 
         <Button
-            android:background=""
+            android:backgroundTint="@color/gris"
             android:layout_width="280dp"
             android:layout_height="wrap_content"
             android:text="Continuar con Google"
