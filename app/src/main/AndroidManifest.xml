@@ -12,6 +12,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.FisikappMovil">
         <activity
+            android:name=".cuartaPantalla"
+            android:exported="false" />
+        <activity
+            android:name=".tercerapantalla"
+            android:exported="false" />
+        <activity
+            android:name=".segundaPantalla"
+            android:exported="false" />
+        <activity
             android:name=".RecuperarCuenta"
             android:exported="false" />
         <activity
