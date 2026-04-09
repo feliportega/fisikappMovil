@@ -12,6 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.FisikappMovil">
         <activity
+            android:name=".RestablecerContrasena"
+            android:exported="false" />
+        <activity
             android:name=".RecuperarCuenta"
             android:exported="false" />
         <activity

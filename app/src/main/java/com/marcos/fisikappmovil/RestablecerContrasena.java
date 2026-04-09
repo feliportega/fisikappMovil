@@ -11,24 +11,23 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-public class Register extends AppCompatActivity {
-
-    Button btncrearcuenta;
+public class RestablecerContrasena extends AppCompatActivity {
+    Button btnnuevapassword;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_register);
+        setContentView(R.layout.activity_restablecer_contrasena);
 
-        btncrearcuenta = findViewById(R.id.btnCrearCuenta);
-        btncrearcuenta.setOnClickListener(new View.OnClickListener() {
+        btnnuevapassword = findViewById(R.id.btnNuevacontraseña);
+
+        btnnuevapassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent irDash = new Intent(Register.this, Dashboard.class);
-                startActivity(irDash);
+                Intent irSesion = new Intent(RestablecerContrasena.this, Login.class);
+                startActivity(irSesion);
             }
         });
-
     }
 }

@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#142050"
+    tools:context=".RestablecerContrasena">
+
+    <ImageView
+        android:layout_width="200dp"
+        android:layout_height="155dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="30dp"
+        android:src="@drawable/logo" />
+
+    <LinearLayout
+        android:layout_marginTop="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="400dp"
+        android:orientation="vertical"
+        android:background="@color/white"
+        >
+        <TextView
+            android:layout_gravity="center"
+            android:layout_marginTop="55dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Restablecer contraseña"
+            android:textSize="35sp"
+            android:textStyle="bold"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="8 caracteres como minimo"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_gravity="center"
+            android:textColor="#959595"
+            />
+        <EditText
+            android:layout_marginTop="20dp"
+            android:layout_gravity="center"
+            android:layout_width="280dp"
+            android:layout_height="wrap_content"
+            android:hint="nueva contraseña"
+            android:padding="10dp"
+
+            android:background="@drawable/input_recuperrar"
+            />
+        <EditText
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            android:layout_width="280dp"
+            android:layout_height="wrap_content"
+            android:hint="vuelve a ingresar contraseña"
+            android:padding="10dp"
+            android:background="@drawable/input_recuperrar"
+            />
+        <Button
+            android:id="@+id/btnNuevacontraseña"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:text="siguiente"
+            android:layout_gravity="right"
+            android:layout_marginRight="60dp"
+            android:layout_marginTop="20dp"
+            android:backgroundTint="#23B1FD"
+            />
+    </LinearLayout>
+
+
+
+</LinearLayout>
+

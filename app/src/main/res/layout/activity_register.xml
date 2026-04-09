@@ -130,6 +130,7 @@
                 android:hint="contraseña" />
 
             <Button
+                android:id="@+id/btnCrearCuenta"
                 android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 android:text="Crear cuenta"

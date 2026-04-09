@@ -93,8 +93,9 @@
             android:drawableLeft="@drawable/baseline_lock_24"
             android:layout_gravity="center"
             android:hint="contraseña" />
-        <TextView
-            android:layout_marginTop="17dp"
+        <Button
+            android:id="@+id/btnRecuperarc"
+            android:layout_marginTop="0dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="¿olvidas tu contraseña?"
@@ -103,16 +104,19 @@
             android:textColor="#404040"
             android:layout_gravity="right"
             android:layout_marginRight="21dp"
+            android:backgroundTint="@color/white"
             />
         <Button
+            android:id="@+id/btnIniciarsesion"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:text="Iniciar sesión"
             android:layout_gravity="center"
-            android:layout_marginTop="10dp"
-            android:background="#1E145A"
+            android:layout_marginTop="0dp"
+            android:backgroundTint="#3A46B6"
             />
-        <TextView
+        <Button
+            android:id="@+id/btnResgistrarse"
             android:layout_marginTop="17dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -122,15 +126,17 @@
             android:textColor="#343434"
             android:layout_gravity="right"
             android:layout_marginRight="29dp"
+            android:backgroundTint="@color/white"
             />
 
         <Button
-            android:backgroundTint="@color/gris"
+            android:backgroundTint="#DFEBEF"
             android:layout_width="280dp"
             android:layout_height="wrap_content"
             android:text="Continuar con Google"
             android:layout_gravity="center"
             android:layout_marginTop="60dp"
+            android:textColor="#0756F4"
             />
 
 
