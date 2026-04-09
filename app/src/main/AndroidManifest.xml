@@ -22,14 +22,15 @@
             android:name=".ConfiguracionSimulacion"
             android:exported="false" />
         <activity
-<<<<<<< HEAD
             android:name=".RestablecerContrasena"
-=======
-            android:name=".Mensaje_denegado"
             android:exported="false" />
         <activity
+            android:name=".Mensaje_denegado"
+            android:exported="false"
+            />
+        <activity
             android:name=".Mensaje_confirmacion"
->>>>>>> origin/johnf
+
             android:exported="false" />
         <activity
             android:name=".cuartaPantalla"
