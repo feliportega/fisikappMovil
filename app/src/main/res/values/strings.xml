@@ -25,4 +25,15 @@
     <string name="Fatext6.1">Tu inscripción al laboratorio ha sido procesada correctamente.</string>
     <string name="Fatext7">¡ Intentalo nuevamente !</string>
 
+    <string name="btn_back_desc">Botón regresar</string>
+    <string name="conceptos_basicos_title">Conceptos básicos</string>
+    <string name="tiro_parabolico_desc">El tiro parabólico es un movimiento en dos dimensiones donde un objeto es lanzado con un ángulo respecto a la horizontal. Este movimiento combina:</string>
+    <string name="movimientos_lista">• Movimiento horizontal con velocidad constante.\n• Movimiento vertical afectado por la gravedad.</string>
+    <string name="trayectoria_desc">La trayectoria que describe el objeto es una parábola.</string>
+    <string name="recursos_header">Recursos</string>
+    <string name="video_desc">Icono video</string>
+    <string name="video_explicativo">Video explicativo</string>
+    <string name="pdf_desc">Icono PDF</string>
+    <string name="pdf_apoyo">PDF de apoyo</string>
+    <string name="siguiente_etapa">Siguiente etapa</string>
 </resources>

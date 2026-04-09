@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="#F8F9FA"
-    tools:context=".PracticaConceptos">
+    tools:context=".ConfiguracionSimulacion">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -42,53 +42,97 @@
             android:orientation="vertical"
             android:padding="20dp">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Objetivo General:"
-                android:textStyle="bold"
-                android:textColor="#000000" />
-            <TextView
+            <Button
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Comprender el comportamiento del tiro parabólico observando la trayectoria de un objeto lanzado..."
-                android:layout_marginBottom="16dp" />
+                android:text="Iniciar Simulación"
+                android:backgroundTint="#0C1446"
+                android:textColor="#FFFFFF"
+                android:layout_marginBottom="24dp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Objetivos Específicos:"
+                android:text="Instrucciones de la Actividad:"
                 android:textStyle="bold"
+                android:textSize="16sp"
                 android:textColor="#000000" />
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="• Identificar la trayectoria parabólica.\n• Observar cómo influye la velocidad inicial.\n• Relacionar el experimento con conceptos físicos."
-                android:layout_marginBottom="16dp" />
+                android:text="1. Inicia la simulación para visualizar el entorno.\n2. Ajusta los parámetros de lanzamiento.\n3. Observa los cambios en tiempo real."
+                android:layout_marginBottom="24dp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Materiales:"
-                android:textStyle="bold"
-                android:textColor="#3B82F6" />
-            <TextView
+                android:text="Velocidad Inicial"
+                android:textStyle="bold" />
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="• 1 pelota pequeña (puede ser de ping-pong, tenis o una bola de papel).\n• 1 metro o cinta métrica.\n• 1 celular para grabar (opcional).\n• 1 cuaderno para registrar datos.  \n• Cinta o tiza para marcar el suelo."
-                android:textColor="#3B82F6"
-                android:layout_marginBottom="16dp" />
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+                <SeekBar
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:max="100"
+                    android:progress="25" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="20sp"
+                    android:textColor="#001F3F"
+                    android:text="25 m/s"
+                    />
+            </LinearLayout>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Procedimiento:"
-                android:textStyle="bold"
-                android:textColor="#000000" />
-            <TextView
+                android:layout_marginTop="16dp"
+                android:text="Ángulo de Lanzamiento"
+                android:textStyle="bold" />
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="1. Ingresa a la sección de simulación.\n2. Ajusta los parámetros necesarios.\n3. Observa la trayectoria en tu entorno." />
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+                <SeekBar
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:max="90"
+                    android:progress="45" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="45°" />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Altura Inicial"
+                android:textStyle="bold" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+                <SeekBar
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:max="20"
+                    android:progress="1" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="1.5 m" />
+            </LinearLayout>
         </LinearLayout>
     </ScrollView>
 
@@ -96,10 +140,11 @@
         android:id="@+id/btnSiguienteEtapa"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="end"
+        android:layout_gravity="center"
         android:layout_margin="20dp"
         android:text="Siguiente etapa"
         android:textAllCaps="false"
         android:textColor="#FFFFFF"
+        android:gravity="center"
         android:backgroundTint="#2ECC71" />
 </LinearLayout>
