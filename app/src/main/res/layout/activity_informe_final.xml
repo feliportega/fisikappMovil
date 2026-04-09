@@ -6,9 +6,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#F8F9FA"
+    android:background="@color/white"
     tools:context=".InformeLaboratorio">
-
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -32,6 +31,14 @@
             android:textSize="20sp"
             android:textStyle="bold"/>
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="CRISTHIAN"
+            android:textColor="@color/gris_texto"
+            android:textSize="14sp"
+            android:layout_marginEnd="8dp"/>
+
         <ImageView
             android:layout_width="32dp"
             android:layout_height="32dp"
@@ -47,7 +54,6 @@
         android:padding="20dp">
 
         <ImageView
-            android:id="@+id/btnBack"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:src="@drawable/iconoretroceder"
@@ -72,7 +78,6 @@
         android:gravity="center_horizontal">
 
         <LinearLayout
-            android:id="@+id/layoutMateriales"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/item_background"
@@ -80,12 +85,10 @@
             android:padding="16dp"
             android:layout_marginBottom="16dp"
             android:gravity="center_vertical">
-
             <ImageView
                 android:layout_width="32dp"
                 android:layout_height="32dp"
                 android:src="@drawable/chulo"/>
-
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -93,12 +96,10 @@
                 android:textSize="24sp"
                 android:layout_marginStart="16dp"
                 android:textColor="@color/black"
-                android:fontFamily="sans-serif-medium"
-                android:textStyle="normal"/>
+                android:fontFamily="sans-serif-medium"/>
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/layoutObservaciones"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/item_background"
@@ -109,7 +110,7 @@
             <ImageView
                 android:layout_width="32dp"
                 android:layout_height="32dp"
-                android:src="@drawable/signoexclamacion"/>
+                android:src="@drawable/chulo"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -121,18 +122,17 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/layoutConclusiones"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/item_background"
             android:orientation="horizontal"
             android:padding="16dp"
-            android:layout_marginBottom="16dp"
+            android:layout_marginBottom="24dp"
             android:gravity="center_vertical">
             <ImageView
                 android:layout_width="32dp"
                 android:layout_height="32dp"
-                android:src="@drawable/signoexclamacion"/>
+                android:src="@drawable/chulo"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -144,16 +144,15 @@
         </LinearLayout>
 
         <Button
-            android:id="@+id/btnEnviar"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:layout_marginBottom="16dp"
+            android:layout_width="280dp"
+            android:layout_height="65dp"
             android:text="Enviar datos"
             android:textAllCaps="false"
-            android:textSize="22sp"
+            android:textSize="24sp"
             android:textColor="@color/white"
             android:background="@drawable/round_button"
-            app:backgroundTint="@color/gris_boton"/>
+            app:backgroundTint="@color/verde"
+            android:layout_marginBottom="16dp"/>
     </LinearLayout>
 
     <View
