@@ -5,6 +5,120 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#94A3B8"
     tools:context=".Dashboard">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/gris"
+        android:orientation="vertical"
+
+        tools:layout_editor_absoluteX="-73dp"
+        tools:layout_editor_absoluteY="-365dp">
+
+        <!-- HEADER -->
+        <LinearLayout
+            android:id="@+id/header"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:padding="10dp"
+            android:background="@color/white"
+            android:orientation="horizontal">
+
+            <!-- Logo -->
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/copa" />
+
+            <!-- Nombre app -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                android:text="@string/name"
+                android:textColor="#0A2540"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <!-- Espacio -->
+            <View
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1" />
+
+            <!-- Usuario -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:padding="10dp"
+                android:text="@string/FaUser"
+                android:textColor="#333333"
+                android:textSize="14sp" />
+
+            <!-- Icono perfil -->
+            <ImageButton
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/icons8"/>
+
+        </LinearLayout>
+
+        <!-- Buscador -->
+        <EditText
+            android:id="@+id/editTextTextEmailAddress"
+            android:layout_width="370dp"
+            android:layout_height="55dp"
+            android:layout_marginTop="10dp"
+            android:layout_gravity="center"
+            android:paddingStart="30dp"
+            android:paddingEnd="15dp"
+            android:hint="@string/faBuscador"
+            android:inputType="text"
+            android:background="@drawable/edittext_redondo"
+            android:backgroundTint="@color/white"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="60dp"/>
+
+        <!-- ICONO CENTRAL -->
+        <ImageView
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            android:src="@drawable/tubo" />
+
+        <!-- TEXTO CENTRAL -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:text="@string/faText1"
+            android:textColor="@color/black" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:gravity="center"
+            android:text="@string/faText2" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="80dp"/>
+
+        <!-- BOTÓN -->
+        <Button
+            android:layout_width="320dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            android:backgroundTint="#142050"
+            android:text="@string/Fabutton" />
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

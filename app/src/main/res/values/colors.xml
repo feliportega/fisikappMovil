@@ -2,5 +2,9 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="gris">#C7C7C7</color>
+    <color name="grisss">#C7C7C7</color>
+    <color name="gris">#BAF5F5F5</color>
+    <color name="gs">#81F5F5F5</color>
+    <color name="Azul">#142050</color>
+    <color name="gris2">#808080</color>
 </resources>

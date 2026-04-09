@@ -12,13 +12,20 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.FisikappMovil">
         <activity
+<<<<<<< HEAD
             android:name=".RestablecerContrasena"
+=======
+            android:name=".Mensaje_denegado"
+            android:exported="false" />
+        <activity
+            android:name=".Mensaje_confirmacion"
+>>>>>>> origin/johnf
             android:exported="false" />
         <activity
             android:name=".RecuperarCuenta"
             android:exported="false" />
         <activity
-            android:name=".UnirseLaboratorio"
+            android:name=".unirse_laboratorio"
             android:exported="false" />
         <activity
             android:name=".InformeLaboratorio"
