@@ -1,0 +1,192 @@
+Index: app/src/main/res/layout/activity_dashboard.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<androidx.constraintlayout.widget.ConstraintLayout xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:app=\"http://schemas.android.com/apk/res-auto\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\"\r\n    android:id=\"@+id/main\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"match_parent\"\r\n    android:background=\"#94A3B8\"\r\n    tools:context=\".Dashboard\">\r\n\r\n    <LinearLayout\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"match_parent\"\r\n        android:background=\"@color/gris\"\r\n        android:orientation=\"vertical\"\r\n\r\n        tools:layout_editor_absoluteX=\"-73dp\"\r\n        tools:layout_editor_absoluteY=\"-365dp\">\r\n\r\n        <!-- HEADER -->\r\n        <LinearLayout\r\n            android:id=\"@+id/header\"\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:gravity=\"center_vertical\"\r\n            android:padding=\"10dp\"\r\n            android:background=\"@color/white\"\r\n            android:orientation=\"horizontal\">\r\n\r\n            <!-- Logo -->\r\n            <ImageView\r\n                android:layout_width=\"40dp\"\r\n                android:layout_height=\"40dp\"\r\n                android:src=\"@drawable/copa\" />\r\n\r\n            <!-- Nombre app -->\r\n            <TextView\r\n                android:layout_width=\"wrap_content\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:padding=\"8dp\"\r\n                android:text=\"@string/name\"\r\n                android:textColor=\"#0A2540\"\r\n                android:textSize=\"18sp\"\r\n                android:textStyle=\"bold\" />\r\n\r\n            <!-- Espacio -->\r\n            <View\r\n                android:layout_width=\"0dp\"\r\n                android:layout_height=\"match_parent\"\r\n                android:layout_weight=\"1\" />\r\n\r\n            <!-- Usuario -->\r\n            <TextView\r\n                android:layout_width=\"wrap_content\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:layout_margin=\"8dp\"\r\n                android:padding=\"10dp\"\r\n                android:text=\"@string/FaUser\"\r\n                android:textColor=\"#333333\"\r\n                android:textSize=\"14sp\" />\r\n\r\n            <!-- Icono perfil -->\r\n            <ImageButton\r\n                android:layout_width=\"40dp\"\r\n                android:layout_height=\"40dp\"\r\n                android:src=\"@drawable/icons8\"/>\r\n\r\n        </LinearLayout>\r\n\r\n        <!-- Buscador -->\r\n        <EditText\r\n            android:id=\"@+id/editTextTextEmailAddress\"\r\n            android:layout_width=\"370dp\"\r\n            android:layout_height=\"55dp\"\r\n            android:layout_marginTop=\"10dp\"\r\n            android:layout_gravity=\"center\"\r\n            android:paddingStart=\"30dp\"\r\n            android:paddingEnd=\"15dp\"\r\n            android:hint=\"@string/faBuscador\"\r\n            android:inputType=\"text\"\r\n            android:background=\"@drawable/edittext_redondo\"\r\n            android:backgroundTint=\"@color/white\"/>\r\n        <View\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"60dp\"/>\r\n\r\n        <!-- ICONO CENTRAL -->\r\n        <ImageView\r\n            android:layout_width=\"200dp\"\r\n            android:layout_height=\"200dp\"\r\n            android:layout_gravity=\"center\"\r\n            android:layout_marginTop=\"20dp\"\r\n            android:src=\"@drawable/tubo\" />\r\n\r\n        <!-- TEXTO CENTRAL -->\r\n        <TextView\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"30dp\"\r\n            android:layout_marginTop=\"10dp\"\r\n            android:gravity=\"center\"\r\n            android:textStyle=\"bold\"\r\n            android:text=\"@string/faText1\"\r\n            android:textColor=\"@color/black\" />\r\n\r\n        <TextView\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:layout_marginTop=\"5dp\"\r\n            android:gravity=\"center\"\r\n            android:text=\"@string/faText2\" />\r\n        <View\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"80dp\"/>\r\n\r\n        <!-- BOTÓN -->\r\n        <Button\r\n            android:layout_width=\"320dp\"\r\n            android:layout_height=\"50dp\"\r\n            android:layout_gravity=\"center\"\r\n            android:layout_marginTop=\"20dp\"\r\n            android:backgroundTint=\"#142050\"\r\n            android:text=\"@string/Fabutton\" />\r\n    </LinearLayout>\r\n</androidx.constraintlayout.widget.ConstraintLayout>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/layout/activity_dashboard.xml b/app/src/main/res/layout/activity_dashboard.xml
+--- a/app/src/main/res/layout/activity_dashboard.xml	(revision a55267a7717e3d50c603eea502258aad1726a008)
++++ b/app/src/main/res/layout/activity_dashboard.xml	(date 1775916005751)
+@@ -114,6 +114,7 @@
+ 
+         <!-- BOTÓN -->
+         <Button
++            android:id="@+id/btnUnirseLab"
+             android:layout_width="320dp"
+             android:layout_height="50dp"
+             android:layout_gravity="center"
+Index: app/src/main/res/layout/activity_unirse_laboratorio.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<androidx.constraintlayout.widget.ConstraintLayout xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:app=\"http://schemas.android.com/apk/res-auto\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\"\r\n    android:id=\"@+id/main\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"match_parent\"\r\n    android:layout_gravity=\"center\"\r\n    tools:context=\".UnirseLaboratorio\">\r\n\r\n    <LinearLayout\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"0dp\"\r\n        android:orientation=\"vertical\">\r\n\r\n        <LinearLayout\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"100pt\"\r\n            android:background=\"#142050\"\r\n            android:orientation=\"vertical\"\r\n            android:layout_gravity=\"center\"\r\n            android:padding=\"30dp\">\r\n\r\n            <ImageView\r\n                android:layout_width=\"115dp\"\r\n                android:layout_height=\"90dp\"\r\n                android:layout_gravity=\"center\"\r\n                android:src=\"@drawable/tubo\"\r\n                android:tint=\"@color/white\"/>\r\n\r\n            <View\r\n                android:layout_width=\"match_parent\"\r\n                android:layout_height=\"5dp\"/>\r\n\r\n            <TextView\r\n                android:layout_width=\"300dp\"\r\n                android:layout_height=\"30dp\"\r\n                android:layout_gravity=\"center\"\r\n                android:textStyle=\"bold\"\r\n                android:gravity=\"center\"\r\n                android:text=\"@string/Fatext\"\r\n                android:textSize=\"23sp\"\r\n                android:textColor=\"@color/white\"/>\r\n\r\n            <View\r\n                android:layout_width=\"match_parent\"\r\n                android:layout_height=\"5dp\"/>\r\n\r\n            <TextView\r\n                android:layout_width=\"250dp\"\r\n                android:layout_height=\"50dp\"\r\n                android:layout_gravity=\"center\"\r\n                android:gravity=\"center\"\r\n                android:text=\"@string/Fatext1\"\r\n                android:textColor=\"@color/gris\"/>\r\n\r\n        </LinearLayout>\r\n\r\n        <View\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"35dp\"/>\r\n\r\n        <TextView\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"40dp\"\r\n            android:text=\"@string/Fatext2\"\r\n            android:textSize=\"20sp\"\r\n            android:gravity=\"center\"\r\n            android:textColor=\"@color/black\"\r\n            android:textStyle=\"bold\"/>\r\n\r\n        <TextView\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"80dp\"\r\n            android:text=\"@string/Fatext3\"\r\n            android:gravity=\"center\"\r\n            android:textColor=\"@color/gris2\"/>\r\n\r\n        <View\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"50dp\"/>\r\n\r\n        <EditText\r\n            android:layout_width=\"370dp\"\r\n            android:layout_height=\"55dp\"\r\n            android:layout_gravity=\"center\"\r\n            android:layout_marginTop=\"10dp\"\r\n            android:paddingStart=\"30dp\"\r\n            android:background=\"@drawable/edittext_redondo2\"\r\n            android:hint=\"Ingresa código\"\r\n            android:paddingEnd=\"15dp\"/>\r\n\r\n        <View\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"30dp\"/>\r\n\r\n        <Button\r\n            android:layout_width=\"320dp\"\r\n            android:layout_height=\"50dp\"\r\n            android:layout_gravity=\"center\"\r\n            android:text=\"@string/Fatext4\"\r\n            android:backgroundTint=\"@color/Azul\"/>\r\n\r\n        <View\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"16dp\"/>\r\n\r\n        <Button\r\n            android:layout_width=\"150dp\"\r\n            android:layout_height=\"50dp\"\r\n            android:layout_gravity=\"center\"\r\n            android:text=\"@string/Fatext5\"\r\n            android:backgroundTint=\"@color/white\"\r\n            android:textColor=\"@color/black\"/>\r\n\r\n    </LinearLayout>\r\n</androidx.constraintlayout.widget.ConstraintLayout>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/layout/activity_unirse_laboratorio.xml b/app/src/main/res/layout/activity_unirse_laboratorio.xml
+--- a/app/src/main/res/layout/activity_unirse_laboratorio.xml	(revision a55267a7717e3d50c603eea502258aad1726a008)
++++ b/app/src/main/res/layout/activity_unirse_laboratorio.xml	(date 1775916379842)
+@@ -95,6 +95,7 @@
+             android:layout_height="30dp"/>
+ 
+         <Button
++            android:id="@+id/btnIngresaCodigo"
+             android:layout_width="320dp"
+             android:layout_height="50dp"
+             android:layout_gravity="center"
+Index: app/src/main/java/com/marcos/fisikappmovil/Dashboard.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.marcos.fisikappmovil;\r\n\r\nimport android.os.Bundle;\r\n\r\nimport androidx.activity.EdgeToEdge;\r\nimport androidx.appcompat.app.AppCompatActivity;\r\nimport androidx.core.graphics.Insets;\r\nimport androidx.core.view.ViewCompat;\r\nimport androidx.core.view.WindowInsetsCompat;\r\n\r\npublic class Dashboard extends AppCompatActivity {\r\n\r\n    @Override\r\n    protected void onCreate(Bundle savedInstanceState) {\r\n        super.onCreate(savedInstanceState);\r\n        EdgeToEdge.enable(this);\r\n        setContentView(R.layout.activity_dashboard);\r\n        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {\r\n            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());\r\n            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);\r\n            return insets;\r\n        });\r\n    }\r\n}\r\n\r\n//SALAZAR--------------
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/marcos/fisikappmovil/Dashboard.java b/app/src/main/java/com/marcos/fisikappmovil/Dashboard.java
+--- a/app/src/main/java/com/marcos/fisikappmovil/Dashboard.java	(revision a55267a7717e3d50c603eea502258aad1726a008)
++++ b/app/src/main/java/com/marcos/fisikappmovil/Dashboard.java	(date 1776220061010)
+@@ -1,6 +1,9 @@
+ package com.marcos.fisikappmovil;
+ 
++import android.content.Intent;
+ import android.os.Bundle;
++import android.view.View;
++import android.widget.Button;
+ 
+ import androidx.activity.EdgeToEdge;
+ import androidx.appcompat.app.AppCompatActivity;
+@@ -8,17 +11,30 @@
+ import androidx.core.view.ViewCompat;
+ import androidx.core.view.WindowInsetsCompat;
+ 
+-public class Dashboard extends AppCompatActivity {
++public class
++
++
++
+ 
++
++
++
++Dashboard extends AppCompatActivity {
++
++    Button btnunirselab;
+     @Override
+     protected void onCreate(Bundle savedInstanceState) {
+         super.onCreate(savedInstanceState);
+         EdgeToEdge.enable(this);
+         setContentView(R.layout.activity_dashboard);
+-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
+-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+-            return insets;
++
++        btnunirselab = findViewById(R.id.btnUnirseLab);
++        btnunirselab.setOnClickListener(new View.OnClickListener() {
++            @Override
++            public void onClick(View view) {
++                Intent irUnirse = new Intent(Dashboard.this,UnirseLaboratorio.class);
++                startActivity(irUnirse);
++            }
+         });
+     }
+ }
+Index: app/src/main/AndroidManifest.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<manifest xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\">\r\n\r\n    <uses-permission android:name=\"android.permission.CAMERA\" />\r\n    <uses-feature android:name=\"android.hardware.camera\" android:required=\"false\" />\r\n\r\n    <application\r\n        android:allowBackup=\"true\"\r\n        android:dataExtractionRules=\"@xml/data_extraction_rules\"\r\n        android:fullBackupContent=\"@xml/backup_rules\"\r\n        android:icon=\"@mipmap/ic_launcher\"\r\n        android:label=\"@string/app_name\"\r\n        android:roundIcon=\"@mipmap/ic_launcher_round\"\r\n        android:supportsRtl=\"true\"\r\n        android:theme=\"@style/Theme.FisikappMovil\">\r\n\r\n        <activity\r\n            android:name=\".SimulacionAR\"\r\n            android:exported=\"false\" />\r\n        <activity\r\n            android:name=\".ConfiguracionSimulacion\"\r\n            android:exported=\"false\" />\r\n        <activity\r\n            android:name=\".RestablecerContrasena\"\r\n            android:exported=\"false\" />\r\n        <activity\r\n            android:name=\".Mensaje_denegado\"\r\n            android:exported=\"false\"\r\n            />\r\n        <activity\r\n            android:name=\".Mensaje_confirmacion\"\r\n\r\n            android:exported=\"false\" />\r\n        <activity\r\n            android:name=\".cuartaPantalla\"\r\n            android:exported=\"false\" />\r\n        <activity\r\n            android:name=\".tercerapantalla\"\r\n            android:exported=\"false\" />\r\n        <activity\r\n            android:name=\".segundaPantalla\"\r\n            android:exported=\"false\" />\r\n        <activity\r\n            android:name=\".RecuperarCuenta\"\r\n            android:exported=\"false\" />\r\n        <activity\r\n            android:name=\".unirse_laboratorio\"\r\n            android:exported=\"false\" />\r\n        <activity\r\n            android:name=\".InformeLaboratorio\"\r\n            android:exported=\"false\" />\r\n        <activity\r\n            android:name=\".PracticaConceptos\"\r\n            android:exported=\"false\" />\r\n        <activity\r\n            android:name=\".ConceptosBasicos\"\r\n            android:exported=\"false\" />\r\n        <activity\r\n            android:name=\".ViewsLaboratorio\"\r\n            android:exported=\"true\">\r\n            <intent-filter>\r\n                <action android:name=\"android.intent.action.MAIN\" />\r\n                <category android:name=\"android.intent.category.LAUNCHER\" />\r\n            </intent-filter>\r\n        </activity>\r\n        <activity\r\n            android:name=\".Dashboard\"\r\n            android:exported=\"false\" />\r\n        <activity\r\n            android:name=\".Login\"\r\n            android:exported=\"false\" />\r\n        <activity\r\n            android:name=\".Register\"\r\n            android:exported=\"false\" />\r\n        <activity\r\n            android:name=\".MainActivity\"\r\n            android:exported=\"false\" />\r\n    </application>\r\n\r\n</manifest>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/AndroidManifest.xml b/app/src/main/AndroidManifest.xml
+--- a/app/src/main/AndroidManifest.xml	(revision a55267a7717e3d50c603eea502258aad1726a008)
++++ b/app/src/main/AndroidManifest.xml	(date 1775918525790)
+@@ -45,7 +45,7 @@
+             android:name=".RecuperarCuenta"
+             android:exported="false" />
+         <activity
+-            android:name=".unirse_laboratorio"
++            android:name=".UnirseLaboratorio"
+             android:exported="false" />
+         <activity
+             android:name=".InformeLaboratorio"
+@@ -56,25 +56,25 @@
+         <activity
+             android:name=".ConceptosBasicos"
+             android:exported="false" />
+-        <activity
+-            android:name=".ViewsLaboratorio"
++        <activity android:name=".Login"
++            android:exported="false"/>
++        <activity android:name=".MainActivity"
+             android:exported="true">
+             <intent-filter>
+                 <action android:name="android.intent.action.MAIN" />
+                 <category android:name="android.intent.category.LAUNCHER" />
+             </intent-filter>
++
+         </activity>
+-        <activity
+-            android:name=".Dashboard"
+-            android:exported="false" />
++
++        <activity android:name=".Register"
++            android:exported="false"/>
+         <activity
+-            android:name=".Login"
+-            android:exported="false" />
+-        <activity
+-            android:name=".Register"
+-            android:exported="false" />
++            android:name=".ViewsLaboratorio"
++            android:exported="false"/>
++
+         <activity
+-            android:name=".MainActivity"
++            android:name=".Dashboard"
+             android:exported="false" />
+     </application>
+ 
+Index: app/src/main/java/com/marcos/fisikappmovil/unirse_laboratorio.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.marcos.fisikappmovil;\r\n\r\nimport android.os.Bundle;\r\n\r\nimport androidx.activity.EdgeToEdge;\r\nimport androidx.appcompat.app.AppCompatActivity;\r\nimport androidx.core.graphics.Insets;\r\nimport androidx.core.view.ViewCompat;\r\nimport androidx.core.view.WindowInsetsCompat;\r\n\r\npublic class unirse_laboratorio extends AppCompatActivity {\r\n\r\n    @Override\r\n    protected void onCreate(Bundle savedInstanceState) {\r\n        super.onCreate(savedInstanceState);\r\n        EdgeToEdge.enable(this);\r\n        setContentView(R.layout.activity_unirse_laboratorio);\r\n        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {\r\n            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());\r\n            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);\r\n            return insets;\r\n        });\r\n    }\r\n}
+===================================================================
+diff --git a/app/src/main/java/com/marcos/fisikappmovil/unirse_laboratorio.java b/app/src/main/java/com/marcos/fisikappmovil/unirse_laboratorio.java
+--- a/app/src/main/java/com/marcos/fisikappmovil/unirse_laboratorio.java	(revision a55267a7717e3d50c603eea502258aad1726a008)
++++ b/app/src/main/java/com/marcos/fisikappmovil/unirse_laboratorio.java	(date 1775916379830)
+@@ -1,6 +1,9 @@
+ package com.marcos.fisikappmovil;
+ 
++import android.content.Intent;
+ import android.os.Bundle;
++import android.view.View;
++import android.widget.Button;
+ 
+ import androidx.activity.EdgeToEdge;
+ import androidx.appcompat.app.AppCompatActivity;
+@@ -10,15 +13,20 @@
+ 
+ public class unirse_laboratorio extends AppCompatActivity {
+ 
++    Button btncodigounirse;
+     @Override
+     protected void onCreate(Bundle savedInstanceState) {
+         super.onCreate(savedInstanceState);
+         EdgeToEdge.enable(this);
+         setContentView(R.layout.activity_unirse_laboratorio);
+-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
+-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+-            return insets;
++
++        btncodigounirse = findViewById(R.id.btnIngresaCodigo);
++        btncodigounirse.setOnClickListener(new View.OnClickListener() {
++            @Override
++            public void onClick(View view) {
++                Intent irMilab= new Intent(unirse_laboratorio.this, ViewsLaboratorio.class);
++                startActivity(irMilab);
++            }
+         });
+     }
+ }
+\ No newline at end of file
