@@ -1,18 +1,19 @@
-package com.marcos.fisikappmovil;
+package com.marcos.fisikappmovil.ui.MonitorDeAprendizajeEstudiante;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import androidx.appcompat.app.AppCompatActivity;
 
-public class ConfiguracionSimulacion extends AppCompatActivity {
+import com.marcos.fisikappmovil.R;
+
+public class PracticaConceptos extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_configuracion_simulacion);
+        setContentView(R.layout.activity_practica_conceptos);
 
         ImageView btnBack = findViewById(R.id.btnBack);
         if (btnBack != null) {
@@ -22,9 +23,8 @@ public class ConfiguracionSimulacion extends AppCompatActivity {
         Button btnSiguiente = findViewById(R.id.btnSiguienteEtapa);
         if (btnSiguiente != null) {
             btnSiguiente.setOnClickListener(v -> {
-                // Aquí iría la pantalla de Realidad Aumentada
-                // Intent intent = new Intent(this, SimulacionAR.class);
-                // startActivity(intent);
+                Intent intent = new Intent(PracticaConceptos.this, ConfiguracionSimulacion.class);
+                startActivity(intent);
             });
         }
     }

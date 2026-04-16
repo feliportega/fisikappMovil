@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/bg_card_rounded"
     android:orientation="vertical"
-    tools:context=".ViewsLaboratorio">
+    tools:context=".ui.MonitorDeAprendizajeEstudiante.ViewsLaboratorio">
 
     <LinearLayout
         android:layout_width="match_parent"

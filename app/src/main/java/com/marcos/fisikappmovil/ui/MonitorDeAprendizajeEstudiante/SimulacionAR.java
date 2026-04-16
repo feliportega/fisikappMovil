@@ -1,8 +1,10 @@
-package com.marcos.fisikappmovil;
+package com.marcos.fisikappmovil.ui.MonitorDeAprendizajeEstudiante;
 
 import android.os.Bundle;
 import android.widget.ImageView;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.marcos.fisikappmovil.R;
 
 public class SimulacionAR extends AppCompatActivity {
 

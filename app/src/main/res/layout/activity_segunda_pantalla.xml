@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/white"
-    tools:context=".segundaPantalla">
+    tools:context=".ui.MonitorDeAprendizajeEstudiante.segundaPantalla">
 
     <LinearLayout
         android:layout_width="match_parent"

@@ -1,4 +1,4 @@
-package com.marcos.fisikappmovil;
+package com.marcos.fisikappmovil.ui.AccesoLaboratorio;
 
 import android.os.Bundle;
 
@@ -8,7 +8,9 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-public class unirse_laboratorio extends AppCompatActivity {
+import com.marcos.fisikappmovil.R;
+
+public class UnirseLaboratorio extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

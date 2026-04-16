@@ -7,7 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#142050"
-    tools:context=".RestablecerContrasena">
+    tools:context=".ui.RecuperacionDeCuenta.RestablecerContrasena">
 
     <ImageView
         android:layout_width="200dp"

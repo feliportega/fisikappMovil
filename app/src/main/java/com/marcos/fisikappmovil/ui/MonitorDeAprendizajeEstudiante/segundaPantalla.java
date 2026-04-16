@@ -1,4 +1,4 @@
-package com.marcos.fisikappmovil;
+package com.marcos.fisikappmovil.ui.MonitorDeAprendizajeEstudiante;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,15 +7,17 @@ import android.widget.Button;
 import android.widget.ImageView;
 import androidx.appcompat.app.AppCompatActivity;
 
-public class tercerapantalla extends AppCompatActivity {
+import com.marcos.fisikappmovil.R;
+
+public class segundaPantalla extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_tercerapantalla);
+        setContentView(R.layout.activity_segunda_pantalla);
 
         ImageView btnBack = findViewById(R.id.btnBack);
-        Button btnEnviar = findViewById(R.id.btnEnviar);
+        Button btnConclusiones = findViewById(R.id.btnConclusiones);
 
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -24,10 +26,10 @@ public class tercerapantalla extends AppCompatActivity {
             }
         });
 
-        btnEnviar.setOnClickListener(new View.OnClickListener() {
+        btnConclusiones.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(tercerapantalla.this, cuartaPantalla.class);
+                Intent intent = new Intent(segundaPantalla.this, tercerapantalla.class);
                 startActivity(intent);
             }
         });

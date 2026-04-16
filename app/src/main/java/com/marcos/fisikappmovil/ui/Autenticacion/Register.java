@@ -1,4 +1,4 @@
-package com.marcos.fisikappmovil;
+package com.marcos.fisikappmovil.ui.Autenticacion;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,9 +7,9 @@ import android.widget.Button;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
+
+import com.marcos.fisikappmovil.R;
+import com.marcos.fisikappmovil.ui.AccesoAlSistema.Dashboard;
 
 public class Register extends AppCompatActivity {
 

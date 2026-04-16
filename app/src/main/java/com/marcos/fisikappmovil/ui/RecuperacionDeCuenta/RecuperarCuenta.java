@@ -1,4 +1,4 @@
-package com.marcos.fisikappmovil;
+package com.marcos.fisikappmovil.ui.RecuperacionDeCuenta;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,9 +7,9 @@ import android.widget.Button;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
+
+import com.marcos.fisikappmovil.R;
+import com.marcos.fisikappmovil.ui.Autenticacion.Login;
 
 public class RecuperarCuenta extends AppCompatActivity {
 

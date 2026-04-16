@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="#F8F9FA"
-    tools:context=".PracticaConceptos">
+    tools:context=".ui.MonitorDeAprendizajeEstudiante.PracticaConceptos">
 
     <LinearLayout
         android:layout_width="match_parent"

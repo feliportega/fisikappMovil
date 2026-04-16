@@ -1,18 +1,14 @@
-package com.marcos.fisikappmovil;
+package com.marcos.fisikappmovil.ui.MonitorDeAprendizajeEstudiante;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.Toast;
-import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
+
+import com.marcos.fisikappmovil.R;
 
 public class InformeLaboratorio extends AppCompatActivity {
 

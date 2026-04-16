@@ -1,4 +1,4 @@
-package com.marcos.fisikappmovil;
+package com.marcos.fisikappmovil.ui.AccesoAlSistema;
 
 import android.os.Bundle;
 
@@ -8,13 +8,15 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-public class Mensaje_denegado extends AppCompatActivity {
+import com.marcos.fisikappmovil.R;
+
+public class Dashboard extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_mensaje_denegado);
+        setContentView(R.layout.activity_dashboard);
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
@@ -22,3 +24,5 @@ public class Mensaje_denegado extends AppCompatActivity {
         });
     }
 }
+
+//SALAZAR--------------
