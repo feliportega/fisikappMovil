@@ -26,7 +26,8 @@ public class InformeLaboratorio extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_informe_laboratorio);
+        // Cambiado de activity_informe_laboratorio a activity_informe_final_1
+        setContentView(R.layout.activity_informe_final_1);
 
         ImageView btnBack = findViewById(R.id.btnBack);
         LinearLayout layoutObservaciones = findViewById(R.id.layoutObservaciones);
