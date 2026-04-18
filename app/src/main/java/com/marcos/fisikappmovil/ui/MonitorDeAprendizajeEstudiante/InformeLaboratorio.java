@@ -16,42 +16,44 @@ public class InformeLaboratorio extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_informe_laboratorio);
+        // El error era que el nombre del layout no coincidía con el archivo XML.
+        // He cambiado activity_informe_laboratorio por activity_informe_final.
+        setContentView(R.layout.activity_informe_final);
 
+        // Referencias a los componentes de la interfaz
         ImageView btnBack = findViewById(R.id.btnBack);
-        LinearLayout layoutObservaciones = findViewById(R.id.layoutObservaciones);
-        LinearLayout layoutConclusiones = findViewById(R.id.layoutConclusiones);
+        
+        // Buscamos los contenedores por su ID en el XML
+        // Nota: Asegúrate de que estos IDs existan en activity_informe_final.xml
+        View layoutMateriales = findViewById(R.id.layoutMateriales); // Si no existe lo ignorará
+        View layoutObservaciones = findViewById(R.id.layoutObservaciones);
+        View layoutConclusiones = findViewById(R.id.layoutConclusiones);
         Button btnEnviar = findViewById(R.id.btnEnviar);
 
-        btnBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish(); // Regresa a la pantalla anterior
-            }
-        });
+        // Configuración de clics
+        if (btnBack != null) {
+            btnBack.setOnClickListener(v -> finish());
+        }
 
-        layoutObservaciones.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        if (layoutObservaciones != null) {
+            layoutObservaciones.setOnClickListener(v -> {
                 Intent intent = new Intent(InformeLaboratorio.this, segundaPantalla.class);
                 startActivity(intent);
-            }
-        });
+            });
+        }
 
-        layoutConclusiones.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        if (layoutConclusiones != null) {
+            layoutConclusiones.setOnClickListener(v -> {
                 Intent intent = new Intent(InformeLaboratorio.this, tercerapantalla.class);
                 startActivity(intent);
-            }
-        });
+            });
+        }
 
-        btnEnviar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        if (btnEnviar != null) {
+            btnEnviar.setOnClickListener(v -> {
                 Intent intent = new Intent(InformeLaboratorio.this, cuartaPantalla.class);
                 startActivity(intent);
-            }
-        });
+            });
+        }
     }
 }

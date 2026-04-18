@@ -3,144 +3,206 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorPrimario"
+    android:orientation="vertical"
     tools:context=".ui.Autenticacion.Register">
 
+    <!-- Sección Superior con Logo -->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#142050"
-        android:orientation="vertical">
+        android:layout_height="0dp"
+        android:layout_weight="0.8"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="24dp">
 
         <ImageView
-            android:layout_width="170dp"
-            android:layout_height="135dp"
-            android:layout_gravity="center"
-            android:layout_marginTop="20dp"
-            android:src="@drawable/logo" />
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:src="@drawable/logo"
+            android:contentDescription="Logo Fisikapp" />
 
         <TextView
-            android:layout_width="250dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="10dp"
-            android:gravity="center"
+            android:layout_marginTop="8dp"
+            android:text="Fisikapp"
+            android:textColor="@color/white"
+            android:textSize="32sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
             android:text="Registro - Crear cuenta"
-            android:textColor="#D7D7D7"
-            android:textSize="20sp" />
-
-        <LinearLayout
-            android:layout_width="355dp"
-            android:layout_height="400dp"
-            android:orientation="vertical"
-            android:layout_gravity="center"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/degradado_register"
-            >
-            <TextView
-                android:layout_marginTop="25dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Nombre completo"
-                android:textSize="15sp"
-                android:textStyle="bold"
-                android:textColor="#5F5F5F"
-                android:layout_marginLeft="18dp"
-                />
-            <EditText
-                android:background="@drawable/desing"
-                android:padding="10dp"
-                android:id="@+id/edtNombrecompleto"
-                android:layout_width="310dp"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:inputType="text"
-                android:drawablePadding="10dp"
-                android:drawableLeft="@drawable/ci_email"
-                android:layout_gravity="center"
-                android:hint="nombre completo" />
-<TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Correo electronico"
-                android:textSize="15sp"
-                android:textStyle="bold"
-                android:textColor="#5F5F5F"
-                android:layout_marginLeft="18dp"
-                />
-            <EditText
-                android:background="@drawable/desing"
-                android:padding="10dp"
-                android:id="@+id/editTextText"
-                android:layout_width="310dp"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:inputType="text"
-                android:drawablePadding="10dp"
-                android:drawableLeft="@drawable/ci_email"
-                android:layout_gravity="center"
-                android:hint="email" />
-            <TextView
-                android:layout_marginTop="13dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Contraseña"
-                android:textSize="15sp"
-                android:textStyle="bold"
-                android:textColor="#5F5F5F"
-                android:layout_marginLeft="18dp"
-                />
-
-            <EditText
-                android:background="@drawable/desing"
-                android:padding="10dp"
-                android:id="@+id/editText"
-                android:layout_width="310dp"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:inputType="text"
-                android:drawablePadding="10dp"
-                android:drawableLeft="@drawable/baseline_lock_24"
-                android:layout_gravity="center"
-                android:hint="contraseña" />
-            <TextView
-                android:layout_marginTop="13dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="confirmar Contraseña"
-                android:textSize="15sp"
-                android:textStyle="bold"
-                android:textColor="#5F5F5F"
-                android:layout_marginLeft="18dp"
-                />
-
-            <EditText
-                android:background="@drawable/desing"
-                android:padding="10dp"
-                android:id="@+id/edtConfirmarcont"
-                android:layout_width="310dp"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:inputType="text"
-                android:drawablePadding="10dp"
-                android:drawableLeft="@drawable/baseline_lock_24"
-                android:layout_gravity="center"
-                android:hint="contraseña" />
-
-            <Button
-                android:id="@+id/btnCrearCuenta"
-                android:layout_width="300dp"
-                android:layout_height="wrap_content"
-                android:text="Crear cuenta"
-                android:layout_marginTop="14dp"
-                android:layout_gravity="center"
-                />
-        </LinearLayout>
-
-
+            android:textColor="#D1D5DB"
+            android:textSize="18sp"
+            android:textAlignment="center" />
     </LinearLayout>
 
+    <!-- Tarjeta de Registro con Fondo Degradado Verde/Cian (Estilo Figma) -->
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="2.4"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="-20dp"
+        app:cardBackgroundColor="#3EDBA0"
+        app:cardCornerRadius="24dp"
+        app:cardElevation="0dp">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="24dp">
+
+                <!-- Campo Nombre -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Nombre completo"
+                    android:textColor="#064E3B"
+                    android:textStyle="bold"
+                    android:textSize="14sp" />
+                <EditText
+                    android:id="@+id/edtNombrecompleto"
+                    android:layout_width="match_parent"
+                    android:layout_height="52dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/edittext_redondo"
+                    android:backgroundTint="@color/white"
+                    android:drawableStart="@drawable/iconousuario"
+                    android:drawablePadding="12dp"
+                    android:hint="cristian eduardo"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp"
+                    android:textSize="14sp" />
+
+                <!-- Campo Correo -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="Correo electrónico"
+                    android:textColor="#064E3B"
+                    android:textStyle="bold"
+                    android:textSize="14sp" />
+                <EditText
+                    android:id="@+id/editTextText"
+                    android:layout_width="match_parent"
+                    android:layout_height="52dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/edittext_redondo"
+                    android:backgroundTint="@color/white"
+                    android:drawableStart="@drawable/ci_email"
+                    android:drawablePadding="12dp"
+                    android:hint="cristian@soy.sena.com"
+                    android:inputType="textEmailAddress"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp"
+                    android:textSize="14sp" />
+
+                <!-- Campo Contraseña -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="Contraseña"
+                    android:textColor="#064E3B"
+                    android:textStyle="bold"
+                    android:textSize="14sp" />
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="52dp"
+                    android:layout_marginTop="8dp">
+                    <EditText
+                        android:id="@+id/editText"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/edittext_redondo"
+                        android:backgroundTint="@color/white"
+                        android:drawableStart="@drawable/baseline_lock_24"
+                        android:drawablePadding="12dp"
+                        android:hint="........."
+                        android:inputType="textPassword"
+                        android:paddingStart="16dp"
+                        android:paddingEnd="48dp"
+                        android:textSize="14sp" />
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginEnd="16dp"
+                        android:src="@android:drawable/ic_menu_view"
+                        app:tint="#64748B" />
+                </RelativeLayout>
+
+                <!-- Confirmar Contraseña -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="Confirmar contraseña"
+                    android:textColor="#064E3B"
+                    android:textStyle="bold"
+                    android:textSize="14sp" />
+                <EditText
+                    android:id="@+id/edtConfirmarcont"
+                    android:layout_width="match_parent"
+                    android:layout_height="52dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/edittext_redondo"
+                    android:backgroundTint="@color/white"
+                    android:drawableStart="@drawable/baseline_lock_24"
+                    android:drawablePadding="12dp"
+                    android:hint="........."
+                    android:inputType="textPassword"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp"
+                    android:textSize="14sp" />
+
+                <!-- Botón Crear Cuenta -->
+                <Button
+                    android:id="@+id/btnCrearCuenta"
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:layout_marginTop="24dp"
+                    android:backgroundTint="@color/colorPrimario"
+                    android:text="Crear cuenta ->"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    android:textSize="16sp"
+                    app:cornerRadius="12dp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp" />
+
+            </LinearLayout>
+        </ScrollView>
+    </androidx.cardview.widget.CardView>
+
+    <!-- Footer -->
+    <TextView
+        android:id="@+id/btnYaTienesCuenta"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="24dp"
+        android:text="¿Ya tienes cuenta? Inicia sesión"
+        android:textColor="@color/white"
+        android:textSize="14sp"
+        android:textStyle="bold" />
 
 </LinearLayout>

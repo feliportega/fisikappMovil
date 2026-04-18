@@ -1,31 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
-    android:orientation="vertical"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#182052"
-    tools:context=".MainActivity">
+    android:background="@color/colorPrimario"
+    android:gravity="center">
 
     <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="280dp"
+        android:layout_height="280dp"
         android:src="@drawable/logo"
-        android:layout_gravity="center"
-        android:layout_marginTop="100dp"
-        />
-    <Button
-        android:id="@+id/btnComienza"
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
-        android:text="Comienza"
-        android:textColor="@color/black"
-        android:backgroundTint="#D8F0F0"
-        android:layout_gravity="right"
-        android:layout_marginTop="170dp"
-        android:layout_marginRight="20dp"
-        />
+        android:contentDescription="Fisikapp Logo" />
 
-</LinearLayout>
+</RelativeLayout>

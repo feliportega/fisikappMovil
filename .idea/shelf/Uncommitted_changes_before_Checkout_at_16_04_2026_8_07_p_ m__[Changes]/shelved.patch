@@ -1,0 +1,564 @@
+Index: app/src/main/res/layout/activity_conceptos_basicos.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<LinearLayout xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:app=\"http://schemas.android.com/apk/res-auto\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\"\r\n    android:id=\"@+id/main\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"match_parent\"\r\n    android:orientation=\"vertical\"\r\n    android:background=\"#F8F9FA\"\r\n    tools:context=\".ConceptosBasicos\">\r\n\r\n    <LinearLayout\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:background=\"#0C1446\"\r\n        android:orientation=\"horizontal\"\r\n        android:padding=\"16dp\"\r\n        android:gravity=\"center_vertical\">\r\n\r\n        <ImageView\r\n            android:id=\"@+id/btnBack\"\r\n            android:layout_width=\"40dp\"\r\n            android:layout_height=\"40dp\"\r\n            android:src=\"@android:drawable/ic_menu_revert\"\r\n            app:tint=\"#FFFFFF\"\r\n            android:clickable=\"true\"\r\n            android:focusable=\"true\"\r\n            android:contentDescription=\"@string/btn_back_desc\"\r\n            android:background=\"?attr/selectableItemBackgroundBorderless\" />\r\n\r\n        <TextView\r\n            android:layout_width=\"wrap_content\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:layout_marginStart=\"16dp\"\r\n            android:text=\"@string/conceptos_basicos_title\"\r\n            android:textColor=\"#FFFFFF\"\r\n            android:textSize=\"22sp\"\r\n            android:textStyle=\"bold\" />\r\n    </LinearLayout>\r\n\r\n    <ScrollView\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"0dp\"\r\n        android:layout_weight=\"1\">\r\n\r\n        <LinearLayout\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:orientation=\"vertical\"\r\n            android:padding=\"20dp\">\r\n\r\n            <TextView\r\n                android:layout_width=\"match_parent\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:text=\"@string/tiro_parabolico_desc\"\r\n                android:textColor=\"#333333\"\r\n                android:textSize=\"17sp\"\r\n                android:lineSpacingExtra=\"4dp\" />\r\n\r\n            <TextView\r\n                android:layout_width=\"match_parent\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:layout_marginTop=\"12dp\"\r\n                android:text=\"@string/movimientos_lista\"\r\n                android:textColor=\"#333333\"\r\n                android:textSize=\"17sp\"\r\n                android:lineSpacingExtra=\"4dp\" />\r\n\r\n            <TextView\r\n                android:layout_width=\"match_parent\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:layout_marginTop=\"12dp\"\r\n                android:text=\"@string/trayectoria_desc\"\r\n                android:textColor=\"#333333\"\r\n                android:textSize=\"17sp\" />\r\n\r\n            <TextView\r\n                android:layout_width=\"match_parent\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:layout_marginTop=\"30dp\"\r\n                android:background=\"#E8F5E9\"\r\n                android:gravity=\"center\"\r\n                android:padding=\"8dp\"\r\n                android:text=\"@string/recursos_header\"\r\n                android:textColor=\"#000000\"\r\n                android:textSize=\"20sp\"\r\n                android:textStyle=\"bold\" />\r\n\r\n            <LinearLayout\r\n                android:layout_width=\"match_parent\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:layout_marginTop=\"20dp\"\r\n                android:background=\"@drawable/bg_item_rounded\"\r\n                android:padding=\"16dp\"\r\n                android:gravity=\"center_vertical\">\r\n                <ImageView\r\n                    android:layout_width=\"30dp\"\r\n                    android:layout_height=\"30dp\"\r\n                    android:contentDescription=\"@string/video_desc\"\r\n                    android:src=\"@android:drawable/ic_menu_slideshow\" />\r\n                <TextView\r\n                    android:layout_width=\"wrap_content\"\r\n                    android:layout_height=\"wrap_content\"\r\n                    android:layout_marginStart=\"16dp\"\r\n                    android:text=\"@string/video_explicativo\"\r\n                    android:textSize=\"16sp\"\r\n                    android:textStyle=\"bold\" />\r\n            </LinearLayout>\r\n\r\n            <LinearLayout\r\n                android:layout_width=\"match_parent\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:layout_marginTop=\"12dp\"\r\n                android:background=\"@drawable/bg_item_rounded\"\r\n                android:padding=\"16dp\"\r\n                android:gravity=\"center_vertical\">\r\n                <ImageView\r\n                    android:layout_width=\"30dp\"\r\n                    android:layout_height=\"30dp\"\r\n                    android:contentDescription=\"@string/pdf_desc\"\r\n                    android:src=\"@android:drawable/ic_menu_save\" />\r\n                <TextView\r\n                    android:layout_width=\"wrap_content\"\r\n                    android:layout_height=\"wrap_content\"\r\n                    android:layout_marginStart=\"16dp\"\r\n                    android:text=\"@string/pdf_apoyo\"\r\n                    android:textSize=\"16sp\"\r\n                    android:textStyle=\"bold\" />\r\n            </LinearLayout>\r\n\r\n        </LinearLayout>\r\n    </ScrollView>\r\n\r\n    <Button\r\n        android:id=\"@+id/btnSiguienteEtapa\"\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:layout_gravity=\"center\"\r\n        android:layout_margin=\"20dp\"\r\n        android:text=\"@string/siguiente_etapa\"\r\n        android:textAllCaps=\"false\"\r\n        android:textColor=\"#FFFFFF\"\r\n        android:backgroundTint=\"#2ECC71\"\r\n        android:paddingStart=\"24dp\"\r\n\r\n\r\n</LinearLayout>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/layout/activity_conceptos_basicos.xml b/app/src/main/res/layout/activity_conceptos_basicos.xml
+--- a/app/src/main/res/layout/activity_conceptos_basicos.xml	(revision 4a9897b6b30bc16ba19901e75628fdbdeb6fe7a0)
++++ b/app/src/main/res/layout/activity_conceptos_basicos.xml	(date 1775936727037)
+@@ -9,6 +9,48 @@
+     android:background="#F8F9FA"
+     tools:context=".ConceptosBasicos">
+ 
++    <!-- Barra Superior Blanca (Fisikapp + Usuario) -->
++    <LinearLayout
++        android:layout_width="match_parent"
++        android:layout_height="wrap_content"
++        android:background="#FFFFFF"
++        android:orientation="horizontal"
++        android:padding="12dp"
++        android:gravity="center_vertical">
++
++        <ImageView
++            android:layout_width="24dp"
++            android:layout_height="24dp"
++            android:src="@drawable/physics"
++            android:contentDescription="Logo" />
++
++        <TextView
++            android:layout_width="0dp"
++            android:layout_height="wrap_content"
++            android:layout_weight="1"
++            android:layout_marginStart="8dp"
++            android:text="Fisikapp"
++            android:textColor="#0C1446"
++            android:textSize="16sp"
++            android:textStyle="bold" />
++
++        <TextView
++            android:layout_width="wrap_content"
++            android:layout_height="wrap_content"
++            android:text="CRISTHIAN"
++            android:textColor="#7F8C8D"
++            android:textSize="12sp"
++            android:layout_marginEnd="8dp" />
++
++        <ImageView
++            android:layout_width="28dp"
++            android:layout_height="28dp"
++            android:src="@android:drawable/ic_menu_myplaces"
++            android:contentDescription="Perfil"
++            app:tint="#7F8C8D" />
++    </LinearLayout>
++
++    <!-- Barra de Navegación Azul -->
+     <LinearLayout
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+@@ -29,6 +71,7 @@
+             android:background="?attr/selectableItemBackgroundBorderless" />
+ 
+         <TextView
++            android:id="@+id/tvTituloToolbar"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:layout_marginStart="16dp"
+@@ -50,6 +93,7 @@
+             android:padding="20dp">
+ 
+             <TextView
++                android:id="@+id/tvDescripcionPrincipal"
+                 android:layout_width="match_parent"
+                 android:layout_height="wrap_content"
+                 android:text="@string/tiro_parabolico_desc"
+@@ -57,6 +101,7 @@
+                 android:textSize="17sp"
+                 android:lineSpacingExtra="4dp" />
+ 
++            <!-- Lista de puntos -->
+             <TextView
+                 android:layout_width="match_parent"
+                 android:layout_height="wrap_content"
+@@ -86,6 +131,7 @@
+                 android:textSize="20sp"
+                 android:textStyle="bold" />
+ 
++            <!-- Recurso Video -->
+             <LinearLayout
+                 android:layout_width="match_parent"
+                 android:layout_height="wrap_content"
+@@ -96,7 +142,7 @@
+                 <ImageView
+                     android:layout_width="30dp"
+                     android:layout_height="30dp"
+-                    android:contentDescription="@string/video_desc"
++                    android:contentDescription="Video"
+                     android:src="@android:drawable/ic_menu_slideshow" />
+                 <TextView
+                     android:layout_width="wrap_content"
+@@ -107,6 +153,7 @@
+                     android:textStyle="bold" />
+             </LinearLayout>
+ 
++            <!-- Recurso PDF -->
+             <LinearLayout
+                 android:layout_width="match_parent"
+                 android:layout_height="wrap_content"
+@@ -117,7 +164,7 @@
+                 <ImageView
+                     android:layout_width="30dp"
+                     android:layout_height="30dp"
+-                    android:contentDescription="@string/pdf_desc"
++                    android:contentDescription="PDF"
+                     android:src="@android:drawable/ic_menu_save" />
+                 <TextView
+                     android:layout_width="wrap_content"
+@@ -135,13 +182,13 @@
+         android:id="@+id/btnSiguienteEtapa"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+-        android:layout_gravity="center"
++        android:layout_gravity="end"
+         android:layout_margin="20dp"
+         android:text="@string/siguiente_etapa"
+         android:textAllCaps="false"
+         android:textColor="#FFFFFF"
+         android:backgroundTint="#2ECC71"
+         android:paddingStart="24dp"
++        android:paddingEnd="24dp" />
+ 
+-
+-</LinearLayout>
+\ No newline at end of file
++</LinearLayout>
+Index: app/src/main/java/com/marcos/fisikappmovil/InformeLaboratorio.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/marcos/fisikappmovil/InformeLaboratorio.java b/app/src/main/java/com/marcos/fisikappmovil/InformeLaboratorio.java
+deleted file mode 100644
+--- a/app/src/main/java/com/marcos/fisikappmovil/InformeLaboratorio.java	(revision 4a9897b6b30bc16ba19901e75628fdbdeb6fe7a0)
++++ /dev/null	(revision 4a9897b6b30bc16ba19901e75628fdbdeb6fe7a0)
+@@ -1,39 +0,0 @@
+-package com.marcos.fisikappmovil;
+-
+-import android.os.Bundle;
+-import android.view.View;
+-import android.widget.ImageView;
+-import android.widget.Toast;
+-import androidx.appcompat.app.AppCompatActivity;
+-
+-public class InformeLaboratorio extends AppCompatActivity {
+-
+-    @Override
+-    protected void onCreate(Bundle savedInstanceState) {
+-        super.onCreate(savedInstanceState);
+-        setContentView(R.layout.activity_informe_laboratorio);
+-
+-        // Botón para regresar
+-        ImageView btnBack = findViewById(R.id.btnBack);
+-        if (btnBack != null) {
+-            btnBack.setOnClickListener(new View.OnClickListener() {
+-                @Override
+-                public void onClick(View v) {
+-                    finish();
+-                }
+-            });
+-        }
+-
+-        // Botón finalizar (simulación de guardado)
+-        View btnFinalizar = findViewById(R.id.btnFinalizar);
+-        if (btnFinalizar != null) {
+-            btnFinalizar.setOnClickListener(new View.OnClickListener() {
+-                @Override
+-                public void onClick(View v) {
+-                    Toast.makeText(InformeLaboratorio.this, "Informe guardado correctamente", Toast.LENGTH_SHORT).show();
+-                    finish(); // Regresa al menú principal
+-                }
+-            });
+-        }
+-    }
+-}
+Index: app/src/main/res/layout/activity_informe_laboratorio.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/layout/activity_informe_laboratorio.xml b/app/src/main/res/layout/activity_informe_laboratorio.xml
+deleted file mode 100644
+--- a/app/src/main/res/layout/activity_informe_laboratorio.xml	(revision 4a9897b6b30bc16ba19901e75628fdbdeb6fe7a0)
++++ /dev/null	(revision 4a9897b6b30bc16ba19901e75628fdbdeb6fe7a0)
+@@ -1,130 +0,0 @@
+-<?xml version="1.0" encoding="utf-8"?>
+-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+-    xmlns:app="http://schemas.android.com/apk/res-auto"
+-    xmlns:tools="http://schemas.android.com/tools"
+-    android:id="@+id/main"
+-    android:layout_width="match_parent"
+-    android:layout_height="match_parent"
+-    android:orientation="vertical"
+-    android:background="#F8F9FA"
+-    tools:context=".InformeLaboratorio">
+-
+-    <LinearLayout
+-        android:layout_width="match_parent"
+-        android:layout_height="wrap_content"
+-        android:background="#0C1446"
+-        android:orientation="horizontal"
+-        android:padding="16dp"
+-        android:gravity="center_vertical">
+-
+-        <ImageView
+-            android:id="@+id/btnBack"
+-            android:layout_width="40dp"
+-            android:layout_height="40dp"
+-            android:src="@android:drawable/ic_menu_revert"
+-            app:tint="#FFFFFF"
+-            android:clickable="true"
+-            android:focusable="true"
+-            android:background="?attr/selectableItemBackgroundBorderless" />
+-
+-        <TextView
+-            android:layout_width="wrap_content"
+-            android:layout_height="wrap_content"
+-            android:layout_marginStart="16dp"
+-            android:text="Informe de laboratorio"
+-            android:textColor="#FFFFFF"
+-            android:textSize="22sp"
+-            android:textStyle="bold" />
+-    </LinearLayout>
+-
+-    <ScrollView
+-        android:layout_width="match_parent"
+-        android:layout_height="0dp"
+-        android:layout_weight="1">
+-
+-        <LinearLayout
+-            android:layout_width="match_parent"
+-            android:layout_height="wrap_content"
+-            android:orientation="vertical"
+-            android:padding="20dp">
+-
+-            <TextView
+-                android:layout_width="wrap_content"
+-                android:layout_height="wrap_content"
+-                android:text="Resumen de resultados"
+-                android:textColor="#0C1446"
+-                android:textSize="18sp"
+-                android:textStyle="bold" />
+-
+-            <androidx.cardview.widget.CardView
+-                android:layout_width="match_parent"
+-                android:layout_height="wrap_content"
+-                android:layout_marginTop="16dp"
+-                app:cardCornerRadius="12dp"
+-                app:cardElevation="2dp">
+-
+-                <LinearLayout
+-                    android:layout_width="match_parent"
+-                    android:layout_height="wrap_content"
+-                    android:orientation="vertical"
+-                    android:padding="16dp">
+-
+-                    <TextView
+-                        android:layout_width="wrap_content"
+-                        android:layout_height="wrap_content"
+-                        android:text="Datos registrados:"
+-                        android:textStyle="bold" />
+-
+-                    <TextView
+-                        android:layout_width="wrap_content"
+-                        android:layout_height="wrap_content"
+-                        android:layout_marginTop="8dp"
+-                        android:text="Distancia recorrida: 0.0 m" />
+-
+-                    <TextView
+-                        android:layout_width="wrap_content"
+-                        android:layout_height="wrap_content"
+-                        android:layout_marginTop="4dp"
+-                        android:text="Altura máxima: 0.0 m" />
+-
+-                    <TextView
+-                        android:layout_width="wrap_content"
+-                        android:layout_height="wrap_content"
+-                        android:layout_marginTop="4dp"
+-                        android:text="Tiempo de vuelo: 0.0 s" />
+-                </LinearLayout>
+-            </androidx.cardview.widget.CardView>
+-
+-            <TextView
+-                android:layout_width="wrap_content"
+-                android:layout_height="wrap_content"
+-                android:layout_marginTop="24dp"
+-                android:text="Conclusiones"
+-                android:textColor="#0C1446"
+-                android:textSize="18sp"
+-                android:textStyle="bold" />
+-
+-            <EditText
+-                android:layout_width="match_parent"
+-                android:layout_height="wrap_content"
+-                android:layout_marginTop="8dp"
+-                android:background="@drawable/bg_item_rounded"
+-                android:hint="Escribe tus conclusiones aquí..."
+-                android:gravity="top"
+-                android:minLines="5"
+-                android:padding="12dp" />
+-
+-        </LinearLayout>
+-    </ScrollView>
+-
+-    <Button
+-        android:id="@+id/btnFinalizar"
+-        android:layout_width="match_parent"
+-        android:layout_height="wrap_content"
+-        android:layout_margin="20dp"
+-        android:text="Finalizar y Guardar"
+-        android:textAllCaps="false"
+-        android:textColor="#FFFFFF"
+-        android:backgroundTint="#0C1446" />
+-
+-</LinearLayout>
+\ No newline at end of file
+Index: app/src/main/res/values/strings.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><resources>\r\n    <string name=\"app_name\">FisikappMovil</string>\r\n    <string name=\"btn_back_desc\">Botón regresar</string>\r\n    <string name=\"conceptos_basicos_title\">Conceptos básicos</string>\r\n    <string name=\"tiro_parabolico_desc\">El tiro parabólico es un movimiento en dos dimensiones donde un objeto es lanzado con un ángulo respecto a la horizontal. Este movimiento combina:</string>\r\n    <string name=\"movimientos_lista\">• Movimiento horizontal con velocidad constante.\\n• Movimiento vertical afectado por la gravedad.</string>\r\n    <string name=\"trayectoria_desc\">La trayectoria que describe el objeto es una parábola.</string>\r\n    <string name=\"recursos_header\">Recursos</string>\r\n    <string name=\"video_desc\">Icono video</string>\r\n    <string name=\"video_explicativo\">Video explicativo</string>\r\n    <string name=\"pdf_desc\">Icono PDF</string>\r\n    <string name=\"pdf_apoyo\">PDF de apoyo</string>\r\n    <string name=\"siguiente_etapa\">Siguiente etapa</string>\r\n</resources>\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/values/strings.xml b/app/src/main/res/values/strings.xml
+--- a/app/src/main/res/values/strings.xml	(revision 4a9897b6b30bc16ba19901e75628fdbdeb6fe7a0)
++++ b/app/src/main/res/values/strings.xml	(date 1775540868991)
+@@ -6,7 +6,7 @@
+     <string name="movimientos_lista">• Movimiento horizontal con velocidad constante.\n• Movimiento vertical afectado por la gravedad.</string>
+     <string name="trayectoria_desc">La trayectoria que describe el objeto es una parábola.</string>
+     <string name="recursos_header">Recursos</string>
+-    <string name="video_desc">Icono video</string>
++    <string name="videocam_icono">Icono video</string>
+     <string name="video_explicativo">Video explicativo</string>
+     <string name="pdf_desc">Icono PDF</string>
+     <string name="pdf_apoyo">PDF de apoyo</string>
+Index: .idea/misc.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><project version=\"4\">\r\n  <component name=\"ExternalStorageConfigurationManager\" enabled=\"true\" />\r\n  <component name=\"ProjectRootManager\" version=\"2\" languageLevel=\"JDK_21\" default=\"true\" project-jdk-name=\"jbr-21\" project-jdk-type=\"JavaSDK\">\r\n    <output url=\"file://$PROJECT_DIR$/build/classes\" />\r\n  </component>\r\n  <component name=\"ProjectType\">\r\n    <option name=\"id\" value=\"Android\" />\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/misc.xml b/.idea/misc.xml
+--- a/.idea/misc.xml	(revision 4a9897b6b30bc16ba19901e75628fdbdeb6fe7a0)
++++ b/.idea/misc.xml	(date 1776127684361)
+@@ -1,3 +1,4 @@
++<?xml version="1.0" encoding="UTF-8"?>
+ <project version="4">
+   <component name="ExternalStorageConfigurationManager" enabled="true" />
+   <component name="ProjectRootManager" version="2" languageLevel="JDK_21" default="true" project-jdk-name="jbr-21" project-jdk-type="JavaSDK">
+@@ -6,4 +7,11 @@
+   <component name="ProjectType">
+     <option name="id" value="Android" />
+   </component>
++  <component name="VisualizationToolProject">
++    <option name="state">
++      <ProjectState>
++        <option name="scale" value="0.19048339843749995" />
++      </ProjectState>
++    </option>
++  </component>
+ </project>
+\ No newline at end of file
+Index: app/src/main/java/com/marcos/fisikappmovil/models/Contenido.java
+===================================================================
+diff --git a/app/src/main/java/com/marcos/fisikappmovil/models/Contenido.java b/app/src/main/java/com/marcos/fisikappmovil/models/Contenido.java
+new file mode 100644
+--- /dev/null	(date 1775924941389)
++++ b/app/src/main/java/com/marcos/fisikappmovil/models/Contenido.java	(date 1775924941389)
+@@ -0,0 +1,29 @@
++package com.marcos.fisikappmovil.models;
++
++import com.google.gson.annotations.SerializedName;
++
++public class Contenido {
++    private int id;
++    private String titulo;
++    private String descripcion;
++    
++    @SerializedName("video")
++    private String videoUrl;
++    
++    @SerializedName("pdf")
++    private String pdfUrl;
++
++    // Getters
++    public int getId() { return id; }
++    public String getTitulo() { return titulo; }
++    public String getDescripcion() { return descripcion; }
++    public String getVideoUrl() { return videoUrl; }
++    public String getPdfUrl() { return pdfUrl; }
++
++    // Setters
++    public void setId(int id) { this.id = id; }
++    public void setTitulo(String titulo) { this.titulo = titulo; }
++    public void setDescripcion(String descripcion) { this.descripcion = descripcion; }
++    public void setVideoUrl(String videoUrl) { this.videoUrl = videoUrl; }
++    public void setPdfUrl(String pdfUrl) { this.pdfUrl = pdfUrl; }
++}
+Index: gradle/libs.versions.toml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>[versions]\r\nagp = \"9.1.0\"\r\njunit = \"4.13.2\"\r\njunitVersion = \"1.1.5\"\r\nespressoCore = \"3.5.1\"\r\nappcompat = \"1.7.1\"\r\nmaterial = \"1.13.0\"\r\nactivity = \"1.13.0\"\r\nconstraintlayout = \"2.2.1\"\r\n\r\n[libraries]\r\njunit = { group = \"junit\", name = \"junit\", version.ref = \"junit\" }\r\next-junit = { group = \"androidx.test.ext\", name = \"junit\", version.ref = \"junitVersion\" }\r\nespresso-core = { group = \"androidx.test.espresso\", name = \"espresso-core\", version.ref = \"espressoCore\" }\r\nappcompat = { group = \"androidx.appcompat\", name = \"appcompat\", version.ref = \"appcompat\" }\r\nmaterial = { group = \"com.google.android.material\", name = \"material\", version.ref = \"material\" }\r\nactivity = { group = \"androidx.activity\", name = \"activity\", version.ref = \"activity\" }\r\nconstraintlayout = { group = \"androidx.constraintlayout\", name = \"constraintlayout\", version.ref = \"constraintlayout\" }\r\n\r\n[plugins]\r\nandroid-application = { id = \"com.android.application\", version.ref = \"agp\" }\r\n\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/gradle/libs.versions.toml b/gradle/libs.versions.toml
+--- a/gradle/libs.versions.toml	(revision 4a9897b6b30bc16ba19901e75628fdbdeb6fe7a0)
++++ b/gradle/libs.versions.toml	(date 1775924207914)
+@@ -7,6 +7,9 @@
+ material = "1.13.0"
+ activity = "1.13.0"
+ constraintlayout = "2.2.1"
++retrofit = "2.9.0"
++converter-gson = "2.9.0"
++okhttp = "4.12.0"
+ 
+ [libraries]
+ junit = { group = "junit", name = "junit", version.ref = "junit" }
+@@ -16,7 +19,9 @@
+ material = { group = "com.google.android.material", name = "material", version.ref = "material" }
+ activity = { group = "androidx.activity", name = "activity", version.ref = "activity" }
+ constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
++retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
++converter-gson = { group = "com.squareup.retrofit2", name = "converter-gson", version.ref = "converter-gson" }
++okhttp = { group = "com.squareup.okhttp3", name = "okhttp", version.ref = "okhttp" }
+ 
+ [plugins]
+ android-application = { id = "com.android.application", version.ref = "agp" }
+-
+Index: app/src/main/AndroidManifest.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<manifest xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\">\r\n\r\n    <uses-permission android:name=\"android.permission.CAMERA\" />\r\n    <uses-feature android:name=\"android.hardware.camera\" android:required=\"false\" />\r\n\r\n    <application\r\n        android:allowBackup=\"true\"\r\n        android:dataExtractionRules=\"@xml/data_extraction_rules\"\r\n        android:fullBackupContent=\"@xml/backup_rules\"\r\n        android:icon=\"@mipmap/ic_launcher\"\r\n        android:label=\"@string/app_name\"\r\n        android:roundIcon=\"@mipmap/ic_launcher_round\"\r\n        android:supportsRtl=\"true\"\r\n        android:theme=\"@style/Theme.FisikappMovil\">\r\n\r\n        <activity\r\n            android:name=\".SimulacionAR\"\r\n            android:exported=\"false\" />\r\n        <activity\r\n            android:name=\".ConfiguracionSimulacion\"\r\n            android:exported=\"false\" />\r\n        <activity\r\n            android:name=\".RecuperarCuenta\"\r\n            android:exported=\"false\" />\r\n        <activity\r\n            android:name=\".UnirseLaboratorio\"\r\n            android:exported=\"false\" />\r\n        <activity\r\n            android:name=\".InformeLaboratorio\"\r\n            android:exported=\"false\" />\r\n        <activity\r\n            android:name=\".PracticaConceptos\"\r\n            android:exported=\"false\" />\r\n        <activity\r\n            android:name=\".ConceptosBasicos\"\r\n            android:exported=\"false\" />\r\n        <activity\r\n            android:name=\".ViewsLaboratorio\"\r\n            android:exported=\"true\">\r\n            <intent-filter>\r\n                <action android:name=\"android.intent.action.MAIN\" />\r\n                <category android:name=\"android.intent.category.LAUNCHER\" />\r\n            </intent-filter>\r\n        </activity>\r\n        <activity\r\n            android:name=\".Dashboard\"\r\n            android:exported=\"false\" />\r\n        <activity\r\n            android:name=\".Login\"\r\n            android:exported=\"false\" />\r\n        <activity\r\n            android:name=\".Register\"\r\n            android:exported=\"false\" />\r\n        <activity\r\n            android:name=\".MainActivity\"\r\n            android:exported=\"false\" />\r\n    </application>\r\n\r\n</manifest>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/AndroidManifest.xml b/app/src/main/AndroidManifest.xml
+--- a/app/src/main/AndroidManifest.xml	(revision 4a9897b6b30bc16ba19901e75628fdbdeb6fe7a0)
++++ b/app/src/main/AndroidManifest.xml	(date 1775924055839)
+@@ -2,6 +2,7 @@
+ <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+     xmlns:tools="http://schemas.android.com/tools">
+ 
++    <uses-permission android:name="android.permission.INTERNET" />
+     <uses-permission android:name="android.permission.CAMERA" />
+     <uses-feature android:name="android.hardware.camera" android:required="false" />
+ 
+@@ -13,6 +14,7 @@
+         android:label="@string/app_name"
+         android:roundIcon="@mipmap/ic_launcher_round"
+         android:supportsRtl="true"
++        android:usesCleartextTraffic="true"
+         android:theme="@style/Theme.FisikappMovil">
+ 
+         <activity
+@@ -26,9 +28,6 @@
+             android:exported="false" />
+         <activity
+             android:name=".UnirseLaboratorio"
+-            android:exported="false" />
+-        <activity
+-            android:name=".InformeLaboratorio"
+             android:exported="false" />
+         <activity
+             android:name=".PracticaConceptos"
+Index: app/src/main/java/com/marcos/fisikappmovil/network/RetrofitClient.java
+===================================================================
+diff --git a/app/src/main/java/com/marcos/fisikappmovil/network/RetrofitClient.java b/app/src/main/java/com/marcos/fisikappmovil/network/RetrofitClient.java
+new file mode 100644
+--- /dev/null	(date 1776305596640)
++++ b/app/src/main/java/com/marcos/fisikappmovil/network/RetrofitClient.java	(date 1776305596640)
+@@ -0,0 +1,20 @@
++package com.marcos.fisikappmovil.network;
++
++import retrofit2.Retrofit;
++import retrofit2.converter.gson.GsonConverterFactory;
++
++public class RetrofitClient {
++    // 10.0.2.2 es la IP especial para que el emulador acceda al localhost de tu PC
++    private static final String BASE_URL = "http://10.0.2.2:8000/";
++    private static Retrofit retrofit = null;
++
++    public static ApiService getApiService() {
++        if (retrofit == null) {
++            retrofit = new Retrofit.Builder()
++                    .baseUrl(BASE_URL)
++                    .addConverterFactory(GsonConverterFactory.create())
++                    .build();
++        }
++        return retrofit.create(ApiService.class);
++    }
++}
+Index: app/src/main/java/com/marcos/fisikappmovil/network/ApiService.java
+===================================================================
+diff --git a/app/src/main/java/com/marcos/fisikappmovil/network/ApiService.java b/app/src/main/java/com/marcos/fisikappmovil/network/ApiService.java
+new file mode 100644
+--- /dev/null	(date 1776305610553)
++++ b/app/src/main/java/com/marcos/fisikappmovil/network/ApiService.java	(date 1776305610553)
+@@ -0,0 +1,19 @@
++package com.marcos.fisikappmovil.network;
++
++import com.marcos.fisikappmovil.models.Contenido;
++import java.util.List;
++import retrofit2.Call;
++import retrofit2.http.GET;
++
++public interface ApiService {
++    
++    // Basado en tu imagen de Swagger: /contenido/conceptos/
++    @GET("contenido/conceptos/")
++    Call<List<Contenido>> getConceptos();
++
++    // /contenido/bibliografia/
++    @GET("contenido/bibliografia/")
++    Call<List<Object>> getBibliografia();
++    
++    // Si tienes estas otras rutas también agrégalas aquí según tu Swagger
++}
+Index: app/build.gradle.kts
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>plugins {\r\n    alias(libs.plugins.android.application)\r\n}\r\n\r\nandroid {\r\n    namespace = \"com.marcos.fisikappmovil\"\r\n    compileSdk {\r\n        version = release(36) {\r\n            minorApiLevel = 1\r\n        }\r\n    }\r\n\r\n    defaultConfig {\r\n        applicationId = \"com.marcos.fisikappmovil\"\r\n        minSdk = 24\r\n        targetSdk = 36\r\n        versionCode = 1\r\n        versionName = \"1.0\"\r\n\r\n        testInstrumentationRunner = \"androidx.test.runner.AndroidJUnitRunner\"\r\n    }\r\n\r\n    buildTypes {\r\n        release {\r\n            isMinifyEnabled = false\r\n            proguardFiles(\r\n                getDefaultProguardFile(\"proguard-android-optimize.txt\"),\r\n                \"proguard-rules.pro\"\r\n            )\r\n        }\r\n    }\r\n    compileOptions {\r\n        sourceCompatibility = JavaVersion.VERSION_11\r\n        targetCompatibility = JavaVersion.VERSION_11\r\n    }\r\n}\r\n\r\ndependencies {\r\n    implementation(libs.appcompat)\r\n    implementation(libs.material)\r\n    implementation(libs.activity)\r\n    implementation(libs.constraintlayout)\r\n    testImplementation(libs.junit)\r\n    androidTestImplementation(libs.ext.junit)\r\n    androidTestImplementation(libs.espresso.core)\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/build.gradle.kts b/app/build.gradle.kts
+--- a/app/build.gradle.kts	(revision 4a9897b6b30bc16ba19901e75628fdbdeb6fe7a0)
++++ b/app/build.gradle.kts	(date 1775927285724)
+@@ -4,11 +4,7 @@
+ 
+ android {
+     namespace = "com.marcos.fisikappmovil"
+-    compileSdk {
+-        version = release(36) {
+-            minorApiLevel = 1
+-        }
+-    }
++    compileSdk = 36
+ 
+     defaultConfig {
+         applicationId = "com.marcos.fisikappmovil"
+@@ -40,6 +36,12 @@
+     implementation(libs.material)
+     implementation(libs.activity)
+     implementation(libs.constraintlayout)
++    
++    // Retrofit para consumo de APIs
++    implementation(libs.retrofit)
++    implementation(libs.converter.gson)
++    implementation(libs.okhttp)
++
+     testImplementation(libs.junit)
+     androidTestImplementation(libs.ext.junit)
+     androidTestImplementation(libs.espresso.core)

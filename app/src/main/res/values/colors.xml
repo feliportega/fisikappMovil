@@ -1,19 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- Colores Base -->
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="grisss">#C7C7C7</color>
-    <color name="gris">#BAF5F5F5</color>
+
+    <!-- Paleta de Colores Oficial Fisikapp -->
+    <color name="colorPrimario">#0F172A</color>
+    <color name="colorSecundario">#2563EB</color>
+    <color name="colorAcento">#7C3AED</color>
+    <color name="colorFondoPrincipal">#F1F5F9</color>
+    <color name="colorExito">#22C55E</color>
+    <color name="colorAdvertencia">#FACC15</color>
+    <color name="colorError">#EF4444</color>
+
+    <!-- Colores Adicionales requeridos por recursos existentes -->
+    <color name="gray">#BB949090</color>
     <color name="gs">#81F5F5F5</color>
-    <color name="Azul">#142050</color>
-    <color name="gris2">#808080</color>
-    <color name="azul">#001F3D</color>
-    <color name="azul_oscuro">#001F3D</color>
-    <color name="gris_boton">#D9D9D9</color>
     <color name="gris_texto">#757575</color>
-    <color name="verde_check">#7ED321</color>
-    <color name="verde">#3EDBA0</color>
     <color name="azul_brillante">#00A3FF</color>
+    <color name="verde_check">#7ED321</color>
+    <color name="gris_boton">#D9D9D9</color>
     <color name="verde_claro_fondo">#E8F5E9</color>
-    <color name="verde_texto_exito">#2E7D32</color>
+    <color name="azul_oscuro">#0F172A</color>
+    <color name="Azul">#0F172A</color>
+
 </resources>
