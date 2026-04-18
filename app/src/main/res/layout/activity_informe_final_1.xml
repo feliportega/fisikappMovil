@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/white"
+    android:background="@color/colorFondoPrincipal"
     tools:context=".InformeLaboratorio">
 
     <LinearLayout
@@ -27,17 +27,9 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="Fisikapp"
-            android:textColor="@color/azul"
+            android:textColor="@color/colorPrimario"
             android:textSize="20sp"
             android:textStyle="bold"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="CRISTHIAN"
-            android:textColor="@color/gris_texto"
-            android:textSize="14sp"
-            android:layout_marginEnd="8dp"/>
 
         <ImageView
             android:layout_width="32dp"
@@ -48,7 +40,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/azul_oscuro"
+        android:background="@color/colorPrimario"
         android:orientation="horizontal"
         android:gravity="center_vertical"
         android:padding="20dp">
@@ -151,7 +143,7 @@
             android:textSize="24sp"
             android:textColor="@color/white"
             android:background="@drawable/round_button"
-            app:backgroundTint="@color/verde"
+            app:backgroundTint="@color/colorExito"
             android:layout_marginBottom="16dp"/>
     </LinearLayout>
 
@@ -159,6 +151,6 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:background="@color/azul_oscuro"/>
+        android:background="@color/colorPrimario"/>
 
 </LinearLayout>

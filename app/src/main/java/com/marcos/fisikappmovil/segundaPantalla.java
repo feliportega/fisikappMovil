@@ -12,7 +12,7 @@ public class segundaPantalla extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_segunda_pantalla);
+        setContentView(R.layout.activity_informe_final_2);
 
         ImageView btnBack = findViewById(R.id.btnBack);
         Button btnConclusiones = findViewById(R.id.btnConclusiones);

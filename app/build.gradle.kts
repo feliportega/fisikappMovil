@@ -4,11 +4,7 @@ plugins {
 
 android {
     namespace = "com.marcos.fisikappmovil"
-    compileSdk {
-        version = release(36) {
-            minorApiLevel = 1
-        }
-    }
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "com.marcos.fisikappmovil"
@@ -40,6 +36,11 @@ dependencies {
     implementation(libs.material)
     implementation(libs.activity)
     implementation(libs.constraintlayout)
+    
+    // Retrofit
+    implementation(libs.retrofit)
+    implementation(libs.retrofit.gson)
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
