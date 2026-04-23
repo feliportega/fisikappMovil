@@ -18,7 +18,7 @@ public class InformeLaboratorio extends AppCompatActivity {
 
         // El error era que el nombre del layout no coincidía con el archivo XML.
         // He cambiado activity_informe_laboratorio por activity_informe_final.
-        setContentView(R.layout.activity_informe_final);
+        setContentView(R.layout.activity_informe_final_1);
 
         // Referencias a los componentes de la interfaz
         ImageView btnBack = findViewById(R.id.btnBack);
