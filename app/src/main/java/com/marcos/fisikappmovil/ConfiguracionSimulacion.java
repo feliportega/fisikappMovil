@@ -22,9 +22,9 @@ public class ConfiguracionSimulacion extends AppCompatActivity {
         Button btnSiguiente = findViewById(R.id.btnSiguienteEtapa);
         if (btnSiguiente != null) {
             btnSiguiente.setOnClickListener(v -> {
-                // Aquí iría la pantalla de Realidad Aumentada
-                // Intent intent = new Intent(this, SimulacionAR.class);
-                // startActivity(intent);
+                // Navegar a la pantalla de Realidad Aumentada (SimulacionAR)
+                Intent intent = new Intent(ConfiguracionSimulacion.this, SimulacionAR.class);
+                startActivity(intent);
             });
         }
     }

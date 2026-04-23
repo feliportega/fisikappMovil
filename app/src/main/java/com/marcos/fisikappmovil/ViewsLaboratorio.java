@@ -36,17 +36,5 @@ public class ViewsLaboratorio extends AppCompatActivity {
                 }
             });
         }
-
-        // 3. Botón Informe de Laboratorio (opcional, por si ya tienes la actividad)
-        LinearLayout btnInforme = findViewById(R.id.btnInforme);
-        if (btnInforme != null) {
-            btnInforme.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(ViewsLaboratorio.this, InformeLaboratorio.class);
-                    startActivity(intent);
-                }
-            });
-        }
     }
 }

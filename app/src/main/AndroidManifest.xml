@@ -28,9 +28,6 @@
             android:name=".UnirseLaboratorio"
             android:exported="false" />
         <activity
-            android:name=".InformeLaboratorio"
-            android:exported="false" />
-        <activity
             android:name=".PracticaConceptos"
             android:exported="false" />
         <activity
