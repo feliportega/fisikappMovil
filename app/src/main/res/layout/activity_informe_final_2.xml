@@ -9,20 +9,20 @@
     android:orientation="vertical"
     tools:context=".ui.MonitorDeAprendizajeEstudiante.segundaPantalla">
 
-    <!-- 1. Barra Superior Blanca (Consistencia Figma) -->
+    <!-- Barra Superior -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:padding="12dp">
+        android:padding="16dp">
 
         <ImageView
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:src="@drawable/iconofisik"
-            android:contentDescription="Logo" />
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_marginEnd="12dp"
+            android:src="@drawable/iconofisik" />
 
         <TextView
             android:layout_width="0dp"
@@ -31,7 +31,7 @@
             android:layout_weight="1"
             android:text="Fisikapp"
             android:textColor="@color/colorPrimario"
-            android:textSize="16sp"
+            android:textSize="20sp"
             android:textStyle="bold" />
 
         <TextView
@@ -43,30 +43,30 @@
             android:textSize="12sp" />
 
         <ImageView
-            android:layout_width="28dp"
-            android:layout_height="28dp"
-            android:src="@drawable/iconousuario"
-            android:contentDescription="Perfil" />
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:src="@drawable/iconousuario" />
     </LinearLayout>
 
-    <!-- 2. Sección del Título Azul -->
+    <!-- Sección Azul -->
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="120dp"
         android:background="@color/colorPrimario"
+        android:gravity="center_vertical"
         android:padding="16dp">
 
         <ImageView
             android:id="@+id/btnBack"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:src="@drawable/iconoretroceder"
-            android:padding="8dp"
-            android:background="@drawable/gs"
             android:alpha="0.8"
+            android:background="@drawable/gs"
             android:clickable="true"
+            android:contentDescription="Atrás"
             android:focusable="true"
-            android:contentDescription="Atrás" />
+            android:padding="8dp"
+            android:src="@drawable/iconoretroceder" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -76,9 +76,10 @@
             android:textColor="@color/white"
             android:textSize="22sp"
             android:textStyle="bold" />
+
     </RelativeLayout>
 
-    <!-- 3. Contenedor Blanco Redondeado (Efecto Hoja Flotante) -->
+    <!-- Contenedor Blanco -->
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -118,32 +119,35 @@
                         android:background="@drawable/bg_item_rounded"
                         android:backgroundTint="#F1F5F9"
                         android:gravity="top"
-                        android:padding="16dp"
                         android:hint="Escribe aquí las observaciones obtenidas..."
+                        android:inputType="textMultiLine"
+                        android:padding="16dp"
                         android:textColor="#475569"
-                        android:textSize="16sp"
-                        android:inputType="textMultiLine" />
+                        android:textSize="16sp" />
 
-                    <!-- Sección de Capturas Estilo Figma -->
+                    <!-- Capturas -->
                     <androidx.cardview.widget.CardView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="24dp"
+                        android:clickable="true"
+                        android:focusable="true"
                         app:cardBackgroundColor="#F1F5F9"
                         app:cardCornerRadius="16dp"
-                        app:cardElevation="0dp"
-                        android:clickable="true"
-                        android:focusable="true">
+                        app:cardElevation="0dp">
+
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center_vertical"
                             android:padding="12dp">
+
                             <ImageView
                                 android:layout_width="48dp"
                                 android:layout_height="48dp"
-                                android:src="@drawable/iconocamara"
-                                android:contentDescription="Cámara" />
+                                android:contentDescription="Cámara"
+                                android:src="@drawable/iconocamara" />
+
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -152,24 +156,36 @@
                                 android:textColor="@color/colorPrimario"
                                 android:textSize="16sp"
                                 android:textStyle="bold" />
+
                         </LinearLayout>
+
                     </androidx.cardview.widget.CardView>
+
                 </LinearLayout>
+
             </ScrollView>
 
             <Button
                 android:id="@+id/btnConclusiones"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:text="Conclusiones"
-                android:backgroundTint="@color/colorExito"
-                android:textColor="@color/white"
+                android:layout_width="250dp"
+                android:layout_height="60dp"
+                android:layout_marginBottom="24dp"
+                android:background="@drawable/round_button"
                 android:padding="14dp"
-                app:cornerRadius="12dp"
+                android:text="Conclusiones"
                 android:textAllCaps="false"
-                android:textSize="16sp" />
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                app:backgroundTint="@color/colorSecundario"
+                app:cornerRadius="12dp" />
 
         </LinearLayout>
+
     </androidx.cardview.widget.CardView>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:background="@color/colorPrimario" />
+
 </LinearLayout>

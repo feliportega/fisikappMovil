@@ -24,4 +24,18 @@
     <color name="azul_oscuro">#0F172A</color>
     <color name="Azul">#0F172A</color>
 
+<!-- Colores Base -->
+<color name="black">#FF000000</color>
+<color name="white">#FFFFFFFF</color>
+
+<!-- Paleta de Colores Oficial Fisikapp -->
+<color name="colorPrimario">#0F172A</color>
+<color name="colorSecundario">#2563EB</color>
+<color name="colorAcento">#7C3AED</color>
+<color name="colorFondoPrincipal">#F1F5F9</color>
+<color name="colorExito">#22C55E</color>
+<color name="colorAdvertencia">#FACC15</color>
+<color name="colorError">#EF4444</color>
+
+
 </resources>
