@@ -1,10 +1,113 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Dashboard">
+    android:background="@color/colorFondoPrincipal"
+    android:orientation="vertical"
+    tools:context=".ui.AccesoAlSistema.Dashboard">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <!-- 1. Barra Superior Blanca (Fisikapp + Usuario) -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="12dp">
+
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/iconofisik" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_weight="1"
+            android:text="Fisikapp"
+            android:textColor="@color/colorPrimario"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:text="CRISTHIAN"
+            android:textColor="#7F8C8D"
+            android:textSize="12sp" />
+
+        <ImageView
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:src="@drawable/iconousuario" />
+    </LinearLayout>
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:padding="24dp">
+
+            <!-- Buscador Moderno -->
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:background="@drawable/edittext_redondo"
+                android:drawableStart="@android:drawable/ic_menu_search"
+                android:drawablePadding="12dp"
+                android:hint="Buscar laboratorios..."
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp" />
+
+            <!-- Contenido Central -->
+            <ImageView
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:layout_marginTop="40dp"
+                android:src="@drawable/tubo" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:text="¡Bienvenido de nuevo!"
+                android:textColor="@color/colorPrimario"
+                android:textSize="22sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Explora los laboratorios disponibles para hoy"
+                android:textColor="#64748B"
+                android:textSize="16sp"
+                android:textAlignment="center" />
+
+            <!-- Botón Principal -->
+            <Button
+                android:id="@+id/btemp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="48dp"
+                android:backgroundTint="@color/colorPrimario"
+                android:padding="16dp"
+                android:text="Empezar Práctica"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                app:cornerRadius="12dp" />
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

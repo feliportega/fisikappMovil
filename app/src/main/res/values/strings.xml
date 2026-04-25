@@ -1,3 +1,39 @@
 <resources>
     <string name="app_name">FisikappMovil</string>
+    <string name="label">email</string>
+
+    <!-- Nombre app -->
+    <string name="name">Fisikapp</string>
+    <!-- Usuario -->
+    <string name="FaUser">Usuario</string>
+    <!-- BUSCADOR -->
+    <string name="faBuscador">Buscar Lavoratorio</string>
+    <!-- texto central-->
+    <string name="faText1">Únete a un laboratorio para comenzar</string>
+    <string name="faText2">Crea un laboratorio o únete con un código para comenzar a gestionar tus experimentos.</string>
+
+    <string name="Fabutton">Unete a un laboratorio</string>
+
+    <string name="Fatext">Unirte a un laboratorio</string>
+    <string name="Fatext1">Accede a nuevas experiencias de aprendizaje</string>
+    <string name="Fatext2">Ingresa el código de 6 dígitos</string>
+    <string name="Fatext3">Pide el código a tu instructor para acceder al laboratorio asignado.</string>
+    <string name="Fatext4">Unete a un laboratorio</string>
+    <string name="Fatext5">Cancelar</string>
+
+    <string name="Fatext6">¡Te has unido con éxito!</string>
+    <string name="Fatext6.1">Tu inscripción al laboratorio ha sido procesada correctamente.</string>
+    <string name="Fatext7">¡ Intentalo nuevamente !</string>
+
+    <string name="btn_back_desc">Botón regresar</string>
+    <string name="conceptos_basicos_title">Conceptos básicos</string>
+    <string name="tiro_parabolico_desc">El tiro parabólico es un movimiento en dos dimensiones donde un objeto es lanzado con un ángulo respecto a la horizontal. Este movimiento combina:</string>
+    <string name="movimientos_lista">• Movimiento horizontal con velocidad constante.\n• Movimiento vertical afectado por la gravedad.</string>
+    <string name="trayectoria_desc">La trayectoria que describe el objeto es una parábola.</string>
+    <string name="recursos_header">Recursos</string>
+    <string name="video_desc">Icono video</string>
+    <string name="video_explicativo">Video explicativo</string>
+    <string name="pdf_desc">Icono PDF</string>
+    <string name="pdf_apoyo">PDF de apoyo</string>
+    <string name="siguiente_etapa">Siguiente etapa</string>
 </resources>

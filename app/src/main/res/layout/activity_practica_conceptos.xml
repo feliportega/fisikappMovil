@@ -1,10 +1,132 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".PracticaConceptos">
+    android:orientation="vertical"
+    android:background="@color/colorFondoPrincipal"
+    tools:context=".ui.MonitorDeAprendizajeEstudiante.PracticaConceptos">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <!-- 1. Barra Superior Blanca (Consistencia Figma) -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="12dp">
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/iconofisik"
+            android:contentDescription="Logo" />
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_weight="1"
+            android:text="Fisikapp"
+            android:textColor="@color/colorPrimario"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:text="CRISTHIAN"
+            android:textColor="#7F8C8D"
+            android:textSize="12sp" />
+        <ImageView
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:src="@drawable/iconousuario"
+            android:contentDescription="Perfil" />
+    </LinearLayout>
+
+    <!-- 2. Encabezado de Sección Azul -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimario"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="16dp">
+        <ImageView
+            android:id="@+id/btnBack"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:src="@drawable/iconoretroceder"
+            app:tint="@color/white"
+            android:clickable="true"
+            android:focusable="true"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="Atrás" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:text="Práctica de conceptos"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="24dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Objetivo General:"
+                android:textStyle="bold"
+                android:textColor="@color/colorPrimario"
+                android:textSize="16sp" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Comprender el comportamiento del tiro parabólico observando la trayectoria de un objeto lanzado..."
+                android:textColor="#475569"
+                android:textSize="15sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:text="Metodología:"
+                android:textStyle="bold"
+                android:textColor="@color/colorSecundario"
+                android:textSize="16sp" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="• Lectura de guía informativa.\n• Uso del simulador AR.\n• Registro de datos."
+                android:textColor="#475569"
+                android:textSize="15sp"
+                android:lineSpacingExtra="4dp" />
+
+        </LinearLayout>
+    </ScrollView>
+
+    <Button
+        android:id="@+id/btnSiguienteEtapa"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="24dp"
+        android:text="Siguiente etapa"
+        android:backgroundTint="@color/colorExito"
+        android:textColor="@color/white"
+        android:padding="14dp"
+        app:cornerRadius="12dp"
+        android:textAllCaps="false"
+        android:textSize="16sp" />
+</LinearLayout>
