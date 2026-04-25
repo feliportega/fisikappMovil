@@ -109,14 +109,15 @@
                 android:paddingEnd="12dp"
                 android:textSize="14sp" />
 
-            <TextView
+            <Button
                 android:id="@+id/btnRecuperarc"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="end"
                 android:layout_marginTop="12dp"
                 android:text="¿Olvidaste tu contraseña?"
-                android:textColor="#1E293B"
+                android:backgroundTint="@color/white"
+                android:textColor="@color/black"
                 android:textSize="12sp"
                 android:textStyle="bold" />
 
@@ -148,12 +149,13 @@
                     android:textColor="#64748B"
                     android:textSize="12sp" />
 
-                <TextView
+                <Button
                     android:id="@+id/btnResgistrarse"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Registrarse"
-                    android:textColor="#1E293B"
+                    android:textColor="@color/black"
+                    android:backgroundTint="@color/white"
                     android:textSize="12sp"
                     android:textStyle="bold" />
             </LinearLayout>

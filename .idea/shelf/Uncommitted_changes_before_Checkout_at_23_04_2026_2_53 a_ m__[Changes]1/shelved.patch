@@ -1,0 +1,52 @@
+Index: app/src/main/res/layout/activity_dashboard.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<LinearLayout xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:app=\"http://schemas.android.com/apk/res-auto\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"match_parent\"\r\n    android:background=\"@color/colorFondoPrincipal\"\r\n    android:orientation=\"vertical\"\r\n    tools:context=\".ui.AccesoAlSistema.Dashboard\">\r\n\r\n    <!-- 1. Barra Superior Blanca (Fisikapp + Usuario) -->\r\n    <LinearLayout\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:background=\"@color/white\"\r\n        android:gravity=\"center_vertical\"\r\n        android:orientation=\"horizontal\"\r\n        android:padding=\"12dp\">\r\n\r\n        <ImageView\r\n            android:layout_width=\"24dp\"\r\n            android:layout_height=\"24dp\"\r\n            android:src=\"@drawable/iconofisik\" />\r\n\r\n        <TextView\r\n            android:layout_width=\"0dp\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:layout_marginStart=\"8dp\"\r\n            android:layout_weight=\"1\"\r\n            android:text=\"Fisikapp\"\r\n            android:textColor=\"@color/colorPrimario\"\r\n            android:textSize=\"18sp\"\r\n            android:textStyle=\"bold\" />\r\n\r\n        <TextView\r\n            android:layout_width=\"wrap_content\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:layout_marginEnd=\"8dp\"\r\n            android:text=\"CRISTHIAN\"\r\n            android:textColor=\"#7F8C8D\"\r\n            android:textSize=\"12sp\" />\r\n\r\n        <ImageView\r\n            android:layout_width=\"32dp\"\r\n            android:layout_height=\"32dp\"\r\n            android:src=\"@drawable/iconousuario\" />\r\n    </LinearLayout>\r\n\r\n    <!-- 2. Encabezado de Sección Azul -->\r\n    <LinearLayout\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:background=\"@color/colorPrimario\"\r\n        android:gravity=\"center_vertical\"\r\n        android:orientation=\"horizontal\"\r\n        android:padding=\"16dp\">\r\n\r\n        <ImageView\r\n            android:id=\"@+id/btnBack\"\r\n            android:layout_width=\"32dp\"\r\n            android:layout_height=\"32dp\"\r\n            android:src=\"@drawable/iconoretroceder\"\r\n            app:tint=\"@color/white\" />\r\n\r\n        <TextView\r\n            android:layout_width=\"wrap_content\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:layout_marginStart=\"16dp\"\r\n            android:text=\"Dashboard\"\r\n            android:textColor=\"@color/white\"\r\n            android:textSize=\"20sp\"\r\n            android:textStyle=\"bold\" />\r\n    </LinearLayout>\r\n\r\n    <ScrollView\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"match_parent\">\r\n\r\n        <LinearLayout\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:gravity=\"center_horizontal\"\r\n            android:orientation=\"vertical\"\r\n            android:padding=\"24dp\">\r\n\r\n            <!-- Buscador Moderno -->\r\n            <EditText\r\n                android:layout_width=\"match_parent\"\r\n                android:layout_height=\"56dp\"\r\n                android:background=\"@drawable/edittext_redondo\"\r\n                android:drawableStart=\"@android:drawable/ic_menu_search\"\r\n                android:drawablePadding=\"12dp\"\r\n                android:hint=\"Buscar laboratorios...\"\r\n                android:paddingStart=\"16dp\"\r\n                android:paddingEnd=\"16dp\" />\r\n\r\n            <!-- Contenido Central -->\r\n            <ImageView\r\n                android:layout_width=\"200dp\"\r\n                android:layout_height=\"200dp\"\r\n                android:layout_marginTop=\"40dp\"\r\n                android:src=\"@drawable/tubo\" />\r\n\r\n            <TextView\r\n                android:layout_width=\"wrap_content\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:layout_marginTop=\"24dp\"\r\n                android:text=\"¡Bienvenido de nuevo!\"\r\n                android:textColor=\"@color/colorPrimario\"\r\n                android:textSize=\"22sp\"\r\n                android:textStyle=\"bold\" />\r\n\r\n            <TextView\r\n                android:layout_width=\"wrap_content\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:layout_marginTop=\"8dp\"\r\n                android:text=\"Explora los laboratorios disponibles para hoy\"\r\n                android:textColor=\"#64748B\"\r\n                android:textSize=\"16sp\"\r\n                android:textAlignment=\"center\" />\r\n\r\n            <!-- Botón Principal -->\r\n            <Button\r\n                android:layout_width=\"match_parent\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:layout_marginTop=\"48dp\"\r\n                android:backgroundTint=\"@color/colorPrimario\"\r\n                android:padding=\"16dp\"\r\n                android:text=\"Empezar Práctica\"\r\n                android:textAllCaps=\"false\"\r\n                android:textColor=\"@color/white\"\r\n                android:textSize=\"16sp\"\r\n                app:cornerRadius=\"12dp\" />\r\n\r\n        </LinearLayout>\r\n    </ScrollView>\r\n</LinearLayout>\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/layout/activity_dashboard.xml b/app/src/main/res/layout/activity_dashboard.xml
+--- a/app/src/main/res/layout/activity_dashboard.xml	(revision 5c7a6c153eb9933f276f3ff012b9fe8e00a3b9c8)
++++ b/app/src/main/res/layout/activity_dashboard.xml	(date 1776930798638)
+@@ -46,31 +46,9 @@
+             android:src="@drawable/iconousuario" />
+     </LinearLayout>
+ 
+-    <!-- 2. Encabezado de Sección Azul -->
+-    <LinearLayout
++    <View
+         android:layout_width="match_parent"
+-        android:layout_height="wrap_content"
+-        android:background="@color/colorPrimario"
+-        android:gravity="center_vertical"
+-        android:orientation="horizontal"
+-        android:padding="16dp">
+-
+-        <ImageView
+-            android:id="@+id/btnBack"
+-            android:layout_width="32dp"
+-            android:layout_height="32dp"
+-            android:src="@drawable/iconoretroceder"
+-            app:tint="@color/white" />
+-
+-        <TextView
+-            android:layout_width="wrap_content"
+-            android:layout_height="wrap_content"
+-            android:layout_marginStart="16dp"
+-            android:text="Dashboard"
+-            android:textColor="@color/white"
+-            android:textSize="20sp"
+-            android:textStyle="bold" />
+-    </LinearLayout>
++        android:layout_height="15dp"/>
+ 
+     <ScrollView
+         android:layout_width="match_parent"
+@@ -121,6 +99,7 @@
+ 
+             <!-- Botón Principal -->
+             <Button
++                android:id="@+id/btemp"
+                 android:layout_width="match_parent"
+                 android:layout_height="wrap_content"
+                 android:layout_marginTop="48dp"

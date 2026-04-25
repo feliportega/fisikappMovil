@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,7 +14,7 @@ import com.marcos.fisikappmovil.ui.Autenticacion.Login;
 
 public class RecuperarCuenta extends AppCompatActivity {
 
-    Button btnvolversesion;
+    TextView btnvolversesion;
     Button btnirrestablecer;
 
     @Override

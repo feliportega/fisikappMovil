@@ -46,31 +46,6 @@
             android:src="@drawable/iconousuario" />
     </LinearLayout>
 
-    <!-- 2. Encabezado de Sección Azul -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/colorPrimario"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:padding="16dp">
-
-        <ImageView
-            android:id="@+id/btnBack"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
-            android:src="@drawable/iconoretroceder"
-            app:tint="@color/white" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:text="Dashboard"
-            android:textColor="@color/white"
-            android:textSize="20sp"
-            android:textStyle="bold" />
-    </LinearLayout>
 
     <ScrollView
         android:layout_width="match_parent"
@@ -121,6 +96,7 @@
 
             <!-- Botón Principal -->
             <Button
+                android:id="@+id/btemp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="48dp"

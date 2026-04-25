@@ -50,7 +50,7 @@
             android:name=".ui.RecuperacionDeCuenta.RecuperarCuenta"
             android:exported="false" />
         <activity
-            android:name=".ui.AccesoLaboratorio.unirse_laboratorio"
+            android:name=".ui.AccesoLaboratorio.UnirseLaboratorio"
             android:exported="false" />
         <activity
             android:name=".ui.MonitorDeAprendizajeEstudiante.InformeLaboratorio"
@@ -71,6 +71,7 @@
         <activity
             android:name=".ui.Autenticacion.Login"
             android:exported="false" />
+
         <activity
             android:name=".ui.Autenticacion.Register"
             android:exported="false" />

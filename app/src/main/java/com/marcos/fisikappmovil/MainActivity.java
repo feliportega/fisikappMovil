@@ -3,12 +3,19 @@ package com.marcos.fisikappmovil;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.View;
+import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.marcos.fisikappmovil.ui.AccesoAlSistema.Dashboard;
+import com.marcos.fisikappmovil.ui.AccesoLaboratorio.UnirseLaboratorio;
 import com.marcos.fisikappmovil.ui.Autenticacion.Login;
 
 public class MainActivity extends AppCompatActivity {
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +31,6 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
                 finish(); // Cerramos el Splash para que no se pueda volver atrás
             }
-        }, 2000); // 2000 milisegundos = 2 segundos
+        }, 3000); // 3000 milisegundos = 3 segundos
     }
 }

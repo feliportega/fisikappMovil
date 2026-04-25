@@ -5,18 +5,31 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 
 import com.marcos.fisikappmovil.R;
 
 public class ViewsLaboratorio extends AppCompatActivity {
+
+    CardView btninforme;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_views_laboratorio);
 
+        btninforme = findViewById(R.id.btnInforme);
+        btninforme.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent lyfinal = new Intent(ViewsLaboratorio.this, InformeLaboratorio.class);
+                startActivity(lyfinal);
+            }
+        });
+
+
         // 1. Botón Conceptos Básicos
-        LinearLayout btnConceptos = findViewById(R.id.btnConceptos);
+        CardView btnConceptos = findViewById(R.id.btnConceptos);
         if (btnConceptos != null) {
             btnConceptos.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -28,7 +41,7 @@ public class ViewsLaboratorio extends AppCompatActivity {
         }
 
         // 2. Botón Práctica de Conceptos
-        LinearLayout btnPractica = findViewById(R.id.btnPractica);
+        CardView btnPractica = findViewById(R.id.btnPractica);
         if (btnPractica != null) {
             btnPractica.setOnClickListener(new View.OnClickListener() {
                 @Override
