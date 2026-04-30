@@ -8,6 +8,8 @@
     <string name="FaUser">Usuario</string>
     <!-- BUSCADOR -->
     <string name="faBuscador">Buscar Lavoratorio</string>
+    <!-- Icono de reconocimiento facial -->
+    <string name="face_consent_icon">Icono de reconocimiento facial</string>
     <!-- texto central-->
     <string name="faText1">Únete a un laboratorio para comenzar</string>
     <string name="faText2">Crea un laboratorio o únete con un código para comenzar a gestionar tus experimentos.</string>

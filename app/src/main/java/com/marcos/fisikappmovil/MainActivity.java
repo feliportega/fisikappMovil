@@ -11,6 +11,30 @@ import com.marcos.fisikappmovil.ui.Autenticacion.Login;
 public class MainActivity extends AppCompatActivity {
 
     private VideoView videoView;
+    private int lastPosition = 0;
+
+    private void goToLogin() {
+        Intent intent = new Intent(MainActivity.this, Login.class);
+        startActivity(intent);
+        finish();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        // Si el video no ha terminado, continuar flujo
+        goToLogin();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (videoView != null) {
+            videoView.seekTo(lastPosition);
+            videoView.start();
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

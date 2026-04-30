@@ -75,6 +75,11 @@
         <activity
             android:name=".ui.Autenticacion.Register"
             android:exported="false" />
+
+        <activity android:name=".ui.faceNet.FaceEnrollActivity" android:exported="false"/>
+        <activity android:name=".ui.faceNet.FaceVerifyActivity" android:exported="false"/>
+        <activity android:name=".ui.Autenticacion.FaceConsentActivity" android:exported="false"/>
+
         <activity
             android:name=".MainActivity"
             android:exported="true" >
