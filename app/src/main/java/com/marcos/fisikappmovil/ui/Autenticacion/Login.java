@@ -32,7 +32,6 @@ public class Login extends AppCompatActivity {
     Button btnrecuperar;
     Button btnsesion;
 
-
     //Test FaceId
     Button btnenrol;
     Button btnverify;
