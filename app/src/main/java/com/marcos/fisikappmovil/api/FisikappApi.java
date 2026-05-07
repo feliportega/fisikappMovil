@@ -4,6 +4,8 @@ import com.marcos.fisikappmovil.models.Conclusion;
 import com.marcos.fisikappmovil.models.Informe;
 import com.marcos.fisikappmovil.models.Recomendacion;
 import com.marcos.fisikappmovil.models.Resultado;
+import com.marcos.fisikappmovil.remote.request.LoginRequest;
+import com.marcos.fisikappmovil.remote.response.LoginResponse;
 
 import java.util.List;
 
@@ -66,4 +68,8 @@ public interface FisikappApi {
 
     @GET("api/recomendaciones/{id}/")
     Call<Recomendacion> getRecomendacion(@Path("id") int id);
+
+    //login
+    @POST("users/login")
+    Call<LoginResponse> login(@Body LoginRequest request);
 }
