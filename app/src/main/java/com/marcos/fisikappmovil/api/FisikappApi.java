@@ -7,6 +7,7 @@ import com.marcos.fisikappmovil.models.Resultado;
 
 import java.util.List;
 
+import retrofit2.http.Header;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
@@ -15,6 +16,8 @@ import retrofit2.http.PATCH;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
+
+import com.marcos.fisikappmovil.models.Laboratorio;
 
 public interface FisikappApi {
 
@@ -66,4 +69,17 @@ public interface FisikappApi {
 
     @GET("api/recomendaciones/{id}/")
     Call<Recomendacion> getRecomendacion(@Path("id") int id);
+
+    //Laboratorio
+    @GET("api/laboratorios/")
+    Call<List<Laboratorio>> getLaboratorios(
+            @Header("Authorization") String token);
+
+    @GET("api/laboratorio/{id}/")
+    <token>
+    Call<Laboratorio> getLaboratorios(@Path("id") int id);
+
+    //nombre de usuario cerrar sesionn
+    @GET("api/users//{id}/")
+    Call<Laboratorio> getLaboratorio(@Path("id") int id);
 }
