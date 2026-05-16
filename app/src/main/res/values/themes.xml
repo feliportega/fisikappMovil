@@ -5,5 +5,10 @@
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
     </style>
 
+    <style name="Theme.App.Splash" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- Fondo mientras arranca -->
+        <item name="android:windowBackground">@color/colorScreenCompany</item>
+    </style>
+
     <style name="Theme.FisikappMovil" parent="Base.Theme.FisikappMovil" />
 </resources>

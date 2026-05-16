@@ -18,7 +18,8 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.FisikappMovil" >
+        android:theme="@style/Theme.App.Splash">
+
         <activity
             android:name=".ui.GestionDePerfilDelEstudiante.Perfil_del_estudiante"
             android:exported="false" />
@@ -75,6 +76,11 @@
         <activity
             android:name=".ui.Autenticacion.Register"
             android:exported="false" />
+
+        <activity android:name=".ui.faceNet.FaceEnrollActivity" android:exported="false"/>
+        <activity android:name=".ui.faceNet.FaceVerifyActivity" android:exported="false"/>
+        <activity android:name=".ui.Autenticacion.FaceConsentActivity" android:exported="false"/>
+
         <activity
             android:name=".MainActivity"
             android:exported="true" >
