@@ -15,4 +15,9 @@ public class Resultado {
     public void setDescripcion(String descripcion) { this.descripcion = descripcion; }
     public int getInforme() { return informe; }
     public void setInforme(int informe) { this.informe = informe; }
+
+    public class UnirLaboratorio {
+        private int id;
+        private String codigo_lab;
+        }
 }

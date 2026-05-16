@@ -84,18 +84,18 @@ public class Dashboard extends AppCompatActivity {
                 startActivity(iremp);
             }
         });
-        //imgcerrar_sesion.setOnClickListener(new View.OnClickListener() {
-        //    @Override
-        //    public void onClick(View view) {
-        //        Intent iremp = new Intent(Dashboard.this, Popup_perfil.class);
-        //        startActivity(iremp);
-        //    }
-        // });
+        imgcerrar_sesion.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent iremp = new Intent(Dashboard.this, Popup_perfil.class);
+                startActivity(iremp);
+            }
+        });
     }
 
     private void cargarLaboratorio() {
 
-        String token = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzc4MDkzMzE1LCJpYXQiOjE3NzgwODYxMTUsImp0aSI6IjJjMWM3NGJlNjI2NzQ2OTI4NGVmMjA2YjVkMmM3MDE2IiwidXNlcl9pZCI6IjMifQ.ni_emF3a97cjbZ4znfxnQ41mahqwLWJ8f2wqLO8-GOs";
+        String token = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzc4MzUwODA4LCJpYXQiOjE3NzgzNDM2MDgsImp0aSI6IjI3YmZmOGE0ZDJmZTQ4NjNhMDA3NTMzMGQ5ZGQzMjFiIiwidXNlcl9pZCI6IjIifQ.alhBSqJq_j0RSOGb5_uqNsBfoCay25AuM27xK7egExY";
 
         api.getLaboratorios(token)
                 .enqueue(new Callback<List<Laboratorio>>() {

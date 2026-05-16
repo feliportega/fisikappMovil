@@ -16,6 +16,5 @@ public class Cerrar_sesion extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_cerrar_sesion);
 
-        });
+    };
     }
-}

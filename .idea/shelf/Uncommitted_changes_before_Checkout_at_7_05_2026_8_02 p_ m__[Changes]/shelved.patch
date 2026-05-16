@@ -1,0 +1,17 @@
+Index: app/src/main/java/com/marcos/fisikappmovil/Cerrar_sesion.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.marcos.fisikappmovil;\r\n\r\nimport android.os.Bundle;\r\n\r\nimport androidx.activity.EdgeToEdge;\r\nimport androidx.appcompat.app.AppCompatActivity;\r\nimport androidx.core.graphics.Insets;\r\nimport androidx.core.view.ViewCompat;\r\nimport androidx.core.view.WindowInsetsCompat;\r\n\r\npublic class Cerrar_sesion extends AppCompatActivity {\r\n\r\n    @Override\r\n    protected void onCreate(Bundle savedInstanceState) {\r\n        super.onCreate(savedInstanceState);\r\n        EdgeToEdge.enable(this);\r\n        setContentView(R.layout.activity_cerrar_sesion);\r\n\r\n        });\r\n    }\r\n}
+===================================================================
+diff --git a/app/src/main/java/com/marcos/fisikappmovil/Cerrar_sesion.java b/app/src/main/java/com/marcos/fisikappmovil/Cerrar_sesion.java
+--- a/app/src/main/java/com/marcos/fisikappmovil/Cerrar_sesion.java	(revision bcbb20e6798261af7021acb642192511d32f95c1)
++++ b/app/src/main/java/com/marcos/fisikappmovil/Cerrar_sesion.java	(date 1778201318519)
+@@ -16,6 +16,5 @@
+         EdgeToEdge.enable(this);
+         setContentView(R.layout.activity_cerrar_sesion);
+ 
+-        });
+-    }
++        }
+ }
+\ No newline at end of file
