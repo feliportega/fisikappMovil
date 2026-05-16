@@ -15,6 +15,7 @@ import retrofit2.http.PATCH;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
+import com.marcos.fisikappmovil.models.Laboratorio;
 
 public interface FisikappApi {
 
@@ -66,4 +67,13 @@ public interface FisikappApi {
 
     @GET("api/recomendaciones/{id}/")
     Call<Recomendacion> getRecomendacion(@Path("id") int id);
+
+    // Laboratorios
+
+    @GET("laboratorios/")
+    Call<List<Laboratorio>> getLaboratorios();
+
+    @GET("laboratorios/{id}/")
+    Call<Laboratorio> getLaboratorio(@Path("id") int id);
+
 }

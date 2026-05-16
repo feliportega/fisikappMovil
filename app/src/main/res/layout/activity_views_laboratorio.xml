@@ -75,6 +75,7 @@
                     android:layout_height="80dp"
                     android:src="@drawable/physics" />
                 <TextView
+                    android:id="@+id/txtTituloLab"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
@@ -83,6 +84,7 @@
                     android:textSize="28sp"
                     android:textStyle="bold" />
                 <TextView
+                    android:id="@+id/txtResumenLab"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Cinemática"
