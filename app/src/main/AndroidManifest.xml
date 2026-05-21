@@ -6,10 +6,13 @@
     <uses-feature
         android:name="android.hardware.camera"
         android:required="false" />
+
     <uses-permission android:name="android.permission.INTERNET" />
 
-    <!-- Permisos para descarga y almacenamiento (necesarios para versiones antiguas de Android) -->
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" android:maxSdkVersion="28" />
+    <uses-permission
+        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        android:maxSdkVersion="28" />
+
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
@@ -22,78 +25,110 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.FisikappMovil"
         android:usesCleartextTraffic="true">
+
         <activity
             android:name=".Cerrar_sesion"
             android:exported="false" />
-        <activity
-            android:name=".ui.AccesoAlSistema.Popup_perfil"
-            android:exported="false" />
+
         <activity
             android:name=".ui.AccesoAlSistema.Item_laboratorio"
             android:exported="false" />
+
         <activity
             android:name=".ui.GestionDePerfilDelEstudiante.Perfil_del_estudiante"
             android:exported="false" />
+
         <activity
             android:name=".ui.MonitorDeAprendizajeEstudiante.SimulacionAR"
             android:exported="false" />
+
         <activity
             android:name=".ui.MonitorDeAprendizajeEstudiante.ConfiguracionSimulacion"
             android:exported="false" />
+
         <activity
             android:name=".ui.RecuperacionDeCuenta.RestablecerContrasena"
             android:exported="false" />
+
         <activity
             android:name=".ui.SistemaDeNotificaciones.Mensaje_denegado"
             android:exported="false" />
+
         <activity
             android:name=".ui.SistemaDeNotificaciones.Mensaje_confirmacion"
             android:exported="false" />
+
         <activity
             android:name=".ui.MonitorDeAprendizajeEstudiante.cuartaPantalla"
             android:exported="false" />
+
         <activity
             android:name=".ui.MonitorDeAprendizajeEstudiante.tercerapantalla"
             android:exported="false" />
+
         <activity
             android:name=".ui.MonitorDeAprendizajeEstudiante.segundaPantalla"
             android:exported="false" />
+
         <activity
             android:name=".ui.RecuperacionDeCuenta.RecuperarCuenta"
             android:exported="false" />
+
         <activity
             android:name=".ui.AccesoLaboratorio.UnirseLaboratorio"
             android:exported="false" />
+
         <activity
             android:name=".ui.MonitorDeAprendizajeEstudiante.InformeLaboratorio"
             android:exported="false" />
+
         <activity
             android:name=".ui.MonitorDeAprendizajeEstudiante.PracticaConceptos"
             android:exported="false" />
+
         <activity
             android:name=".ui.MonitorDeAprendizajeEstudiante.ConceptosBasicos"
             android:exported="false" />
+
         <activity
             android:name=".ui.MonitorDeAprendizajeEstudiante.ViewsLaboratorio"
             android:exported="false" />
+
         <activity
             android:name=".ui.AccesoAlSistema.Dashboard"
             android:exported="false" />
+
         <activity
             android:name=".ui.Autenticacion.Login"
             android:exported="false" />
+
         <activity
             android:name=".ui.Autenticacion.Register"
             android:exported="false" />
+
+        <activity
+            android:name=".ui.faceNet.FaceEnrollActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".ui.faceNet.FaceVerifyActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".ui.Autenticacion.FaceConsentActivity"
+            android:exported="false" />
+
         <activity
             android:name=".MainActivity"
             android:exported="true">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
         </activity>
+
     </application>
 
 </manifest>

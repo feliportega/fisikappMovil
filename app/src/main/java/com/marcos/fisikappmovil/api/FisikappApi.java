@@ -4,6 +4,11 @@ import com.marcos.fisikappmovil.models.Conclusion;
 import com.marcos.fisikappmovil.models.Informe;
 import com.marcos.fisikappmovil.models.Recomendacion;
 import com.marcos.fisikappmovil.models.Resultado;
+import com.marcos.fisikappmovil.remote.request.EmailRequest;
+import com.marcos.fisikappmovil.remote.request.LoginRequest;
+import com.marcos.fisikappmovil.remote.request.RegisterRequest;
+import com.marcos.fisikappmovil.remote.request.ResetPasswordRequest;
+import com.marcos.fisikappmovil.remote.response.LoginResponse;
 import com.marcos.fisikappmovil.models.Laboratorio;
 import com.marcos.fisikappmovil.models.UnirLaboratorio;
 
@@ -46,7 +51,7 @@ public interface FisikappApi {
     @DELETE("api/informes/{id}/")
     Call<Void> eliminarInforme(@Path("id") int id);
 
-    // Resultados
+    // --- MÉTODOS DE RESULTADOS ---
     @GET("api/resultados/")
     Call<List<Resultado>> getResultados();
 
@@ -56,7 +61,7 @@ public interface FisikappApi {
     @GET("api/resultados/{id}/")
     Call<Resultado> getResultado(@Path("id") int id);
 
-    // Conclusiones
+    // --- MÉTODOS DE CONCLUSIONES ---
     @GET("api/conclusiones/")
     Call<List<Conclusion>> getConclusiones();
 
@@ -66,7 +71,7 @@ public interface FisikappApi {
     @GET("api/conclusiones/{id}/")
     Call<Conclusion> getConclusion(@Path("id") int id);
 
-    // Recomendaciones
+    // --- MÉTODOS DE RECOMENDACIONES ---
     @GET("api/recomendaciones/")
     Call<List<Recomendacion>> getRecomendaciones();
 
@@ -106,4 +111,18 @@ public interface FisikappApi {
     Call<UnirLaboratorio> postUnirlaboratorio(
             @Path("codigo_lab") String codigo_lab
     );
+
+    // --- MÉTODOS DE AUTENTICACIÓN (LOGIN, REGISTER, ETC) ---
+    @POST("users/login/")
+    Call<LoginResponse> login(@Body LoginRequest request);
+
+    @POST("users/register/")
+    Call<Void> register(@Body RegisterRequest request);
+
+    @POST("users/recuperar-contrasena/")
+    Call<Void> recuperarContrasena(@Body EmailRequest request);
+
+    @POST("users/restablecer-contrasena/")
+    Call<Void> restablecerContrasena(@Body ResetPasswordRequest request);
+
 }

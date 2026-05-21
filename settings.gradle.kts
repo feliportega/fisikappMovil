@@ -24,4 +24,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "FisikappMovil"
 include(":app")
- 
+include(":facesdk")
