@@ -26,6 +26,7 @@ public class RecuperarCuenta extends AppCompatActivity {
     TextView btnvolversesion;
     Button btnirrestablecer;
     EditText etEmail;
+    TextView tvErrorBanner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +37,7 @@ public class RecuperarCuenta extends AppCompatActivity {
         btnvolversesion = findViewById(R.id.btnRegresarsesion);
         btnirrestablecer = findViewById(R.id.btnSRestableser);
         etEmail = findViewById(R.id.etEmailRecuperar);
+        tvErrorBanner = findViewById(R.id.tvErrorBanner);
 
         btnvolversesion.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -51,6 +53,8 @@ public class RecuperarCuenta extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 String correo = etEmail.getText().toString().trim();
+                tvErrorBanner.setVisibility(View.GONE);
+
                 if (correo.isEmpty()) {
                     etEmail.setError("Introduce tu correo");
                     return;
@@ -69,21 +73,21 @@ public class RecuperarCuenta extends AppCompatActivity {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
                 if (response.isSuccessful()) {
-                    Toast.makeText(RecuperarCuenta.this, "Se ha enviado un enlace a tu correo", Toast.LENGTH_LONG).show();
+                    Toast.makeText(RecuperarCuenta.this, "Reset link sent to your email.", Toast.LENGTH_LONG).show();
                     
-                    // Al estar en el mismo paquete com.marcos.fisikappmovil.ui.RecuperacionDeCuenta
-                    // ya debería reconocer RestablecerContrasena sin problemas
                     Intent intent = new Intent(RecuperarCuenta.this, RestablecerContrasena.class);
                     intent.putExtra("user_email", correo);
                     startActivity(intent);
                 } else {
-                    Toast.makeText(RecuperarCuenta.this, "Error: Verifica que el correo sea correcto", Toast.LENGTH_SHORT).show();
+                    tvErrorBanner.setText("Error: Email not found or invalid.");
+                    tvErrorBanner.setVisibility(View.VISIBLE);
                 }
             }
 
             @Override
             public void onFailure(Call<Void> call, Throwable t) {
-                Toast.makeText(RecuperarCuenta.this, "Error de red: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                tvErrorBanner.setText("Network error: " + t.getMessage());
+                tvErrorBanner.setVisibility(View.VISIBLE);
             }
         });
     }
