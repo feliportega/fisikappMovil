@@ -25,7 +25,7 @@
             android:contentDescription="Logo Fisikapp" />
     </LinearLayout>
 
-    <!-- Tarjeta Blanca Flotante (Consistencia Figma) -->
+    <!-- Tarjeta Blanca Flotante -->
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -40,6 +40,22 @@
             android:background="@color/white"
             android:orientation="vertical"
             android:padding="32dp">
+
+            <!-- Banner de Error -->
+            <TextView
+                android:id="@+id/tvErrorBanner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:background="#FFEBEE"
+                android:gravity="center"
+                android:padding="12dp"
+                android:textColor="#C62828"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:visibility="gone"
+                android:drawableStart="@android:drawable/stat_notify_error"
+                android:drawablePadding="8dp" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -79,6 +95,7 @@
                 android:drawablePadding="12dp"
                 android:hint="tu.correo@ejemplo.com"
                 android:inputType="textEmailAddress"
+                android:textColor="@color/black"
                 android:paddingStart="16dp"
                 android:paddingEnd="16dp"
                 android:textSize="14sp"
