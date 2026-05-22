@@ -14,7 +14,7 @@ public class ConfiguracionSimulacion extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_configuracion_simulacion);
+        setContentView(R.layout.pasos_del_laboratorio);
 
         ImageView btnBack = findViewById(R.id.btnBack);
 

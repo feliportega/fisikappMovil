@@ -1,0 +1,495 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#0D1A52"
+    android:orientation="vertical"
+    tools:context=".ui.MonitorDeAprendizajeEstudiante.ConfiguracionSimulacion">
+
+    <!-- Header superior -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="20dp">
+
+        <ImageView
+            android:id="@+id/btnBack"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:background="@drawable/white_circle"
+            android:padding="8dp"
+            android:src="@drawable/iconoretroceder"
+            app:tint="#0D1A52" />
+
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_toEndOf="@id/btnBack"
+            android:text="Pasos del laboratorio"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tvTitle"
+            android:layout_alignStart="@id/tvTitle"
+            android:text="Sigue estos pasos para completar tu práctica"
+            android:textColor="#B0BEC5"
+            android:textSize="13sp" />
+    </RelativeLayout>
+
+    <!-- Contenedor blanco con bordes redondeados -->
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        app:cardCornerRadius="32dp"
+        app:cardElevation="0dp"
+        android:layout_marginBottom="-32dp">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true"
+            android:scrollbars="none">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="24dp">
+
+                <!-- Paso 3 Header -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:background="@drawable/round_button"
+                        android:backgroundTint="#FACC15"
+                        android:gravity="center"
+                        android:text="3"
+                        android:textColor="@color/black"
+                        android:textStyle="bold" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="12dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Registrar datos de la simulación"
+                            android:textColor="#0D1A52"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Guarda los resultados obtenidos en la simulación."
+                            android:textColor="#757575"
+                            android:textSize="13sp" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <!-- Imagen de Simulación TAL CUAL -->
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:layout_marginTop="16dp"
+                    app:cardCornerRadius="16dp"
+                    app:cardElevation="4dp">
+
+                    <ImageView
+                        android:id="@+id/imgSimulation"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/imgtiroparabolico" />
+                </androidx.cardview.widget.CardView>
+
+                <!-- Feedback Card (¡Buen intento!) -->
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    app:cardBackgroundColor="#FFF9C4"
+                    app:cardCornerRadius="12dp"
+                    app:cardElevation="0dp">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="16dp">
+
+                        <View
+                            android:id="@+id/statusCircle"
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            android:background="@drawable/white_circle"
+                            android:backgroundTint="#0D1A52"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"/>
+
+                        <TextView
+                            android:id="@+id/tvFeedbackTitle"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="12dp"
+                            android:text="¡Buen intento!"
+                            android:textColor="#0D1A52"
+                            android:textSize="14sp"
+                            android:textStyle="bold"
+                            app:layout_constraintStart_toEndOf="@id/statusCircle"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintEnd_toStartOf="@+id/layoutPrecisionInfo"/>
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:text="La trayectoria se ve bien, pero aún puedes mejorar."
+                            android:textColor="#757575"
+                            android:textSize="11sp"
+                            app:layout_constraintStart_toStartOf="@id/tvFeedbackTitle"
+                            app:layout_constraintTop_toBottomOf="@id/tvFeedbackTitle"
+                            app:layout_constraintEnd_toStartOf="@+id/layoutPrecisionInfo"/>
+
+                        <LinearLayout
+                            android:id="@+id/layoutPrecisionInfo"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:gravity="end"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Precisión 78%"
+                                android:textColor="#2563EB"
+                                android:textSize="14sp"
+                                android:textStyle="bold" />
+
+                            <ProgressBar
+                                style="?android:attr/progressBarStyleHorizontal"
+                                android:layout_width="90dp"
+                                android:layout_height="8dp"
+                                android:layout_marginTop="4dp"
+                                android:progress="78"
+                                android:progressTint="#0D1A52"
+                                android:progressBackgroundTint="#CFD8DC" />
+                        </LinearLayout>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </androidx.cardview.widget.CardView>
+
+                <!-- Parámetros Header -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:text="Parámetros de la simulación"
+                    android:textColor="#0D1A52"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <!-- Lista de Parámetros -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:orientation="vertical">
+
+                    <!-- Velocidad Inicial -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:paddingVertical="8dp">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Velocidad inicial (v₀)"
+                            android:textColor="#0D1A52"
+                            android:textSize="13sp" />
+
+                        <EditText
+                            android:layout_width="55dp"
+                            android:layout_height="38dp"
+                            android:background="@drawable/edittext_redondo"
+                            android:gravity="center"
+                            android:text="20"
+                            android:textColor="#0D1A52"
+                            android:textSize="14sp"
+                            android:textStyle="bold"
+                            android:inputType="numberDecimal" />
+
+                        <TextView
+                            android:layout_width="40dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:text="m/s"
+                            android:textColor="#757575"
+                            android:textSize="12sp" />
+
+                        <SeekBar
+                            android:layout_width="110dp"
+                            android:layout_height="wrap_content"
+                            android:progress="20"
+                            android:progressTint="#F57C00"
+                            android:thumbTint="#F57C00" />
+                    </LinearLayout>
+
+                    <!-- Ángulo -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:paddingVertical="8dp">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Ángulo de lanzamiento (θ)"
+                            android:textColor="#0D1A52"
+                            android:textSize="13sp" />
+
+                        <EditText
+                            android:layout_width="55dp"
+                            android:layout_height="38dp"
+                            android:background="@drawable/edittext_redondo"
+                            android:gravity="center"
+                            android:text="30"
+                            android:textColor="#0D1A52"
+                            android:textSize="14sp"
+                            android:textStyle="bold"
+                            android:inputType="number" />
+
+                        <TextView
+                            android:layout_width="40dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:text="°"
+                            android:textColor="#757575"
+                            android:textSize="12sp" />
+
+                        <SeekBar
+                            android:layout_width="110dp"
+                            android:layout_height="wrap_content"
+                            android:progress="30"
+                            android:progressTint="#F57C00"
+                            android:thumbTint="#F57C00" />
+                    </LinearLayout>
+
+                    <!-- Altura Inicial -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:paddingVertical="8dp">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Altura inicial (h₀)"
+                            android:textColor="#0D1A52"
+                            android:textSize="13sp" />
+
+                        <EditText
+                            android:layout_width="55dp"
+                            android:layout_height="38dp"
+                            android:background="@drawable/edittext_redondo"
+                            android:gravity="center"
+                            android:text="1.5"
+                            android:textColor="#0D1A52"
+                            android:textSize="14sp"
+                            android:textStyle="bold"
+                            android:inputType="numberDecimal" />
+
+                        <TextView
+                            android:layout_width="40dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:text="m"
+                            android:textColor="#757575"
+                            android:textSize="12sp" />
+
+                        <SeekBar
+                            android:layout_width="110dp"
+                            android:layout_height="wrap_content"
+                            android:progress="15"
+                            android:progressTint="#F57C00"
+                            android:thumbTint="#F57C00" />
+                    </LinearLayout>
+
+                    <!-- Gravedad -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:paddingVertical="8dp">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Gravedad (g)"
+                            android:textColor="#0D1A52"
+                            android:textSize="13sp" />
+
+                        <EditText
+                            android:layout_width="55dp"
+                            android:layout_height="38dp"
+                            android:background="@drawable/edittext_redondo"
+                            android:gravity="center"
+                            android:text="9.8"
+                            android:textColor="#0D1A52"
+                            android:textSize="14sp"
+                            android:textStyle="bold"
+                            android:inputType="numberDecimal" />
+
+                        <TextView
+                            android:layout_width="40dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:text="m/s²"
+                            android:textColor="#757575"
+                            android:textSize="12sp" />
+
+                        <SeekBar
+                            android:layout_width="110dp"
+                            android:layout_height="wrap_content"
+                            android:progress="98"
+                            android:progressTint="#F57C00"
+                            android:thumbTint="#F57C00" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <Button
+                    android:id="@+id/btnGuardarDatos"
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:layout_marginTop="32dp"
+                    android:backgroundTint="#F57C00"
+                    android:text="Guardar datos de la simulación"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    app:cornerRadius="12dp" />
+
+            </LinearLayout>
+        </ScrollView>
+    </androidx.cardview.widget.CardView>
+
+    <!-- Barra de Navegación Inferior -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="75dp"
+        android:background="#0D1A52"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <!-- Inicio -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+            <ImageView
+                android:layout_width="26dp"
+                android:layout_height="26dp"
+                android:src="@drawable/iconofisik"
+                app:tint="@color/white" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Inicio"
+                android:textColor="@color/white"
+                android:textSize="11sp" />
+        </LinearLayout>
+
+        <!-- Laboratorios -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+            <ImageView
+                android:layout_width="26dp"
+                android:layout_height="26dp"
+                android:src="@drawable/physics"
+                app:tint="#2563EB" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Laboratorios"
+                android:textColor="#2563EB"
+                android:textSize="11sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <!-- Informes -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+            <ImageView
+                android:layout_width="26dp"
+                android:layout_height="26dp"
+                android:src="@android:drawable/ic_menu_sort_by_size"
+                app:tint="@color/white" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Informes"
+                android:textColor="@color/white"
+                android:textSize="11sp" />
+        </LinearLayout>
+
+        <!-- Perfil -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+            <ImageView
+                android:layout_width="26dp"
+                android:layout_height="26dp"
+                android:src="@drawable/iconousuario"
+                app:tint="@color/white" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Perfil"
+                android:textColor="@color/white"
+                android:textSize="11sp" />
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>
