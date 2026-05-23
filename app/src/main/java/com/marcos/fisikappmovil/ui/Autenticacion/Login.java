@@ -18,10 +18,6 @@ import com.marcos.fisikappmovil.api.RetrofitClient;
 import com.marcos.fisikappmovil.model.TokenManager;
 import com.marcos.fisikappmovil.remote.request.LoginRequest;
 import com.marcos.fisikappmovil.remote.response.LoginResponse;
-import com.marcos.fisikappmovil.api.FisikappApi;
-import com.marcos.fisikappmovil.api.RetrofitClient;
-import com.marcos.fisikappmovil.remote.request.LoginRequest;
-import com.marcos.fisikappmovil.remote.response.LoginResponse;
 import com.marcos.fisikappmovil.security.FaceVault;
 import com.marcos.fisikappmovil.ui.AccesoAlSistema.Dashboard;
 import com.marcos.fisikappmovil.R;
@@ -106,8 +102,7 @@ public class Login extends AppCompatActivity {
                     if(email.isEmpty()) edtCorreo.setError("Campo requerido");
                     if(password.isEmpty()) edtPassword.setError("Campo requerido");
                     return;
-                    Intent indas = new Intent(Login.this, Dashboard.class);
-                    startActivity(indas);
+
                 }
 
                 ejecutarLogin(email, password);
@@ -182,9 +177,6 @@ public class Login extends AppCompatActivity {
                     tokenManager.saveToken(access);
 
                     String nombreUsuario = "Usuario";
-                    if (response.body().getUser() != null) {
-                        nombreUsuario = response.body().getUser().getNombre();
-                    }
 
                     Toast.makeText(Login.this, "¡Bienvenido " + nombreUsuario + "!", Toast.LENGTH_SHORT).show();
 
