@@ -2,9 +2,12 @@ package com.marcos.fisikappmovil.ui.Autenticacion;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.InputType;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -31,12 +34,16 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class Login extends AppCompatActivity {
-
     EditText edtCorreo, edtPassword;
+    TextView tvErrorBanner;
+    ImageView ivShowPassword;
     TokenManager tokenManager;
     Button btnregistro;
     Button btnrecuperar;
     Button btnsesion;
+
+    // State for password visibility
+    private boolean isPasswordVisible = false;
 
     //Test FaceId
     Button btnenrol;
@@ -51,6 +58,8 @@ public class Login extends AppCompatActivity {
 
         edtPassword = findViewById(R.id.editTextPassword);
         edtCorreo = findViewById(R.id.editTextTextEmailAddress);
+        tvErrorBanner = findViewById(R.id.tvErrorBanner);
+        ivShowPassword = findViewById(R.id.ivShowPassword);
 
         btnregistro = findViewById(R.id.btnResgistrarse);
         btnrecuperar = findViewById(R.id.btnRecuperarc);
@@ -59,6 +68,14 @@ public class Login extends AppCompatActivity {
         //Test FaceId
         btnenrol = findViewById(R.id.btnEnrolarRostro);
         btnverify = findViewById(R.id.btnReconocerRostro);
+
+        // Logic for showing/hiding password
+        ivShowPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                togglePasswordVisibility();
+            }
+        });
 
         btnregistro.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -76,49 +93,25 @@ public class Login extends AppCompatActivity {
             }
         });
 
-        btnsesion.setOnClickListener(view -> {
+        btnsesion.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String email = edtCorreo.getText().toString();
+                String password = edtPassword.getText().toString();
 
-            String correo = edtCorreo.getText().toString();
-            String password = edtPassword.getText().toString();
+                // Ocultamos el banner al intentar de nuevo
+                tvErrorBanner.setVisibility(View.GONE);
 
-            LoginRequest request = new LoginRequest(correo,password);
-
-            FisikappApi api = RetrofitClient.getClient().create(FisikappApi.class);
-
-            Call<LoginResponse> call = api.login(request);
-
-            call.enqueue(new Callback<LoginResponse>() {
-                @Override
-                public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
-                    if (response.isSuccessful() && response.body() != null) {
-
-                        String access = response.body().getToken();
-                        guaardarToken(access);
-
-                        Toast.makeText(Login.this, "BIENBENIDO", Toast.LENGTH_SHORT).show();
-                    } else {
-                        Toast.makeText(Login.this, "correo o contraseña incorrecto", Toast.LENGTH_SHORT).show();
-                    }
-
+                if(email.isEmpty() || password.isEmpty()){
+                    if(email.isEmpty()) edtCorreo.setError("Campo requerido");
+                    if(password.isEmpty()) edtPassword.setError("Campo requerido");
+                    return;
                     Intent indas = new Intent(Login.this, Dashboard.class);
                     startActivity(indas);
                 }
 
-                private void guaardarToken(String access) {
-                    System.out.println("token : "+access);
-                }
-
-
-
-
-                @Override
-                public void onFailure(Call<LoginResponse> call, Throwable throwable) {
-
-                    Toast.makeText(Login.this, "error"+throwable.getMessage(), Toast.LENGTH_SHORT).show();
-                }
-            });
-
-
+                ejecutarLogin(email, password);
+            }
         });
 
         btnenrol.setOnClickListener(new View.OnClickListener() {
@@ -160,4 +153,61 @@ public class Login extends AppCompatActivity {
 
     }
 
+    private void togglePasswordVisibility() {
+        if (isPasswordVisible) {
+            // Hide password
+            edtPassword.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+            ivShowPassword.setImageResource(R.drawable.baseline_remove_red_eye_24);
+        } else {
+            // Show password
+            edtPassword.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+            // Optional: you might want a "visibility off" icon if you have one
+            // ivShowPassword.setImageResource(R.drawable.baseline_visibility_off_24);
+        }
+        isPasswordVisible = !isPasswordVisible;
+        // Move cursor to the end
+        edtPassword.setSelection(edtPassword.getText().length());
+    }
+
+    private void ejecutarLogin(String email, String password) {
+        LoginRequest request = new LoginRequest(email, password);
+        FisikappApi api = RetrofitClient.getClient().create(FisikappApi.class);
+        Call<LoginResponse> call = api.login(request);
+
+        call.enqueue(new Callback<LoginResponse>() {
+            @Override
+            public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    String access = response.body().getToken();
+                    tokenManager.saveToken(access);
+
+                    String nombreUsuario = "Usuario";
+                    if (response.body().getUser() != null) {
+                        nombreUsuario = response.body().getUser().getNombre();
+                    }
+
+                    Toast.makeText(Login.this, "¡Bienvenido " + nombreUsuario + "!", Toast.LENGTH_SHORT).show();
+
+                    // Navegamos al Dashboard
+                    Intent intent = new Intent(Login.this, Dashboard.class);
+                    intent.putExtra("USER_EMAIL", email);
+                    intent.putExtra("USER_NAME", nombreUsuario);
+                    startActivity(intent);
+                    finish();
+
+                } else {
+                    // Mostramos el banner de error en lugar del Toast
+                    tvErrorBanner.setText("Incorrect username or password.");
+                    tvErrorBanner.setVisibility(View.VISIBLE);
+                    edtPassword.setText("");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<LoginResponse> call, Throwable t) {
+                tvErrorBanner.setText("Network error: " + t.getMessage());
+                tvErrorBanner.setVisibility(View.VISIBLE);
+            }
+        });
+    }
 }
