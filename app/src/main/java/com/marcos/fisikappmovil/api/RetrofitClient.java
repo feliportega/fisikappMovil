@@ -11,6 +11,7 @@ public class RetrofitClient {
     private static Retrofit retrofit = null;
     private static final String BASE_URL = "https://backend-fisikapp.onrender.com/api/";
 
+
     public static Retrofit getClient() {
         if (retrofit == null) {
             HttpLoggingInterceptor logging = new HttpLoggingInterceptor();

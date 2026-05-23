@@ -20,10 +20,11 @@ import retrofit2.http.PATCH;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
+import com.marcos.fisikappmovil.models.Laboratorio;
 
 public interface FisikappApi {
 
-    // --- MÉTODOS DE INFORMES ---
+    // Informes
     @GET("api/informes/")
     Call<List<Informe>> getInformes();
 
@@ -42,7 +43,7 @@ public interface FisikappApi {
     @DELETE("api/informes/{id}/")
     Call<Void> eliminarInforme(@Path("id") int id);
 
-    // --- MÉTODOS DE RESULTADOS ---
+    // Resultados
     @GET("api/resultados/")
     Call<List<Resultado>> getResultados();
 
@@ -52,7 +53,7 @@ public interface FisikappApi {
     @GET("api/resultados/{id}/")
     Call<Resultado> getResultado(@Path("id") int id);
 
-    // --- MÉTODOS DE CONCLUSIONES ---
+    // Conclusiones
     @GET("api/conclusiones/")
     Call<List<Conclusion>> getConclusiones();
 
@@ -62,7 +63,7 @@ public interface FisikappApi {
     @GET("api/conclusiones/{id}/")
     Call<Conclusion> getConclusion(@Path("id") int id);
 
-    // --- MÉTODOS DE RECOMENDACIONES ---
+    // Recomendaciones
     @GET("api/recomendaciones/")
     Call<List<Recomendacion>> getRecomendaciones();
 
@@ -71,6 +72,15 @@ public interface FisikappApi {
 
     @GET("api/recomendaciones/{id}/")
     Call<Recomendacion> getRecomendacion(@Path("id") int id);
+
+    // Laboratorios
+
+    @GET("laboratorios/")
+    Call<List<Laboratorio>> getLaboratorios();
+
+    @GET("laboratorios/{id}/")
+    Call<Laboratorio> getLaboratorio(@Path("id") int id);
+
 
     // --- MÉTODOS DE AUTENTICACIÓN (LOGIN, REGISTER, ETC) ---
     @POST("users/login/")
