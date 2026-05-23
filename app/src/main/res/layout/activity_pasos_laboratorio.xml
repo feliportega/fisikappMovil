@@ -6,6 +6,7 @@
     android:orientation="vertical"
     android:background="#001B6B">
 
+
     <!-- SCROLL -->
     <ScrollView
         android:layout_width="match_parent"
@@ -21,7 +22,7 @@
             <!-- HEADER -->
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="160dp"
+                android:layout_height="140dp"
                 android:orientation="vertical"
                 android:padding="24dp"
                 android:paddingTop="18dp">
@@ -31,6 +32,8 @@
                     android:layout_height="wrap_content"
                     android:text="Pasos del laboratorio"
                     android:textColor="@android:color/white"
+                    android:layout_marginTop="35dp"
+                    android:gravity="center"
                     android:textSize="16sp"
                     android:textStyle="bold"/>
 
@@ -47,9 +50,10 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="-20dp"
                 android:background="@drawable/bg_card_rounded"
                 android:orientation="vertical"
-                android:padding="24dp">
+                android:padding="12dp">
 
                 <!-- PASO -->
                 <LinearLayout
@@ -457,7 +461,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="3dp"
+                android:layout_marginTop="1dp"
                 android:text="Inicio"
                 android:textColor="@android:color/white"
                 android:textSize="11sp"/>
@@ -480,10 +484,10 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="3dp"
+                android:layout_marginTop="1dp"
                 android:text="Laboratorios"
                 android:textColor="@android:color/white"
-                android:textSize="11sp"/>
+                android:textSize="10sp"/>
         </LinearLayout>
 
         <!-- INFORMES -->
@@ -503,7 +507,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="3dp"
+                android:layout_marginTop="1dp"
                 android:text="Informes"
                 android:textColor="@android:color/white"
                 android:textSize="11sp"/>
@@ -526,7 +530,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="3dp"
+                android:layout_marginTop="1dp"
                 android:text="Perfil"
                 android:textColor="@android:color/white"
                 android:textSize="11sp"/>
