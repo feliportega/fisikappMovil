@@ -64,6 +64,9 @@
             android:name=".ui.MonitorDeAprendizajeEstudiante.ConceptosBasicos"
             android:exported="false" />
         <activity
+            android:name=".ui.MonitorDeAprendizajeEstudiante.PasosLaboratorio"
+            android:exported="false"/>
+        <activity
             android:name=".ui.MonitorDeAprendizajeEstudiante.ViewsLaboratorio"
             android:exported="false" >
         </activity>
@@ -77,11 +80,6 @@
         <activity
             android:name=".ui.Autenticacion.Register"
             android:exported="false" />
-
-        <activity
-            android:name=".ui.MonitorDeAprendizajeEstudiante.PasosLaboratorio"
-            android:exported="false" />
-
         <activity android:name=".ui.faceNet.FaceEnrollActivity" android:exported="false"/>
         <activity android:name=".ui.faceNet.FaceVerifyActivity" android:exported="false"/>
         <activity android:name=".ui.Autenticacion.FaceConsentActivity" android:exported="false"/>
