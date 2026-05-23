@@ -211,7 +211,7 @@
 
     </androidx.cardview.widget.CardView>
 
-      <!-- NAVBAR -->
+      <!-- NAVBAR - comentario modificado -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="75dp"
