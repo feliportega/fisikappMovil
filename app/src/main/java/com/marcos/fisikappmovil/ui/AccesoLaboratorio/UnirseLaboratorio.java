@@ -45,11 +45,6 @@ public class UnirseLaboratorio extends AppCompatActivity {
                     edit_unirse.setError("Ingrese un código");
                     return;
                 }
-                // VALIDAR FORMATO
-                if (!codigo.matches("^[A-Z]{3}-\\d{4}$")) {
-                    edit_unirse.setError("Formato inválido. Ej: LAB-2024");
-                    return;
-                }
 
                 buscarLaboratorio(codigo);
             }
@@ -62,8 +57,11 @@ public class UnirseLaboratorio extends AppCompatActivity {
                 .getClient()
                 .create(FisikappApi.class);
 
+        UnirLaboratorio unirLaboratorio =
+                new UnirLaboratorio(codigo_lab);
+
         Call<UnirLaboratorio> call =
-                api.getUnirlaboratorio(codigo_lab);
+                api.postUnirlaboratorio(unirLaboratorio);
 
         call.enqueue(new Callback<UnirLaboratorio>() {
 
@@ -73,7 +71,7 @@ public class UnirseLaboratorio extends AppCompatActivity {
 
                 if (response.isSuccessful() && response.body() != null) {
 
-                    UnirLaboratorio unirLaboratorio = response.body();
+                    UnirLaboratorio laboratorio = response.body();
 
                     Toast.makeText(
                             UnirseLaboratorio.this,
@@ -86,10 +84,15 @@ public class UnirseLaboratorio extends AppCompatActivity {
                             ViewsLaboratorio.class
                     );
 
-                    // ENVIAR DATOS
-                    intent.putExtra("id_lab", unirLaboratorio.getId());
-                    intent.putExtra("codigo_lab",
-                            unirLaboratorio.getCodigo_lab());
+                    intent.putExtra(
+                            "id_lab",
+                            laboratorio.getId()
+                    );
+
+                    intent.putExtra(
+                            "codigo_lab",
+                            laboratorio.getCodigo_lab()
+                    );
 
                     startActivity(intent);
 
@@ -97,8 +100,8 @@ public class UnirseLaboratorio extends AppCompatActivity {
 
                     Toast.makeText(
                             UnirseLaboratorio.this,
-                            "Código inválido o laboratorio no existe",
-                            Toast.LENGTH_SHORT
+                            "Error: " + response.code(),
+                            Toast.LENGTH_LONG
                     ).show();
                 }
             }
@@ -109,7 +112,7 @@ public class UnirseLaboratorio extends AppCompatActivity {
 
                 Toast.makeText(
                         UnirseLaboratorio.this,
-                        "Error de conexión: " + throwable.getMessage(),
+                        "Error: " + throwable.getMessage(),
                         Toast.LENGTH_LONG
                 ).show();
             }

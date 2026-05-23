@@ -1,0 +1,319 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#F5F5F5">
+
+    <!-- HEADER -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="#001B66"
+        android:padding="20dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <ImageView
+                android:id="@+id/btnBack"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/iconoretroceder"
+                android:scaleType="fitCenter" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginStart="16dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Laboratorio experimental"
+                    android:textColor="#FFFFFF"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Tiro parabólico"
+                    android:textColor="#FFFFFF"
+                    android:textSize="16sp"
+                    android:layout_marginTop="4dp" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <!-- CONTENIDO -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="#FFFFFF"
+            android:paddingBottom="90dp">
+
+            <!-- TABS -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:orientation="horizontal">
+
+                <Button
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="Resumen"
+                    android:textStyle="bold"
+                    android:backgroundTint="@color/white"
+                    android:textColor="@color/black" />
+
+                <Button
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="Fórmulas"
+                    android:textStyle="bold"
+                    android:backgroundTint="@color/white"
+                    android:textColor="@color/black" />
+
+            </LinearLayout>
+
+            <!-- TITULO -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Fórmulas utilizadas"
+                android:textSize="26sp"
+                android:textStyle="bold"
+                android:textColor="#001B66"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="28dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Estas ecuaciones describen el movimiento de un objeto en un tiro parabólico."
+                android:textSize="18sp"
+                android:textColor="#3E4A66"
+                android:layout_marginStart="24dp"
+                android:layout_marginEnd="24dp"
+                android:layout_marginTop="14dp" />
+
+            <!-- CARD FORMULAS -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_margin="24dp"
+                android:background="#FFB300"
+                android:padding="18dp">
+
+                <!-- Alcance -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Alcance horizontal"
+                    android:textStyle="bold"
+                    android:textSize="20sp"
+                    android:textColor="#000000" />
+
+                <ImageView
+                    android:layout_width="260dp"
+                    android:layout_height="110dp"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="18dp"
+                    android:src="@drawable/operacion1"
+                    android:scaleType="fitCenter" />
+
+                <!-- Divider -->
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#FFFFFF"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="20dp" />
+
+                <!-- Altura -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Altura máxima"
+                    android:textStyle="bold"
+                    android:textSize="20sp"
+                    android:textColor="#000000" />
+
+                <ImageView
+                    android:layout_width="260dp"
+                    android:layout_height="110dp"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="18dp"
+                    android:src="@drawable/operacion2"
+                    android:scaleType="fitCenter" />
+
+                <!-- Divider -->
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#FFFFFF"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="20dp" />
+
+                <!-- Tiempo -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Tiempo de vuelo"
+                    android:textStyle="bold"
+                    android:textSize="20sp"
+                    android:textColor="#000000" />
+
+                <ImageView
+                    android:layout_width="260dp"
+                    android:layout_height="110dp"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="18dp"
+                    android:src="@drawable/operacion3"
+                    android:scaleType="fitCenter" />
+
+            </LinearLayout>
+
+            <!-- DEFINICIONES -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Donde:"
+                android:textStyle="bold"
+                android:textSize="24sp"
+                android:textColor="#001B66"
+                android:layout_marginStart="24dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="v₀ = Velocidad inicial (m/s)\n\nθ = Ángulo de lanzamiento (°)\n\ng = Aceleración de la gravedad (9.8 m/s²)"
+                android:textSize="18sp"
+                android:textColor="#1E2B4D"
+                android:layout_margin="24dp" />
+
+        </LinearLayout>
+
+    </ScrollView>
+
+    <!-- BOTTOM NAV -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="75dp"
+        android:orientation="horizontal"
+        android:background="#001B66"
+        android:gravity="center">
+
+        <!-- Inicio -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center">
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/baseline_home_24"
+                app:tint="#FFFFFF" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Inicio"
+                android:textColor="#FFFFFF" />
+
+        </LinearLayout>
+
+        <!-- Laboratorios -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center">
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/baseline_science_24"
+                app:tint="#FFFFFF" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Laboratorios"
+                android:textColor="#FFFFFF" />
+
+        </LinearLayout>
+
+        <!-- Informes -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center">
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_report"
+                app:tint="#FFFFFF" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Informes"
+                android:textColor="#FFFFFF" />
+
+        </LinearLayout>
+
+        <!-- Perfil -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center">
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_profile"
+                app:tint="#FFFFFF" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Perfil"
+                android:textColor="#FFFFFF" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

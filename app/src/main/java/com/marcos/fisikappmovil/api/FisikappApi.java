@@ -103,13 +103,10 @@ public interface FisikappApi {
     );
 
     // Unirse a laboratorio
-    @GET("api/laboratorio-profesor/{codigo_lab}/")
-    Call<UnirLaboratorio> getUnirlaboratorio(
-            @Path("codigo_lab") String codigo_lab
-    );
-    @POST("api/laboratorio-profesor/{codigo_lab}/")
+
+    @POST("api/inscribir/")
     Call<UnirLaboratorio> postUnirlaboratorio(
-            @Path("codigo_lab") String codigo_lab
+            @Body UnirLaboratorio unirLaboratorio
     );
 
     // --- MÉTODOS DE AUTENTICACIÓN (LOGIN, REGISTER, ETC) ---

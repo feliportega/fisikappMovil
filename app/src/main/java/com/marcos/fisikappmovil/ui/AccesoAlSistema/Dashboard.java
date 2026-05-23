@@ -84,13 +84,7 @@ public class Dashboard extends AppCompatActivity {
                 startActivity(iremp);
             }
         });
-        imgcerrar_sesion.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent iremp = new Intent(Dashboard.this, Popup_perfil.class);
-                startActivity(iremp);
-            }
-        });
+
     }
 
     private void cargarLaboratorio() {
