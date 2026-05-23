@@ -1,0 +1,82 @@
+Index: app/src/main/java/com/marcos/fisikappmovil/api/RetrofitClient.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.marcos.fisikappmovil.api;\r\n\r\nimport java.util.concurrent.TimeUnit;\r\n\r\nimport okhttp3.OkHttpClient;\r\nimport okhttp3.logging.HttpLoggingInterceptor;\r\nimport retrofit2.Retrofit;\r\nimport retrofit2.converter.gson.GsonConverterFactory;\r\n\r\npublic class RetrofitClient {\r\n    private static Retrofit retrofit = null;\r\n    private static final String BASE_URL = \"https://backend-fisikapp.onrender.com/api/\";\r\n\r\n    public static Retrofit getClient() {\r\n        if (retrofit == null) {\r\n            HttpLoggingInterceptor logging = new HttpLoggingInterceptor();\r\n            logging.setLevel(HttpLoggingInterceptor.Level.BODY);\r\n\r\n            // Aumentamos los timeouts para servidores lentos (como Onrender)\r\n            OkHttpClient client = new OkHttpClient.Builder()\r\n                    .addInterceptor(logging)\r\n                    .connectTimeout(60, TimeUnit.SECONDS)\r\n                    .readTimeout(60, TimeUnit.SECONDS)\r\n                    .writeTimeout(60, TimeUnit.SECONDS)\r\n                    .build();\r\n\r\n            retrofit = new Retrofit.Builder()\r\n                    .baseUrl(BASE_URL)\r\n                    .addConverterFactory(GsonConverterFactory.create())\r\n                    .client(client)\r\n                    .build();\r\n        }\r\n        return retrofit;\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/marcos/fisikappmovil/api/RetrofitClient.java b/app/src/main/java/com/marcos/fisikappmovil/api/RetrofitClient.java
+--- a/app/src/main/java/com/marcos/fisikappmovil/api/RetrofitClient.java	(revision 051e9cc7a1cb6db5c65ffe4888512ab109a51444)
++++ b/app/src/main/java/com/marcos/fisikappmovil/api/RetrofitClient.java	(date 1778940872321)
+@@ -7,6 +7,7 @@
+ import retrofit2.Retrofit;
+ import retrofit2.converter.gson.GsonConverterFactory;
+ 
++
+ public class RetrofitClient {
+     private static Retrofit retrofit = null;
+     private static final String BASE_URL = "https://backend-fisikapp.onrender.com/api/";
+Index: app/build.gradle.kts
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>plugins {\r\n    alias(libs.plugins.android.application)\r\n}\r\n\r\nandroid {\r\n    namespace = \"com.marcos.fisikappmovil\"\r\n    compileSdk = 36\r\n\r\n    defaultConfig {\r\n        applicationId = \"com.marcos.fisikappmovil\"\r\n        minSdk = 24\r\n        targetSdk = 36\r\n        versionCode = 1\r\n        versionName = \"1.0\"\r\n\r\n        testInstrumentationRunner = \"androidx.test.runner.AndroidJUnitRunner\"\r\n    }\r\n\r\n    buildTypes {\r\n        release {\r\n            isMinifyEnabled = false\r\n            proguardFiles(\r\n                getDefaultProguardFile(\"proguard-android-optimize.txt\"),\r\n                \"proguard-rules.pro\"\r\n            )\r\n        }\r\n    }\r\n    compileOptions {\r\n        sourceCompatibility = JavaVersion.VERSION_11\r\n        targetCompatibility = JavaVersion.VERSION_11\r\n    }\r\n}\r\n\r\ndependencies {\r\n    implementation(libs.appcompat)\r\n    implementation(libs.activity)\r\n    implementation(libs.constraintlayout)\r\n\r\n    // Usamos las versiones definidas en libs.versions.toml o las declaradas explícitamente, pero sin duplicar.\r\n    implementation(\"com.squareup.retrofit2:retrofit:2.11.0\")\r\n    implementation(\"com.squareup.retrofit2:converter-gson:2.11.0\")\r\n    implementation(\"com.squareup.okhttp3:logging-interceptor:4.12.0\")\r\n    implementation(\"com.google.code.gson:gson:2.10.1\")\r\n\r\n    implementation(\"com.google.android.material:material:1.11.0\")\r\n    testImplementation(libs.junit)\r\n    androidTestImplementation(libs.ext.junit)\r\n    androidTestImplementation(libs.espresso.core)\r\n\r\n    implementation(project(\":facesdk\"))\r\n\r\n    // CameraX\r\n    implementation(\"androidx.camera:camera-core:1.5.1\")\r\n    implementation(\"androidx.camera:camera-camera2:1.5.1\")\r\n    implementation(\"androidx.camera:camera-lifecycle:1.5.1\")\r\n    implementation(\"androidx.camera:camera-view:1.5.1\")\r\n    implementation(\"androidx.camera:camera-extensions:1.5.1\")\r\n\r\n    // Security\r\n    implementation(\"androidx.security:security-crypto:1.1.0-alpha06\")\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/build.gradle.kts b/app/build.gradle.kts
+--- a/app/build.gradle.kts	(revision 051e9cc7a1cb6db5c65ffe4888512ab109a51444)
++++ b/app/build.gradle.kts	(date 1778941120476)
+@@ -36,26 +36,12 @@
+     implementation(libs.activity)
+     implementation(libs.constraintlayout)
+ 
+-    // Usamos las versiones definidas en libs.versions.toml o las declaradas explícitamente, pero sin duplicar.
+-    implementation("com.squareup.retrofit2:retrofit:2.11.0")
+-    implementation("com.squareup.retrofit2:converter-gson:2.11.0")
+-    implementation("com.squareup.okhttp3:logging-interceptor:4.12.0")
+-    implementation("com.google.code.gson:gson:2.10.1")
++    // Retrofit
++    implementation(libs.retrofit)
++    implementation(libs.retrofit.gson)
+ 
+     implementation("com.google.android.material:material:1.11.0")
+     testImplementation(libs.junit)
+     androidTestImplementation(libs.ext.junit)
+     androidTestImplementation(libs.espresso.core)
+-
+-    implementation(project(":facesdk"))
+-
+-    // CameraX
+-    implementation("androidx.camera:camera-core:1.5.1")
+-    implementation("androidx.camera:camera-camera2:1.5.1")
+-    implementation("androidx.camera:camera-lifecycle:1.5.1")
+-    implementation("androidx.camera:camera-view:1.5.1")
+-    implementation("androidx.camera:camera-extensions:1.5.1")
+-
+-    // Security
+-    implementation("androidx.security:security-crypto:1.1.0-alpha06")
+-}
++}
+\ No newline at end of file
+Index: .idea/deploymentTargetSelector.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/deploymentTargetSelector.xml b/.idea/deploymentTargetSelector.xml
+deleted file mode 100644
+--- a/.idea/deploymentTargetSelector.xml	(revision 051e9cc7a1cb6db5c65ffe4888512ab109a51444)
++++ /dev/null	(revision 051e9cc7a1cb6db5c65ffe4888512ab109a51444)
+@@ -1,11 +0,0 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+-<project version="4">
+-  <component name="deploymentTargetSelector">
+-    <selectionStates>
+-      <SelectionState runConfigName="app">
+-        <option name="selectionMode" value="DROPDOWN" />
+-        <DialogSelection />
+-      </SelectionState>
+-    </selectionStates>
+-  </component>
+-</project>
+\ No newline at end of file

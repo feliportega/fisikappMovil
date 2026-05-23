@@ -1,0 +1,37 @@
+Index: app/src/main/java/com/marcos/fisikappmovil/api/RetrofitClient.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.marcos.fisikappmovil.api;\r\n\r\nimport java.util.concurrent.TimeUnit;\r\n\r\nimport okhttp3.OkHttpClient;\r\nimport okhttp3.logging.HttpLoggingInterceptor;\r\nimport retrofit2.Retrofit;\r\nimport retrofit2.converter.gson.GsonConverterFactory;\r\n\r\npublic class RetrofitClient {\r\n    private static Retrofit retrofit = null;\r\n    private static final String BASE_URL = \"https://backend-fisikapp.onrender.com/api/\";\r\n\r\n    public static Retrofit getClient() {\r\n        if (retrofit == null) {\r\n            HttpLoggingInterceptor logging = new HttpLoggingInterceptor();\r\n            logging.setLevel(HttpLoggingInterceptor.Level.BODY);\r\n\r\n            // Aumentamos los timeouts para servidores lentos (como Onrender)\r\n            OkHttpClient client = new OkHttpClient.Builder()\r\n                    .addInterceptor(logging)\r\n                    .connectTimeout(60, TimeUnit.SECONDS)\r\n                    .readTimeout(60, TimeUnit.SECONDS)\r\n                    .writeTimeout(60, TimeUnit.SECONDS)\r\n                    .build();\r\n\r\n            retrofit = new Retrofit.Builder()\r\n                    .baseUrl(BASE_URL)\r\n                    .addConverterFactory(GsonConverterFactory.create())\r\n                    .client(client)\r\n                    .build();\r\n        }\r\n        return retrofit;\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/marcos/fisikappmovil/api/RetrofitClient.java b/app/src/main/java/com/marcos/fisikappmovil/api/RetrofitClient.java
+--- a/app/src/main/java/com/marcos/fisikappmovil/api/RetrofitClient.java	(revision 051e9cc7a1cb6db5c65ffe4888512ab109a51444)
++++ b/app/src/main/java/com/marcos/fisikappmovil/api/RetrofitClient.java	(date 1778940486121)
+@@ -7,6 +7,7 @@
+ import retrofit2.Retrofit;
+ import retrofit2.converter.gson.GsonConverterFactory;
+ 
++
+ public class RetrofitClient {
+     private static Retrofit retrofit = null;
+     private static final String BASE_URL = "https://backend-fisikapp.onrender.com/api/";
+Index: .idea/deploymentTargetSelector.xml
+===================================================================
+diff --git a/.idea/deploymentTargetSelector.xml b/.idea/deploymentTargetSelector.xml
+deleted file mode 100644
+--- a/.idea/deploymentTargetSelector.xml	(revision 051e9cc7a1cb6db5c65ffe4888512ab109a51444)
++++ /dev/null	(revision 051e9cc7a1cb6db5c65ffe4888512ab109a51444)
+@@ -1,11 +0,0 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+-<project version="4">
+-  <component name="deploymentTargetSelector">
+-    <selectionStates>
+-      <SelectionState runConfigName="app">
+-        <option name="selectionMode" value="DROPDOWN" />
+-        <DialogSelection />
+-      </SelectionState>
+-    </selectionStates>
+-  </component>
+-</project>
+\ No newline at end of file

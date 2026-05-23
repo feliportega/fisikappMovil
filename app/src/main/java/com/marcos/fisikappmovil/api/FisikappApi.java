@@ -9,6 +9,8 @@ import com.marcos.fisikappmovil.remote.request.LoginRequest;
 import com.marcos.fisikappmovil.remote.request.RegisterRequest;
 import com.marcos.fisikappmovil.remote.request.ResetPasswordRequest;
 import com.marcos.fisikappmovil.remote.response.LoginResponse;
+import com.marcos.fisikappmovil.models.Laboratorio;
+import com.marcos.fisikappmovil.models.UnirLaboratorio;
 import com.marcos.fisikappmovil.remote.request.LoginRequest;
 import com.marcos.fisikappmovil.remote.response.LoginResponse;
 
@@ -18,6 +20,7 @@ import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;
+import retrofit2.http.Header;
 import retrofit2.http.PATCH;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
@@ -37,10 +40,16 @@ public interface FisikappApi {
     Call<Informe> getInforme(@Path("id") int id);
 
     @PUT("api/informes/{id}/")
-    Call<Informe> actualizarInforme(@Path("id") int id, @Body Informe informe);
+    Call<Informe> actualizarInforme(
+            @Path("id") int id,
+            @Body Informe informe
+    );
 
     @PATCH("api/informes/{id}/")
-    Call<Informe> parchearInforme(@Path("id") int id, @Body Informe informe);
+    Call<Informe> parchearInforme(
+            @Path("id") int id,
+            @Body Informe informe
+    );
 
     @DELETE("api/informes/{id}/")
     Call<Void> eliminarInforme(@Path("id") int id);
@@ -70,19 +79,38 @@ public interface FisikappApi {
     Call<List<Recomendacion>> getRecomendaciones();
 
     @POST("api/recomendaciones/")
-    Call<Recomendacion> crearRecomendacion(@Body Recomendacion recomendacion);
+    Call<Recomendacion> crearRecomendacion(
+            @Body Recomendacion recomendacion
+    );
 
     @GET("api/recomendaciones/{id}/")
-    Call<Recomendacion> getRecomendacion(@Path("id") int id);
+    Call<Recomendacion> getRecomendacion(
+            @Path("id") int id
+    );
 
     // Laboratorios
+    @GET("api/laboratorios/")
+    Call<List<Laboratorio>> getLaboratorios(
+            @Header("Authorization") String token
+    );
 
-    @GET("laboratorios/")
-    Call<List<Laboratorio>> getLaboratorios();
+    @GET("api/laboratorio/{id}/")
+    Call<Laboratorio> getLaboratorioPorId(
+            @Path("id") int id
+    );
 
-    @GET("laboratorios/{id}/")
-    Call<Laboratorio> getLaboratorio(@Path("id") int id);
+    // Usuario
+    @GET("api/users/{id}/")
+    Call<Laboratorio> getLaboratorio(
+            @Path("id") int id
+    );
 
+    // Unirse a laboratorio
+
+    @POST("api/inscribir/")
+    Call<UnirLaboratorio> postUnirlaboratorio(
+            @Body UnirLaboratorio unirLaboratorio
+    );
 
     // --- MÉTODOS DE AUTENTICACIÓN (LOGIN, REGISTER, ETC) ---
     @POST("users/register/")
