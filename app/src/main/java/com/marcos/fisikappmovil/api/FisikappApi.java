@@ -9,6 +9,8 @@ import com.marcos.fisikappmovil.remote.request.LoginRequest;
 import com.marcos.fisikappmovil.remote.request.RegisterRequest;
 import com.marcos.fisikappmovil.remote.request.ResetPasswordRequest;
 import com.marcos.fisikappmovil.remote.response.LoginResponse;
+import com.marcos.fisikappmovil.remote.request.LoginRequest;
+import com.marcos.fisikappmovil.remote.response.LoginResponse;
 
 import java.util.List;
 
@@ -83,9 +85,6 @@ public interface FisikappApi {
 
 
     // --- MÉTODOS DE AUTENTICACIÓN (LOGIN, REGISTER, ETC) ---
-    @POST("users/login/")
-    Call<LoginResponse> login(@Body LoginRequest request);
-
     @POST("users/register/")
     Call<Void> register(@Body RegisterRequest request);
 
@@ -95,4 +94,8 @@ public interface FisikappApi {
     @POST("users/restablecer-contrasena/")
     Call<Void> restablecerContrasena(@Body ResetPasswordRequest request);
 
+
+    //login
+    @POST("users/login")
+    Call<LoginResponse> login(@Body LoginRequest request);
 }
