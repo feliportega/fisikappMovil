@@ -62,6 +62,12 @@
         <activity
             android:name=".ui.MonitorDeAprendizajeEstudiante.ConceptosBasicos"
             android:exported="false" />
+
+        <!-- Nueva Pantalla: Práctica Experimental -->
+        <activity
+            android:name=".ui.MonitorDeAprendizajeEstudiante.PracticaExperimental"
+            android:exported="false" />
+
         <activity
             android:name=".ui.MonitorDeAprendizajeEstudiante.ViewsLaboratorio"
             android:exported="false" >
