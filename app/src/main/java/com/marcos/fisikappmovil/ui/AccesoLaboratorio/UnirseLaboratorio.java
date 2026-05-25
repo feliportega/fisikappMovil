@@ -63,7 +63,7 @@ public class UnirseLaboratorio extends AppCompatActivity {
 
         // TOKEN
         String tokenGuardado =
-                "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzc5NzQzMzQ4LCJpYXQiOjE3Nzk3MzYxNDgsImp0aSI6IjNiNWM1ZGUxOGZmMzQ3M2Y4MGU4NzBmY2I4ZjJkOTc1IiwidXNlcl9pZCI6IjEwNiJ9.CpQzQf5yaM-YCozeDL46weviOOOxjD9Y-ft5q2SiU0g";
+                "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzc5NzQ3MjEzLCJpYXQiOjE3Nzk3NDAwMTMsImp0aSI6IjMwMDQ5ZGE2NzlkNjRlYzBiOThmZGM4NTAxZDk0MjQ1IiwidXNlcl9pZCI6IjEwNiJ9.fRR0N2_4qmFmNpUQiz_Zpc1gp2AziWlnJRb7ZuLK8q4";
 
         // AUTHORIZATION
         String token = "Bearer " + tokenGuardado;
