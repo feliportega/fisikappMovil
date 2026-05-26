@@ -1,6 +1,7 @@
 package com.marcos.fisikappmovil.ui.RecuperacionDeCuenta;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -12,15 +13,12 @@ import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.marcos.fisikappmovil.R;
-import com.marcos.fisikappmovil.api.FisikappApi;
-import com.marcos.fisikappmovil.api.RetrofitClient;
-import com.marcos.fisikappmovil.remote.request.EmailRequest;
 import com.marcos.fisikappmovil.ui.Autenticacion.Login;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-
+/**
+ * Activity que gestiona la redirección del usuario a la plataforma web
+ * para realizar la recuperación de su contraseña.
+ */
 public class RecuperarCuenta extends AppCompatActivity {
 
     TextView btnvolversesion;
@@ -42,7 +40,7 @@ public class RecuperarCuenta extends AppCompatActivity {
         btnvolversesion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // Volver al Login explícitamente
+                // Volver al Login
                 Intent intent = new Intent(RecuperarCuenta.this, Login.class);
                 startActivity(intent);
                 finish();
@@ -52,43 +50,28 @@ public class RecuperarCuenta extends AppCompatActivity {
         btnirrestablecer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String correo = etEmail.getText().toString().trim();
-                tvErrorBanner.setVisibility(View.GONE);
-
-                if (correo.isEmpty()) {
-                    etEmail.setError("Introduce tu correo");
-                    return;
-                }
-                enviarSolicitudRecuperacion(correo);
+                // Al hacer clic, redirigimos directamente a la web
+                abrirWebRecuperacion();
             }
         });
     }
 
-    private void enviarSolicitudRecuperacion(String correo) {
-        EmailRequest request = new EmailRequest(correo);
-        FisikappApi api = RetrofitClient.getClient().create(FisikappApi.class);
-        Call<Void> call = api.recuperarContrasena(request);
-
-        call.enqueue(new Callback<Void>() {
-            @Override
-            public void onResponse(Call<Void> call, Response<Void> response) {
-                if (response.isSuccessful()) {
-                    Toast.makeText(RecuperarCuenta.this, "Reset link sent to your email.", Toast.LENGTH_LONG).show();
-                    
-                    Intent intent = new Intent(RecuperarCuenta.this, RestablecerContrasena.class);
-                    intent.putExtra("user_email", correo);
-                    startActivity(intent);
-                } else {
-                    tvErrorBanner.setText("Error: Email not found or invalid.");
-                    tvErrorBanner.setVisibility(View.VISIBLE);
-                }
-            }
-
-            @Override
-            public void onFailure(Call<Void> call, Throwable t) {
-                tvErrorBanner.setText("Network error: " + t.getMessage());
-                tvErrorBanner.setVisibility(View.VISIBLE);
-            }
-        });
+    /**
+     * Abre el navegador predeterminado del dispositivo con la URL de recuperación.
+     * Reemplace la URL de abajo cuando el equipo de backend/web la proporcione.
+     */
+    private void abrirWebRecuperacion() {
+        // --- TODO: REEMPLAZAR CON LA URL REAL ---
+        String urlWeb = "https://fisikapp-web.onrender.com/password-reset"; 
+        
+        try {
+            Intent intentWeb = new Intent(Intent.ACTION_VIEW);
+            intentWeb.setData(Uri.parse(urlWeb));
+            startActivity(intentWeb);
+            
+            Toast.makeText(this, "Redirigiendo a la plataforma web...", Toast.LENGTH_SHORT).show();
+        } catch (Exception e) {
+            Toast.makeText(this, "No se pudo abrir el navegador: " + e.getMessage(), Toast.LENGTH_LONG).show();
+        }
     }
 }
