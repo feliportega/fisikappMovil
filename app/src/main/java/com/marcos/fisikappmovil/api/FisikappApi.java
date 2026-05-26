@@ -9,6 +9,10 @@ import com.marcos.fisikappmovil.remote.request.LoginRequest;
 import com.marcos.fisikappmovil.remote.request.RegisterRequest;
 import com.marcos.fisikappmovil.remote.request.ResetPasswordRequest;
 import com.marcos.fisikappmovil.remote.response.LoginResponse;
+import com.marcos.fisikappmovil.models.Laboratorio;
+import com.marcos.fisikappmovil.models.UnirLaboratorio;
+import com.marcos.fisikappmovil.remote.request.LoginRequest;
+import com.marcos.fisikappmovil.remote.response.LoginResponse;
 
 import java.util.List;
 
@@ -16,14 +20,16 @@ import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;
+import retrofit2.http.Header;
 import retrofit2.http.PATCH;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
+import com.marcos.fisikappmovil.models.Laboratorio;
 
 public interface FisikappApi {
 
-    // --- MÉTODOS DE INFORMES ---
+    // Informes
     @GET("api/informes/")
     Call<List<Informe>> getInformes();
 
@@ -34,15 +40,21 @@ public interface FisikappApi {
     Call<Informe> getInforme(@Path("id") int id);
 
     @PUT("api/informes/{id}/")
-    Call<Informe> actualizarInforme(@Path("id") int id, @Body Informe informe);
+    Call<Informe> actualizarInforme(
+            @Path("id") int id,
+            @Body Informe informe
+    );
 
     @PATCH("api/informes/{id}/")
-    Call<Informe> parchearInforme(@Path("id") int id, @Body Informe informe);
+    Call<Informe> parchearInforme(
+            @Path("id") int id,
+            @Body Informe informe
+    );
 
     @DELETE("api/informes/{id}/")
     Call<Void> eliminarInforme(@Path("id") int id);
 
-    // --- MÉTODOS DE RESULTADOS ---
+    // Resultados
     @GET("api/resultados/")
     Call<List<Resultado>> getResultados();
 
@@ -52,7 +64,7 @@ public interface FisikappApi {
     @GET("api/resultados/{id}/")
     Call<Resultado> getResultado(@Path("id") int id);
 
-    // --- MÉTODOS DE CONCLUSIONES ---
+    // Conclusiones
     @GET("api/conclusiones/")
     Call<List<Conclusion>> getConclusiones();
 
@@ -62,20 +74,46 @@ public interface FisikappApi {
     @GET("api/conclusiones/{id}/")
     Call<Conclusion> getConclusion(@Path("id") int id);
 
-    // --- MÉTODOS DE RECOMENDACIONES ---
+    // Recomendaciones
     @GET("api/recomendaciones/")
     Call<List<Recomendacion>> getRecomendaciones();
 
     @POST("api/recomendaciones/")
-    Call<Recomendacion> crearRecomendacion(@Body Recomendacion recomendacion);
+    Call<Recomendacion> crearRecomendacion(
+            @Body Recomendacion recomendacion
+    );
 
     @GET("api/recomendaciones/{id}/")
-    Call<Recomendacion> getRecomendacion(@Path("id") int id);
+    Call<Recomendacion> getRecomendacion(
+            @Path("id") int id
+    );
+
+    // Laboratorios
+    @GET("api/laboratorios/")
+    Call<List<Laboratorio>> getLaboratorios(
+            @Header("Authorization") String token
+    );
+
+    @GET("api/laboratorio/{id}/")
+    Call<Laboratorio> getLaboratorioPorId(
+            @Path("id") int id
+    );
+
+    // Usuario
+    @GET("api/users/{id}/")
+    Call<Laboratorio> getLaboratorio(
+            @Path("id") int id
+    );
+
+    // Unirse a laboratorio
+
+    @POST("inscribir/")
+    Call<UnirLaboratorio> postUnirlaboratorio(
+            @Header("Authorization") String token,
+            @Body UnirLaboratorio unirLaboratorio
+    );
 
     // --- MÉTODOS DE AUTENTICACIÓN (LOGIN, REGISTER, ETC) ---
-    @POST("users/login/")
-    Call<LoginResponse> login(@Body LoginRequest request);
-
     @POST("users/register/")
     Call<Void> register(@Body RegisterRequest request);
 
@@ -85,4 +123,8 @@ public interface FisikappApi {
     @POST("users/restablecer-contrasena/")
     Call<Void> restablecerContrasena(@Body ResetPasswordRequest request);
 
+
+    //login
+    @POST("users/login/")
+    Call<LoginResponse> login(@Body LoginRequest request);
 }
