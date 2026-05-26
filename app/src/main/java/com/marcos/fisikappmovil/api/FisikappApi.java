@@ -107,8 +107,9 @@ public interface FisikappApi {
 
     // Unirse a laboratorio
 
-    @POST("api/inscribir/")
+    @POST("inscribir/")
     Call<UnirLaboratorio> postUnirlaboratorio(
+            @Header("Authorization") String token,
             @Body UnirLaboratorio unirLaboratorio
     );
 
@@ -124,6 +125,6 @@ public interface FisikappApi {
 
 
     //login
-    @POST("users/login")
+    @POST("users/login/")
     Call<LoginResponse> login(@Body LoginRequest request);
 }
