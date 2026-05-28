@@ -1,0 +1,350 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#FFFFFF"
+    tools:context=".ui.MonitorDeAprendizajeEstudiante.PracticaExperimental">
+
+    <!-- Encabezado Azul -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimario"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <ImageButton
+                android:id="@+id/btnBack"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/white_circle"
+                android:src="@drawable/iconoretroceder"
+                android:padding="8dp"
+                app:tint="@color/colorPrimario"
+                android:contentDescription="Regresar" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginStart="16dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Práctica experimental"
+                    android:textColor="#FFFFFF"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Sigue las instrucciones para realizar tu práctica"
+                    android:textColor="#D1D5DB"
+                    android:textSize="12sp" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+    <ScrollView
+        android:id="@+id/mainScrollView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:id="@+id/mainContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="20dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Materiales de la práctica"
+                android:textColor="@color/colorPrimario"
+                android:textStyle="bold"
+                android:textSize="16sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Asegúrate de contar con todos los materiales y equipos de la lista para realizar tu experimento de forma precisa."
+                android:textColor="#64748B"
+                android:textSize="13sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="1. Materiales necesarios"
+                android:textColor="@color/colorPrimario"
+                android:textStyle="bold"
+                android:textSize="14sp" />
+
+            <!-- Grid de 6 Materiales -->
+            <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:scrollbars="none">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <!-- Material 1 -->
+                    <LinearLayout android:layout_width="80dp" android:layout_height="110dp" android:background="#FACC15" android:gravity="center" android:layout_marginEnd="8dp" android:orientation="vertical">
+                        <ImageView android:layout_width="40dp" android:layout_height="40dp" android:src="@drawable/lanzador" android:contentDescription="Lanzador" />
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Lanzador" android:textSize="10sp" android:textColor="#FFFFFF" android:gravity="center" />
+                    </LinearLayout>
+                    <!-- Material 2 -->
+                    <LinearLayout android:layout_width="80dp" android:layout_height="110dp" android:background="#0D1A52" android:gravity="center" android:layout_marginEnd="8dp" android:orientation="vertical">
+                        <ImageView android:layout_width="40dp" android:layout_height="40dp" android:src="@drawable/pelota" android:contentDescription="Pelota" />
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Pelota" android:textSize="10sp" android:textColor="#FFFFFF" android:gravity="center" />
+                    </LinearLayout>
+                    <!-- Material 3 -->
+                    <LinearLayout android:layout_width="80dp" android:layout_height="110dp" android:background="#FACC15" android:gravity="center" android:layout_marginEnd="8dp" android:orientation="vertical">
+                        <ImageView android:layout_width="40dp" android:layout_height="40dp" android:src="@drawable/trasportador" android:contentDescription="Transportador" />
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Transportador" android:textSize="10sp" android:textColor="#FFFFFF" android:gravity="center" />
+                    </LinearLayout>
+                    <!-- Material 4 -->
+                    <LinearLayout android:layout_width="80dp" android:layout_height="110dp" android:background="#0D1A52" android:gravity="center" android:layout_marginEnd="8dp" android:orientation="vertical">
+                        <ImageView android:layout_width="40dp" android:layout_height="40dp" android:src="@drawable/cinta" android:contentDescription="Cinta métrica" />
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Cinta métrica" android:textSize="10sp" android:textColor="#FFFFFF" android:gravity="center" />
+                    </LinearLayout>
+                    <!-- Material 5 -->
+                    <LinearLayout android:layout_width="80dp" android:layout_height="110dp" android:background="#FACC15" android:gravity="center" android:layout_marginEnd="8dp" android:orientation="vertical">
+                        <ImageView android:layout_width="40dp" android:layout_height="40dp" android:src="@drawable/cronometro" android:contentDescription="Cronómetro" />
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Cronómetro" android:textSize="10sp" android:textColor="#FFFFFF" android:gravity="center" />
+                    </LinearLayout>
+                    <!-- Material 6 -->
+                    <LinearLayout android:layout_width="80dp" android:layout_height="110dp" android:background="#0D1A52" android:gravity="center" android:orientation="vertical">
+                        <ImageView android:layout_width="40dp" android:layout_height="40dp" android:src="@drawable/camara" android:contentDescription="Teléfono" />
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Teléfono con\ncámara lenta" android:textSize="9sp" android:textColor="#FFFFFF" android:gravity="center" />
+                    </LinearLayout>
+                </LinearLayout>
+            </HorizontalScrollView>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:text="2. Procedimiento paso a paso"
+                android:textColor="@color/colorPrimario"
+                android:textStyle="bold"
+                android:textSize="14sp" />
+
+            <!-- Lista de Pasos Desplegables -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="12dp">
+
+                <!-- Paso 1 -->
+                <LinearLayout
+                    android:id="@+id/layoutPaso1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:paddingVertical="8dp"
+                    android:background="?attr/selectableItemBackground">
+                    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal">
+                        <TextView android:layout_width="24dp" android:layout_height="24dp" android:background="#FACC15" android:text="1" android:gravity="center" android:textColor="@color/white" android:textStyle="bold" android:layout_marginEnd="12dp"/>
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Coloca el lanzador en una superficie plana y asegúrate de que esté fijo." android:textSize="13sp" android:textColor="#000000"/>
+                    </LinearLayout>
+                    <ImageView android:id="@+id/imgPaso1" android:layout_width="match_parent" android:layout_height="180dp" android:layout_marginTop="10dp" android:visibility="gone" android:src="@drawable/physics" android:background="#F1F5F9" android:scaleType="fitCenter" android:contentDescription="Ejemplo paso 1" />
+                </LinearLayout>
+
+                <!-- Paso 2 -->
+                <LinearLayout
+                    android:id="@+id/layoutPaso2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:paddingVertical="8dp"
+                    android:background="?attr/selectableItemBackground">
+                    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal">
+                        <TextView android:layout_width="24dp" android:layout_height="24dp" android:background="#FACC15" android:text="2" android:gravity="center" android:textColor="@color/white" android:textStyle="bold" android:layout_marginEnd="12dp"/>
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Ajusta el ángulo de lanzamiento indicado en tu comparación." android:textSize="13sp" android:textColor="#000000"/>
+                    </LinearLayout>
+                    <ImageView android:id="@+id/imgPaso2" android:layout_width="match_parent" android:layout_height="180dp" android:layout_marginTop="10dp" android:visibility="gone" android:src="@drawable/physics" android:background="#F1F5F9" android:scaleType="fitCenter" android:contentDescription="Ejemplo paso 2" />
+                </LinearLayout>
+
+                <!-- Paso 3 -->
+                <LinearLayout
+                    android:id="@+id/layoutPaso3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:paddingVertical="8dp"
+                    android:background="?attr/selectableItemBackground">
+                    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal">
+                        <TextView android:layout_width="24dp" android:layout_height="24dp" android:background="#FACC15" android:text="3" android:gravity="center" android:textColor="@color/white" android:textStyle="bold" android:layout_marginEnd="12dp"/>
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Carga la pelota en el lanzador con cuidado." android:textSize="13sp" android:textColor="#000000"/>
+                    </LinearLayout>
+                    <ImageView android:id="@+id/imgPaso3" android:layout_width="match_parent" android:layout_height="180dp" android:layout_marginTop="10dp" android:visibility="gone" android:src="@drawable/physics" android:background="#F1F5F9" android:scaleType="fitCenter" android:contentDescription="Ejemplo paso 3" />
+                </LinearLayout>
+
+                <!-- Paso 4 -->
+                <LinearLayout
+                    android:id="@+id/layoutPaso4"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:paddingVertical="8dp"
+                    android:background="?attr/selectableItemBackground">
+                    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal">
+                        <TextView android:layout_width="24dp" android:layout_height="24dp" android:background="#FACC15" android:text="4" android:gravity="center" android:textColor="@color/white" android:textStyle="bold" android:layout_marginEnd="12dp"/>
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Realiza el lanzamiento manteniendo el ángulo constante y observa el vuelo." android:textSize="13sp" android:textColor="#000000"/>
+                    </LinearLayout>
+                    <ImageView android:id="@+id/imgPaso4" android:layout_width="match_parent" android:layout_height="180dp" android:layout_marginTop="10dp" android:visibility="gone" android:src="@drawable/physics" android:background="#F1F5F9" android:scaleType="fitCenter" android:contentDescription="Ejemplo paso 4" />
+                </LinearLayout>
+
+                <!-- Paso 5 -->
+                <LinearLayout
+                    android:id="@+id/layoutPaso5"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:paddingVertical="8dp"
+                    android:background="?attr/selectableItemBackground">
+                    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal">
+                        <TextView android:layout_width="24dp" android:layout_height="24dp" android:background="#FACC15" android:text="5" android:gravity="center" android:textColor="@color/white" android:textStyle="bold" android:layout_marginEnd="12dp"/>
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Mide la distancia horizontal alcanzada por la pelota (R)." android:textSize="13sp" android:textColor="#000000"/>
+                    </LinearLayout>
+                    <ImageView android:id="@+id/imgPaso5" android:layout_width="match_parent" android:layout_height="180dp" android:layout_marginTop="10dp" android:visibility="gone" android:src="@drawable/physics" android:background="#F1F5F9" android:scaleType="fitCenter" android:contentDescription="Ejemplo paso 5" />
+                </LinearLayout>
+
+                <!-- Paso 6 -->
+                <LinearLayout
+                    android:id="@+id/layoutPaso6"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:paddingVertical="8dp"
+                    android:background="?attr/selectableItemBackground">
+                    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal">
+                        <TextView android:layout_width="24dp" android:layout_height="24dp" android:background="#FACC15" android:text="6" android:gravity="center" android:textColor="@color/white" android:textStyle="bold" android:layout_marginEnd="12dp"/>
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Mide la altura máxima lograda por la pelota (H)." android:textSize="13sp" android:textColor="#000000"/>
+                    </LinearLayout>
+                    <ImageView android:id="@+id/imgPaso6" android:layout_width="match_parent" android:layout_height="180dp" android:layout_marginTop="10dp" android:visibility="gone" android:src="@drawable/physics" android:background="#F1F5F9" android:scaleType="fitCenter" android:contentDescription="Ejemplo paso 6" />
+                </LinearLayout>
+
+                <!-- Paso 7 -->
+                <LinearLayout
+                    android:id="@+id/layoutPaso7"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:paddingVertical="8dp"
+                    android:background="?attr/selectableItemBackground">
+                    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal">
+                        <TextView android:layout_width="24dp" android:layout_height="24dp" android:background="#FACC15" android:text="7" android:gravity="center" android:textColor="@color/white" android:textStyle="bold" android:layout_marginEnd="12dp"/>
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Toma un video del lanzamiento si es posible para el análisis posterior." android:textSize="13sp" android:textColor="#000000"/>
+                    </LinearLayout>
+                    <ImageView android:id="@+id/imgPaso7" android:layout_width="match_parent" android:layout_height="180dp" android:layout_marginTop="10dp" android:visibility="gone" android:src="@drawable/physics" android:background="#F1F5F9" android:scaleType="fitCenter" android:contentDescription="Ejemplo paso 7" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:text="3. Evidencias"
+                android:textColor="@color/colorPrimario"
+                android:textStyle="bold"
+                android:textSize="14sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="Registra tus datos y guarda tus evidencias."
+                android:textColor="#64748B"
+                android:textSize="13sp" />
+
+            <!-- Área de evidencias -->
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="120dp"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/input_recuperrar">
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center"
+                    android:src="@android:drawable/ic_input_add"
+                    app:tint="#FACC15"
+                    android:contentDescription="Añadir evidencia" />
+            </FrameLayout>
+
+            <!-- Botones de Acción -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="16dp"
+                android:weightSum="3">
+                <Button android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="Tomar foto" android:textSize="10sp" android:layout_marginEnd="4dp" android:backgroundTint="#FFFFFF" android:textColor="#334155" app:strokeColor="#E2E8F0" app:strokeWidth="1dp" />
+                <Button android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="Grabar video" android:textSize="10sp" android:layout_marginEnd="4dp" android:backgroundTint="#FFFFFF" android:textColor="#334155" app:strokeColor="#E2E8F0" app:strokeWidth="1dp" />
+                <Button android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="Subir evidencia" android:textSize="10sp" android:backgroundTint="#FFFFFF" android:textColor="#334155" app:strokeColor="#E2E8F0" app:strokeWidth="1dp" />
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/btnContinuar"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:layout_marginTop="32dp"
+                android:backgroundTint="#FACC15"
+                android:text="Continuar a registro experimental"
+                android:textAllCaps="false"
+                android:textColor="@color/colorPrimario"
+                android:textStyle="bold"
+                app:cornerRadius="12dp" />
+
+        </LinearLayout>
+    </ScrollView>
+
+    <!-- Barra de Navegación Inferior -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@color/colorPrimario"
+        android:orientation="horizontal"
+        android:gravity="center">
+        <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="Inicio" android:textColor="#FFFFFF" android:gravity="center" android:textSize="10sp" />
+        <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="Laboratorios" android:textColor="#FFFFFF" android:gravity="center" android:textSize="10sp" />
+        <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="Informes" android:textColor="#FFFFFF" android:gravity="center" android:textSize="10sp" />
+        <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="Perfil" android:textColor="#FFFFFF" android:gravity="center" android:textSize="10sp" />
+    </LinearLayout>
+
+</LinearLayout>
