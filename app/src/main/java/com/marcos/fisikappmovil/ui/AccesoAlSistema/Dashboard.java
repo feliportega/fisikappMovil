@@ -26,57 +26,57 @@ import retrofit2.Response;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-
+/**
+ * Activity del Dashboard principal.
+ * Muestra la bienvenida personalizada al usuario y la lista de laboratorios disponibles.
+ */
 public class Dashboard extends AppCompatActivity {
 
     Button btemp;
-
-    TextView txtLaboratorio; // Declarada en tu código original
+    TextView txtLaboratorio; 
+    TextView tvNombreBarra, tvBienvenida; // Nuevas vistas para el nombre dinámico
 
     FisikappApi api;
     RecyclerView recyclerView;
     ImageView imgcerrar_sesion;
 
     private ImageView imgLaboratorio;
-    private TextView txtlaboratorio; // Declarada en tu código original (minúscula)
+    private TextView txtlaboratorio; 
     private RecyclerView tarjeta;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
-
         EdgeToEdge.enable(this);
-
         setContentView(R.layout.activity_dashboard);
 
-        // Inicialización respetando tus nombres
+        // Inicialización de componentes
         imgcerrar_sesion = findViewById(R.id.imgcerrar_sesion);
         imgLaboratorio = findViewById(R.id.imgLaboratorio);
-        txtLaboratorio = findViewById(R.id.txtLaboratorio); // El TextView con ID camelCase
-        txtlaboratorio = findViewById(R.id.txtLaboratorio); // Asignamos el mismo ID a la variable en minúscula
+        txtLaboratorio = findViewById(R.id.txtLaboratorio);
+        txtlaboratorio = findViewById(R.id.txtLaboratorio);
         tarjeta = findViewById(R.id.tarjeta);
+        
+        // Vistas del nombre dinámico
+        tvNombreBarra = findViewById(R.id.tvNombreUsuarioBarra);
+        tvBienvenida = findViewById(R.id.txtLaboratorio); // Usamos el ID existente para el mensaje central
 
-        // conexion del RecyclerView del Xml
+        // Recibir y mostrar el nombre del usuario
+        String nombre = getIntent().getStringExtra("USER_NAME");
+        if (nombre != null && !nombre.isEmpty()) {
+            if (tvNombreBarra != null) tvNombreBarra.setText(nombre.toUpperCase());
+            if (txtLaboratorio != null) txtLaboratorio.setText("¡Bienvenido de nuevo, " + nombre + "!");
+        }
+
+        // Configuración del RecyclerView
         recyclerView = findViewById(R.id.tarjeta);
-
-        // como se muestra
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        // BOTON
         btemp = findViewById(R.id.btemp);
+        api = RetrofitClient.getClient().create(FisikappApi.class);
 
-        // RETROFIT
-        api = RetrofitClient
-                .getClient()
-                .create(FisikappApi.class);
-
-        // CONSUMIR API
         cargarLaboratorio();
 
-
-        // CLICK BOTON
         btemp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -84,55 +84,49 @@ public class Dashboard extends AppCompatActivity {
                 startActivity(iremp);
             }
         });
-
     }
 
+    /**
+     * Obtiene la lista de laboratorios desde la API.
+     */
     private void cargarLaboratorio() {
+        // Nota: El token debería ser manejado de forma dinámica idealmente
+        String token = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."; 
 
-        String token = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzc4MzUwODA4LCJpYXQiOjE3NzgzNDM2MDgsImp0aSI6IjI3YmZmOGE0ZDJmZTQ4NjNhMDA3NTMzMGQ5ZGQzMjFiIiwidXNlcl9pZCI6IjIifQ.alhBSqJq_j0RSOGb5_uqNsBfoCay25AuM27xK7egExY";
+        api.getLaboratorios(token).enqueue(new Callback<List<Laboratorio>>() {
+            @Override
+            public void onResponse(Call<List<Laboratorio>> call, Response<List<Laboratorio>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    List<Laboratorio> lista = response.body();
+                    LaboratorioAdapter adapter = new LaboratorioAdapter(lista);
+                    recyclerView.setAdapter(adapter);
+                    actualizarVistaLaboratorio(lista);
+                } else {
+                    actualizarVistaLaboratorio(null);
+                }
+            }
 
-        api.getLaboratorios(token)
-                .enqueue(new Callback<List<Laboratorio>>() {
-
-                    @Override
-                    public void onResponse(Call<List<Laboratorio>> call, Response<List<Laboratorio>> response) {
-                        if (response.isSuccessful() && response.body() != null) {
-                            List<Laboratorio> lista = response.body();
-
-                            LaboratorioAdapter adapter = new LaboratorioAdapter(lista);
-                            recyclerView.setAdapter(adapter);
-
-                            // Ejecutamos la lógica de visibilidad con la lista recibida
-                            actualizarVistaLaboratorio(lista);
-                        } else {
-                            // Si la respuesta es vacía o falla, mostramos el estado inicial
-                            actualizarVistaLaboratorio(null);
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<List<Laboratorio>> call, Throwable throwable) {
-                        Log.e("API_ERROR", throwable.getMessage());
-                        // En caso de error de red, mostramos el estado inicial (copa visible)
-                        actualizarVistaLaboratorio(null);
-                    }
-                });
+            @Override
+            public void onFailure(Call<List<Laboratorio>> call, Throwable throwable) {
+                Log.e("API_ERROR", throwable.getMessage());
+                actualizarVistaLaboratorio(null);
+            }
+        });
     }
 
+    /**
+     * Gestiona la visibilidad de los elementos según si hay laboratorios o no.
+     */
     private void actualizarVistaLaboratorio(List<?> listaLaboratorio) {
         if (listaLaboratorio != null && !listaLaboratorio.isEmpty()) {
-            // SI HAY LABORATORIOS: Se ocultan los elementos de bienvenida
             imgLaboratorio.setVisibility(View.GONE);
             if (txtlaboratorio != null) txtlaboratorio.setVisibility(View.GONE);
             if (txtLaboratorio != null) txtLaboratorio.setVisibility(View.GONE);
-
             tarjeta.setVisibility(View.VISIBLE);
         } else {
-            // CUANDO NO HAY LABORATORIOS: Muestra la copa y el título
             imgLaboratorio.setVisibility(View.VISIBLE);
             if (txtlaboratorio != null) txtlaboratorio.setVisibility(View.VISIBLE);
             if (txtLaboratorio != null) txtLaboratorio.setVisibility(View.VISIBLE);
-
             tarjeta.setVisibility(View.GONE);
         }
     }

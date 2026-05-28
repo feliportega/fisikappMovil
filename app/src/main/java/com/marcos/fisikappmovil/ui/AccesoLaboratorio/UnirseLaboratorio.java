@@ -2,6 +2,7 @@ package com.marcos.fisikappmovil.ui.AccesoLaboratorio;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -40,7 +41,6 @@ public class UnirseLaboratorio extends AppCompatActivity {
 
                 String codigo = edit_unirse.getText().toString().trim();
 
-                // VALIDAR VACÍO
                 if (codigo.isEmpty()) {
                     edit_unirse.setError("Ingrese un código");
                     return;
@@ -57,11 +57,19 @@ public class UnirseLaboratorio extends AppCompatActivity {
                 .getClient()
                 .create(FisikappApi.class);
 
+        // BODY
         UnirLaboratorio unirLaboratorio =
                 new UnirLaboratorio(codigo_lab);
 
+        // TOKEN
+        String tokenGuardado =
+                "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzc5OTM3ODU3LCJpYXQiOjE3Nzk5MzA2NTcsImp0aSI6IjViMzc4MzA3Mjg1MjQ4M2RhOTQyNDk2MjcwNjEyMzk4IiwidXNlcl9pZCI6IjEwNiJ9.ImFH0qqgPJY3QpVaPbMKqqcsv5gCj3m1TRtoF54zL0c";
+
+        // AUTHORIZATION
+        String token = "Bearer " + tokenGuardado;
+
         Call<UnirLaboratorio> call =
-                api.postUnirlaboratorio(unirLaboratorio);
+                api.postUnirlaboratorio(token, unirLaboratorio);
 
         call.enqueue(new Callback<UnirLaboratorio>() {
 
@@ -69,9 +77,11 @@ public class UnirseLaboratorio extends AppCompatActivity {
             public void onResponse(Call<UnirLaboratorio> call,
                                    Response<UnirLaboratorio> response) {
 
-                if (response.isSuccessful() && response.body() != null) {
+                if (response.isSuccessful()
+                        && response.body() != null) {
 
-                    UnirLaboratorio laboratorio = response.body();
+                    UnirLaboratorio laboratorio =
+                            response.body();
 
                     Toast.makeText(
                             UnirseLaboratorio.this,
@@ -89,26 +99,42 @@ public class UnirseLaboratorio extends AppCompatActivity {
                             laboratorio.getId()
                     );
 
-                    intent.putExtra(
-                            "codigo_lab",
-                            laboratorio.getCodigo_lab()
-                    );
-
                     startActivity(intent);
 
                 } else {
 
-                    Toast.makeText(
-                            UnirseLaboratorio.this,
-                            "Error: " + response.code(),
-                            Toast.LENGTH_LONG
-                    ).show();
+                    try {
+
+                        String error =
+                                response.errorBody().string();
+
+                        Log.e("ERROR_API", error);
+
+                        Toast.makeText(
+                                UnirseLaboratorio.this,
+                                "Error: " + error,
+                                Toast.LENGTH_LONG
+                        ).show();
+
+                    } catch (Exception e) {
+
+                        e.printStackTrace();
+
+                        Toast.makeText(
+                                UnirseLaboratorio.this,
+                                "Error: " + response.code(),
+                                Toast.LENGTH_LONG
+                        ).show();
+                    }
                 }
             }
 
             @Override
             public void onFailure(Call<UnirLaboratorio> call,
                                   Throwable throwable) {
+
+                Log.e("ERROR_RETROFIT",
+                        throwable.getMessage());
 
                 Toast.makeText(
                         UnirseLaboratorio.this,
