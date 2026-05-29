@@ -1,0 +1,447 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical"
+    tools:context=".ui.MonitorDeAprendizajeEstudiante.InformeLaboratorio">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#0D1A52"
+        android:padding="20dp">
+
+        <ImageView
+            android:id="@+id/btnBack"
+            android:layout_width="34dp"
+            android:layout_height="34dp"
+            android:src="@drawable/iconoretroceder"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="16dp"
+            android:layout_toEndOf="@id/btnBack"
+            android:text="Generar Informe ar"
+            android:textColor="@color/white"
+            android:textSize="22sp"
+            android:textStyle="bold" />
+    </RelativeLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="20dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Laboratorio de Tiro Parabólico"
+                android:textColor="#0D1A52"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:gravity="center_vertical">
+                <ImageView
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:src="@drawable/iconousuario"
+                    app:tint="#757575" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:text="Nelson Gomez : 2024-A"
+                    android:textColor="#757575"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:gravity="center_vertical">
+                <ImageView
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:src="@drawable/baseline_science_24"
+                    app:tint="#757575" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:text="Física Experimental I"
+                    android:textColor="#757575"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:gravity="center_vertical">
+                <ImageView
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:src="@android:drawable/ic_menu_today"
+                    app:tint="#757575" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:text="26 de mayo, 2026"
+                    android:textColor="#757575"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="16dp"
+                android:background="#E0E0E0" />
+
+
+
+
+
+
+
+
+
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                app:cardBackgroundColor="#F0F4F8"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="0dp">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="RESUMEN DEL EXPRIMENTO"
+                        android:textColor="#90A4AE"
+                        android:textSize="12sp"
+                        android:textStyle="bold" />
+
+                    <RelativeLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="8dp">
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Intentos" android:textColor="#546E7A"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_alignParentEnd="true"
+                            android:text="2/3"
+                            android:textColor="#546E7A" />
+
+                    </RelativeLayout>
+
+                    <RelativeLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="8dp">
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Resuelto" android:textColor="#546E7A"/>
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_alignParentEnd="true" android:text="si" android:textColor="#546E7A"/>
+                    </RelativeLayout>
+
+                    <RelativeLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="8dp">
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Distancia Objetivo" android:textColor="#546E7A"/>
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_alignParentEnd="true" android:text="12 m" android:textColor="#546E7A"/>
+                    </RelativeLayout>
+
+
+                    <RelativeLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="4dp">
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Altura Objetivo" android:textColor="#546E7A"/>
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_alignParentEnd="true" android:text="2.91 s" android:textColor="#546E7A"/>
+                    </RelativeLayout>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+
+
+
+
+
+
+
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                app:cardBackgroundColor="#F0F4F8"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="0dp">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="RESULTADOS DEL LANZAMIENTO 1"
+                        android:textColor="#90A4AE"
+                        android:textSize="12sp"
+                        android:textStyle="bold" />
+                    <RelativeLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="8dp">
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Altura máxima" android:textColor="#546E7A"/>
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_alignParentEnd="true" android:text="10.32 m" android:textColor="#546E7A"/>
+                    </RelativeLayout>
+                    <RelativeLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="4dp">
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Tiempo de vuelo" android:textColor="#546E7A"/>
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_alignParentEnd="true" android:text="2.91 s" android:textColor="#546E7A"/>
+                    </RelativeLayout>
+                    <RelativeLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="4dp">
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Alcance Horizontal" android:textColor="#546E7A"/>
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_alignParentEnd="true" android:text="40.85 m" android:textColor="#546E7A"/>
+                    </RelativeLayout>
+                    <RelativeLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="4dp">
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Velocidad Inicial" android:textColor="#546E7A"/>
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_alignParentEnd="true" android:text="19.8 m/s" android:textColor="#546E7A"/>
+                    </RelativeLayout>
+
+                    <RelativeLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="4dp">
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Angulo de lanzamiento " android:textColor="#546E7A"/>
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_alignParentEnd="true" android:text=" 42°" android:textColor="#546E7A"/>
+                    </RelativeLayout>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+
+
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                app:cardBackgroundColor="#FFF9C4"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="0dp">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="RESULTADOS DEL LANZAMIENTO 2"
+                        android:textColor="#A1887F"
+                        android:textSize="12sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="LANZAMIENTO EXITOSO"
+                        android:textColor="#A1887F"
+                        android:textSize="12sp"
+                        android:textStyle="bold" />
+                    <RelativeLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="8dp">
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Altura máxima" android:textColor="#5D4037" android:textStyle="bold"/>
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_alignParentEnd="true" android:text="10.51 m" android:textColor="#5D4037" android:textStyle="bold"/>
+                    </RelativeLayout>
+                    <RelativeLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="4dp">
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Tiempo de vuelo" android:textColor="#5D4037" android:textStyle="bold"/>
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_alignParentEnd="true" android:text="2.94 s" android:textColor="#5D4037" android:textStyle="bold"/>
+                    </RelativeLayout>
+                    <RelativeLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="4dp">
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Alcance Horizontal" android:textColor="#5D4037" android:textStyle="bold"/>
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_alignParentEnd="true" android:text="41.62 m" android:textColor="#0D1A52" android:textStyle="bold"/>
+                    </RelativeLayout>
+                    <RelativeLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="4dp">
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Velocidad Inicial" android:textColor="#5D4037" android:textStyle="bold"/>
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_alignParentEnd="true" android:text="20.3 m/s" android:textColor="#0D1A52" android:textStyle="bold"/>
+                    </RelativeLayout>
+                    <RelativeLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="4dp">
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Angulo De Lanzamiento" android:textColor="#5D4037" android:textStyle="bold"/>
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_alignParentEnd="true" android:text="45°" android:textColor="#0D1A52" android:textStyle="bold"/>
+                    </RelativeLayout>
+                    <RelativeLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="4dp">
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Precision Exprimental" android:textColor="#5D4037" android:textStyle="bold"/>
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_alignParentEnd="true" android:text="99%" android:textColor="#0D1A52" android:textStyle="bold"/>
+                    </RelativeLayout>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:text="CONCLUSIONES"
+                android:textColor="#90A4AE"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Los datos experimentales coinciden con el modelo teórico del tiro parabólico, presentando un margen de error inferior al 1%.
+El lanzamiento 2 obtuvo la mayor precisión y logró alcanzar el objetivo establecido."
+                android:textColor="#757575"
+                android:textSize="14sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:text="PROGRESO DEL INFORME"
+                android:textColor="#90A4AE"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="12dp" android:gravity="center_vertical">
+                <ImageView android:layout_width="20dp" android:layout_height="20dp" android:src="@drawable/chulo" app:tint="#4CAF50" />
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginStart="12dp" android:text="Datos experimentales completados" android:textColor="#757575" />
+            </LinearLayout>
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="8dp" android:gravity="center_vertical">
+                <ImageView android:layout_width="20dp" android:layout_height="20dp" android:src="@drawable/chulo" app:tint="#4CAF50" />
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginStart="12dp" android:text="Simulación completada" android:textColor="#757575" />
+            </LinearLayout>
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="8dp" android:gravity="center_vertical">
+                <ImageView android:layout_width="20dp" android:layout_height="20dp" android:src="@drawable/chulo" app:tint="#4CAF50" />
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginStart="12dp" android:text="Comparación completada" android:textColor="#757575" />
+            </LinearLayout>
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="8dp" android:gravity="center_vertical">
+                <ImageView android:layout_width="20dp" android:layout_height="20dp" android:src="@drawable/chulo" app:tint="#4CAF50" />
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginStart="12dp" android:text="Evidencias adjuntadas" android:textColor="#757575" />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:text="Conclusiones del laboratorio"
+                android:textColor="#0D1A52"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="120dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/edittext_redondo"
+                android:gravity="top"
+                android:hint="Escribe tus conclusiones, observaciones y reflexiones sobre la práctica."
+                android:padding="12dp"
+                android:textSize="14sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:orientation="horizontal"
+                android:baselineAligned="false">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Evidencias" android:textColor="#0D1A52" android:textStyle="bold" android:layout_gravity="center_horizontal"/>
+                    <GridLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:columnCount="2"
+                        android:rowCount="2">
+                        <View android:layout_width="70dp" android:layout_height="70dp" android:layout_margin="4dp" android:background="#E3F2FD"/>
+                        <View android:layout_width="70dp" android:layout_height="70dp" android:layout_margin="4dp" android:background="#E3F2FD"/>
+                        <View android:layout_width="70dp" android:layout_height="70dp" android:layout_margin="4dp" android:background="#E3F2FD"/>
+                        <View android:layout_width="70dp" android:layout_height="70dp" android:layout_margin="4dp" android:background="#E3F2FD"/>
+                    </GridLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1.2"
+                    android:orientation="vertical"
+                    android:layout_marginStart="16dp">
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Comparativa" android:textColor="#0D1A52" android:textStyle="bold" android:layout_gravity="center_horizontal"/>
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="120dp"
+                        android:layout_marginTop="8dp"
+                        android:padding="8dp">
+                        <View android:id="@+id/axis" android:layout_width="2dp" android:layout_height="match_parent" android:background="#757575" android:layout_alignParentStart="true"/>
+                        <View android:layout_width="match_parent" android:layout_height="2dp" android:background="#757575" android:layout_alignParentBottom="true"/>
+                        <LinearLayout android:layout_width="match_parent" android:layout_height="match_parent" android:orientation="horizontal" android:gravity="bottom" android:layout_toEndOf="@id/axis" android:paddingStart="4dp" tools:ignore="RtlSymmetry">
+                            <View android:layout_width="12dp" android:layout_height="80dp" android:background="#0D1A52" android:layout_marginEnd="4dp"/>
+                            <View android:layout_width="12dp" android:layout_height="50dp" android:background="#FACC15" android:layout_marginEnd="8dp"/>
+                            <View android:layout_width="12dp" android:layout_height="40dp" android:background="#0D1A52" android:layout_marginEnd="4dp"/>
+                            <View android:layout_width="12dp" android:layout_height="35dp" android:background="#FACC15" android:layout_marginEnd="8dp"/>
+                        </LinearLayout>
+                    </RelativeLayout>
+                    <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content" android:orientation="horizontal" android:layout_gravity="center_horizontal" android:layout_marginTop="4dp">
+                        <View android:layout_width="10dp" android:layout_height="10dp" android:background="#0D1A52" android:layout_gravity="center_vertical"/>
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text=" Sim" android:textSize="10sp" android:layout_marginEnd="8dp"/>
+                        <View android:layout_width="10dp" android:layout_height="10dp" android:background="#FACC15" android:layout_gravity="center_vertical"/>
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text=" Real" android:textSize="10sp"/>
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/btnGenerarPDF"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginTop="32dp"
+                android:layout_marginBottom="20dp"
+                android:backgroundTint="#FACC15"
+                android:text="Generar PDF"
+                android:textAllCaps="false"
+                android:textColor="#0D1A52"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:cornerRadius="12dp" />
+
+        </LinearLayout>
+    </ScrollView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="75dp"
+        android:background="#0D1A52"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <LinearLayout android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:gravity="center" android:orientation="vertical">
+            <ImageView android:layout_width="24dp" android:layout_height="24dp" android:src="@drawable/baseline_home_24" app:tint="@color/white" />
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Inicio" android:textColor="@color/white" android:textSize="11sp" />
+        </LinearLayout>
+
+        <LinearLayout android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:gravity="center" android:orientation="vertical">
+            <ImageView android:layout_width="24dp" android:layout_height="24dp" android:src="@drawable/baseline_science_24" app:tint="@color/white" />
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Laboratorios" android:textColor="@color/white" android:textSize="11sp" />
+        </LinearLayout>
+
+        <LinearLayout android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:gravity="center" android:orientation="vertical">
+            <ImageView android:layout_width="24dp" android:layout_height="24dp" android:src="@drawable/ic_report" app:tint="#FACC15" />
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Informes" android:textColor="#FACC15" android:textStyle="bold" android:textSize="11sp" />
+        </LinearLayout>
+
+        <LinearLayout android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:gravity="center" android:orientation="vertical">
+            <ImageView android:layout_width="24dp" android:layout_height="24dp" android:src="@drawable/ic_profile" app:tint="@color/white" />
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Perfil" android:textColor="@color/white" android:textSize="11sp" />
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

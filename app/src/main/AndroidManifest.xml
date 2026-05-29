@@ -16,15 +16,17 @@
 
     <application
         android:allowBackup="true"
-        android:usesCleartextTraffic="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.FisikappMovil">
-
+        android:theme="@style/Theme.FisikappMovil"
+        android:usesCleartextTraffic="true">
+        <activity
+            android:name=".informe_laboratorio_ar"
+            android:exported="false" />
         <activity
             android:name=".Laboratorio_experimental"
             android:exported="false" />
@@ -75,16 +77,13 @@
             android:exported="false" />
         <activity
             android:name=".ui.MonitorDeAprendizajeEstudiante.ConceptosBasicos"
-            android:exported="false" />
-
-        <!-- Nueva Pantalla: Práctica Experimental -->
+            android:exported="false" /> <!-- Nueva Pantalla: Práctica Experimental -->
         <activity
             android:name=".ui.MonitorDeAprendizajeEstudiante.PracticaExperimental"
             android:exported="false" />
-
         <activity
             android:name=".ui.MonitorDeAprendizajeEstudiante.PasosLaboratorio"
-            android:exported="false"/>
+            android:exported="false" />
         <activity
             android:name=".ui.MonitorDeAprendizajeEstudiante.ViewsLaboratorio"
             android:exported="false" />
@@ -94,7 +93,6 @@
         <activity
             android:name=".ui.Autenticacion.Login"
             android:exported="false" />
-
         <activity
             android:name=".ui.Autenticacion.Register"
             android:exported="false" />
