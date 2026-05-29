@@ -94,6 +94,7 @@
                 android:drawableStart="@drawable/ci_email"
                 android:drawablePadding="12dp"
                 android:hint="tu.correo@ejemplo.com"
+                android:textColorHint="#94A3B8"
                 android:inputType="textEmailAddress"
                 android:textColor="@color/black"
                 android:paddingStart="16dp"

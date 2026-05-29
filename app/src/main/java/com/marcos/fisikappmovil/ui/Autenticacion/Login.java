@@ -29,6 +29,11 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+/**
+ * Activity que gestiona el inicio de sesión de los usuarios.
+ * Permite la autenticación mediante correo/contraseña y biometría facial,
+ * además de navegación a registro y recuperación de cuenta.
+ */
 public class Login extends AppCompatActivity {
     EditText edtCorreo, edtPassword;
     TextView tvErrorBanner;
@@ -38,10 +43,10 @@ public class Login extends AppCompatActivity {
     Button btnrecuperar;
     Button btnsesion;
 
-    // State for password visibility
+    // Estado para la visibilidad de la contraseña
     private boolean isPasswordVisible = false;
 
-    //Test FaceId
+    // Botones para prueba de FaceId
     Button btnenrol;
     Button btnverify;
 
@@ -176,11 +181,15 @@ public class Login extends AppCompatActivity {
                     String access = response.body().getToken();
                     tokenManager.saveToken(access);
 
+                    // Extraemos el nombre real del usuario de la respuesta
                     String nombreUsuario = "Usuario";
+                    if (response.body().getUser() != null && response.body().getUser().getNombre() != null) {
+                        nombreUsuario = response.body().getUser().getNombre();
+                    }
 
                     Toast.makeText(Login.this, "¡Bienvenido " + nombreUsuario + "!", Toast.LENGTH_SHORT).show();
 
-                    // Navegamos al Dashboard
+                    // Navegamos al Dashboard pasando el nombre como extra
                     Intent intent = new Intent(Login.this, Dashboard.class);
                     intent.putExtra("USER_EMAIL", email);
                     intent.putExtra("USER_NAME", nombreUsuario);
