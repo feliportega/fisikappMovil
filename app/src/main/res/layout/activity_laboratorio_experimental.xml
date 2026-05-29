@@ -137,12 +137,12 @@
                     android:textColor="#000000" />
 
                 <ImageView
-                    android:layout_width="260dp"
-                    android:layout_height="110dp"
+                    android:layout_width="240dp"
+                    android:layout_height="80dp"
                     android:layout_gravity="center"
                     android:layout_marginTop="18dp"
-                    android:src="@drawable/operacion1"
-                    android:scaleType="fitCenter" />
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/operacion1" />
 
                 <!-- Divider -->
                 <View
@@ -162,20 +162,12 @@
                     android:textColor="#000000" />
 
                 <ImageView
-                    android:layout_width="260dp"
-                    android:layout_height="110dp"
+                    android:layout_width="240dp"
+                    android:layout_height="80dp"
                     android:layout_gravity="center"
                     android:layout_marginTop="18dp"
                     android:src="@drawable/operacion2"
                     android:scaleType="fitCenter" />
-
-                <!-- Divider -->
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="#FFFFFF"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginBottom="20dp" />
 
                 <!-- Tiempo -->
                 <TextView
@@ -187,8 +179,8 @@
                     android:textColor="#000000" />
 
                 <ImageView
-                    android:layout_width="260dp"
-                    android:layout_height="110dp"
+                    android:layout_width="240dp"
+                    android:layout_height="80dp"
                     android:layout_gravity="center"
                     android:layout_marginTop="18dp"
                     android:src="@drawable/operacion3"

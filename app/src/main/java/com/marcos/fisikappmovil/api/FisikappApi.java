@@ -11,6 +11,7 @@ import com.marcos.fisikappmovil.remote.request.ResetPasswordRequest;
 import com.marcos.fisikappmovil.remote.response.LoginResponse;
 import com.marcos.fisikappmovil.models.Laboratorio;
 import com.marcos.fisikappmovil.models.UnirLaboratorio;
+import com.google.gson.JsonObject;
 import com.marcos.fisikappmovil.remote.request.LoginRequest;
 import com.marcos.fisikappmovil.remote.response.LoginResponse;
 
@@ -108,7 +109,7 @@ public interface FisikappApi {
     // Unirse a laboratorio
 
     @POST("inscribir/")
-    Call<UnirLaboratorio> postUnirlaboratorio(
+    Call<JsonObject> postUnirlaboratorio(
             @Header("Authorization") String token,
             @Body UnirLaboratorio unirLaboratorio
     );

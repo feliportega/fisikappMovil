@@ -11,9 +11,11 @@ import android.widget.Toast;
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.gson.JsonObject;
 import com.marcos.fisikappmovil.R;
 import com.marcos.fisikappmovil.api.FisikappApi;
 import com.marcos.fisikappmovil.api.RetrofitClient;
+import com.marcos.fisikappmovil.model.TokenManager;
 import com.marcos.fisikappmovil.models.UnirLaboratorio;
 import com.marcos.fisikappmovil.ui.MonitorDeAprendizajeEstudiante.ViewsLaboratorio;
 
@@ -24,6 +26,7 @@ import retrofit2.Response;
 public class UnirseLaboratorio extends AppCompatActivity {
 
     EditText edit_unirse;
+    TokenManager tokenManager;
     Button btnUnirse;
 
     @Override
@@ -34,6 +37,7 @@ public class UnirseLaboratorio extends AppCompatActivity {
 
         edit_unirse = findViewById(R.id.edit_unirse);
         btnUnirse = findViewById(R.id.btnUnirse);
+        tokenManager = new TokenManager(this);
 
         btnUnirse.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -61,31 +65,37 @@ public class UnirseLaboratorio extends AppCompatActivity {
         UnirLaboratorio unirLaboratorio =
                 new UnirLaboratorio(codigo_lab);
 
-        // TOKEN
         String tokenGuardado =
-                "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzc5OTM3ODU3LCJpYXQiOjE3Nzk5MzA2NTcsImp0aSI6IjViMzc4MzA3Mjg1MjQ4M2RhOTQyNDk2MjcwNjEyMzk4IiwidXNlcl9pZCI6IjEwNiJ9.ImFH0qqgPJY3QpVaPbMKqqcsv5gCj3m1TRtoF54zL0c";
+                tokenManager.getToken();
 
-        // AUTHORIZATION
-        String token = "Bearer " + tokenGuardado;
+        String token =
+                "Bearer " + tokenGuardado;
 
-        Call<UnirLaboratorio> call =
+        Call<JsonObject> call =
                 api.postUnirlaboratorio(token, unirLaboratorio);
 
-        call.enqueue(new Callback<UnirLaboratorio>() {
+        call.enqueue(new Callback<JsonObject>() {
 
             @Override
-            public void onResponse(Call<UnirLaboratorio> call,
-                                   Response<UnirLaboratorio> response) {
+            public void onResponse(Call<JsonObject> call,
+                                   Response<JsonObject> response) {
 
                 if (response.isSuccessful()
                         && response.body() != null) {
 
-                    UnirLaboratorio laboratorio =
-                            response.body();
+                    JsonObject json = response.body();
+
+                    String mensaje =
+                            json.get("mensaje").getAsString();
+
+                    int idLaboratorio =
+                            json.getAsJsonObject("laboratorio")
+                                    .get("id")
+                                    .getAsInt();
 
                     Toast.makeText(
                             UnirseLaboratorio.this,
-                            "Laboratorio encontrado",
+                            mensaje,
                             Toast.LENGTH_SHORT
                     ).show();
 
@@ -96,7 +106,7 @@ public class UnirseLaboratorio extends AppCompatActivity {
 
                     intent.putExtra(
                             "id_lab",
-                            laboratorio.getId()
+                            idLaboratorio
                     );
 
                     startActivity(intent);
@@ -130,7 +140,7 @@ public class UnirseLaboratorio extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<UnirLaboratorio> call,
+            public void onFailure(Call<JsonObject> call,
                                   Throwable throwable) {
 
                 Log.e("ERROR_RETROFIT",
