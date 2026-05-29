@@ -477,9 +477,9 @@
 
             <ImageView
                 android:layout_width="22dp"
-                android:layout_height="22dp"
+                android:layout_height="13dp"
                 android:src="@drawable/baseline_science_24"
-                app:tint="@android:color/white"/>
+                app:tint="@android:color/white" />
 
             <TextView
                 android:layout_width="wrap_content"

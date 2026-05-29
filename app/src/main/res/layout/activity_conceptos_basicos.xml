@@ -33,6 +33,7 @@
             android:layout_marginStart="16dp"/>
     </LinearLayout>
 
+
     <!-- Tabs -->
     <LinearLayout
         android:layout_width="match_parent"
@@ -40,7 +41,9 @@
         android:orientation="horizontal"
         android:background="@android:color/white">
 
+        <!-- TAB CONCEPTOS -->
         <TextView
+            android:id="@+id/tabConceptos"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -51,7 +54,9 @@
             android:textSize="16sp"
             android:padding="16dp"/>
 
+        <!-- TAB FORMULAS -->
         <TextView
+            android:id="@+id/tabFormulas"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -61,6 +66,7 @@
             android:textColor="#808080"
             android:textSize="16sp"
             android:padding="16dp"/>
+
     </LinearLayout>
 
     <!-- Línea indicador -->
@@ -81,100 +87,138 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:padding="20dp"
-            android:background="@color/white">
+            android:background="@android:color/white">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Conceptos clave"
-                android:textStyle="bold"
-                android:textSize="28sp"
-                android:textColor="#000000"/>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="El tiro parabólico es un movimiento en dos dimensiones donde un objeto es lanzado con un ángulo respecto a la horizontal."
-                android:textSize="16sp"
-                android:textColor="#444444"
-                android:layout_marginTop="12dp"
-                android:lineSpacingExtra="4dp"/>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="• En el eje horizontal (x) el movimiento es MRU (velocidad constante)."
-                android:textSize="16sp"
-                android:textColor="#444444"
-                android:layout_marginTop="16dp"/>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="• En el eje vertical (y) el movimiento es MRUA (aceleración = -g)."
-                android:textSize="16sp"
-                android:textColor="#444444"
-                android:layout_marginTop="10dp"/>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="• La trayectoria que describe el objeto es una parábola."
-                android:textSize="16sp"
-                android:textColor="#444444"
-                android:layout_marginTop="10dp"/>
-
-            <!-- Card imagen -->
+            <!-- ===================== -->
+            <!-- CONTENIDO CONCEPTOS -->
+            <!-- ===================== -->
             <LinearLayout
+                android:id="@+id/layoutConceptos"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_marginTop="24dp"
-                android:background="@android:color/white"
-                android:padding="16dp"
-                android:elevation="3dp">
+                android:orientation="vertical">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Componentes del movimiento"
+                    android:text="Conceptos clave"
                     android:textStyle="bold"
-                    android:textSize="18sp"
-                    android:textColor="#000000"
-                    android:layout_gravity="center_horizontal"/>
+                    android:textSize="28sp"
+                    android:textColor="#000000"/>
 
-                <ImageView
+                <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="220dp"
-                    android:layout_marginTop="16dp"
-                    android:scaleType="fitCenter"
-                    android:src="@drawable/parabolico"/>
+                    android:layout_height="wrap_content"
+                    android:text="El tiro parabólico es un movimiento en dos dimensiones donde un objeto es lanzado con un ángulo respecto a la horizontal."
+                    android:textSize="16sp"
+                    android:textColor="#444444"
+                    android:layout_marginTop="12dp"
+                    android:lineSpacingExtra="4dp"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="• En el eje horizontal (x) el movimiento es MRU."
+                    android:textSize="16sp"
+                    android:textColor="#444444"
+                    android:layout_marginTop="16dp"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="• En el eje vertical (y) el movimiento es MRUA."
+                    android:textSize="16sp"
+                    android:textColor="#444444"
+                    android:layout_marginTop="10dp"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="• La trayectoria que describe el objeto es una parábola."
+                    android:textSize="16sp"
+                    android:textColor="#444444"
+                    android:layout_marginTop="10dp"/>
+
+                <!-- Card imagen -->
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:background="@android:color/white"
+                    android:elevation="3dp"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:text="Componentes del movimiento"
+                        android:textColor="#000000"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="220dp"
+                        android:layout_marginTop="16dp"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/parabolico" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="El uso de vectores permite representar movimientos en diferentes direcciones y hacer operaciones matemáticas."
+                    android:textSize="16sp"
+                    android:textColor="#444444"
+                    android:layout_marginTop="18dp"
+                    android:lineSpacingExtra="4dp"/>
+
             </LinearLayout>
 
-            <!-- Botón -->
-<!--            <Button-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="55dp"-->
-<!--                android:text="Ver fórmulas →"-->
-<!--                android:textAllCaps="false"-->
-<!--                android:textStyle="bold"-->
-<!--                android:textSize="18sp"-->
-<!--                android:textColor="#000000"-->
-<!--                android:backgroundTint="#FFC107"-->
-<!--                android:layout_marginTop="24dp"/>-->
-
-            <TextView
+            <!-- ===================== -->
+            <!-- CONTENIDO FORMULAS -->
+            <!-- ===================== -->
+            <LinearLayout
+                android:id="@+id/layoutFormulas"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="El uso de vectores permite representar movimientos en diferentes direcciones y hacer operaciones matemáticas para calcular la trayectoria final de un objeto en movimiento. En el contexto del movimiento, los vectores se utilizan para describir magnitudes como la posición, velocidad y aceleración."
-                android:textSize="16sp"
-                android:textColor="#444444"
-                android:layout_marginTop="12dp"
-                android:lineSpacingExtra="4dp"/>
+                android:orientation="vertical"
+                android:visibility="gone">
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Fórmulas"
+                    android:textStyle="bold"
+                    android:textSize="28sp"
+                    android:textColor="#000000"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="• Alcance: R = (Vo² * sen(2θ)) / g"
+                    android:textSize="16sp"
+                    android:textColor="#444444"
+                    android:layout_marginTop="16dp"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="• Altura máxima: H = (Vo² * sen²(θ)) / 2g"
+                    android:textSize="16sp"
+                    android:textColor="#444444"
+                    android:layout_marginTop="10dp"/>
+
+            </LinearLayout>
 
         </LinearLayout>
+
     </ScrollView>
+
 
     <!-- Bottom Navigation -->
     <LinearLayout
@@ -192,10 +236,9 @@
             android:gravity="center">
 
             <ImageView
-                android:layout_width="24dp"
+                android:layout_width="21dp"
                 android:layout_height="24dp"
-                android:src="@drawable/physics"
-                />
+                android:src="@drawable/baseline_home_24" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -215,7 +258,7 @@
             <ImageView
                 android:layout_width="24dp"
                 android:layout_height="24dp"
-                android:src="@drawable/copa"
+                android:src="@drawable/baseline_science_24"
                 />
 
             <TextView
@@ -235,9 +278,9 @@
 
             <ImageView
                 android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:src="@drawable/signoexclamacion"
-                android:tint="@android:color/white"/>
+                android:layout_height="20dp"
+                android:src="@drawable/ic_report"
+                app:tint="@android:color/white" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -255,10 +298,10 @@
             android:gravity="center">
 
             <ImageView
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:src="@drawable/iconousuario"
-                android:tint="@android:color/white"/>
+                android:layout_width="21dp"
+                android:layout_height="22dp"
+                android:src="@drawable/ic_profile"
+                app:tint="@android:color/white" />
 
             <TextView
                 android:layout_width="wrap_content"
