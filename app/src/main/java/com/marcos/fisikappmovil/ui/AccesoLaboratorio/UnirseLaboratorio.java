@@ -14,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.marcos.fisikappmovil.R;
 import com.marcos.fisikappmovil.api.FisikappApi;
 import com.marcos.fisikappmovil.api.RetrofitClient;
+import com.marcos.fisikappmovil.model.TokenManager;
 import com.marcos.fisikappmovil.models.UnirLaboratorio;
 import com.marcos.fisikappmovil.ui.MonitorDeAprendizajeEstudiante.ViewsLaboratorio;
 
@@ -57,16 +58,32 @@ public class UnirseLaboratorio extends AppCompatActivity {
                 .getClient()
                 .create(FisikappApi.class);
 
-        // BODY
+        // Body de la petición
         UnirLaboratorio unirLaboratorio =
                 new UnirLaboratorio(codigo_lab);
 
-        // TOKEN
-        String tokenGuardado =
-                "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzc5OTM3ODU3LCJpYXQiOjE3Nzk5MzA2NTcsImp0aSI6IjViMzc4MzA3Mjg1MjQ4M2RhOTQyNDk2MjcwNjEyMzk4IiwidXNlcl9pZCI6IjEwNiJ9.ImFH0qqgPJY3QpVaPbMKqqcsv5gCj3m1TRtoF54zL0c";
+        // Recuperar token guardado
+        TokenManager tokenManager = new TokenManager(this);
 
-        // AUTHORIZATION
+        String tokenGuardado = tokenManager.getToken();
+
+        Log.d("TOKEN_GUARDADO", String.valueOf(tokenGuardado));
+
+        if (tokenGuardado == null || tokenGuardado.isEmpty()) {
+
+            Toast.makeText(
+                    this,
+                    "No se encontró el token. Inicie sesión nuevamente.",
+                    Toast.LENGTH_LONG
+            ).show();
+
+            return;
+        }
+
+        // Header Authorization
         String token = "Bearer " + tokenGuardado;
+
+        Log.d("TOKEN_ENVIADO", token);
 
         Call<UnirLaboratorio> call =
                 api.postUnirlaboratorio(token, unirLaboratorio);
@@ -96,7 +113,7 @@ public class UnirseLaboratorio extends AppCompatActivity {
 
                     intent.putExtra(
                             "id_lab",
-                            laboratorio.getId()
+                            laboratorio.getLaboratorio()
                     );
 
                     startActivity(intent);
@@ -105,8 +122,11 @@ public class UnirseLaboratorio extends AppCompatActivity {
 
                     try {
 
-                        String error =
-                                response.errorBody().string();
+                        String error = "";
+
+                        if (response.errorBody() != null) {
+                            error = response.errorBody().string();
+                        }
 
                         Log.e("ERROR_API", error);
 
@@ -118,7 +138,11 @@ public class UnirseLaboratorio extends AppCompatActivity {
 
                     } catch (Exception e) {
 
-                        e.printStackTrace();
+                        Log.e(
+                                "ERROR_EXCEPTION",
+                                e.getMessage(),
+                                e
+                        );
 
                         Toast.makeText(
                                 UnirseLaboratorio.this,
@@ -133,8 +157,11 @@ public class UnirseLaboratorio extends AppCompatActivity {
             public void onFailure(Call<UnirLaboratorio> call,
                                   Throwable throwable) {
 
-                Log.e("ERROR_RETROFIT",
-                        throwable.getMessage());
+                Log.e(
+                        "ERROR_RETROFIT",
+                        throwable.getMessage(),
+                        throwable
+                );
 
                 Toast.makeText(
                         UnirseLaboratorio.this,
