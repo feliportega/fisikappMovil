@@ -50,34 +50,26 @@ public class ViewsLaboratorio extends AppCompatActivity {
         // =========================
         FisikappApi api = RetrofitClient.getClient().create(FisikappApi.class);
 
-        // Usamos el método corregido getLaboratorioPorId que creamos en la interfaz
-        api.getLaboratorioPorId(8).enqueue(new Callback<JsonObject>() {
+        /// 1. Primero obtenemos el token de forma segura usando tu TokenManager
+        com.marcos.fisikappmovil.model.TokenManager tokenManager = new com.marcos.fisikappmovil.model.TokenManager(this);
+        String tokenGuardado = tokenManager.getToken();
+        String token = "Bearer " + tokenGuardado;
+
+// 2. Ahora sí, le pasamos el token y el ID del laboratorio (el 8 en tu caso)
+        api.getLaboratorioPorId(token, 8).enqueue(new Callback<JsonObject>() {
             @Override
-            public void onResponse(@NonNull Call<JsonObject> call, @NonNull Response<JsonObject> response) {
+            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    JsonObject laboratorioJson = response.body();
-
-                    // Extraemos los textos de forma segura validando si las llaves existen en tu backend de Django
-                    String titulo = laboratorioJson.has("titulo_lab") && !laboratorioJson.get("titulo_lab").isJsonNull()
-                            ? laboratorioJson.get("titulo_lab").getAsString() : "Sin título disponible";
-
-                    String resumen = laboratorioJson.has("resumen") && !laboratorioJson.get("resumen").isJsonNull()
-                            ? laboratorioJson.get("resumen").getAsString() : "Sin resumen disponible";
-
-                    // Seteamos los textos reales en los TextViews
-                    if (txtTituloLab != null) txtTituloLab.setText(titulo);
-                    if (txtResumenLab != null) txtResumenLab.setText(resumen);
+                    JsonObject labJson = response.body();
+                    // Aquí va tu lógica para pintar los datos en la vista de este Activity
                 } else {
-                    if (txtTituloLab != null) txtTituloLab.setText("Error al obtener el laboratorio");
-                    Log.e("VIEWS_LAB_API", "Código de error: " + response.code());
+                    Log.e("VIEWS_LAB_API", "Error en respuesta: " + response.code());
                 }
             }
 
             @Override
-            public void onFailure(@NonNull Call<JsonObject> call, @NonNull Throwable t) {
-                if (txtTituloLab != null) txtTituloLab.setText("Error de conexión");
-                if (txtResumenLab != null) txtResumenLab.setText(t.getMessage());
-                Log.e("VIEWS_LAB_API", "Error: " + t.getMessage());
+            public void onFailure(Call<JsonObject> call, Throwable t) {
+                Log.e("VIEWS_LAB_API", "Error de red: " + t.getMessage());
             }
         });
     }

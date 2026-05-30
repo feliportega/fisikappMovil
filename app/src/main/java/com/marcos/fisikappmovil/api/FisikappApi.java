@@ -97,6 +97,7 @@ public interface FisikappApi {
     // Detalles del Laboratorio (¡Esta es la que llama el Adapter internamente!)
     @GET("api/laboratorio/{id}/")
     Call<com.google.gson.JsonObject> getLaboratorioPorId(
+            @Header("Authorization") String token, // <-- Agregamos esto
             @Path("id") int id
     );
 

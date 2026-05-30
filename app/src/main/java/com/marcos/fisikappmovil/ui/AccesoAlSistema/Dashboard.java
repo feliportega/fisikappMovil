@@ -114,6 +114,7 @@ public class Dashboard extends AppCompatActivity {
                     lista = response.body();
                     Log.d("LABS_ENCONTRADOS", String.valueOf(lista.size()));
 
+                    // Ahora le enviamos también la variable 'token' que armaste arriba
                     LaboratorioAdapter adapter = new LaboratorioAdapter(lista);
                     recyclerView.setAdapter(adapter);
 
