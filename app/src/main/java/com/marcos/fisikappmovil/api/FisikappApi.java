@@ -89,8 +89,8 @@ public interface FisikappApi {
     );
 
     // Laboratorios
-    @GET("api/laboratorios/")
-    Call<List<Laboratorio>> getLaboratorios(
+    @GET("inscripciones/mis-laboratorios/")
+    Call<List<Laboratorio>> getMisLaboratorios(
             @Header("Authorization") String token
     );
 

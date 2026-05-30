@@ -1,5 +1,6 @@
 package com.marcos.fisikappmovil.ui.AccesoAlSistema;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,6 +42,11 @@ public class LaboratorioAdapter
             int position) {
 
         Laboratorio laboratorio = lista.get(position);
+
+        Log.d("LAB_DEBUG",
+                "Titulo: " + laboratorio.getTitulo_lab()
+                        + " Codigo: " + laboratorio.getCodigo_lab()
+                        + " Resumen: " + laboratorio.getResumen());
 
         holder.txtTitulo.setText(
                 laboratorio.getTitulo_lab());

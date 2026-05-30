@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-
+import com.marcos.fisikappmovil.model.TokenManager;
 import com.marcos.fisikappmovil.R;
 import com.marcos.fisikappmovil.api.FisikappApi;
 import com.marcos.fisikappmovil.api.RetrofitClient;
@@ -90,29 +90,71 @@ public class Dashboard extends AppCompatActivity {
      * Obtiene la lista de laboratorios desde la API.
      */
     private void cargarLaboratorio() {
-        // Nota: El token debería ser manejado de forma dinámica idealmente
-        String token = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."; 
 
-        api.getLaboratorios(token).enqueue(new Callback<List<Laboratorio>>() {
-            @Override
-            public void onResponse(Call<List<Laboratorio>> call, Response<List<Laboratorio>> response) {
-                if (response.isSuccessful() && response.body() != null) {
-                    List<Laboratorio> lista = response.body();
-                    LaboratorioAdapter adapter = new LaboratorioAdapter(lista);
-                    recyclerView.setAdapter(adapter);
-                    actualizarVistaLaboratorio(lista);
-                } else {
-                    actualizarVistaLaboratorio(null);
+        TokenManager tokenManager = new TokenManager(this);
+
+        String tokenGuardado = tokenManager.getToken();
+
+        if (tokenGuardado == null || tokenGuardado.isEmpty()) {
+            Log.e("TOKEN", "No existe token");
+            return;
+        }
+
+        String token = "Bearer " + tokenGuardado;
+
+        api.getMisLaboratorios(token).enqueue(
+                new Callback<List<Laboratorio>>() {
+
+                    @Override
+                    public void onResponse(
+                            Call<List<Laboratorio>> call,
+                            Response<List<Laboratorio>> response) {
+
+                        Log.d("CODIGO", String.valueOf(response.code()));
+                        if(response.body()!=null){
+                            Log.d("CANTIDAD", String.valueOf(response.body().size()));
+                        }
+
+                        if (response.isSuccessful()
+                                && response.body() != null) {
+
+                            List<Laboratorio> lista =
+                                    response.body();
+
+                            Log.d(
+                                    "LABS_ENCONTRADOS",
+                                    String.valueOf(lista.size())
+                            );
+
+                            LaboratorioAdapter adapter =
+                                    new LaboratorioAdapter(lista);
+
+                            recyclerView.setAdapter(adapter);
+
+                            actualizarVistaLaboratorio(lista);
+
+                        } else {
+
+                            actualizarVistaLaboratorio(null);
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(
+                            Call<List<Laboratorio>> call,
+                            Throwable throwable) {
+
+                        Log.e(
+                                "API_ERROR",
+                                throwable.getMessage()
+                        );
+
+                        actualizarVistaLaboratorio(null);
+                    }
                 }
-            }
-
-            @Override
-            public void onFailure(Call<List<Laboratorio>> call, Throwable throwable) {
-                Log.e("API_ERROR", throwable.getMessage());
-                actualizarVistaLaboratorio(null);
-            }
-        });
+        );
     }
+
 
     /**
      * Gestiona la visibilidad de los elementos según si hay laboratorios o no.
