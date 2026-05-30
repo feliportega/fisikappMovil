@@ -93,13 +93,13 @@ public class ConceptosBasicos extends AppCompatActivity {
                 layoutConceptos.setVisibility(View.GONE);
                 layoutFormulas.setVisibility(View.VISIBLE);
 
-
                 tabConceptos.setTextColor(getResources().getColor(android.R.color.darker_gray));
                 tabFormulas.setTextColor(getResources().getColor(android.R.color.holo_blue_dark));
 
             }
         });
 
-
     }
 }
+
+
