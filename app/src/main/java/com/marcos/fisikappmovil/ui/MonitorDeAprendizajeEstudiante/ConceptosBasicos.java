@@ -8,7 +8,11 @@ import android.widget.ImageView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.marcos.fisikappmovil.R;
+import com.marcos.fisikappmovil.Laboratorio_experimental;
 
+/**
+ * Activity que muestra los conceptos teóricos del laboratorio.
+ */
 public class ConceptosBasicos extends AppCompatActivity {
 
     @Override
@@ -19,23 +23,15 @@ public class ConceptosBasicos extends AppCompatActivity {
         // Botón para regresar
         ImageView btnBack = findViewById(R.id.btnBack);
         if (btnBack != null) {
-            btnBack.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    finish();
-                }
-            });
+            btnBack.setOnClickListener(v -> finish());
         }
 
-        // Botón "Siguiente etapa" para ir a Práctica de Conceptos
-        Button btnSiguiente = findViewById(R.id.btnSiguienteEtapa);
-        if (btnSiguiente != null) {
-            btnSiguiente.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(ConceptosBasicos.this, PracticaConceptos.class);
-                    startActivity(intent);
-                }
+        // CONFIGURACIÓN DEL FLUJO (Punto 4 al 5): De Teoría a Fórmulas
+        Button btnVerFormulas = findViewById(R.id.btnVerFormulas);
+        if (btnVerFormulas != null) {
+            btnVerFormulas.setOnClickListener(v -> {
+                Intent intent = new Intent(ConceptosBasicos.this, Laboratorio_experimental.class);
+                startActivity(intent);
             });
         }
     }
