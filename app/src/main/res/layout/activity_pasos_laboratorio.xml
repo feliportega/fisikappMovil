@@ -6,8 +6,6 @@
     android:orientation="vertical"
     android:background="#001B6B">
 
-
-    <!-- SCROLL -->
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -19,7 +17,6 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <!-- HEADER -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="140dp"
@@ -46,16 +43,15 @@
                     android:textSize="13sp"/>
             </LinearLayout>
 
-            <!-- CONTENEDOR BLANCO -->
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"
                 android:layout_marginTop="-20dp"
                 android:background="@drawable/bg_card_rounded"
                 android:orientation="vertical"
-                android:padding="12dp">
+                android:padding="16dp">
 
-                <!-- PASO 1: Iniciar Camino -->
                 <LinearLayout
                     android:id="@+id/btnIniciarCamino"
                     android:layout_width="match_parent"
@@ -63,16 +59,15 @@
                     android:orientation="horizontal"
                     android:clickable="true"
                     android:focusable="true"
+                    android:paddingVertical="8dp"
                     android:background="?attr/selectableItemBackground">
 
-                    <!-- COLUMNA IZQUIERDA -->
                     <LinearLayout
                         android:layout_width="40dp"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:gravity="center_horizontal"
                         android:orientation="vertical">
 
-                        <!-- CIRCULO -->
                         <TextView
                             android:layout_width="28dp"
                             android:layout_height="28dp"
@@ -82,14 +77,13 @@
                             android:textColor="@android:color/black"
                             android:textStyle="bold"/>
 
-                        <!-- LINEA -->
                         <View
                             android:layout_width="2dp"
-                            android:layout_height="65dp"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"
                             android:background="#E0E0E0"/>
                     </LinearLayout>
 
-                    <!-- CONTENIDO -->
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -112,7 +106,6 @@
                             android:textColor="#777777"
                             android:textSize="13sp"/>
 
-                        <!-- LINEA -->
                         <View
                             android:layout_width="match_parent"
                             android:layout_height="1dp"
@@ -122,17 +115,12 @@
 
                 </LinearLayout>
 
-                <!-- Otros pasos simplificados para visualización -->
-                <!-- [Resto de pasos 2 al 6...] -->
-
             </LinearLayout>
 
         </LinearLayout>
 
     </ScrollView>
 
-    <!-- BOTTOM NAVIGATION -->
-    <!-- MENU INFERIOR -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="70dp"
@@ -141,20 +129,17 @@
         android:orientation="horizontal"
         android:padding="8dp">
 
-        <!-- INICIO -->
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
             android:orientation="vertical">
-
             <ImageView
                 android:layout_width="22dp"
                 android:layout_height="22dp"
                 android:src="@drawable/baseline_home_24"
                 app:tint="@android:color/white"/>
-
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -164,43 +149,37 @@
                 android:textSize="11sp"/>
         </LinearLayout>
 
-        <!-- LABORATORIOS -->
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
             android:orientation="vertical">
-
             <ImageView
                 android:layout_width="22dp"
-                android:layout_height="13dp"
+                android:layout_height="22dp"
                 android:src="@drawable/baseline_science_24"
                 app:tint="@android:color/white" />
-
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="1dp"
                 android:text="Laboratorios"
                 android:textColor="@android:color/white"
-                android:textSize="10sp"/>
+                android:textSize="11sp"/>
         </LinearLayout>
 
-        <!-- INFORMES -->
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
             android:orientation="vertical">
-
             <ImageView
                 android:layout_width="22dp"
                 android:layout_height="22dp"
                 android:src="@drawable/ic_report"
                 app:tint="@android:color/white"/>
-
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -210,20 +189,17 @@
                 android:textSize="11sp"/>
         </LinearLayout>
 
-        <!-- PERFIL -->
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
             android:orientation="vertical">
-
             <ImageView
                 android:layout_width="22dp"
                 android:layout_height="22dp"
                 android:src="@drawable/ic_profile"
                 app:tint="@android:color/white"/>
-
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
