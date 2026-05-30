@@ -100,11 +100,6 @@ public class ConceptosBasicos extends AppCompatActivity {
             }
         });
 
-        // =========================
-        // CLICK BIBLIOGRAFIA
-        // =========================
-
-        });
 
     }
 }
