@@ -10,76 +10,93 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.marcos.fisikappmovil.R;
-import com.marcos.fisikappmovil.models.Laboratorio;
+import com.marcos.fisikappmovil.api.FisikappApi;
+import com.marcos.fisikappmovil.api.RetrofitClient;
+import com.marcos.fisikappmovil.models.Incripcion;
+
 
 import java.util.List;
 
-public class LaboratorioAdapter
-        extends RecyclerView.Adapter<LaboratorioAdapter.ViewHolder> {
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
-    List<Laboratorio> lista;
+public class LaboratorioAdapter extends RecyclerView.Adapter<LaboratorioAdapter.ViewHolder> {
 
-    public LaboratorioAdapter(List<Laboratorio> lista) {
+    private List<Incripcion> listaInscripciones;
+    private FisikappApi api;
 
-        this.lista = lista;
+    public LaboratorioAdapter(List<Incripcion> listaInscripciones) {
+        this.listaInscripciones = listaInscripciones;
+        this.api = RetrofitClient.getClient().create(FisikappApi.class);
     }
 
     @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(
-            @NonNull ViewGroup parent,
-            int viewType) {
-
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.activity_item_laboratorio, parent, false);
-
         return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(
-            @NonNull ViewHolder holder,
-            int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        Incripcion inscripcion = listaInscripciones.get(position);
+        int idLaboratorio = inscripcion.getLaboratorio();
 
-        Laboratorio laboratorio = lista.get(position);
+        // Ponemos textos temporales de carga mientras llega la info de la API
+        holder.txtTitulo.setText("Cargando laboratorio...");
+        holder.txtCodigo.setText("");
+        holder.txtResumen.setText("");
 
-        Log.d("LAB_DEBUG",
-                "Titulo: " + laboratorio.getTitulo_lab()
-                        + " Codigo: " + laboratorio.getCodigo_lab()
-                        + " Resumen: " + laboratorio.getResumen());
+        // Hacemos la petición secundaria importando com.google.gson.JsonObject
+        api.getLaboratorioPorId(idLaboratorio).enqueue(new retrofit2.Callback<com.google.gson.JsonObject>() {
+            @Override
+            public void onResponse(@NonNull retrofit2.Call<com.google.gson.JsonObject> call, @NonNull retrofit2.Response<com.google.gson.JsonObject> response) {
+                if (holder.getAdapterPosition() == RecyclerView.NO_POSITION) return;
 
-        holder.txtTitulo.setText(
-                laboratorio.getTitulo_lab());
+                if (response.isSuccessful() && response.body() != null) {
+                    com.google.gson.JsonObject labJson = response.body();
 
-        holder.txtCodigo.setText(
-                laboratorio.getCodigo_lab());
+                    // Extraemos los textos directamente del JSON usando las llaves de tu backend
+                    // Si en tu base de datos de Django los campos se llaman diferente (ej: "titulo" o "codigo"), cámbialos aquí dentro de las comillas
+                    String titulo = labJson.has("titulo_lab") && !labJson.get("titulo_lab").isJsonNull() ? labJson.get("titulo_lab").getAsString() : "Sin título";
+                    String codigo = labJson.has("codigo_lab") && !labJson.get("codigo_lab").isJsonNull() ? labJson.get("codigo_lab").getAsString() : "Sin código";
+                    String resumen = labJson.has("resumen") && !labJson.get("resumen").isJsonNull() ? labJson.get("resumen").getAsString() : "Sin resumen";
 
-        holder.txtResumen.setText(
-                laboratorio.getResumen());
+                    // Asignamos los datos directamente a tus TextViews
+                    if (holder.txtTitulo != null) holder.txtTitulo.setText(titulo);
+                    if (holder.txtCodigo != null) holder.txtCodigo.setText(codigo);
+                    if (holder.txtResumen != null) holder.txtResumen.setText(resumen);
+                } else {
+                    if (holder.txtTitulo != null) holder.txtTitulo.setText("Error al cargar datos");
+                    Log.e("ADAPTER_API", "Código de error: " + response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull retrofit2.Call<com.google.gson.JsonObject> call, @NonNull Throwable t) {
+                if (holder.getAdapterPosition() == RecyclerView.NO_POSITION) return;
+
+                if (holder.txtTitulo != null) holder.txtTitulo.setText("Error de conexión");
+                Log.e("ADAPTER_API", "Error: " + t.getMessage());
+            }
+        });
     }
 
     @Override
     public int getItemCount() {
-
-        return lista.size();
+        return listaInscripciones.size();
     }
 
-    public static class ViewHolder
-            extends RecyclerView.ViewHolder {
-
+    public static class ViewHolder extends RecyclerView.ViewHolder {
         TextView txtTitulo, txtCodigo, txtResumen;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-
-            txtTitulo =
-                    itemView.findViewById(R.id.txtTitulo);
-
-            txtCodigo =
-                    itemView.findViewById(R.id.txtCodigo);
-
-            txtResumen =
-                    itemView.findViewById(R.id.txtResumen);
+            txtTitulo = itemView.findViewById(R.id.txtTitulo);
+            txtCodigo = itemView.findViewById(R.id.txtCodigo);
+            txtResumen = itemView.findViewById(R.id.txtResumen);
         }
     }
 }

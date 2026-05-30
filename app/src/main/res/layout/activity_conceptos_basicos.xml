@@ -91,9 +91,6 @@
             android:padding="20dp"
             android:background="@android:color/white">
 
-            <!-- ===================== -->
-            <!-- CONTENIDO CONCEPTOS -->
-            <!-- ===================== -->
             <LinearLayout
                 android:id="@+id/layoutConceptos"
                 android:layout_width="match_parent"
@@ -193,6 +190,8 @@
                 android:layout_marginTop="24dp"/>
 
         </LinearLayout>
+        </LinearLayout>
+
     </ScrollView>
 
     <!-- Bottom Navigation Omitido por brevedad -->
