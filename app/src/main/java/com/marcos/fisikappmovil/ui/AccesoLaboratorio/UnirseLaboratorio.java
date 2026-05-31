@@ -72,9 +72,9 @@ public class UnirseLaboratorio extends AppCompatActivity {
         if (tokenGuardado == null || tokenGuardado.isEmpty()) {
 
             Toast.makeText(
-                    this,
-                    "No se encontró el token. Inicie sesión nuevamente.",
-                    Toast.LENGTH_LONG
+                    UnirseLaboratorio.this,
+                    "Laboratorio encontrado",
+                    Toast.LENGTH_SHORT
             ).show();
 
             return;
@@ -93,6 +93,9 @@ public class UnirseLaboratorio extends AppCompatActivity {
             @Override
             public void onResponse(Call<UnirLaboratorio> call,
                                    Response<UnirLaboratorio> response) {
+
+                Log.d("RESPUESTA_CODE", String.valueOf(response.code()));
+                Log.d("RESPUESTA_BODY", String.valueOf(response.body()));
 
                 if (response.isSuccessful()
                         && response.body() != null) {
