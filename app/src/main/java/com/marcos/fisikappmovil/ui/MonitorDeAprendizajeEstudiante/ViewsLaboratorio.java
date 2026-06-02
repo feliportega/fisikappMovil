@@ -6,12 +6,15 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.marcos.fisikappmovil.R;
 import com.marcos.fisikappmovil.api.FisikappApi;
 import com.marcos.fisikappmovil.api.RetrofitClient;
+import com.marcos.fisikappmovil.model.TokenManager;
+import com.marcos.fisikappmovil.models.LabResEstudiante;
 import com.marcos.fisikappmovil.models.Laboratorio;
 import com.marcos.fisikappmovil.ui.AccesoAlSistema.Dashboard;
 
@@ -21,8 +24,10 @@ import retrofit2.Response;
 
 public class ViewsLaboratorio extends AppCompatActivity {
 
-    TextView txtTituloLab, txtResumenLab;
+    TextView txtTituloLab, txtResumenLab,tvConfig;
     ImageButton btnRdash;
+    FisikappApi fisikappApi;
+    TokenManager tokenManager;
 
     Button btnPractica;
 
@@ -34,7 +39,7 @@ public class ViewsLaboratorio extends AppCompatActivity {
         // =========================
         // COMPONENTES
         // =========================
-
+        tvConfig=findViewById(R.id.tvConfig);
         btnRdash = findViewById(R.id.btnRdash);
         btnRdash.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -47,59 +52,46 @@ public class ViewsLaboratorio extends AppCompatActivity {
         txtTituloLab = findViewById(R.id.txtTituloLab);
         txtResumenLab = findViewById(R.id.txtResumenLab);
 
+        fisikappApi = RetrofitClient.getClient().create(FisikappApi.class);
+        tokenManager = new TokenManager(this);
+
         btnPractica = findViewById(R.id.btnPractica);
 
-        // =========================
-        // BOTÓN COMENZAR LABORATORIO
-        // =========================
 
-        btnPractica.setOnClickListener(v -> {
+        cargarLaboratorio(2);
 
-            Intent intent = new Intent(
-                    ViewsLaboratorio.this,
-                    PasosLaboratorio.class
-            );
+    }
 
-            startActivity(intent);
-        });
 
-        // =========================
-        // CONSUMO DEL BACKEND
-        // =========================
+    private void cargarLaboratorio(int id) {
+        String token = tokenManager.getToken();
+        if (token == null) {
+            Toast.makeText(this, "Token no encontrado", Toast.LENGTH_SHORT).show();
+            return;
+        }
 
-        FisikappApi api = RetrofitClient
-                .getClient()
-                .create(FisikappApi.class);
-
-        api.getLaboratorio(8).enqueue(new Callback<Laboratorio>() {
-
+        String authHeader = "Bearer " + token;
+        //Call<LabResEstudiante> call = FisikappApi.getLaboratorio(authHeader, id);
+        Call<LabResEstudiante> call = fisikappApi.getLaboratorio(authHeader,id);
+        call.enqueue(new Callback<LabResEstudiante>() {
             @Override
-            public void onResponse(Call<Laboratorio> call,
-                                   Response<Laboratorio> response) {
-
+            public void onResponse(Call<LabResEstudiante> call, Response<LabResEstudiante> response) {
                 if (response.isSuccessful() && response.body() != null) {
-
-                    Laboratorio laboratorio = response.body();
-
-                    txtTituloLab.setText(
-                            laboratorio.getTitulo_lab()
-                    );
-
-                    txtResumenLab.setText(
-                            laboratorio.getResumen()
-                    );
+                    LabResEstudiante lab = response.body();
+                    txtTituloLab.setText(lab.getTituloLab());
+                    txtResumenLab.setText(lab.getCategoria());
+                    tvConfig.setText(lab.getPrologo());
+                    // Aquí puedes actualizar otras vistas con la información del laboratorio
+                } else {
+                    Toast.makeText(ViewsLaboratorio.this, "Error al obtener el laboratorio", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
-            public void onFailure(Call<Laboratorio> call, Throwable t) {
-
-                txtTituloLab.setText("Error de conexión");
-
-                txtResumenLab.setText(
-                        t.getMessage()
-                );
+            public void onFailure(Call<LabResEstudiante> call, Throwable t) {
+                Toast.makeText(ViewsLaboratorio.this, "Error de conexión: " + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
+
 }
