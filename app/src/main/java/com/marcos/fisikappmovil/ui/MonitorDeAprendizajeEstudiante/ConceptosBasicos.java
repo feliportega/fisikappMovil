@@ -10,9 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.marcos.fisikappmovil.R;
 
-/**
- * Activity que muestra los conceptos teóricos del laboratorio.
- */
+
 public class ConceptosBasicos extends AppCompatActivity {
 
     @Override
@@ -27,7 +25,7 @@ public class ConceptosBasicos extends AppCompatActivity {
         }
 
         // CONFIGURACIÓN DEL FLUJO (Punto 4 al 5): De Teoría a Fórmulas
-        Button btnVerFormulas = findViewById(R.id.btnVerFormulas);
+        Button btnVerFormulas = findViewById(R.id.btnFormulas);
         if (btnVerFormulas != null) {
             btnVerFormulas.setOnClickListener(v -> {
                 Intent intent = new Intent(ConceptosBasicos.this, Laboratorio_experimental.class);
