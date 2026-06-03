@@ -3,6 +3,7 @@ package com.marcos.fisikappmovil.api;
 import com.marcos.fisikappmovil.models.Conclusion;
 import com.marcos.fisikappmovil.models.Incripcion;
 import com.marcos.fisikappmovil.models.Informe;
+import com.marcos.fisikappmovil.models.LabResEstudiante;
 import com.marcos.fisikappmovil.models.Recomendacion;
 import com.marcos.fisikappmovil.models.Resultado;
 import com.marcos.fisikappmovil.remote.request.EmailRequest;
@@ -123,4 +124,17 @@ public interface FisikappApi {
     //login
     @POST("users/login/")
     Call<LoginResponse> login(@Body LoginRequest request);
+
+    //@GET("laboratorio-profesor/{id}/")
+  //  Call<LabResEstudiante> getLaab(
+  //          @Header("Authorization") String token,
+ //           @Path("id") int id
+  //  );
+
+    @GET("laboratorio-profesor/{id}/")
+    Call<LabResEstudiante>getLaboratorio(
+            @Header("Autorization") String token,
+            @Path("id") int id
+    );
+
 }

@@ -8,8 +8,8 @@ public class Conclusion {
     public Conclusion(String texto, int informe) {
         this.texto = texto;
         this.informe = informe;
-    }
 
+        
     public int getId() { return id; }
     public String getTexto() { return texto; }
     public void setTexto(String texto) { this.texto = texto; }
