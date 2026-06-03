@@ -15,21 +15,35 @@ import com.marcos.fisikappmovil.R;
 public class SimulacionAR extends AppCompatActivity {
 
     private Button btnIrAConceptos;
+    private int idLaboratorio = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_simulacion_ar);
+        idLaboratorio = getIntent().getIntExtra("LABORATORIO_ID", -1);
 
         ImageView btnBack = findViewById(R.id.btnBack);
+
         if (btnBack != null) {
             btnBack.setOnClickListener(v -> finish());
         }
 
         btnIrAConceptos = findViewById(R.id.btnIrAConceptos);
+
         if (btnIrAConceptos != null) {
             btnIrAConceptos.setOnClickListener(v -> {
-                Intent intent = new Intent(SimulacionAR.this, ConceptosBasicos.class);
+
+                Intent intent = new Intent(
+                        SimulacionAR.this,
+                        ConceptosBasicos.class
+                );
+
+                intent.putExtra(
+                        "LABORATORIO_ID",
+                        idLaboratorio
+                );
+
                 startActivity(intent);
             });
         }
