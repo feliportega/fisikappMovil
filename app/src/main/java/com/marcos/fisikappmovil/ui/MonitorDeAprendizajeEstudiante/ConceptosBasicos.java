@@ -23,6 +23,10 @@ import retrofit2.Response;
 public class ConceptosBasicos extends AppCompatActivity {
 
     private int idLaboratorio = -1;
+    private TextView txtTituloLaboratorio;
+    private TextView txtResumen;
+    private TextView txtPrologo;
+    private TextView txtIntroduccion;
     private TextView txtMarcoTeorico;
 
     @Override
@@ -32,6 +36,10 @@ public class ConceptosBasicos extends AppCompatActivity {
         idLaboratorio = getIntent().getIntExtra("LABORATORIO_ID", -1);
 
         txtMarcoTeorico = findViewById(R.id.txtMarcoTeorico);
+        txtTituloLaboratorio = findViewById(R.id.txtTituloLaboratorio);
+        txtResumen = findViewById(R.id.txtResumen);
+        txtPrologo = findViewById(R.id.txtPrologo);
+        txtIntroduccion = findViewById(R.id.txtIntroduccion);
         Log.d("CONCEPTOS_API", "ID recibido: " + idLaboratorio);
 
         // Botón para regresar
@@ -81,6 +89,29 @@ public class ConceptosBasicos extends AppCompatActivity {
                                         "CONCEPTOS_API",
                                         laboratorio.toString()
                                 );
+                                String titulo =
+                                        laboratorio.has("titulo_lab")
+                                                && !laboratorio.get("titulo_lab").isJsonNull()
+                                                ? laboratorio.get("titulo_lab").getAsString()
+                                                : "Sin título";
+
+                                String resumen =
+                                        laboratorio.has("resumen")
+                                                && !laboratorio.get("resumen").isJsonNull()
+                                                ? laboratorio.get("resumen").getAsString()
+                                                : "Sin resumen";
+
+                                String prologo =
+                                        laboratorio.has("prologo")
+                                                && !laboratorio.get("prologo").isJsonNull()
+                                                ? laboratorio.get("prologo").getAsString()
+                                                : "Sin prólogo";
+
+                                String introduccion =
+                                        laboratorio.has("introduccion")
+                                                && !laboratorio.get("introduccion").isJsonNull()
+                                                ? laboratorio.get("introduccion").getAsString()
+                                                : "Sin introducción";
 
                                 String marcoTeorico =
                                         laboratorio.has("marco_teorico")
@@ -88,6 +119,10 @@ public class ConceptosBasicos extends AppCompatActivity {
                                                 ? laboratorio.get("marco_teorico").getAsString()
                                                 : "No existe marco teórico";
 
+                                txtTituloLaboratorio.setText(titulo);
+                                txtResumen.setText(resumen);
+                                txtPrologo.setText(prologo);
+                                txtIntroduccion.setText(introduccion);
                                 txtMarcoTeorico.setText(
                                         marcoTeorico
                                 );
