@@ -1,5 +1,6 @@
 package com.marcos.fisikappmovil.ui.MonitorDeAprendizajeEstudiante;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.transition.TransitionManager;
@@ -11,28 +12,29 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import com.marcos.fisikappmovil.R;
+import com.marcos.fisikappmovil.models.MenuActivity;
 
-/**
- * Activity que guía al usuario a través del experimento físico.
- * Muestra materiales y un procedimiento paso a paso en formato acordeón.
- */
-public class PracticaExperimental extends AppCompatActivity {
+
+public class PracticaExperimental extends MenuActivity {
 
     private ImageButton btnBack;
-    private Button btnContinuar;
+    private Button btnEmpezarPractica;
     
     // Elementos del acordeón
     private LinearLayout layoutPaso1, layoutPaso2, layoutPaso3, layoutPaso4, layoutPaso5, layoutPaso6, layoutPaso7;
     private ImageView imgPaso1, imgPaso2, imgPaso3, imgPaso4, imgPaso5, imgPaso6, imgPaso7;
 
+
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_practica_experimental);
+        configurarMenu();
 
         // Inicializar vistas básicas
         btnBack = findViewById(R.id.btnBack);
-        btnContinuar = findViewById(R.id.btnContinuar);
+        btnEmpezarPractica = findViewById(R.id.btnEmpezarPractica);
 
         // Inicializar elementos del acordeón
         initAccordionViews();
@@ -46,11 +48,11 @@ public class PracticaExperimental extends AppCompatActivity {
         setupStepListeners();
 
         // BOTÓN FINAL (Punto 7 del flujo): Regresa al Roadmap (Pasos del laboratorio)
-        if (btnContinuar != null) {
-            btnContinuar.setOnClickListener(new View.OnClickListener() {
+        if (btnEmpezarPractica != null) {
+            btnEmpezarPractica.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(PracticaExperimental.this, PasosLaboratorio.class);
+                    Intent intent = new Intent(PracticaExperimental.this, PasosDelLaboratorio.class);
                     // Usamos estas flags para no crear muchas pantallas repetidas en el historial
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                     startActivity(intent);

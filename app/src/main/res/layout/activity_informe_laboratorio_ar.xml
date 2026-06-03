@@ -416,32 +416,112 @@ El lanzamiento 2 obtuvo la mayor precisión y logró alcanzar el objetivo establ
         </LinearLayout>
     </ScrollView>
 
+    <!-- BOTTOM NAVIGATION -->
+    <!-- MENU INFERIOR -->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="75dp"
-        android:background="#0D1A52"
+        android:layout_height="70dp"
+        android:background="#001B6B"
         android:gravity="center"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:padding="8dp">
 
-        <LinearLayout android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:gravity="center" android:orientation="vertical">
-            <ImageView android:layout_width="24dp" android:layout_height="24dp" android:src="@drawable/baseline_home_24" app:tint="@color/white" />
-            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Inicio" android:textColor="@color/white" android:textSize="11sp" />
+        <!-- INICIO -->
+        <LinearLayout
+            android:id="@+id/btnInicio"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                android:src="@drawable/baseline_home_24"
+                app:tint="@android:color/white"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="1dp"
+                android:text="Inicio"
+                android:textColor="@android:color/white"
+                android:textSize="11sp"/>
         </LinearLayout>
 
-        <LinearLayout android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:gravity="center" android:orientation="vertical">
-            <ImageView android:layout_width="24dp" android:layout_height="24dp" android:src="@drawable/baseline_science_24" app:tint="@color/white" />
-            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Laboratorios" android:textColor="@color/white" android:textSize="11sp" />
+        <!-- LABORATORIOS -->
+        <LinearLayout
+            android:id="@+id/btnLaboratorios"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                android:src="@drawable/baseline_science_24"
+                app:tint="@android:color/white"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="1dp"
+                android:text="Laboratorios"
+                android:textColor="@android:color/white"
+                android:textSize="10sp"/>
         </LinearLayout>
 
-        <LinearLayout android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:gravity="center" android:orientation="vertical">
-            <ImageView android:layout_width="24dp" android:layout_height="24dp" android:src="@drawable/ic_report" app:tint="#FACC15" />
-            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Informes" android:textColor="#FACC15" android:textStyle="bold" android:textSize="11sp" />
+        <!-- INFORMES -->
+        <LinearLayout
+            android:id="@+id/btnInformes"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                android:src="@drawable/ic_report"
+                app:tint="@android:color/white"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="1dp"
+                android:text="Informes"
+                android:textColor="@android:color/white"
+                android:textSize="11sp"/>
         </LinearLayout>
 
-        <LinearLayout android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:gravity="center" android:orientation="vertical">
-            <ImageView android:layout_width="24dp" android:layout_height="24dp" android:src="@drawable/ic_profile" app:tint="@color/white" />
-            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Perfil" android:textColor="@color/white" android:textSize="11sp" />
+        <!-- PERFIL -->
+        <LinearLayout
+            android:id="@+id/btnPerfil"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                android:src="@drawable/ic_profile"
+                app:tint="@android:color/white"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="1dp"
+                android:text="Perfil"
+                android:textColor="@android:color/white"
+                android:textSize="11sp"/>
         </LinearLayout>
+
     </LinearLayout>
 
 </LinearLayout>

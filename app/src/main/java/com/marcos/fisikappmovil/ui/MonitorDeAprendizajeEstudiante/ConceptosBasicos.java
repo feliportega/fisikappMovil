@@ -5,18 +5,21 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.marcos.fisikappmovil.R;
+import com.marcos.fisikappmovil.models.MenuActivity;
 
 
-public class ConceptosBasicos extends AppCompatActivity {
+public class ConceptosBasicos extends MenuActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_conceptos_basicos);
+        configurarMenu();
 
         // Botón para regresar
         ImageView btnBack = findViewById(R.id.btnBack);
@@ -25,7 +28,7 @@ public class ConceptosBasicos extends AppCompatActivity {
         }
 
         // CONFIGURACIÓN DEL FLUJO (Punto 4 al 5): De Teoría a Fórmulas
-        Button btnVerFormulas = findViewById(R.id.btnFormulas);
+        TextView btnVerFormulas = findViewById(R.id.btnFormulas);
         if (btnVerFormulas != null) {
             btnVerFormulas.setOnClickListener(v -> {
                 Intent intent = new Intent(ConceptosBasicos.this, Laboratorio_experimental.class);

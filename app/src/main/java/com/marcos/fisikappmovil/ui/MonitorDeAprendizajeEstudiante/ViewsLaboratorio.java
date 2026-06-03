@@ -15,12 +15,13 @@ import com.marcos.fisikappmovil.api.RetrofitClient;
 
 // Importamos JsonObject de Google Gson para manejar la respuesta sin la clase Laboratorio
 import com.google.gson.JsonObject;
+import com.marcos.fisikappmovil.models.MenuActivity;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class ViewsLaboratorio extends AppCompatActivity {
+public class ViewsLaboratorio extends MenuActivity {
 
     TextView txtTituloLab, txtResumenLab;
     Button btnPractica;
@@ -29,6 +30,7 @@ public class ViewsLaboratorio extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_views_laboratorio);
+        configurarMenu();
 
         // COMPONENTES
         txtTituloLab = findViewById(R.id.txtTituloLab);

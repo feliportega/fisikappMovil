@@ -27,15 +27,12 @@ import retrofit2.Response;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-/**
- * Activity del Dashboard principal.
- * Muestra la bienvenida personalizada al usuario y la lista de laboratorios disponibles.
- */
+
 public class Dashboard extends AppCompatActivity {
 
     Button btemp;
-    TextView txtLaboratorio; // Mensaje de bienvenida / estado
-    TextView tvNombreBarra;  // Nombre en la barra superior
+    TextView txtLaboratorio;
+    TextView tvNombreBarra;
 
     FisikappApi api;
     RecyclerView recyclerView;
@@ -48,24 +45,24 @@ public class Dashboard extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_dashboard);
 
-        // Inicialización limpia de componentes
+
         imgcerrar_sesion = findViewById(R.id.imgcerrar_sesion);
         imgLaboratorio = findViewById(R.id.imgLaboratorio);
         txtLaboratorio = findViewById(R.id.txtLaboratorio);
         tvNombreBarra = findViewById(R.id.tvNombreUsuarioBarra);
 
-        // Configuración del RecyclerView
+
         recyclerView = findViewById(R.id.tarjeta);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        // Optimización para que el RecyclerView calcule bien los tamaños dentro de un ScrollView
+
         recyclerView.setHasFixedSize(false);
         recyclerView.setNestedScrollingEnabled(false);
 
         btemp = findViewById(R.id.btemp);
         api = RetrofitClient.getClient().create(FisikappApi.class);
 
-        // Recibir y mostrar el nombre del usuario de forma segura
+
         String nombre = getIntent().getStringExtra("USER_NAME");
         if (nombre != null && !nombre.isEmpty()) {
             if (tvNombreBarra != null) tvNombreBarra.setText(nombre.toUpperCase());
@@ -85,9 +82,7 @@ public class Dashboard extends AppCompatActivity {
         });
     }
 
-    /**
-     * Obtiene la lista de laboratorios desde la API.
-     */
+
     private void cargarLaboratorio() {
         TokenManager tokenManager = new TokenManager(this);
         String tokenGuardado = tokenManager.getToken();
@@ -114,7 +109,7 @@ public class Dashboard extends AppCompatActivity {
                     lista = response.body();
                     Log.d("LABS_ENCONTRADOS", String.valueOf(lista.size()));
 
-                    // Ahora le enviamos también la variable 'token' que armaste arriba
+
                     LaboratorioAdapter adapter = new LaboratorioAdapter(lista);
                     recyclerView.setAdapter(adapter);
 
@@ -132,19 +127,16 @@ public class Dashboard extends AppCompatActivity {
         });
     }
 
-    /**
-     * Gestiona la visibilidad de los elementos según si hay laboratorios o no.
-     */
+
     private void actualizarVistaLaboratorio(List<?> listaLaboratorio) {
         if (listaLaboratorio != null && !listaLaboratorio.isEmpty()) {
-            // SI HAY DATOS: Ocultamos la imagen de marcador de posición (tubo)
             if (imgLaboratorio != null) imgLaboratorio.setVisibility(View.GONE);
 
-            // Mantenemos el texto de bienvenida visible y mostramos la lista
+
             if (txtLaboratorio != null) txtLaboratorio.setVisibility(View.VISIBLE);
             if (recyclerView != null) recyclerView.setVisibility(View.VISIBLE);
         } else {
-            // NO HAY DATOS o Error: Mostramos los elementos por defecto de pantalla vacía
+
             if (imgLaboratorio != null) imgLaboratorio.setVisibility(View.VISIBLE);
             if (txtLaboratorio != null) {
                 txtLaboratorio.setVisibility(View.VISIBLE);

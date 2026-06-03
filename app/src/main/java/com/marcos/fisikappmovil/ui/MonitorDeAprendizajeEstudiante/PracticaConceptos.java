@@ -23,7 +23,7 @@ public class PracticaConceptos extends AppCompatActivity {
         Button btnSiguiente = findViewById(R.id.btnSiguienteEtapa);
         if (btnSiguiente != null) {
             btnSiguiente.setOnClickListener(v -> {
-                Intent intent = new Intent(PracticaConceptos.this, ConfiguracionSimulacion.class);
+                Intent intent = new Intent(PracticaConceptos.this, PasosDelLaboratorio.class);
                 startActivity(intent);
             });
         }

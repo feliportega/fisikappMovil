@@ -43,7 +43,7 @@
             android:name=".ui.MonitorDeAprendizajeEstudiante.SimulacionAR"
             android:exported="false" />
         <activity
-            android:name=".ui.MonitorDeAprendizajeEstudiante.ConfiguracionSimulacion"
+            android:name=".ui.MonitorDeAprendizajeEstudiante.PasosDelLaboratorio"
             android:exported="false" />
         <activity
             android:name=".ui.RecuperacionDeCuenta.RestablecerContrasena"
