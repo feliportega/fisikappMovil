@@ -88,7 +88,8 @@ public class Dashboard extends AppCompatActivity {
         String tokenGuardado = tokenManager.getToken();
 
         if (tokenGuardado == null || tokenGuardado.isEmpty()) {
-            Log.e("TOKEN", "No existe token");
+            Log.e("TOKEN", "No existe token en las preferencias");
+            actualizarVistaLaboratorio(null);
             return;
         }
 
@@ -97,31 +98,27 @@ public class Dashboard extends AppCompatActivity {
         api.getMisLaboratorios(token).enqueue(new Callback<List<Incripcion>>() {
             @Override
             public void onResponse(Call<List<Incripcion>> call, Response<List<Incripcion>> response) {
-                Log.d("CODIGO", String.valueOf(response.code()));
+                Log.d("CODIGO_RESPUESTA", "Código HTTP: " + response.code());
 
-                List<Incripcion> lista = null;
-
-                if (response.body() != null) {
-                    Log.d("CANTIDAD", String.valueOf(response.body().size()));
-                }
-
+                // Primero validamos si la respuesta del servidor fue exitosa (Códigos 200-299)
                 if (response.isSuccessful() && response.body() != null) {
-                    lista = response.body();
-                    Log.d("LABS_ENCONTRADOS", String.valueOf(lista.size()));
+                    List<Incripcion> lista = response.body();
+                    Log.d("LABS_ENCONTRADOS", "Cantidad recibida: " + lista.size());
 
-
+                    // Configurar el adaptador con la lista segura
                     LaboratorioAdapter adapter = new LaboratorioAdapter(lista);
                     recyclerView.setAdapter(adapter);
 
                     actualizarVistaLaboratorio(lista);
                 } else {
+                    Log.e("API_ERROR_SERVER", "El servidor respondió con error o cuerpo vacío.");
                     actualizarVistaLaboratorio(null);
                 }
             }
 
             @Override
             public void onFailure(Call<List<Incripcion>> call, Throwable throwable) {
-                Log.e("API_ERROR", throwable.getMessage());
+                Log.e("API_ERROR_CONEXION", "Fallo total de red: " + throwable.getMessage());
                 actualizarVistaLaboratorio(null);
             }
         });

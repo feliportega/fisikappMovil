@@ -132,9 +132,8 @@ public interface FisikappApi {
   //  );
 
     @GET("laboratorio-profesor/{id}/")
-    Call<LabResEstudiante>getLaboratorio(
-            @Header("Autorization") String token,
+    Call<LabResEstudiante> getLaboratorio(
+            @Header("Authorization")
             @Path("id") int id
     );
-
 }
