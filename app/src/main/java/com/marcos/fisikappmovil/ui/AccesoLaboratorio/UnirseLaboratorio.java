@@ -16,6 +16,9 @@ import com.marcos.fisikappmovil.api.FisikappApi;
 import com.marcos.fisikappmovil.api.RetrofitClient;
 import com.marcos.fisikappmovil.model.TokenManager;
 import com.marcos.fisikappmovil.models.UnirLaboratorio;
+import com.marcos.fisikappmovil.ui.AccesoAlSistema.Dashboard;
+import com.marcos.fisikappmovil.ui.MonitorDeAprendizajeEstudiante.ConceptosBasicos;
+import com.marcos.fisikappmovil.ui.MonitorDeAprendizajeEstudiante.PasosLaboratorio;
 import com.marcos.fisikappmovil.ui.MonitorDeAprendizajeEstudiante.ViewsLaboratorio;
 
 import retrofit2.Call;
@@ -25,7 +28,7 @@ import retrofit2.Response;
 public class UnirseLaboratorio extends AppCompatActivity {
 
     EditText edit_unirse;
-    Button btnUnirse;
+    Button btnUnirse, btnCancelarUA;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,8 +36,20 @@ public class UnirseLaboratorio extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_unirse_laboratorio);
 
+        btnCancelarUA = findViewById(R.id.btnCancelarUA);
         edit_unirse = findViewById(R.id.edit_unirse);
         btnUnirse = findViewById(R.id.btnUnirse);
+
+        if (btnCancelarUA != null) {
+            btnCancelarUA.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(UnirseLaboratorio.this, Dashboard.class);
+
+                    startActivity(intent);
+                }
+            });
+        }
 
         btnUnirse.setOnClickListener(new View.OnClickListener() {
             @Override
