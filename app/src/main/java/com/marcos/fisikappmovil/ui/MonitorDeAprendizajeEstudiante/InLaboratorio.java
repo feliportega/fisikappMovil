@@ -1,16 +1,13 @@
-package com.marcos.fisikappmovil;
+package com.marcos.fisikappmovil.ui.MonitorDeAprendizajeEstudiante;
 
 import android.os.Bundle;
 
 import androidx.activity.EdgeToEdge;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
+import com.marcos.fisikappmovil.R;
 import com.marcos.fisikappmovil.models.MenuActivity;
 
-public class informe_laboratorio_ar extends MenuActivity {
+public class InLaboratorio extends MenuActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

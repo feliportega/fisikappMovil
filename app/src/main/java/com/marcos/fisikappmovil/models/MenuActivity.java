@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.marcos.fisikappmovil.R;
 import com.marcos.fisikappmovil.ui.AccesoAlSistema.Dashboard;
 import com.marcos.fisikappmovil.ui.GestionDePerfilDelEstudiante.Perfil_del_estudiante;
+import com.marcos.fisikappmovil.ui.MonitorDeAprendizajeEstudiante.InLaboratorio;
 import com.marcos.fisikappmovil.ui.MonitorDeAprendizajeEstudiante.InformeLaboratorio;
 import com.marcos.fisikappmovil.ui.MonitorDeAprendizajeEstudiante.ViewsLaboratorio;
 
@@ -35,7 +36,7 @@ public class MenuActivity extends AppCompatActivity {
 
         if (btnInformes != null) {
             btnInformes.setOnClickListener(v ->
-                    startActivity(new Intent(this, InformeLaboratorio.class)));
+                    startActivity(new Intent(this, InLaboratorio.class)));
         }
 
         if (btnPerfil != null) {

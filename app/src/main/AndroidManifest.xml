@@ -25,7 +25,7 @@
         android:theme="@style/Theme.FisikappMovil"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".informe_laboratorio_ar"
+            android:name=".ui.MonitorDeAprendizajeEstudiante.InLaboratorio"
             android:exported="false" />
         <activity
             android:name=".ui.MonitorDeAprendizajeEstudiante.Laboratorio_experimental"

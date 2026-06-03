@@ -211,18 +211,19 @@
 
     </androidx.cardview.widget.CardView>
 
-      <!-- NAVBAR -->
+    <!-- BOTTOM NAVIGATION -->
+    <!-- MENU INFERIOR -->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="75dp"
-        android:background="#001B5B"
+        android:layout_height="70dp"
+        android:background="#001B6B"
         android:gravity="center"
         android:orientation="horizontal"
-        android:paddingTop="6dp"
-        android:paddingBottom="6dp">
+        android:padding="8dp">
 
         <!-- INICIO -->
         <LinearLayout
+            android:id="@+id/btnInicio"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -238,7 +239,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="3dp"
+                android:layout_marginTop="1dp"
                 android:text="Inicio"
                 android:textColor="@android:color/white"
                 android:textSize="11sp"/>
@@ -246,6 +247,7 @@
 
         <!-- LABORATORIOS -->
         <LinearLayout
+            android:id="@+id/btnLaboratorios"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -261,14 +263,15 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="3dp"
+                android:layout_marginTop="1dp"
                 android:text="Laboratorios"
                 android:textColor="@android:color/white"
-                android:textSize="11sp"/>
+                android:textSize="10sp"/>
         </LinearLayout>
 
         <!-- INFORMES -->
         <LinearLayout
+            android:id="@+id/btnInformes"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -284,7 +287,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="3dp"
+                android:layout_marginTop="1dp"
                 android:text="Informes"
                 android:textColor="@android:color/white"
                 android:textSize="11sp"/>
@@ -292,6 +295,7 @@
 
         <!-- PERFIL -->
         <LinearLayout
+            android:id="@+id/btnPerfil"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -307,7 +311,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="3dp"
+                android:layout_marginTop="1dp"
                 android:text="Perfil"
                 android:textColor="@android:color/white"
                 android:textSize="11sp"/>
