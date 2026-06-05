@@ -49,6 +49,7 @@ dependencies {
 
     implementation(project(":facesdk"))
 
+    implementation("androidx.cardview:cardview:1.0.0")
     // CameraX
     implementation("androidx.camera:camera-core:1.5.1")
     implementation("androidx.camera:camera-camera2:1.5.1")
