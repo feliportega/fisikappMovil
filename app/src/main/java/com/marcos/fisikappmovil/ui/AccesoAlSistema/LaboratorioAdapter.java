@@ -83,7 +83,7 @@ public class LaboratorioAdapter extends RecyclerView.Adapter<LaboratorioAdapter.
 
             // BUSCAMOS EL BOTÓN: Asegúrate de que el id en tu XML (activity_item_laboratorio)
             // se llame exactamente igual (por ejemplo, R.id.btnIniciar o R.id.btn_iniciar)
-            btnIniciar = itemView.findViewById(R.id.btnIniciar);
+            btnIniciar = itemView.findViewById(R.id .btnIniciar);
         }
     }
 }
