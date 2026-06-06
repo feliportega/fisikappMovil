@@ -170,7 +170,7 @@
                         <TextView android:layout_width="24dp" android:layout_height="24dp" android:background="#FACC15" android:text="1" android:gravity="center" android:textColor="@color/white" android:textStyle="bold" android:layout_marginEnd="12dp"/>
                         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Coloca el lanzador en una superficie plana y asegúrate de que esté fijo." android:textSize="13sp" android:textColor="#000000"/>
                     </LinearLayout>
-                    <ImageView android:id="@+id/imgPaso1" android:layout_width="match_parent" android:layout_height="180dp" android:layout_marginTop="10dp" android:visibility="gone" android:src="@drawable/physics" android:background="#F1F5F9" android:scaleType="fitCenter" android:contentDescription="Ejemplo paso 1" />
+                    <ImageView android:id="@+id/imgPaso1" android:layout_width="match_parent" android:layout_height="180dp" android:layout_marginTop="10dp" android:visibility="gone" android:src="@drawable/logo_fisikapp" android:background="#F1F5F9" android:scaleType="fitCenter" android:contentDescription="Ejemplo paso 1" />
                 </LinearLayout>
 
                 <!-- Paso 2 -->
@@ -187,7 +187,7 @@
                         <TextView android:layout_width="24dp" android:layout_height="24dp" android:background="#FACC15" android:text="2" android:gravity="center" android:textColor="@color/white" android:textStyle="bold" android:layout_marginEnd="12dp"/>
                         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Ajusta el ángulo de lanzamiento indicado en tu comparación." android:textSize="13sp" android:textColor="#000000"/>
                     </LinearLayout>
-                    <ImageView android:id="@+id/imgPaso2" android:layout_width="match_parent" android:layout_height="180dp" android:layout_marginTop="10dp" android:visibility="gone" android:src="@drawable/physics" android:background="#F1F5F9" android:scaleType="fitCenter" android:contentDescription="Ejemplo paso 2" />
+                    <ImageView android:id="@+id/imgPaso2" android:layout_width="match_parent" android:layout_height="180dp" android:layout_marginTop="10dp" android:visibility="gone" android:src="@drawable/logo_fisikapp" android:background="#F1F5F9" android:scaleType="fitCenter" android:contentDescription="Ejemplo paso 2" />
                 </LinearLayout>
 
                 <!-- Paso 3 -->
@@ -204,7 +204,7 @@
                         <TextView android:layout_width="24dp" android:layout_height="24dp" android:background="#FACC15" android:text="3" android:gravity="center" android:textColor="@color/white" android:textStyle="bold" android:layout_marginEnd="12dp"/>
                         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Carga la pelota en el lanzador con cuidado." android:textSize="13sp" android:textColor="#000000"/>
                     </LinearLayout>
-                    <ImageView android:id="@+id/imgPaso3" android:layout_width="match_parent" android:layout_height="180dp" android:layout_marginTop="10dp" android:visibility="gone" android:src="@drawable/physics" android:background="#F1F5F9" android:scaleType="fitCenter" android:contentDescription="Ejemplo paso 3" />
+                    <ImageView android:id="@+id/imgPaso3" android:layout_width="match_parent" android:layout_height="180dp" android:layout_marginTop="10dp" android:visibility="gone" android:src="@drawable/logo_fisikapp" android:background="#F1F5F9" android:scaleType="fitCenter" android:contentDescription="Ejemplo paso 3" />
                 </LinearLayout>
 
                 <!-- Paso 4 -->
@@ -221,7 +221,7 @@
                         <TextView android:layout_width="24dp" android:layout_height="24dp" android:background="#FACC15" android:text="4" android:gravity="center" android:textColor="@color/white" android:textStyle="bold" android:layout_marginEnd="12dp"/>
                         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Realiza el lanzamiento manteniendo el ángulo constante y observa el vuelo." android:textSize="13sp" android:textColor="#000000"/>
                     </LinearLayout>
-                    <ImageView android:id="@+id/imgPaso4" android:layout_width="match_parent" android:layout_height="180dp" android:layout_marginTop="10dp" android:visibility="gone" android:src="@drawable/physics" android:background="#F1F5F9" android:scaleType="fitCenter" android:contentDescription="Ejemplo paso 4" />
+                    <ImageView android:id="@+id/imgPaso4" android:layout_width="match_parent" android:layout_height="180dp" android:layout_marginTop="10dp" android:visibility="gone" android:src="@drawable/logo_fisikapp" android:background="#F1F5F9" android:scaleType="fitCenter" android:contentDescription="Ejemplo paso 4" />
                 </LinearLayout>
 
                 <!-- Paso 5 -->
@@ -238,7 +238,7 @@
                         <TextView android:layout_width="24dp" android:layout_height="24dp" android:background="#FACC15" android:text="5" android:gravity="center" android:textColor="@color/white" android:textStyle="bold" android:layout_marginEnd="12dp"/>
                         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Mide la distancia horizontal alcanzada por la pelota (R)." android:textSize="13sp" android:textColor="#000000"/>
                     </LinearLayout>
-                    <ImageView android:id="@+id/imgPaso5" android:layout_width="match_parent" android:layout_height="180dp" android:layout_marginTop="10dp" android:visibility="gone" android:src="@drawable/physics" android:background="#F1F5F9" android:scaleType="fitCenter" android:contentDescription="Ejemplo paso 5" />
+                    <ImageView android:id="@+id/imgPaso5" android:layout_width="match_parent" android:layout_height="180dp" android:layout_marginTop="10dp" android:visibility="gone" android:src="@drawable/logo_fisikapp" android:background="#F1F5F9" android:scaleType="fitCenter" android:contentDescription="Ejemplo paso 5" />
                 </LinearLayout>
 
                 <!-- Paso 6 -->
@@ -255,7 +255,7 @@
                         <TextView android:layout_width="24dp" android:layout_height="24dp" android:background="#FACC15" android:text="6" android:gravity="center" android:textColor="@color/white" android:textStyle="bold" android:layout_marginEnd="12dp"/>
                         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Mide la altura máxima lograda por la pelota (H)." android:textSize="13sp" android:textColor="#000000"/>
                     </LinearLayout>
-                    <ImageView android:id="@+id/imgPaso6" android:layout_width="match_parent" android:layout_height="180dp" android:layout_marginTop="10dp" android:visibility="gone" android:src="@drawable/physics" android:background="#F1F5F9" android:scaleType="fitCenter" android:contentDescription="Ejemplo paso 6" />
+                    <ImageView android:id="@+id/imgPaso6" android:layout_width="match_parent" android:layout_height="180dp" android:layout_marginTop="10dp" android:visibility="gone" android:src="@drawable/logo_fisikapp" android:background="#F1F5F9" android:scaleType="fitCenter" android:contentDescription="Ejemplo paso 6" />
                 </LinearLayout>
 
                 <!-- Paso 7 -->
@@ -272,7 +272,7 @@
                         <TextView android:layout_width="24dp" android:layout_height="24dp" android:background="#FACC15" android:text="7" android:gravity="center" android:textColor="@color/white" android:textStyle="bold" android:layout_marginEnd="12dp"/>
                         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Toma un video del lanzamiento si es posible para el análisis posterior." android:textSize="13sp" android:textColor="#000000"/>
                     </LinearLayout>
-                    <ImageView android:id="@+id/imgPaso7" android:layout_width="match_parent" android:layout_height="180dp" android:layout_marginTop="10dp" android:visibility="gone" android:src="@drawable/physics" android:background="#F1F5F9" android:scaleType="fitCenter" android:contentDescription="Ejemplo paso 7" />
+                    <ImageView android:id="@+id/imgPaso7" android:layout_width="match_parent" android:layout_height="180dp" android:layout_marginTop="10dp" android:visibility="gone" android:src="@drawable/logo_fisikapp" android:background="#F1F5F9" android:scaleType="fitCenter" android:contentDescription="Ejemplo paso 7" />
                 </LinearLayout>
             </LinearLayout>
 

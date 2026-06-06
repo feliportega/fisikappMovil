@@ -31,9 +31,6 @@
             android:name=".ui.MonitorDeAprendizajeEstudiante.Laboratorio_experimental"
             android:exported="false" />
         <activity
-            android:name=".Cerrar_sesion"
-            android:exported="false" />
-        <activity
             android:name=".ui.AccesoAlSistema.Item_laboratorio"
             android:exported="false" />
         <activity
@@ -49,31 +46,10 @@
             android:name=".ui.RecuperacionDeCuenta.RestablecerContrasena"
             android:exported="false" />
         <activity
-            android:name=".ui.SistemaDeNotificaciones.Mensaje_denegado"
-            android:exported="false" />
-        <activity
-            android:name=".ui.SistemaDeNotificaciones.Mensaje_confirmacion"
-            android:exported="false" />
-        <activity
-            android:name=".ui.MonitorDeAprendizajeEstudiante.cuartaPantalla"
-            android:exported="false" />
-        <activity
-            android:name=".ui.MonitorDeAprendizajeEstudiante.tercerapantalla"
-            android:exported="false" />
-        <activity
-            android:name=".ui.MonitorDeAprendizajeEstudiante.segundaPantalla"
-            android:exported="false" />
-        <activity
             android:name=".ui.RecuperacionDeCuenta.RecuperarCuenta"
             android:exported="false" />
         <activity
             android:name=".ui.AccesoLaboratorio.UnirseLaboratorio"
-            android:exported="false" />
-        <activity
-            android:name=".ui.MonitorDeAprendizajeEstudiante.InformeLaboratorio"
-            android:exported="false" />
-        <activity
-            android:name=".ui.MonitorDeAprendizajeEstudiante.PracticaConceptos"
             android:exported="false" />
         <activity
             android:name=".ui.MonitorDeAprendizajeEstudiante.ConceptosBasicos"
