@@ -4,13 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorFondoPrincipal"
-    tools:context=".ui.AccesoAlSistema.Dashboard">
+    android:background="#EEF5FB"
+    tools:context=".ui.AccesoAlSistema.Dashboard"
+    >
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+
+        >
 
         <View
             android:layout_width="match_parent"
@@ -29,7 +32,8 @@
             <ImageView
                 android:layout_width="24dp"
                 android:layout_height="24dp"
-                android:src="@drawable/iconofisik" />
+                android:src="@drawable/iconofisik"
+                />
 
             <TextView
                 android:layout_width="0dp"
@@ -47,7 +51,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
                 android:text="CRISTHIAN"
-                android:textColor="#7F8C8D"
+                android:textColor="#0A7DB6"
                 android:textSize="12sp" />
 
             <ImageView
@@ -62,7 +66,7 @@
             android:id="@+id/edtBuscar"
             android:layout_width="match_parent"
             android:layout_height="56dp"
-            android:background="@drawable/edittext_redondo"
+            android:background="@drawable/edittext_redondo2"
             android:drawableStart="@android:drawable/ic_menu_search"
             android:drawablePadding="12dp"
             android:hint="Buscar laboratorios..."
@@ -76,7 +80,7 @@
             android:layout_height="220dp"
             android:layout_marginTop="40dp"
             android:layout_gravity="center"
-            android:src="@drawable/tubo" />
+            android:src="@drawable/tubo" /> -->
 
         <TextView
             android:id="@+id/txtLaboratorio"
