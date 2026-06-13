@@ -20,10 +20,11 @@
         android:padding="16dp">
 
         <ImageView
-            android:layout_width="120dp"
-            android:layout_height="60dp"
-            android:layout_marginBottom="12dp"
-            android:src="@drawable/physics" />
+            android:id="@+id/imgLogo"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/vector_main_logo"
+            android:scaleType="fitCenter"/>
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -38,7 +39,7 @@
                 android:text="Informe Final"
                 android:textColor="@android:color/white"
                 android:textSize="20sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"/>
 
             <TextView
                 android:id="@+id/txtNombreLaboratorio"
@@ -46,7 +47,8 @@
                 android:layout_height="wrap_content"
                 android:text="Cargando laboratorio..."
                 android:textColor="@android:color/white"
-                android:textSize="14sp" />
+                android:textSize="14sp"/>
+
         </LinearLayout>
 
     </LinearLayout>
