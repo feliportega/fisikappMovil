@@ -24,6 +24,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.FisikappMovil"
         android:usesCleartextTraffic="true">
+
+        <activity
+            android:name=".ui.MonitorDeAprendizajeEstudiante.InformeFinalLaboratorio"
+            android:exported="false" />
         <activity
             android:name=".informe_laboratorio_ar"
             android:exported="false" />

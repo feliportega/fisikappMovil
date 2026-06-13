@@ -8,30 +8,6 @@
     android:orientation="vertical"
     tools:context=".ui.MonitorDeAprendizajeEstudiante.InformeLaboratorio">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#0D1A52"
-        android:padding="20dp">
-
-        <ImageView
-            android:id="@+id/btnBack"
-            android:layout_width="34dp"
-            android:layout_height="34dp"
-            android:src="@drawable/iconoretroceder"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginStart="16dp"
-            android:layout_toEndOf="@id/btnBack"
-            android:text="Generar Informe ar"
-            android:textColor="@color/white"
-            android:textSize="22sp"
-            android:textStyle="bold" />
-    </RelativeLayout>
-
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -43,6 +19,30 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:padding="20dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#0D1A52"
+                android:padding="20dp">
+
+                <ImageView
+                    android:id="@+id/btnBack"
+                    android:layout_width="34dp"
+                    android:layout_height="34dp"
+                    android:src="@drawable/iconoretroceder" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="16dp"
+                    android:layout_toEndOf="@id/btnBack"
+                    android:text="Generar Informe ar"
+                    android:textColor="@color/white"
+                    android:textSize="22sp"
+                    android:textStyle="bold" />
+            </RelativeLayout>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -109,20 +109,6 @@
                     android:textSize="14sp" />
             </LinearLayout>
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginTop="16dp"
-                android:background="#E0E0E0" />
-
-
-
-
-
-
-
-
-
 
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
@@ -159,7 +145,19 @@
                     <RelativeLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="8dp">
                         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Resuelto" android:textColor="#546E7A"/>
                         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_alignParentEnd="true" android:text="si" android:textColor="#546E7A"/>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_marginTop="16dp"
+                            android:background="#E0E0E0" />
                     </RelativeLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="40.85 m"
+                        android:textColor="#546E7A" />
 
                     <RelativeLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="8dp">
                         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Distancia Objetivo" android:textColor="#546E7A"/>
@@ -211,7 +209,7 @@
                     </RelativeLayout>
                     <RelativeLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="4dp">
                         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Alcance Horizontal" android:textColor="#546E7A"/>
-                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_alignParentEnd="true" android:text="40.85 m" android:textColor="#546E7A"/>
+
                     </RelativeLayout>
                     <RelativeLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="4dp">
                         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Velocidad Inicial" android:textColor="#546E7A"/>
