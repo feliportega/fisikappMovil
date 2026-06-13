@@ -89,13 +89,13 @@ public interface FisikappApi {
     );
 
     // Laboratorios (¡Esta es la que usamos para el Dashboard!)
-    @GET("inscripciones/mis-laboratorios/")
+    @GET("laboratorios-estudiante/")
     Call<List<Incripcion>> getMisLaboratorios(
             @Header("Authorization") String token
     );
 
     // Detalles del Laboratorio (¡Esta es la que llama el Adapter internamente!)
-    @GET("laboratorios/{id}/")
+    @GET("laboratorios-estudiante/{id}/")
     Call<com.google.gson.JsonObject> getLaboratorioPorId(
             @Header("Authorization") String token, // <-- Agregamos esto
             @Path("id") int id
