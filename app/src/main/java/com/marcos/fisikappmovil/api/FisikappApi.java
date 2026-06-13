@@ -1,7 +1,9 @@
 package com.marcos.fisikappmovil.api;
 
 import com.marcos.fisikappmovil.models.Conclusion;
+import com.marcos.fisikappmovil.models.Incripcion;
 import com.marcos.fisikappmovil.models.Informe;
+import com.marcos.fisikappmovil.models.LabResEstudiante;
 import com.marcos.fisikappmovil.models.Recomendacion;
 import com.marcos.fisikappmovil.models.Resultado;
 import com.marcos.fisikappmovil.remote.request.EmailRequest;
@@ -9,7 +11,6 @@ import com.marcos.fisikappmovil.remote.request.LoginRequest;
 import com.marcos.fisikappmovil.remote.request.RegisterRequest;
 import com.marcos.fisikappmovil.remote.request.ResetPasswordRequest;
 import com.marcos.fisikappmovil.remote.response.LoginResponse;
-import com.marcos.fisikappmovil.models.Laboratorio;
 import com.marcos.fisikappmovil.models.UnirLaboratorio;
 import com.google.gson.JsonObject;
 import com.marcos.fisikappmovil.remote.request.LoginRequest;
@@ -26,7 +27,7 @@ import retrofit2.http.PATCH;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
-import com.marcos.fisikappmovil.models.Laboratorio;
+
 
 public interface FisikappApi {
 
@@ -89,20 +90,16 @@ public interface FisikappApi {
             @Path("id") int id
     );
 
-    // Laboratorios
-    @GET("api/laboratorios/")
-    Call<List<Laboratorio>> getLaboratorios(
+    // Laboratorios (¡Esta es la que usamos para el Dashboard!)
+    @GET("inscripciones/mis-laboratorios/")
+    Call<List<Incripcion>> getMisLaboratorios(
             @Header("Authorization") String token
     );
 
-    @GET("api/laboratorio/{id}/")
-    Call<Laboratorio> getLaboratorioPorId(
-            @Path("id") int id
-    );
-
-    // Usuario
-    @GET("api/users/{id}/")
-    Call<Laboratorio> getLaboratorio(
+    // Detalles del Laboratorio (¡Esta es la que llama el Adapter internamente!)
+    @GET("laboratorios/{id}/")
+    Call<com.google.gson.JsonObject> getLaboratorioPorId(
+            @Header("Authorization") String token, // <-- Agregamos esto
             @Path("id") int id
     );
 
@@ -128,4 +125,16 @@ public interface FisikappApi {
     //login
     @POST("users/login/")
     Call<LoginResponse> login(@Body LoginRequest request);
+
+    //@GET("laboratorio-profesor/{id}/")
+  //  Call<LabResEstudiante> getLaab(
+  //          @Header("Authorization") String token,
+ //           @Path("id") int id
+  //  );
+
+    @GET("laboratorio-profesor/{id}/")
+    Call<LabResEstudiante> getLaboratorio(
+            @Header("Authorization")
+            @Path("id") int id
+    );
 }

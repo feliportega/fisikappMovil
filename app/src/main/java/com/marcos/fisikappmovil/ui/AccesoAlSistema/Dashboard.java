@@ -12,13 +12,15 @@ import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+import com.marcos.fisikappmovil.model.TokenManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.marcos.fisikappmovil.R;
 import com.marcos.fisikappmovil.api.FisikappApi;
 import com.marcos.fisikappmovil.api.RetrofitClient;
-import com.marcos.fisikappmovil.models.Laboratorio;
+import com.marcos.fisikappmovil.models.Incripcion;
+
 import com.marcos.fisikappmovil.ui.AccesoLaboratorio.UnirseLaboratorio;
 
 import java.util.List;
@@ -27,153 +29,122 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+
 public class Dashboard extends AppCompatActivity {
 
-    private Button btemp;
+    Button btemp;
+    TextView txtLaboratorio;
+    TextView tvNombreBarra;
 
-    private TextView tvNombreBarra;
-    private TextView txtBienvenida;
+    FisikappApi api;
+    RecyclerView recyclerView;
+    ImageView imgcerrar_sesion;
+    private ImageView imgLaboratorio;
 
-    private ImageView imgcerrar_sesion;
-
-    private LinearLayout layoutBienvenida;
-
-    private RecyclerView recyclerLaboratorios;
-
-    private FisikappApi api;
-
-    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_dashboard);
 
-        // INICIALIZAR VISTAS
-        imgcerrar_sesion = findViewById(R.id.imgcerrar_sesion);
 
+        imgcerrar_sesion = findViewById(R.id.imgcerrar_sesion);
+        imgLaboratorio = findViewById(R.id.imgLaboratorio);
+        txtLaboratorio = findViewById(R.id.txtLaboratorio);
         tvNombreBarra = findViewById(R.id.tvNombreUsuarioBarra);
 
-        txtBienvenida = findViewById(R.id.txtBienvenida);
 
-        layoutBienvenida = findViewById(R.id.layoutBienvenida);
+        recyclerView = findViewById(R.id.tarjeta);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        recyclerLaboratorios = findViewById(R.id.recyclerLaboratorios);
+
+        recyclerView.setHasFixedSize(false);
+        recyclerView.setNestedScrollingEnabled(false);
 
         btemp = findViewById(R.id.btemp);
-
-        // RECYCLERVIEW
-        recyclerLaboratorios.setLayoutManager(
-                new LinearLayoutManager(this)
-        );
-
-        // API
         api = RetrofitClient.getClient().create(FisikappApi.class);
 
-        // NOMBRE USUARIO
+
         String nombre = getIntent().getStringExtra("USER_NAME");
-
         if (nombre != null && !nombre.isEmpty()) {
-
-            tvNombreBarra.setText(nombre.toUpperCase());
-
-            txtBienvenida.setText(
-                    "¡Bienvenido de nuevo, " + nombre + "!"
-            );
+            if (tvNombreBarra != null) tvNombreBarra.setText(nombre.toUpperCase());
+            if (txtLaboratorio != null) txtLaboratorio.setText("¡Bienvenido de nuevo, " + nombre + "!");
+        } else {
+            if (txtLaboratorio != null) txtLaboratorio.setText("¡Bienvenido de nuevo!");
         }
 
-        // CARGAR LABORATORIOS
         cargarLaboratorio();
 
-        // BOTON EMPEZAR
         btemp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                Intent intent = new Intent(
-                        Dashboard.this,
-                        UnirseLaboratorio.class
-                );
-
-                startActivity(intent);
+                Intent iremp = new Intent(Dashboard.this, UnirseLaboratorio.class);
+                startActivity(iremp);
             }
         });
     }
 
-    /**
-     * CARGAR LABORATORIOS
-     */
+
     private void cargarLaboratorio() {
+        TokenManager tokenManager = new TokenManager(this);
+        String tokenGuardado = tokenManager.getToken();
 
-        String token = "Bearer TU_TOKEN";
+        if (tokenGuardado == null || tokenGuardado.isEmpty()) {
+            Log.e("TOKEN", "No existe token en las preferencias");
+            actualizarVistaLaboratorio(null);
+            return;
+        }
 
-        api.getLaboratorios(token).enqueue(new Callback<List<Laboratorio>>() {
+        String token = "Bearer " + tokenGuardado;
 
+        api.getMisLaboratorios(token).enqueue(new Callback<List<Incripcion>>() {
             @Override
-            public void onResponse(
-                    Call<List<Laboratorio>> call,
-                    Response<List<Laboratorio>> response
-            ) {
+            public void onResponse(Call<List<Incripcion>> call, Response<List<Incripcion>> response) {
+                Log.d("CODIGO_RESPUESTA", "Código HTTP: " + response.code());
 
+                // Primero validamos si la respuesta del servidor fue exitosa (Códigos 200-299)
                 if (response.isSuccessful() && response.body() != null) {
+                    List<Incripcion> lista = response.body();
+                    Log.d("LABS_ENCONTRADOS", "Cantidad recibida: " + lista.size());
 
-                    List<Laboratorio> lista = response.body();
+                    // Configurar el adaptador con la lista segura
+                    LaboratorioAdapter adapter = new LaboratorioAdapter(lista);
+                    recyclerView.setAdapter(adapter);
 
-                    Log.d("LABS", "Cantidad: " + lista.size());
-
-                    // ADAPTER
-                    LaboratorioAdapter adapter =
-                            new LaboratorioAdapter(lista);
-
-                    recyclerLaboratorios.setAdapter(adapter);
-
-                    // ACTUALIZAR UI
                     actualizarVistaLaboratorio(lista);
-
                 } else {
-
-                    Log.e("API", "Respuesta vacía");
-
+                    Log.e("API_ERROR_SERVER", "El servidor respondió con error o cuerpo vacío.");
                     actualizarVistaLaboratorio(null);
                 }
             }
 
             @Override
-            public void onFailure(
-                    Call<List<Laboratorio>> call,
-                    Throwable throwable
-            ) {
-
-                Log.e("API_ERROR", throwable.getMessage());
-
+            public void onFailure(Call<List<Incripcion>> call, Throwable throwable) {
+                Log.e("API_ERROR_CONEXION", "Fallo total de red: " + throwable.getMessage());
                 actualizarVistaLaboratorio(null);
             }
         });
     }
 
-    /**
-     * MOSTRAR U OCULTAR CONTENIDO
-     */
-    private void actualizarVistaLaboratorio(
-            List<?> listaLaboratorio
-    ) {
 
-        if (listaLaboratorio != null
-                && !listaLaboratorio.isEmpty()) {
+    private void actualizarVistaLaboratorio(List<?> listaLaboratorio) {
+        if (listaLaboratorio != null && !listaLaboratorio.isEmpty()) {
+            if (imgLaboratorio != null) imgLaboratorio.setVisibility(View.GONE);
 
-            // MOSTRAR LISTA
-            recyclerLaboratorios.setVisibility(View.VISIBLE);
 
-            // OCULTAR BIENVENIDA
-            layoutBienvenida.setVisibility(View.GONE);
-
+            if (txtLaboratorio != null) txtLaboratorio.setVisibility(View.VISIBLE);
+            if (recyclerView != null) recyclerView.setVisibility(View.VISIBLE);
         } else {
 
-            // MOSTRAR BIENVENIDA
-            layoutBienvenida.setVisibility(View.VISIBLE);
-
-            // OCULTAR LISTA
-            recyclerLaboratorios.setVisibility(View.GONE);
+            if (imgLaboratorio != null) imgLaboratorio.setVisibility(View.VISIBLE);
+            if (txtLaboratorio != null) {
+                txtLaboratorio.setVisibility(View.VISIBLE);
+                txtLaboratorio.setText("No hay laboratorios disponibles hoy");
+            }
+            if (recyclerView != null) recyclerView.setVisibility(View.GONE);
         }
     }
 }

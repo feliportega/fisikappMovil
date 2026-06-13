@@ -4,9 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#0D1A52"
+    android:background="@color/colorFondoPrincipal"
     android:orientation="vertical"
-    tools:context=".ui.MonitorDeAprendizajeEstudiante.ConfiguracionSimulacion">
+    tools:context=".ui.MonitorDeAprendizajeEstudiante.PasosDelLaboratorio">
+
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -61,7 +62,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:padding="24dp">
+                android:padding="24dp"
+                android:background="#FFFFFF">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -391,89 +393,112 @@
         </ScrollView>
     </androidx.cardview.widget.CardView>
 
+    <!-- BOTTOM NAVIGATION -->
+    <!-- MENU INFERIOR -->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="75dp"
-        android:background="#0D1A52"
+        android:layout_height="70dp"
+        android:background="#001B6B"
         android:gravity="center"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:padding="8dp">
 
+        <!-- INICIO -->
         <LinearLayout
+            android:id="@+id/btnInicio"
             android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
             android:orientation="vertical">
+
             <ImageView
-                android:layout_width="26dp"
-                android:layout_height="26dp"
+                android:layout_width="22dp"
+                android:layout_height="22dp"
                 android:src="@drawable/baseline_home_24"
-                app:tint="@color/white" />
+                app:tint="@android:color/white"/>
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="1dp"
                 android:text="Inicio"
-                android:textColor="@color/white"
-                android:textSize="11sp" />
+                android:textColor="@android:color/white"
+                android:textSize="11sp"/>
         </LinearLayout>
 
+        <!-- LABORATORIOS -->
         <LinearLayout
+            android:id="@+id/btnLaboratorios"
             android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
             android:orientation="vertical">
+
             <ImageView
-                android:layout_width="26dp"
-                android:layout_height="26dp"
+                android:layout_width="22dp"
+                android:layout_height="22dp"
                 android:src="@drawable/baseline_science_24"
-                app:tint="#2563EB" />
+                app:tint="@android:color/white"/>
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="1dp"
                 android:text="Laboratorios"
-                android:textColor="#2563EB"
-                android:textSize="11sp"
-                android:textStyle="bold" />
+                android:textColor="@android:color/white"
+                android:textSize="10sp"/>
         </LinearLayout>
 
+        <!-- INFORMES -->
         <LinearLayout
+            android:id="@+id/btnInformes"
             android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
             android:orientation="vertical">
+
             <ImageView
-                android:layout_width="26dp"
-                android:layout_height="26dp"
+                android:layout_width="22dp"
+                android:layout_height="22dp"
                 android:src="@drawable/ic_report"
-                app:tint="@color/white" />
+                app:tint="@android:color/white"/>
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="1dp"
                 android:text="Informes"
-                android:textColor="@color/white"
-                android:textSize="11sp" />
+                android:textColor="@android:color/white"
+                android:textSize="11sp"/>
         </LinearLayout>
 
+        <!-- PERFIL -->
         <LinearLayout
+            android:id="@+id/btnPerfil"
             android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
             android:orientation="vertical">
+
             <ImageView
-                android:layout_width="26dp"
-                android:layout_height="26dp"
+                android:layout_width="22dp"
+                android:layout_height="22dp"
                 android:src="@drawable/ic_profile"
-                app:tint="@color/white" />
+                app:tint="@android:color/white"/>
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="1dp"
                 android:text="Perfil"
-                android:textColor="@color/white"
-                android:textSize="11sp" />
+                android:textColor="@android:color/white"
+                android:textSize="11sp"/>
         </LinearLayout>
+
     </LinearLayout>
 
 </LinearLayout>

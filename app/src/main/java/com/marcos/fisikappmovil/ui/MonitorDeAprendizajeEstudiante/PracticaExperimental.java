@@ -1,5 +1,7 @@
 package com.marcos.fisikappmovil.ui.MonitorDeAprendizajeEstudiante;
 
+import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.transition.TransitionManager;
 import android.view.View;
@@ -10,68 +12,87 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import com.marcos.fisikappmovil.R;
+import com.marcos.fisikappmovil.models.MenuActivity;
 
-public class PracticaExperimental extends AppCompatActivity {
+
+public class PracticaExperimental extends MenuActivity {
 
     private ImageButton btnBack;
-    private Button btnContinuar;
+    private Button btnEmpezarPractica;
     
     // Elementos del acordeón
-    private LinearLayout layoutPaso1, layoutPaso2;
-    private ImageView imgPaso1, imgPaso2;
+    private LinearLayout layoutPaso1, layoutPaso2, layoutPaso3, layoutPaso4, layoutPaso5, layoutPaso6, layoutPaso7;
+    private ImageView imgPaso1, imgPaso2, imgPaso3, imgPaso4, imgPaso5, imgPaso6, imgPaso7;
 
+
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_practica_experimental);
+        configurarMenu();
 
         // Inicializar vistas básicas
         btnBack = findViewById(R.id.btnBack);
-        btnContinuar = findViewById(R.id.btnContinuar);
+        btnEmpezarPractica = findViewById(R.id.btnEmpezarPractica);
 
         // Inicializar elementos del acordeón
-        layoutPaso1 = findViewById(R.id.layoutPaso1);
-        layoutPaso2 = findViewById(R.id.layoutPaso2);
-        imgPaso1 = findViewById(R.id.imgPaso1);
-        imgPaso2 = findViewById(R.id.imgPaso2);
+        initAccordionViews();
 
-        btnBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-            }
-        });
+        // Botón atrás
+        if (btnBack != null) {
+            btnBack.setOnClickListener(v -> finish());
+        }
 
-        // Configurar clics para el efecto acordeón
-        layoutPaso1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                toggleStep(imgPaso1, (ViewGroup) layoutPaso1.getParent());
-            }
-        });
+        // Configurar clics para expandir/colapsar pasos
+        setupStepListeners();
 
-        layoutPaso2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                toggleStep(imgPaso2, (ViewGroup) layoutPaso2.getParent());
-            }
-        });
-
-        btnContinuar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Navegación futura
-            }
-        });
+        // BOTÓN FINAL (Punto 7 del flujo): Regresa al Roadmap (Pasos del laboratorio)
+        if (btnEmpezarPractica != null) {
+            btnEmpezarPractica.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(PracticaExperimental.this, PasosDelLaboratorio.class);
+                    // Usamos estas flags para no crear muchas pantallas repetidas en el historial
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                    startActivity(intent);
+                    finish();
+                }
+            });
+        }
     }
 
-    /**
-     * Alterna la visibilidad de la imagen con una animación suave
-     */
+    private void initAccordionViews() {
+        layoutPaso1 = findViewById(R.id.layoutPaso1);
+        layoutPaso2 = findViewById(R.id.layoutPaso2);
+        layoutPaso3 = findViewById(R.id.layoutPaso3);
+        layoutPaso4 = findViewById(R.id.layoutPaso4);
+        layoutPaso5 = findViewById(R.id.layoutPaso5);
+        layoutPaso6 = findViewById(R.id.layoutPaso6);
+        layoutPaso7 = findViewById(R.id.layoutPaso7);
+
+        imgPaso1 = findViewById(R.id.imgPaso1);
+        imgPaso2 = findViewById(R.id.imgPaso2);
+        imgPaso3 = findViewById(R.id.imgPaso3);
+        imgPaso4 = findViewById(R.id.imgPaso4);
+        imgPaso5 = findViewById(R.id.imgPaso5);
+        imgPaso6 = findViewById(R.id.imgPaso6);
+        imgPaso7 = findViewById(R.id.imgPaso7);
+    }
+
+    private void setupStepListeners() {
+        if (layoutPaso1 != null) layoutPaso1.setOnClickListener(v -> toggleStep(imgPaso1, (ViewGroup) layoutPaso1.getParent()));
+        if (layoutPaso2 != null) layoutPaso2.setOnClickListener(v -> toggleStep(imgPaso2, (ViewGroup) layoutPaso2.getParent()));
+        if (layoutPaso3 != null) layoutPaso3.setOnClickListener(v -> toggleStep(imgPaso3, (ViewGroup) layoutPaso3.getParent()));
+        if (layoutPaso4 != null) layoutPaso4.setOnClickListener(v -> toggleStep(imgPaso4, (ViewGroup) layoutPaso4.getParent()));
+        if (layoutPaso5 != null) layoutPaso5.setOnClickListener(v -> toggleStep(imgPaso5, (ViewGroup) layoutPaso5.getParent()));
+        if (layoutPaso6 != null) layoutPaso6.setOnClickListener(v -> toggleStep(imgPaso6, (ViewGroup) layoutPaso6.getParent()));
+        if (layoutPaso7 != null) layoutPaso7.setOnClickListener(v -> toggleStep(imgPaso7, (ViewGroup) layoutPaso7.getParent()));
+    }
+
     private void toggleStep(ImageView imageView, ViewGroup parent) {
-        // Animación de transición suave
+        if (imageView == null) return;
         TransitionManager.beginDelayedTransition(parent);
-        
         if (imageView.getVisibility() == View.GONE) {
             imageView.setVisibility(View.VISIBLE);
         } else {

@@ -57,6 +57,7 @@
 
                 <!-- PASO -->
                 <LinearLayout
+                    android:id="@+id/lnlConceptos"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
@@ -446,6 +447,7 @@
 
         <!-- INICIO -->
         <LinearLayout
+            android:id="@+id/btnInicio"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -469,6 +471,7 @@
 
         <!-- LABORATORIOS -->
         <LinearLayout
+            android:id="@+id/btnLaboratorios"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -492,6 +495,7 @@
 
         <!-- INFORMES -->
         <LinearLayout
+            android:id="@+id/btnInformes"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -515,6 +519,7 @@
 
         <!-- PERFIL -->
         <LinearLayout
+            android:id="@+id/btnPerfil"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"

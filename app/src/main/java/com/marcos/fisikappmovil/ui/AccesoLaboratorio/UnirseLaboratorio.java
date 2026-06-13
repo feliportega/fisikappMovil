@@ -11,12 +11,14 @@ import android.widget.Toast;
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.gson.JsonObject;
 import com.marcos.fisikappmovil.R;
 import com.marcos.fisikappmovil.api.FisikappApi;
 import com.marcos.fisikappmovil.api.RetrofitClient;
 import com.marcos.fisikappmovil.model.TokenManager;
 import com.marcos.fisikappmovil.models.UnirLaboratorio;
+import com.marcos.fisikappmovil.ui.AccesoAlSistema.Dashboard;
+import com.marcos.fisikappmovil.ui.MonitorDeAprendizajeEstudiante.ConceptosBasicos;
+import com.marcos.fisikappmovil.ui.MonitorDeAprendizajeEstudiante.PasosLaboratorio;
 import com.marcos.fisikappmovil.ui.MonitorDeAprendizajeEstudiante.ViewsLaboratorio;
 
 import retrofit2.Call;
@@ -26,8 +28,7 @@ import retrofit2.Response;
 public class UnirseLaboratorio extends AppCompatActivity {
 
     EditText edit_unirse;
-    TokenManager tokenManager;
-    Button btnUnirse;
+    Button btnUnirse, btnCancelarUA;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,9 +36,20 @@ public class UnirseLaboratorio extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_unirse_laboratorio);
 
+        btnCancelarUA = findViewById(R.id.btnCancelarUA);
         edit_unirse = findViewById(R.id.edit_unirse);
         btnUnirse = findViewById(R.id.btnUnirse);
-        tokenManager = new TokenManager(this);
+
+        if (btnCancelarUA != null) {
+            btnCancelarUA.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(UnirseLaboratorio.this, Dashboard.class);
+
+                    startActivity(intent);
+                }
+            });
+        }
 
         btnUnirse.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -61,41 +73,54 @@ public class UnirseLaboratorio extends AppCompatActivity {
                 .getClient()
                 .create(FisikappApi.class);
 
-        // BODY
+        // Body de la petición
         UnirLaboratorio unirLaboratorio =
                 new UnirLaboratorio(codigo_lab);
 
-        String tokenGuardado =
-                tokenManager.getToken();
+        // Recuperar token guardado
+        TokenManager tokenManager = new TokenManager(this);
 
-        String token =
-                "Bearer " + tokenGuardado;
+        String tokenGuardado = tokenManager.getToken();
 
-        Call<JsonObject> call =
+        Log.d("TOKEN_GUARDADO", String.valueOf(tokenGuardado));
+
+        if (tokenGuardado == null || tokenGuardado.isEmpty()) {
+
+            Toast.makeText(
+                    UnirseLaboratorio.this,
+                    "Laboratorio encontrado",
+                    Toast.LENGTH_SHORT
+            ).show();
+
+            return;
+        }
+
+        // Header Authorization
+        String token = "Bearer " + tokenGuardado;
+
+        Log.d("TOKEN_ENVIADO", token);
+
+        Call<UnirLaboratorio> call =
                 api.postUnirlaboratorio(token, unirLaboratorio);
 
-        call.enqueue(new Callback<JsonObject>() {
+        call.enqueue(new Callback<UnirLaboratorio>() {
 
             @Override
-            public void onResponse(Call<JsonObject> call,
-                                   Response<JsonObject> response) {
+            public void onResponse(Call<UnirLaboratorio> call,
+                                   Response<UnirLaboratorio> response) {
+
+                Log.d("RESPUESTA_CODE", String.valueOf(response.code()));
+                Log.d("RESPUESTA_BODY", String.valueOf(response.body()));
 
                 if (response.isSuccessful()
                         && response.body() != null) {
 
-                    JsonObject json = response.body();
-
-                    String mensaje =
-                            json.get("mensaje").getAsString();
-
-                    int idLaboratorio =
-                            json.getAsJsonObject("laboratorio")
-                                    .get("id")
-                                    .getAsInt();
+                    UnirLaboratorio laboratorio =
+                            response.body();
 
                     Toast.makeText(
                             UnirseLaboratorio.this,
-                            mensaje,
+                            "Laboratorio encontrado",
                             Toast.LENGTH_SHORT
                     ).show();
 
@@ -106,7 +131,7 @@ public class UnirseLaboratorio extends AppCompatActivity {
 
                     intent.putExtra(
                             "id_lab",
-                            idLaboratorio
+                            laboratorio.getLaboratorio()
                     );
 
                     startActivity(intent);
@@ -115,8 +140,11 @@ public class UnirseLaboratorio extends AppCompatActivity {
 
                     try {
 
-                        String error =
-                                response.errorBody().string();
+                        String error = "";
+
+                        if (response.errorBody() != null) {
+                            error = response.errorBody().string();
+                        }
 
                         Log.e("ERROR_API", error);
 
@@ -128,7 +156,11 @@ public class UnirseLaboratorio extends AppCompatActivity {
 
                     } catch (Exception e) {
 
-                        e.printStackTrace();
+                        Log.e(
+                                "ERROR_EXCEPTION",
+                                e.getMessage(),
+                                e
+                        );
 
                         Toast.makeText(
                                 UnirseLaboratorio.this,
@@ -140,11 +172,14 @@ public class UnirseLaboratorio extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<JsonObject> call,
+            public void onFailure(Call<UnirLaboratorio> call,
                                   Throwable throwable) {
 
-                Log.e("ERROR_RETROFIT",
-                        throwable.getMessage());
+                Log.e(
+                        "ERROR_RETROFIT",
+                        throwable.getMessage(),
+                        throwable
+                );
 
                 Toast.makeText(
                         UnirseLaboratorio.this,
