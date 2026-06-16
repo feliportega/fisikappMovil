@@ -66,8 +66,10 @@ dependencies {
     implementation(libs.constraintlayout)
 
     // Retrofit
+    implementation(libs.com.google.code.gson.gson)
     implementation(libs.retrofit)
-    implementation(libs.retrofit.gson)
+    implementation(libs.converter.gson)
+    implementation(libs.logging.interceptor)
 
     implementation("com.google.android.material:material:1.11.0")
     testImplementation(libs.junit)

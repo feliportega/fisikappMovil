@@ -74,9 +74,9 @@ public class InformeLaboratorio extends AppCompatActivity {
                 .getClient()
                 .create(FisikappApi.class);
 
-        Call<List<Informe>> call = api.getInformes();
+        //Call<List<Informe>> call = api.getInformes();
 
-        call.enqueue(new Callback<List<Informe>>() {
+        /*call.enqueue(new Callback<List<Informe>>() {
 
             @Override
             public void onResponse(
@@ -124,6 +124,6 @@ public class InformeLaboratorio extends AppCompatActivity {
                                 + t.getMessage()
                 );
             }
-        });
+        });*/
     }
 }
