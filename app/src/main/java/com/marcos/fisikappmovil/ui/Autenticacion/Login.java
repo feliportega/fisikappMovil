@@ -18,6 +18,7 @@ import com.marcos.fisikappmovil.R;
 import com.marcos.fisikappmovil.data.repository.AuthRepository;
 import com.marcos.fisikappmovil.model.TokenManager;
 import com.marcos.fisikappmovil.remote.response.LoginResponse;
+import com.marcos.fisikappmovil.security.CredentialVault;
 import com.marcos.fisikappmovil.ui.AccesoAlSistema.Dashboard;
 import com.marcos.fisikappmovil.ui.RecuperacionDeCuenta.RecuperarCuenta;
 
@@ -125,18 +126,31 @@ public class Login extends AppCompatActivity {
         });
     }
 
+    //Solo test String password -> manejarLoginExitoso(String email, String password, LoginResponse response)
     private void manejarLoginExitoso(String email, LoginResponse response) {
-        String accessToken = response.getAccessToken();
-        String refreshToken = response.getRefreshToken();
+        tokenManager.saveTokens(
+                response.getAccessToken(),
+                response.getRefreshToken()
+        );
 
-        tokenManager.saveTokens(accessToken, refreshToken);
+        //Log.d("AUTH", "Access guardado: " + tokenManager.getAccessToken());
+        //Log.d("AUTH", "Refresh guardado: " + tokenManager.getRefreshToken());
+        //Log.d("AUTH", "Header: " + tokenManager.getAuthorizationHeader());
 
-        Log.d("AUTH", "Access guardado: " + tokenManager.getAccessToken());
-        Log.d("AUTH", "Refresh guardado: " + tokenManager.getRefreshToken());
-        Log.d("AUTH", "Header: " + tokenManager.getAuthorizationHeader());
-
+        //Solo Test
+        //if (FaceVault.hasConsent(this) && FaceVault.hasEmbedding(this)) {
+        //    CredentialVault.saveCredentials(this, email, password);
+        //}
 
         String nombreUsuario = obtenerNombreUsuario(response);
+
+        if (response.getUser() != null) {
+            tokenManager.saveUserData(
+                    response.getUser().getNombre(),
+                    response.getUser().getCorreo(),
+                    response.getUser().getRol()
+            );
+        }
 
         Toast.makeText(
                 Login.this,
@@ -144,7 +158,7 @@ public class Login extends AppCompatActivity {
                 Toast.LENGTH_SHORT
         ).show();
 
-        irAlDashboard(email, nombreUsuario);
+        irAlDashboard();
     }
 
     private String obtenerNombreUsuario(LoginResponse response) {
@@ -157,10 +171,8 @@ public class Login extends AppCompatActivity {
         return "Usuario";
     }
 
-    private void irAlDashboard(String email, String nombreUsuario) {
+    private void irAlDashboard() {
         Intent intent = new Intent(Login.this, Dashboard.class);
-        intent.putExtra("USER_EMAIL", email);
-        intent.putExtra("USER_NAME", nombreUsuario);
         startActivity(intent);
         finish();
     }

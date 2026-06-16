@@ -13,11 +13,16 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.marcos.fisikappmovil.R;
+import com.marcos.fisikappmovil.security.FaceVault;
 import com.marcos.fisikappmovil.ui.AccesoLaboratorio.UnirseLaboratorio;
+import com.marcos.fisikappmovil.ui.Autenticacion.FaceConsentActivity;
+import com.marcos.fisikappmovil.ui.faceNet.FaceEnrollActivity;
 
 public class Dashboard extends AppCompatActivity {
 
     Button btemp;
+
+    Button enrol;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +31,8 @@ public class Dashboard extends AppCompatActivity {
         setContentView(R.layout.activity_dashboard);
 
         btemp = findViewById(R.id.btemp);
+        enrol = findViewById(R.id.btempQ);
+
 
         btemp.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -34,7 +41,34 @@ public class Dashboard extends AppCompatActivity {
                 startActivity(iremp);
             }
         });
+
+        enrol.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public  void onClick(View view) {
+                if (FaceVault.hasEmbedding(Dashboard.this)) {
+                    new androidx.appcompat.app.AlertDialog.Builder(Dashboard.this)
+                            .setTitle("Rostro ya registrado")
+                            .setMessage("Ya existe un rostro guardado en este dispositivo. ¿Deseas reemplazarlo?")
+                            .setPositiveButton("Sí, reemplazar", (dialog, which) -> {
+                                openEnrollFlow();
+                            })
+                            .setNegativeButton("No", null)
+                            .show();
+                } else {
+                    openEnrollFlow();
+                }
+
+            }
+            private void openEnrollFlow() {
+                Intent intent;
+                if (FaceVault.hasConsent(Dashboard.this)) {
+                    intent = new Intent(Dashboard.this, FaceEnrollActivity.class);
+                } else {
+                    intent = new Intent(Dashboard.this, FaceConsentActivity.class);
+                }
+                startActivity(intent);
+            }
+        });
+
     }
 }
-
-//SALAZAR--------------

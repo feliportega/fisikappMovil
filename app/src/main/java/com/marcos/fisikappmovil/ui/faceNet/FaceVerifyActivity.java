@@ -31,12 +31,20 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import com.marcos.fisikappmovil.security.FaceVault;
-import com.marcos.fisikappmovil.ui.faceNet.FaceGuideOverlayView;
 import com.marcos.fisikappmovil.facenet.FaceSdkBridge;
 import com.dcl.facesdk.FaceSdk;
 import com.dcl.facesdk.FaceSdkResult;
 import com.google.common.util.concurrent.ListenableFuture;
 import com.marcos.fisikappmovil.R;
+
+import android.content.Intent;
+
+import com.marcos.fisikappmovil.data.repository.AuthRepository;
+import com.marcos.fisikappmovil.model.TokenManager;
+import com.marcos.fisikappmovil.remote.response.LoginResponse;
+import com.marcos.fisikappmovil.security.CredentialVault;
+import com.marcos.fisikappmovil.ui.AccesoAlSistema.Dashboard;
+import com.marcos.fisikappmovil.ui.Autenticacion.Login;
 
 import java.io.File;
 import java.io.IOException;
@@ -51,6 +59,11 @@ public class FaceVerifyActivity extends AppCompatActivity {
     private static final int REQUIRED_STABLE_FRAMES = 60;
     private static final float MATCH_THRESHOLD = 0.75f;
 
+    private AuthRepository authRepository;
+    private TokenManager tokenManager;
+
+    private String savedCorreo;
+    private String savedPassword;
     private FaceGuideOverlayView overlayView;
     private VerifyResultOverlayView resultOverlay;
     private PreviewView previewView;
@@ -60,7 +73,7 @@ public class FaceVerifyActivity extends AppCompatActivity {
 
     private TextView tvTitle;
     private Button btnPassword;
-    private TextView btnCancel;
+    //private TextView btnCancel;
 
     private ExecutorService cameraExecutor;
     private ProcessCameraProvider cameraProvider;
@@ -137,6 +150,26 @@ public class FaceVerifyActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        if (!CredentialVault.hasCredentials(this)) {
+            Toast.makeText(this, "No hay credenciales guardadas para ingreso facial", Toast.LENGTH_LONG).show();
+            goToManualLogin();
+            return;
+        }
+
+        savedCorreo = CredentialVault.getCorreo(this);
+        savedPassword = CredentialVault.getPassword(this);
+
+        if (savedCorreo == null || savedCorreo.trim().isEmpty()
+                || savedPassword == null || savedPassword.trim().isEmpty()) {
+            Toast.makeText(this, "Credenciales locales inválidas", Toast.LENGTH_LONG).show();
+            CredentialVault.clearCredentials(this);
+            goToManualLogin();
+            return;
+        }
+
+        authRepository = new AuthRepository();
+        tokenManager = new TokenManager(this);
+
         float[] storedEmbedding = FaceVault.getEmbedding(this);
         if (storedEmbedding == null || storedEmbedding.length == 0) {
             Toast.makeText(this, "No hay rostro enrolado en este dispositivo", Toast.LENGTH_LONG).show();
@@ -160,7 +193,7 @@ public class FaceVerifyActivity extends AppCompatActivity {
         tvStatus = findViewById(R.id.tvStatus);
         tvVerifyStatus = findViewById(R.id.tvVerifyStatus);
         btnPassword = findViewById(R.id.btnPassword);
-        btnCancel = findViewById(R.id.btnCancel);
+        //btnCancel = findViewById(R.id.btnCancel);
 
         cameraExecutor = Executors.newSingleThreadExecutor();
         faceSdk = new FaceSdk(
@@ -171,14 +204,14 @@ public class FaceVerifyActivity extends AppCompatActivity {
                 1
         );
 
-        btnCancel.setOnClickListener(v -> {
-            tvVerifyStatus.setText("Cancelando...");
-            safeCloseAndFinish();
-        });
+        //btnCancel.setOnClickListener(v -> {
+        //    tvVerifyStatus.setText("Cancelando...");
+        //    goToManualLogin();
+        //});
 
         btnPassword.setOnClickListener(v -> {
             Toast.makeText(this, "Volver a login con contraseña", Toast.LENGTH_SHORT).show();
-            safeCloseAndFinish();
+            goToManualLogin();
         });
 
         previewView.post(() -> previewSize = new Size(previewView.getWidth(), previewView.getHeight()));
@@ -191,17 +224,17 @@ public class FaceVerifyActivity extends AppCompatActivity {
     }
 
     private void setControlsEnabled(boolean enabled) {
-        btnCancel.setEnabled(enabled);
+        //btnCancel.setEnabled(enabled);
         btnPassword.setEnabled(enabled);
 
-        btnCancel.setAlpha(enabled ? 1f : 0.4f);
+        //btnCancel.setAlpha(enabled ? 1f : 0.4f);
         btnPassword.setAlpha(enabled ? 1f : 0.4f);
 
         if (enabled){
-            btnCancel.setVisibility(View.GONE);
+            //btnCancel.setVisibility(View.GONE);
             btnPassword.setVisibility(View.GONE);
         } else {
-            btnCancel.setVisibility(View.INVISIBLE);
+            //btnCancel.setVisibility(View.INVISIBLE);
             btnPassword.setVisibility(View.INVISIBLE);
         }
 
@@ -440,21 +473,19 @@ public class FaceVerifyActivity extends AppCompatActivity {
                                         hasCompleted = true;
                                         setControlsEnabled(false);
                                         overlayView.setVisibility(View.GONE);
+
                                         resultOverlay.showSuccess(
-                                                "Bienvenido",
-                                                "Identidad verificada correctamente"
+                                                "Rostro verificado",
+                                                "Iniciando sesión..."
                                         );
 
                                         tvTitle.setText("VERIFICADO");
                                         tvStatus.setText("");
                                         tvVerifyStatus.setText("");
 
-                                        //Toast.makeText(FaceVerifyActivity.this, "Rostro reconocido", Toast.LENGTH_SHORT).show();
-
                                         mainHandler.postDelayed(() -> {
-                                            safeCloseAndFinish();
-                                            safeCloseAndFinish();
-                                        }, 2200);
+                                            loginWithStoredCredentials();
+                                        }, 800);
 
                                     } else {
                                         hasCompleted = true;
@@ -478,7 +509,8 @@ public class FaceVerifyActivity extends AppCompatActivity {
                                             verifying = false;
                                             hasCompleted = false;
                                             stableCounter = 0;
-                                            safeCloseAndFinish();
+                                            //safeCloseAndFinish();
+                                            goToManualLogin();
                                         }, 2200);
 
                                     }
@@ -576,7 +608,137 @@ public class FaceVerifyActivity extends AppCompatActivity {
         }
     }
 
+    private void loginWithStoredCredentials() {
+        if (savedCorreo == null || savedPassword == null) {
+            goToManualLogin();
+            return;
+        }
+
+        authRepository.login(savedCorreo, savedPassword, result -> {
+            if (isClosing || isDestroyed()) {
+                return;
+            }
+
+            if (result.isSuccess()) {
+                handleAutoLoginSuccess(result.getData());
+            } else {
+                resultOverlay.showError(
+                        "No fue posible iniciar sesión",
+                        "Ingresa con tu contraseña"
+                );
+
+                mainHandler.postDelayed(() -> {
+                    CredentialVault.clearCredentials(FaceVerifyActivity.this);
+                    goToManualLogin();
+                }, 1800);
+            }
+        });
+    }
+
+    private void handleAutoLoginSuccess(LoginResponse response) {
+        if (response == null || !response.hasValidAccessToken()) {
+            goToManualLogin();
+            return;
+        }
+
+        tokenManager.saveTokens(
+                response.getAccessToken(),
+                response.getRefreshToken()
+        );
+
+        if (response.getUser() != null) {
+            tokenManager.saveUserData(
+                    response.getUser().getNombre(),
+                    response.getUser().getCorreo(),
+                    response.getUser().getRol()
+            );
+        }
+
+        resultOverlay.showSuccess(
+                "Bienvenido",
+                "Ingreso facial correcto"
+        );
+
+        mainHandler.postDelayed(() -> {
+            goToDashboard();
+        }, 1200);
+    }
+
+    private void goToDashboard() {
+        safeCloseAndRun(() -> {
+            Intent intent = new Intent(FaceVerifyActivity.this, Dashboard.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
+            finish();
+        });
+    }
+
+    private void goToManualLogin() {
+        safeCloseAndRun(() -> {
+            Intent intent = new Intent(FaceVerifyActivity.this, Login.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
+            finish();
+        });
+    }
+
+    private void safeCloseAndRun(Runnable afterClose) {
+        if (isClosing) return;
+        isClosing = true;
+
+        mainHandler.removeCallbacks(stabilityLoop);
+
+        try {
+            if (imageAnalysis != null) {
+                imageAnalysis.clearAnalyzer();
+            }
+        } catch (Exception e) {
+            Log.e(TAG, "Error limpiando analyzer", e);
+        }
+
+        mainHandler.postDelayed(() -> {
+            try {
+                if (cameraProvider != null) {
+                    cameraProvider.unbindAll();
+                }
+            } catch (Exception e) {
+                Log.e(TAG, "Error cerrando cámara", e);
+            }
+
+            try {
+                if (faceSdk != null) {
+                    faceSdk.close();
+                }
+            } catch (Exception e) {
+                Log.e(TAG, "Error cerrando FaceSdk", e);
+            }
+
+            try {
+                if (cameraExecutor != null && !cameraExecutor.isShutdown()) {
+                    cameraExecutor.shutdown();
+                }
+            } catch (Exception e) {
+                Log.e(TAG, "Error cerrando cameraExecutor", e);
+            }
+
+            mainHandler.postDelayed(() -> {
+                if (afterClose != null && !isDestroyed()) {
+                    afterClose.run();
+                }
+            }, 150);
+
+        }, 250);
+    }
+
     private void safeCloseAndFinish() {
+        safeCloseAndRun(() -> {
+            if (!isFinishing() && !isDestroyed()) {
+                finish();
+            }
+        });
+    }
+
+    /*private void safeCloseAndFinish() {
         if (isClosing) return;
         isClosing = true;
 
@@ -613,7 +775,7 @@ public class FaceVerifyActivity extends AppCompatActivity {
                 finish();
             }
         }, 250);
-    }
+    }*/
 
     @Override
     protected void onDestroy() {
