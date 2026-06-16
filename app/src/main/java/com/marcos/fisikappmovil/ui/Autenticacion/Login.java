@@ -12,6 +12,7 @@ import com.marcos.fisikappmovil.security.FaceVault;
 import com.marcos.fisikappmovil.ui.AccesoAlSistema.Dashboard;
 import com.marcos.fisikappmovil.R;
 import com.marcos.fisikappmovil.ui.RecuperacionDeCuenta.RecuperarCuenta;
+import com.marcos.fisikappmovil.ui.UnityAR.UnityArActivity;
 import com.marcos.fisikappmovil.ui.faceNet.FaceEnrollActivity;
 import com.marcos.fisikappmovil.ui.faceNet.FaceVerifyActivity;
 
@@ -23,6 +24,9 @@ public class Login extends AppCompatActivity {
     //Test FaceId
     Button btnenrol;
     Button btnverify;
+
+    //Test ARUnity
+    Button btnMinigame;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +41,10 @@ public class Login extends AppCompatActivity {
         //Test FaceId
         btnenrol = findViewById(R.id.btnEnrolarRostro);
         btnverify = findViewById(R.id.btnReconocerRostro);
+
+        //Test ARUnity
+        btnMinigame = findViewById(R.id.btnMinigame);
+
 
         btnregistro.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -96,6 +104,32 @@ public class Login extends AppCompatActivity {
                 Intent goVerify = new Intent(Login.this, FaceVerifyActivity.class);
                 startActivity(goVerify);
 
+            }
+        });
+
+        /*btnMinigame.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //Intent irMinigame = new Intent(Login.this, com.unity3d.player.UnityPlayerActivity.class);
+                Intent irMinigame = new Intent(Login.this, UnityArActivity.class);
+                startActivity(irMinigame);
+            }
+        });*/
+
+        btnMinigame.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent irMinigame = new Intent(Login.this, UnityArActivity.class);
+
+                String json = "{"
+                        + "\"exerciseId\":\"PARABOLIC-001\","
+                        + "\"initialPower\":3.5,"
+                        + "\"initialAngle\":35.0,"
+                        + "\"showTrajectory\":true"
+                        + "}";
+
+                irMinigame.putExtra(UnityArActivity.EXTRA_EXERCISE_DATA, json);
+                startActivity(irMinigame);
             }
         });
 

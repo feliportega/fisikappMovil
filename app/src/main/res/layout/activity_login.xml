@@ -109,24 +109,41 @@
                 android:paddingEnd="12dp"
                 android:textSize="14sp" />
 
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="0dp"
+            android:orientation="horizontal">
+
+
             <Button
-                android:id="@+id/btnRecuperarc"
+                android:id="@+id/btnMinigame"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="end"
-                android:layout_marginTop="12dp"
-                android:text="¿Olvidaste tu contraseña?"
-                android:backgroundTint="@color/white"
-                android:textColor="@color/black"
-                android:textSize="12sp"
-                android:textStyle="bold" />
+                android:backgroundTint="@color/colorPrimario"
+                android:text="Minijuego"/>
+
+            <Button
+                    android:id="@+id/btnRecuperarc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:layout_marginTop="0dp"
+                    android:text="¿Olvidaste tu contraseña?"
+                    android:backgroundTint="@color/white"
+                    android:textColor="@color/black"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+
+        </LinearLayout>
 
             <!-- Botón Login -->
             <Button
                 android:id="@+id/btnIniciarsesion"
                 android:layout_width="match_parent"
                 android:layout_height="52dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="10dp"
                 android:backgroundTint="@color/colorPrimario"
                 android:text="Iniciar sesión"
                 android:textAllCaps="false"
@@ -139,7 +156,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="10dp"
                 android:orientation="horizontal">
 
                 <TextView

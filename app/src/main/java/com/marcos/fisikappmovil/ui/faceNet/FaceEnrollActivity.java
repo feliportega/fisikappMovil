@@ -463,8 +463,6 @@ public class FaceEnrollActivity extends AppCompatActivity {
                                 stableCounter = 0;
 
                                 runOnUiThread(() -> {
-                                    //progressBar.setProgress(0);
-                                    //tvPercent.setText("0%");
                                     tvSubtitle.setText("Cambia de posicion");
                                     tvStatusTitle.setText("Primera captura lista");
                                     tvStatusMsg.setText("Ahora mueve ligeramente tu rostro");
@@ -487,8 +485,6 @@ public class FaceEnrollActivity extends AppCompatActivity {
                                         tvSubtitle.setText("Correcto");
                                         tvStatusTitle.setText("Registro exitoso");
                                         tvStatusMsg.setText("Rostro enrolado correctamente");
-                                        //progressBar.setProgress(100);
-                                        //tvPercent.setText("100%");
                                         Toast.makeText(
                                                 FaceEnrollActivity.this,
                                                 "Embedding combinado guardado en el dispositivo",

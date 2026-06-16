@@ -2,18 +2,41 @@ plugins {
     alias(libs.plugins.android.application)
 }
 
+val unityStreamingAssetsValue =
+    (findProperty("unityStreamingAssets") as? String).orEmpty()
+
+val unityNoCompressExtensions =
+    listOf(
+        ".unity3d",
+        ".ress",
+        ".resource",
+        ".obb",
+        ".bundle",
+        ".unityexp"
+    ) + unityStreamingAssetsValue
+        .split(",")
+        .map { it.trim() }
+        .filter { it.isNotEmpty() }
+
 android {
     namespace = "com.marcos.fisikappmovil"
     compileSdk = 36
 
     defaultConfig {
         applicationId = "com.marcos.fisikappmovil"
-        minSdk = 24
+        minSdk = 25
         targetSdk = 36
         versionCode = 1
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    androidResources {
+        ignoreAssetsPattern =
+            "!.svn:!.git:!.ds_store:!*.scc:!CVS:!thumbs.db:!picasa.ini:!*~"
+
+        noCompress += unityNoCompressExtensions
     }
 
     buildTypes {
@@ -28,6 +51,12 @@ android {
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
+    }
+
+    packaging {
+        jniLibs {
+            useLegacyPackaging = true
+        }
     }
 }
 
@@ -46,6 +75,9 @@ dependencies {
     androidTestImplementation(libs.espresso.core)
 
     implementation(project(":facesdk"))
+    implementation(project(":unityLibrary"))
+    implementation("androidx.appcompat:appcompat:1.6.1")
+
 
     // CameraX
     implementation("androidx.camera:camera-core:1.5.1")
