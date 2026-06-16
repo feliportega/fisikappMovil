@@ -107,25 +107,39 @@ public class Login extends AppCompatActivity {
             }
         });
 
-        /*btnMinigame.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //Intent irMinigame = new Intent(Login.this, com.unity3d.player.UnityPlayerActivity.class);
-                Intent irMinigame = new Intent(Login.this, UnityArActivity.class);
-                startActivity(irMinigame);
-            }
-        });*/
-
         btnMinigame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent irMinigame = new Intent(Login.this, UnityArActivity.class);
 
                 String json = "{"
-                        + "\"exerciseId\":\"PARABOLIC-001\","
-                        + "\"initialPower\":3.5,"
-                        + "\"initialAngle\":35.0,"
-                        + "\"showTrajectory\":true"
+                        + "\"schemaVersion\":1,"
+                        + "\"requestId\":\"REQ-001\","
+                        + "\"runId\":\"RUN-001\","
+                        + "\"scene\":{"
+                        + "\"labKey\":\"PARABOLIC-001\","
+                        + "\"unitySceneName\":\"ParabolicMotionLab\","
+                        + "\"displayName\":\"Movimiento parabólico\""
+                        + "},"
+                        + "\"participant\":{"
+                        + "\"participantId\":\"STUDENT-001\","
+                        + "\"displayName\":\"Cristian Camilo\""
+                        + "},"
+                        + "\"context\":{"
+                        + "\"organizationName\":\"Institución\","
+                        + "\"courseName\":\"Física\","
+                        + "\"groupName\":\"Grupo 10A\""
+                        + "},"
+                        + "\"exercise\":{"
+                        + "\"exerciseId\":\"EX-PARABOLIC-001\","
+                        + "\"maxAttempts\":4,"
+                        + "\"allowResume\":true"
+                        + "},"
+                        + "\"options\":{"
+                        + "\"language\":\"es\","
+                        + "\"showProjectileCameraOption\":true,"
+                        + "\"showTrajectoryPreview\":true"
+                        + "}"
                         + "}";
 
                 irMinigame.putExtra(UnityArActivity.EXTRA_EXERCISE_DATA, json);
