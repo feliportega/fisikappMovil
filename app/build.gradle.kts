@@ -88,6 +88,9 @@ dependencies {
     implementation("androidx.camera:camera-view:1.5.1")
     implementation("androidx.camera:camera-extensions:1.5.1")
 
+    // Barcode
+    implementation(libs.barcode.scanning)
+
     // Security
     implementation("androidx.security:security-crypto:1.1.0-alpha06")
 }

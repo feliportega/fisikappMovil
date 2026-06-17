@@ -96,6 +96,14 @@
             android:exported="false" />
 
         <activity
+            android:name=".ui.AccesoAlSistema.UnirseGrupoActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".ui.AccesoAlSistema.QrScannerActivity"
+            android:exported="false" />
+
+        <activity
             android:name=".SplashAuthActivity"
             android:exported="true" >
             <intent-filter>
