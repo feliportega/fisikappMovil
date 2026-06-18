@@ -20,6 +20,7 @@ import com.marcos.fisikappmovil.data.repository.GrupoRepository;
 import com.marcos.fisikappmovil.model.GrupoAcademicoItem;
 import com.marcos.fisikappmovil.model.TokenManager;
 import com.marcos.fisikappmovil.ui.Autenticacion.Login;
+import com.marcos.fisikappmovil.ui.GestionDePerfilDelEstudiante.Perfil_del_estudiante;
 
 import java.util.List;
 
@@ -85,7 +86,13 @@ public class Dashboard extends AppCompatActivity {
     }
 
     private void initListeners() {
-        imgCerrarSesion.setOnClickListener(v -> cerrarSesion());
+        //imgCerrarSesion.setOnClickListener(v -> cerrarSesion());
+
+
+        imgCerrarSesion.setOnClickListener(v -> {
+            Intent intent = new Intent(Dashboard.this, Perfil_del_estudiante.class);
+            startActivity(intent);
+        });
 
         btnUnirmeGrupo.setOnClickListener(v -> {
             Intent intent = new Intent(Dashboard.this, UnirseGrupoActivity.class);
