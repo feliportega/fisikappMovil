@@ -109,6 +109,14 @@ public class SplashAuthActivity extends AppCompatActivity {
         alreadyNavigated = true;
 
         if (tokenManager.hasValidAccessToken()) {
+            String rol = tokenManager.getUserRole();
+
+            if (rol == null || !rol.trim().equalsIgnoreCase("estudiante")) {
+                tokenManager.clearSession();
+                goToLogin();
+                return;
+            }
+
             goToDashboard();
             return;
         }
