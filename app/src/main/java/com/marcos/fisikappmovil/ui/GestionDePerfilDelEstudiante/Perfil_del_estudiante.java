@@ -15,6 +15,8 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.marcos.fisikappmovil.R;
+import com.marcos.fisikappmovil.data.repository.AuthRepository;
+import com.marcos.fisikappmovil.remote.response.LoginResponse;
 import com.marcos.fisikappmovil.data.repository.PerfilRepository;
 import com.marcos.fisikappmovil.model.TokenManager;
 import com.marcos.fisikappmovil.remote.response.PerfilResponse;
@@ -22,6 +24,7 @@ import com.marcos.fisikappmovil.security.CredentialVault;
 import com.marcos.fisikappmovil.security.FaceEmbeddingCodec;
 import com.marcos.fisikappmovil.security.FaceVault;
 import com.marcos.fisikappmovil.ui.Autenticacion.FaceConsentActivity;
+import com.marcos.fisikappmovil.ui.Autenticacion.Login;
 import com.marcos.fisikappmovil.ui.faceNet.FaceEnrollActivity;
 
 public class Perfil_del_estudiante extends AppCompatActivity {
@@ -41,6 +44,8 @@ public class Perfil_del_estudiante extends AppCompatActivity {
     private TextView tvEstadoFacialPerfil;
 
     private Button btnEditarPerfil;
+
+    private Button btnCerrarSesionPerfil;
     private Button btnActivarRostro;
     private Button btnDesactivarRostro;
 
@@ -48,6 +53,8 @@ public class Perfil_del_estudiante extends AppCompatActivity {
     private PerfilRepository perfilRepository;
 
     private PerfilResponse perfilActual;
+
+    private AuthRepository authRepository;
 
     private boolean esperandoResultadoEnrolamiento = false;
 
@@ -67,6 +74,7 @@ public class Perfil_del_estudiante extends AppCompatActivity {
     private void initDependencies() {
         tokenManager = new TokenManager(this);
         perfilRepository = new PerfilRepository();
+        authRepository = new AuthRepository();
     }
 
     private void initViews() {
@@ -83,6 +91,7 @@ public class Perfil_del_estudiante extends AppCompatActivity {
         tvEstadoFacialPerfil = findViewById(R.id.tvEstadoFacialPerfil);
 
         btnEditarPerfil = findViewById(R.id.btnEditarPerfil);
+        btnCerrarSesionPerfil = findViewById(R.id.btnCerrarSesionPerfil);
         btnActivarRostro = findViewById(R.id.btnActivarRostro);
         btnDesactivarRostro = findViewById(R.id.btnDesactivarRostro);
     }
@@ -95,7 +104,7 @@ public class Perfil_del_estudiante extends AppCompatActivity {
         });
 
         btnActivarRostro.setOnClickListener(v -> iniciarFlujoReconocimientoFacial());
-
+        btnCerrarSesionPerfil.setOnClickListener(v -> confirmarCerrarSesion());
         btnDesactivarRostro.setOnClickListener(v -> confirmarDesactivarRostro());
     }
 
@@ -281,10 +290,121 @@ public class Perfil_del_estudiante extends AppCompatActivity {
                 perfilActual = result.getData();
                 Toast.makeText(this, "Rostro sincronizado correctamente", Toast.LENGTH_SHORT).show();
                 actualizarEstadoFacial(perfilActual);
+                mostrarDialogoConfirmarPassword();
             } else {
                 Toast.makeText(this, result.getErrorMessage(), Toast.LENGTH_LONG).show();
                 actualizarEstadoFacial(perfilActual);
             }
+        });
+    }
+
+    private void mostrarDialogoConfirmarPassword() {
+        if (perfilActual == null || perfilActual.getCorreo() == null || perfilActual.getCorreo().trim().isEmpty()) {
+            Toast.makeText(this, "No se pudo obtener el correo del perfil", Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        final android.widget.EditText inputPassword = new android.widget.EditText(this);
+        inputPassword.setHint("Contraseña actual");
+        inputPassword.setInputType(
+                android.text.InputType.TYPE_CLASS_TEXT |
+                        android.text.InputType.TYPE_TEXT_VARIATION_PASSWORD
+        );
+        inputPassword.setSingleLine(true);
+        inputPassword.setPadding(40, 20, 40, 20);
+
+        androidx.appcompat.app.AlertDialog dialog = new androidx.appcompat.app.AlertDialog.Builder(this)
+                .setTitle("Activar ingreso facial")
+                .setMessage("Confirma tu contraseña para activar el ingreso facial rápido en este dispositivo.")
+                .setView(inputPassword)
+                .setPositiveButton("Confirmar", null)
+                .setNegativeButton("Ahora no", (d, which) -> {
+                    Toast.makeText(
+                            this,
+                            "Rostro registrado. El ingreso facial rápido queda pendiente.",
+                            Toast.LENGTH_LONG
+                    ).show();
+                    actualizarEstadoFacial(perfilActual);
+                })
+                .create();
+
+        dialog.setOnShowListener(d -> {
+            Button positiveButton = dialog.getButton(androidx.appcompat.app.AlertDialog.BUTTON_POSITIVE);
+
+            positiveButton.setOnClickListener(v -> {
+                String password = inputPassword.getText().toString();
+
+                if (password.trim().isEmpty()) {
+                    inputPassword.setError("Ingresa tu contraseña");
+                    return;
+                }
+
+                dialog.dismiss();
+                confirmarPasswordYGuardarCredenciales(password);
+            });
+        });
+
+        dialog.show();
+    }
+
+    private void confirmarPasswordYGuardarCredenciales(String password) {
+        if (perfilActual == null) {
+            Toast.makeText(this, "Perfil no disponible", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        String correo = perfilActual.getCorreo();
+
+        if (correo == null || correo.trim().isEmpty()) {
+            Toast.makeText(this, "Correo no disponible", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        setLoading(true);
+
+        authRepository.login(correo, password, result -> {
+            setLoading(false);
+
+            if (!result.isSuccess()) {
+                Toast.makeText(
+                        this,
+                        "Contraseña incorrecta. No se activó el ingreso facial rápido.",
+                        Toast.LENGTH_LONG
+                ).show();
+                actualizarEstadoFacial(perfilActual);
+                return;
+            }
+
+            LoginResponse response = result.getData();
+
+            if (response == null || !response.hasValidAccessToken()) {
+                Toast.makeText(this, "No se pudo validar la sesión", Toast.LENGTH_LONG).show();
+                actualizarEstadoFacial(perfilActual);
+                return;
+            }
+
+            tokenManager.saveTokens(
+                    response.getAccessToken(),
+                    response.getRefreshToken()
+            );
+
+            if (response.getUser() != null) {
+                tokenManager.saveUserData(
+                        response.getUser().getNombre(),
+                        response.getUser().getCorreo(),
+                        response.getUser().getRol()
+                );
+            }
+
+            CredentialVault.saveCredentials(this, correo, password);
+
+            Toast.makeText(
+                    this,
+                    "Ingreso facial rápido activado en este dispositivo",
+                    Toast.LENGTH_LONG
+            ).show();
+
+            actualizarEstadoFacial(perfilActual);
         });
     }
 
@@ -323,6 +443,24 @@ public class Perfil_del_estudiante extends AppCompatActivity {
                 actualizarEstadoFacial(perfilActual);
             }
         });
+    }
+
+    private void confirmarCerrarSesion() {
+        new AlertDialog.Builder(this)
+                .setTitle("Cerrar sesión")
+                .setMessage("¿Deseas cerrar tu sesión actual?")
+                .setPositiveButton("Cerrar sesión", (dialog, which) -> cerrarSesion())
+                .setNegativeButton("Cancelar", null)
+                .show();
+    }
+
+    private void cerrarSesion() {
+        tokenManager.clearSession();
+
+        Intent intent = new Intent(this, Login.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+        finish();
     }
 
     private void setLoading(boolean loading) {

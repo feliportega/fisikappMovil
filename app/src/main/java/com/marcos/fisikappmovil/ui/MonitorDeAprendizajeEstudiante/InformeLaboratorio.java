@@ -3,7 +3,6 @@ package com.marcos.fisikappmovil.ui.MonitorDeAprendizajeEstudiante;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -13,13 +12,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.marcos.fisikappmovil.R;
 import com.marcos.fisikappmovil.api.FisikappApi;
 import com.marcos.fisikappmovil.api.RetrofitClient;
-import com.marcos.fisikappmovil.models.Informe;
-
-import java.util.List;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class InformeLaboratorio extends AppCompatActivity {
 
