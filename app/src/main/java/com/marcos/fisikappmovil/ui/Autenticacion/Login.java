@@ -128,6 +128,16 @@ public class Login extends AppCompatActivity {
 
     //Solo test String password -> manejarLoginExitoso(String email, String password, LoginResponse response)
     private void manejarLoginExitoso(String email, LoginResponse response) {
+        if (response == null || !response.hasValidAccessToken()) {
+            mostrarError("No fue posible iniciar sesión. Respuesta inválida.");
+            return;
+        }
+
+        if (!esRolEstudiante(response)) {
+            denegarAccesoPorRol(response);
+            return;
+        }
+
         tokenManager.saveTokens(
                 response.getAccessToken(),
                 response.getRefreshToken()
@@ -214,5 +224,46 @@ public class Login extends AppCompatActivity {
         } else {
             btnSesion.setText("Iniciando...");
         }
+    }
+
+    private void denegarAccesoPorRol(LoginResponse response) {
+        String rol = "desconocido";
+
+        if (response != null && response.getUser() != null && response.getUser().getRol() != null) {
+            rol = response.getUser().getRol();
+        }
+
+        tokenManager.clearSession();
+
+        new androidx.appcompat.app.AlertDialog.Builder(this)
+                .setTitle("Acceso no permitido")
+                .setMessage(
+                        "Esta aplicación móvil está disponible solo para estudiantes.\n\n" +
+                                "Tu rol actual es: " + rol + "."
+                )
+                //.setPositiveButton("Entendido", null)
+                .setPositiveButton("Ir a la web", (dialog, which) -> abrirWeb())
+                .setNegativeButton("Cerrar", null)
+                .show();
+    }
+
+    private void abrirWeb() {
+        try {
+            Intent intent = new Intent(Intent.ACTION_VIEW);
+            intent.setData(android.net.Uri.parse("https://URL-DE-LA-WEB.com"));
+            startActivity(intent);
+        } catch (Exception e) {
+            Toast.makeText(this, "No se pudo abrir la web", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private boolean esRolEstudiante(LoginResponse response) {
+        if (response == null || response.getUser() == null) {
+            return false;
+        }
+
+        String rol = response.getUser().getRol();
+
+        return rol != null && rol.trim().equalsIgnoreCase("estudiante");
     }
 }
