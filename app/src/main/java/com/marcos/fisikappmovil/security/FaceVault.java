@@ -40,6 +40,10 @@ public class FaceVault {
             getPrefs(context).edit().putBoolean(KEY_CONSENT, accepted).apply();
         } catch (Exception e) {
             e.printStackTrace();
+
+            if (SecurePrefsRecovery.isCryptoFailure(e)) {
+                SecurePrefsRecovery.deleteEncryptedPrefs(context, FILE_NAME);
+            }
         }
     }
 
@@ -48,6 +52,11 @@ public class FaceVault {
             return getPrefs(context).getBoolean(KEY_CONSENT, false);
         } catch (Exception e) {
             e.printStackTrace();
+
+            if (SecurePrefsRecovery.isCryptoFailure(e)) {
+                SecurePrefsRecovery.deleteEncryptedPrefs(context, FILE_NAME);
+            }
+
             return false;
         }
     }
@@ -79,6 +88,9 @@ public class FaceVault {
         } catch (Exception e) {
             Log.e(TAG, "saveEmbedding ERROR", e);
             e.printStackTrace();
+            if (SecurePrefsRecovery.isCryptoFailure(e)) {
+                SecurePrefsRecovery.deleteEncryptedPrefs(context, FILE_NAME);
+            }
         }
     }
 
@@ -107,6 +119,11 @@ public class FaceVault {
         } catch (Exception e) {
             Log.e(TAG, "getEmbedding ERROR", e);
             e.printStackTrace();
+
+            if (SecurePrefsRecovery.isCryptoFailure(e)) {
+                SecurePrefsRecovery.deleteEncryptedPrefs(context, FILE_NAME);
+            }
+
             return null;
         }
     }
@@ -120,6 +137,10 @@ public class FaceVault {
             getPrefs(context).edit().remove(KEY_EMBEDDING).apply();
         } catch (Exception e) {
             e.printStackTrace();
+
+            if (SecurePrefsRecovery.isCryptoFailure(e)) {
+                SecurePrefsRecovery.deleteEncryptedPrefs(context, FILE_NAME);
+            }
         }
     }
 
@@ -128,6 +149,10 @@ public class FaceVault {
             getPrefs(context).edit().remove(KEY_CONSENT).apply();
         } catch (Exception e) {
             e.printStackTrace();
+
+            if (SecurePrefsRecovery.isCryptoFailure(e)) {
+                SecurePrefsRecovery.deleteEncryptedPrefs(context, FILE_NAME);
+            }
         }
     }
 
@@ -139,6 +164,10 @@ public class FaceVault {
                     .apply();
         } catch (Exception e) {
             e.printStackTrace();
+
+            if (SecurePrefsRecovery.isCryptoFailure(e)) {
+                SecurePrefsRecovery.deleteEncryptedPrefs(context, FILE_NAME);
+            }
         }
     }
 }

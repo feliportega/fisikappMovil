@@ -54,6 +54,11 @@ public class CredentialVault {
             return getPrefs(context).getString(KEY_CORREO, null);
         } catch (Exception e) {
             e.printStackTrace();
+
+            if (SecurePrefsRecovery.isCryptoFailure(e)) {
+                SecurePrefsRecovery.deleteEncryptedPrefs(context, FILE_NAME);
+            }
+
             return null;
         }
     }
@@ -63,6 +68,11 @@ public class CredentialVault {
             return getPrefs(context).getString(KEY_PASSWORD, null);
         } catch (Exception e) {
             e.printStackTrace();
+
+            if (SecurePrefsRecovery.isCryptoFailure(e)) {
+                SecurePrefsRecovery.deleteEncryptedPrefs(context, FILE_NAME);
+            }
+
             return null;
         }
     }
@@ -83,6 +93,11 @@ public class CredentialVault {
 
         } catch (Exception e) {
             e.printStackTrace();
+
+            if (SecurePrefsRecovery.isCryptoFailure(e)) {
+                SecurePrefsRecovery.deleteEncryptedPrefs(context, FILE_NAME);
+            }
+
             return false;
         }
     }
