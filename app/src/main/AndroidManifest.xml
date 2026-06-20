@@ -53,7 +53,7 @@
             android:name=".ui.RecuperacionDeCuenta.RecuperarCuenta"
             android:exported="false" />
         <activity
-            android:name=".ui.AccesoLaboratorio.UnirseLaboratorio"
+            android:name=".ui.Laboratorio.UnirseLaboratorio"
             android:exported="false" />
         <activity
             android:name=".ui.MonitorDeAprendizajeEstudiante.InformeLaboratorio"
@@ -101,6 +101,10 @@
 
         <activity
             android:name=".ui.AccesoAlSistema.QrScannerActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".ui.Laboratorio.GrupoLaboratoriosActivity"
             android:exported="false" />
 
         <activity

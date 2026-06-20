@@ -137,17 +137,11 @@ public class Dashboard extends AppCompatActivity {
         recyclerView.setVisibility(View.VISIBLE);
 
         GrupoAcademicoAdapter adapter = new GrupoAcademicoAdapter(grupos, grupo -> {
-            Toast.makeText(
-                    Dashboard.this,
-                    "Abrir grupo: " + grupo.getNombre(),
-                    Toast.LENGTH_SHORT
-            ).show();
-
-            // Próximo paso:
-            // Intent intent = new Intent(Dashboard.this, GrupoDetalleActivity.class);
-            // intent.putExtra("GRUPO_ID", grupo.getId());
-            // intent.putExtra("GRUPO_NOMBRE", grupo.getNombre());
-            // startActivity(intent);
+            Intent intent = new Intent(Dashboard.this, com.marcos.fisikappmovil.ui.Laboratorio.GrupoLaboratoriosActivity.class);
+            intent.putExtra(com.marcos.fisikappmovil.ui.Laboratorio.GrupoLaboratoriosActivity.EXTRA_GRUPO_ID, grupo.getId());
+            intent.putExtra(com.marcos.fisikappmovil.ui.Laboratorio.GrupoLaboratoriosActivity.EXTRA_GRUPO_NOMBRE, grupo.getNombre());
+            intent.putExtra(com.marcos.fisikappmovil.ui.Laboratorio.GrupoLaboratoriosActivity.EXTRA_GRUPO_CURSO, "Física");
+            startActivity(intent);
         });
 
         recyclerView.setAdapter(adapter);
