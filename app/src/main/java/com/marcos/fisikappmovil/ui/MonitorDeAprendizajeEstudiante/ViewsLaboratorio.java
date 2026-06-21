@@ -18,7 +18,7 @@ public class ViewsLaboratorio extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_views_laboratorio);
 
-        btninforme = findViewById(R.id.btnInforme);
+        //btninforme = findViewById(R.id.btnInforme);
         btninforme.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -29,27 +29,27 @@ public class ViewsLaboratorio extends AppCompatActivity {
 
 
         // 1. Botón Conceptos Básicos
-        CardView btnConceptos = findViewById(R.id.btnConceptos);
-        if (btnConceptos != null) {
-            btnConceptos.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(ViewsLaboratorio.this, ConceptosBasicos.class);
-                    startActivity(intent);
-                }
-            });
-        }
+        //CardView btnConceptos = findViewById(R.id.btnConceptos);
+        //if (btnConceptos != null) {
+        //    btnConceptos.setOnClickListener(new View.OnClickListener() {
+        //        @Override
+        //        public void onClick(View v) {
+        //            Intent intent = new Intent(ViewsLaboratorio.this, ConceptosBasicos.class);
+        //            startActivity(intent);
+        //        }
+        //    });
+        //}
 
         // 2. Botón Práctica de Conceptos
-        CardView btnPractica = findViewById(R.id.btnPractica);
-        if (btnPractica != null) {
-            btnPractica.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(ViewsLaboratorio.this, PracticaConceptos.class);
-                    startActivity(intent);
-                }
-            });
-        }
+        //CardView btnPractica = findViewById(R.id.btnPractica);
+        //if (btnPractica != null) {
+        //    btnPractica.setOnClickListener(new View.OnClickListener() {
+        //        @Override
+        //        public void onClick(View v) {
+        //            Intent intent = new Intent(ViewsLaboratorio.this, PracticaConceptos.class);
+        //            startActivity(intent);
+        //        }
+        //    });
+        //}
     }
 }

@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.marcos.fisikappmovil.R;
 import com.marcos.fisikappmovil.data.repository.LaboratorioRepository;
 import com.marcos.fisikappmovil.model.LaboratorioAsignadoItem;
+import com.marcos.fisikappmovil.ui.Laboratorio.DetalleLaboratorioActivity;
 import com.marcos.fisikappmovil.model.TokenManager;
 
 import java.util.List;
@@ -137,18 +138,30 @@ public class GrupoLaboratoriosActivity extends AppCompatActivity {
     }
 
     private void abrirLaboratorio(LaboratorioAsignadoItem laboratorio) {
-        Toast.makeText(
-                this,
-                "Abrir laboratorio: " + laboratorio.getTitulo(),
-                Toast.LENGTH_SHORT
-        ).show();
+        Intent intent = new Intent(this, DetalleLaboratorioActivity.class);
 
-        // Próximo paso:
-        // Intent intent = new Intent(this, DetalleLaboratorioActivity.class);
-        // intent.putExtra("ASIGNACION_ID", laboratorio.getAsignacionId());
-        // intent.putExtra("LABORATORIO_ID", laboratorio.getLaboratorioId());
-        // intent.putExtra("GRUPO_ID", laboratorio.getGrupoId());
-        // startActivity(intent);
+        intent.putExtra(DetalleLaboratorioActivity.EXTRA_ASIGNACION_ID, laboratorio.getAsignacionId());
+        intent.putExtra(DetalleLaboratorioActivity.EXTRA_LABORATORIO_ID, laboratorio.getLaboratorioId());
+        intent.putExtra(DetalleLaboratorioActivity.EXTRA_GRUPO_ID, laboratorio.getGrupoId());
+
+        intent.putExtra(DetalleLaboratorioActivity.EXTRA_TITULO, laboratorio.getTitulo());
+        intent.putExtra(
+                DetalleLaboratorioActivity.EXTRA_RESUMEN,
+                "Comprender el comportamiento del tiro parabólico mediante lectura, preguntas, práctica experimental, práctica simulada AR y análisis de resultados."
+        );
+
+        intent.putExtra(DetalleLaboratorioActivity.EXTRA_GRUPO_NOMBRE, grupoNombre);
+        intent.putExtra(DetalleLaboratorioActivity.EXTRA_ESTADO_ASIGNACION, laboratorio.getEstadoAsignacion());
+        intent.putExtra(DetalleLaboratorioActivity.EXTRA_ESTADO_ENTREGA, laboratorio.getEstadoEntrega());
+        intent.putExtra(DetalleLaboratorioActivity.EXTRA_FECHA_FIN, laboratorio.getFechaFin());
+
+        intent.putExtra(DetalleLaboratorioActivity.EXTRA_INTENTOS_USADOS, laboratorio.getIntentosUsados());
+        intent.putExtra(DetalleLaboratorioActivity.EXTRA_INTENTOS_MAXIMOS, laboratorio.getIntentosMaximos());
+
+        intent.putExtra(DetalleLaboratorioActivity.EXTRA_LAB_KEY, laboratorio.getLabKey());
+        intent.putExtra(DetalleLaboratorioActivity.EXTRA_UNITY_SCENE, laboratorio.getUnitySceneName());
+
+        startActivity(intent);
     }
 
     private void mostrarCargando() {

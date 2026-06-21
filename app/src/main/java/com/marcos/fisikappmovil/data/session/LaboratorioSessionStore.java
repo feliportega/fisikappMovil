@@ -1,0 +1,174 @@
+package com.marcos.fisikappmovil.data.session;
+
+import android.content.Context;
+import android.content.SharedPreferences;
+
+import com.marcos.fisikappmovil.model.LaboratorioPasoItem;
+
+public class LaboratorioSessionStore {
+
+    private static final String PREFS_NAME = "laboratorio_session_store";
+
+    private final SharedPreferences prefs;
+
+    public LaboratorioSessionStore(Context context) {
+        prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+    }
+
+    private String keyPaso(int asignacionId, int ordenPaso) {
+        return "asignacion_" + asignacionId + "_paso_" + ordenPaso;
+    }
+
+    private String keyUnityResult(int asignacionId) {
+        return "asignacion_" + asignacionId + "_unity_result_json";
+    }
+
+    private String keyEntregaEnviada(int asignacionId) {
+        return "asignacion_" + asignacionId + "_entrega_enviada";
+    }
+
+    public String getEstadoPaso(int asignacionId, int ordenPaso) {
+        if (ordenPaso == 1) {
+            return prefs.getString(
+                    keyPaso(asignacionId, ordenPaso),
+                    LaboratorioPasoItem.ESTADO_PENDIENTE
+            );
+        }
+
+        return prefs.getString(
+                keyPaso(asignacionId, ordenPaso),
+                LaboratorioPasoItem.ESTADO_BLOQUEADO
+        );
+    }
+
+    public void setEstadoPaso(int asignacionId, int ordenPaso, String estado) {
+        prefs.edit()
+                .putString(keyPaso(asignacionId, ordenPaso), estado)
+                .apply();
+    }
+
+    public void completarPasoYDesbloquearSiguiente(int asignacionId, int ordenPaso) {
+        SharedPreferences.Editor editor = prefs.edit();
+
+        editor.putString(
+                keyPaso(asignacionId, ordenPaso),
+                LaboratorioPasoItem.ESTADO_COMPLETADO
+        );
+
+        editor.putString(
+                keyPaso(asignacionId, ordenPaso + 1),
+                LaboratorioPasoItem.ESTADO_PENDIENTE
+        );
+
+        editor.apply();
+    }
+
+    public boolean estaPasoCompletado(int asignacionId, int ordenPaso) {
+        return LaboratorioPasoItem.ESTADO_COMPLETADO.equalsIgnoreCase(
+                getEstadoPaso(asignacionId, ordenPaso)
+        );
+    }
+
+    public void saveUnityResultJson(int asignacionId, String json) {
+        prefs.edit()
+                .putString(keyUnityResult(asignacionId), json)
+                .apply();
+    }
+
+    public String getUnityResultJson(int asignacionId) {
+        return prefs.getString(keyUnityResult(asignacionId), null);
+    }
+
+    public boolean hasUnityResult(int asignacionId) {
+        String json = getUnityResultJson(asignacionId);
+        return json != null && !json.trim().isEmpty();
+    }
+
+    public void marcarEntregaEnviada(int asignacionId) {
+        prefs.edit()
+                .putBoolean(keyEntregaEnviada(asignacionId), true)
+                .apply();
+    }
+
+    public boolean isEntregaEnviada(int asignacionId) {
+        return prefs.getBoolean(keyEntregaEnviada(asignacionId), false);
+    }
+
+    public void resetLaboratorio(int asignacionId) {
+        SharedPreferences.Editor editor = prefs.edit();
+
+        for (int i = 1; i <= 12; i++) {
+            editor.remove(keyPaso(asignacionId, i));
+        }
+
+        editor.remove(keyUnityResult(asignacionId));
+        editor.remove(keyEntregaEnviada(asignacionId));
+        editor.remove(keyPreguntasJson(asignacionId));
+        editor.remove(keyDatosExperimentalesJson(asignacionId));
+        editor.remove(keyEvidenciasJson(asignacionId));
+        editor.remove(keyComparacionTexto(asignacionId));
+        editor.remove(keyConclusionesTexto(asignacionId));
+
+        editor.apply();
+    }
+
+    private String keyPreguntasJson(int asignacionId) {
+        return "asignacion_" + asignacionId + "_preguntas_json";
+    }
+
+    private String keyDatosExperimentalesJson(int asignacionId) {
+        return "asignacion_" + asignacionId + "_datos_experimentales_json";
+    }
+
+    private String keyEvidenciasJson(int asignacionId) {
+        return "asignacion_" + asignacionId + "_evidencias_json";
+    }
+
+    private String keyComparacionTexto(int asignacionId) {
+        return "asignacion_" + asignacionId + "_comparacion_texto";
+    }
+
+    private String keyConclusionesTexto(int asignacionId) {
+        return "asignacion_" + asignacionId + "_conclusiones_texto";
+    }
+
+    public void savePreguntasJson(int asignacionId, String json) {
+        prefs.edit().putString(keyPreguntasJson(asignacionId), json).apply();
+    }
+
+    public String getPreguntasJson(int asignacionId) {
+        return prefs.getString(keyPreguntasJson(asignacionId), null);
+    }
+
+    public void saveDatosExperimentalesJson(int asignacionId, String json) {
+        prefs.edit().putString(keyDatosExperimentalesJson(asignacionId), json).apply();
+    }
+
+    public String getDatosExperimentalesJson(int asignacionId) {
+        return prefs.getString(keyDatosExperimentalesJson(asignacionId), null);
+    }
+
+    public void saveEvidenciasJson(int asignacionId, String json) {
+        prefs.edit().putString(keyEvidenciasJson(asignacionId), json).apply();
+    }
+
+    public String getEvidenciasJson(int asignacionId) {
+        return prefs.getString(keyEvidenciasJson(asignacionId), null);
+    }
+
+    public void saveComparacionTexto(int asignacionId, String texto) {
+        prefs.edit().putString(keyComparacionTexto(asignacionId), texto).apply();
+    }
+
+    public String getComparacionTexto(int asignacionId) {
+        return prefs.getString(keyComparacionTexto(asignacionId), "");
+    }
+
+    public void saveConclusionesTexto(int asignacionId, String texto) {
+        prefs.edit().putString(keyConclusionesTexto(asignacionId), texto).apply();
+    }
+
+    public String getConclusionesTexto(int asignacionId) {
+        return prefs.getString(keyConclusionesTexto(asignacionId), "");
+    }
+}

@@ -88,12 +88,39 @@
             android:exported="false"/>
 
         <activity
-            android:name=".ui.Autenticacion.FaceConsentActivity"
-            android:exported="false"/>
+            android:name=".ui.MonitorDeAprendizajeEstudiante.PasosLaboratorio"
+            android:exported="false" />
 
         <activity
-            android:name=".ui.UnityAR.ResultadoUnityActivity"
+            android:name=".ui.MonitorDeAprendizajeEstudiante.PracticaExperimental"
             android:exported="false" />
+
+        <activity
+            android:name=".ui.MonitorDeAprendizajeEstudiante.ComparacionResultadosActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".ui.MonitorDeAprendizajeEstudiante.EnvioEntregaLaboratorioActivity"
+            android:exported="false" />
+
+
+        <activity
+            android:name=".ui.MonitorDeAprendizajeEstudiante.LecturaLaboratorioActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".ui.MonitorDeAprendizajeEstudiante.PreguntasLaboratorioActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".ui.MonitorDeAprendizajeEstudiante.DatosExperimentalesActivity"
+            android:exported="false" />
+
+
+
+        <activity
+            android:name=".ui.Autenticacion.FaceConsentActivity"
+            android:exported="false"/>
 
         <activity
             android:name=".ui.AccesoAlSistema.UnirseGrupoActivity"
@@ -104,7 +131,19 @@
             android:exported="false" />
 
         <activity
+            android:name=".ui.Laboratorio.DetalleLaboratorioActivity"
+            android:exported="false" />
+
+        <activity
             android:name=".ui.Laboratorio.GrupoLaboratoriosActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".ui.MonitorDeAprendizajeEstudiante.SimulacionARActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".ui.UnityAR.ResultadoUnityActivity"
             android:exported="false" />
 
         <activity

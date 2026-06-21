@@ -11,16 +11,17 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
+        <!-- HEADER -->
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="160dp"
+            android:layout_height="150dp"
             android:background="#001B6B"
             android:gravity="center_vertical"
             android:orientation="horizontal"
             android:padding="20dp">
 
             <ImageView
-                android:id="@+id/btnBackSimulacionAr"
+                android:id="@+id/btnBackEnvioEntrega"
                 android:layout_width="38dp"
                 android:layout_height="38dp"
                 android:background="@drawable/white_circle"
@@ -38,7 +39,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Práctica simulada AR"
+                    android:text="Enviar entrega"
                     android:textColor="@android:color/white"
                     android:textSize="22sp"
                     android:textStyle="bold" />
@@ -47,7 +48,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
-                    android:text="Unity / Movimiento parabólico"
+                    android:text="Revisa y envía tu laboratorio"
                     android:textColor="#D6D6D6"
                     android:textSize="13sp" />
 
@@ -55,6 +56,7 @@
 
         </LinearLayout>
 
+        <!-- CONTENIDO -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -63,30 +65,47 @@
             android:orientation="vertical"
             android:padding="22dp">
 
-            <TextView
-                android:id="@+id/tvTituloAr"
+            <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Movimiento parabólico"
-                android:textColor="#001B6B"
-                android:textSize="20sp"
-                android:textStyle="bold" />
+                app:cardBackgroundColor="#ECFDF5"
+                app:cardCornerRadius="18dp"
+                app:cardElevation="0dp">
 
-            <TextView
-                android:id="@+id/tvDescripcionAr"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:lineSpacingExtra="4dp"
-                android:textColor="#334155"
-                android:textSize="14sp" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="18dp">
+
+                    <TextView
+                        android:id="@+id/tvEstadoEnvio"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Lista para enviar"
+                        android:textColor="#15803D"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tvCalificacionEstado"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="Calificación: pendiente"
+                        android:textColor="#166534"
+                        android:textSize="14sp" />
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="18dp"
                 app:cardBackgroundColor="#F1F5F9"
-                app:cardCornerRadius="16dp"
+                app:cardCornerRadius="18dp"
                 app:cardElevation="0dp">
 
                 <LinearLayout
@@ -98,19 +117,20 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Fórmula aplicada"
+                        android:text="Resumen"
                         android:textColor="#001B6B"
-                        android:textSize="16sp"
+                        android:textSize="17sp"
                         android:textStyle="bold" />
 
                     <TextView
-                        android:id="@+id/tvFormulaAr"
+                        android:id="@+id/tvResumenEntrega"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:lineSpacingExtra="6dp"
+                        android:layout_marginTop="12dp"
+                        android:lineSpacingExtra="5dp"
+                        android:text="Resumen de entrega"
                         android:textColor="#334155"
-                        android:textSize="15sp" />
+                        android:textSize="14sp" />
 
                 </LinearLayout>
 
@@ -121,7 +141,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="18dp"
                 app:cardBackgroundColor="#FFF9C4"
-                app:cardCornerRadius="16dp"
+                app:cardCornerRadius="18dp"
                 app:cardElevation="0dp">
 
                 <LinearLayout
@@ -131,20 +151,19 @@
                     android:padding="18dp">
 
                     <TextView
-                        android:id="@+id/tvIntentosAr"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Intentos disponibles: 0/4"
+                        android:text="Aviso"
                         android:textColor="#001B6B"
                         android:textSize="16sp"
                         android:textStyle="bold" />
 
                     <TextView
-                        android:id="@+id/tvObjetivoAr"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
+                        android:layout_marginTop="8dp"
                         android:lineSpacingExtra="4dp"
+                        android:text="La app móvil no calcula la calificación. Solo envía la entrega al servidor. La calificación quedará pendiente hasta que sea revisada por IA/instructor."
                         android:textColor="#475569"
                         android:textSize="14sp" />
 
@@ -153,13 +172,13 @@
             </androidx.cardview.widget.CardView>
 
             <Button
-                android:id="@+id/btnIniciarAr"
+                android:id="@+id/btnEnviarEntrega"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
                 android:backgroundTint="#001B6B"
                 android:padding="14dp"
-                android:text="Iniciar práctica AR"
+                android:text="Enviar entrega"
                 android:textAllCaps="false"
                 android:textColor="@android:color/white"
                 android:textSize="15sp" />

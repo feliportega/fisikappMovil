@@ -3,6 +3,7 @@ package com.marcos.fisikappmovil.data.repository;
 import com.marcos.fisikappmovil.data.callback.RepositoryCallback;
 import com.marcos.fisikappmovil.data.result.AppResult;
 import com.marcos.fisikappmovil.model.LaboratorioAsignadoItem;
+import com.marcos.fisikappmovil.model.LaboratorioPasoItem;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -66,5 +67,87 @@ public class LaboratorioRepository {
         ));
 
         callback.onComplete(AppResult.success(laboratorios, 200));
+    }
+
+    public void getPasosLaboratorioMock(
+            int asignacionId,
+            int laboratorioId,
+            RepositoryCallback<List<LaboratorioPasoItem>> callback
+    ) {
+        List<LaboratorioPasoItem> pasos = new ArrayList<>();
+
+        pasos.add(new LaboratorioPasoItem(
+                1,
+                "Leer conceptos",
+                "Revisa los conceptos básicos, fórmulas y marco teórico del tiro parabólico.",
+                LaboratorioPasoItem.TIPO_LECTURA,
+                true,
+                LaboratorioPasoItem.ESTADO_PENDIENTE
+        ));
+
+        pasos.add(new LaboratorioPasoItem(
+                2,
+                "Responder preguntas",
+                "Responde las preguntas de comprensión antes de iniciar la práctica.",
+                LaboratorioPasoItem.TIPO_PREGUNTAS,
+                true,
+                LaboratorioPasoItem.ESTADO_BLOQUEADO
+        ));
+
+        pasos.add(new LaboratorioPasoItem(
+                3,
+                "Práctica experimental",
+                "Realiza la práctica con materiales físicos o siguiendo el procedimiento indicado.",
+                LaboratorioPasoItem.TIPO_PRACTICA_EXPERIMENTAL,
+                true,
+                LaboratorioPasoItem.ESTADO_BLOQUEADO
+        ));
+
+        pasos.add(new LaboratorioPasoItem(
+                4,
+                "Registrar datos experimentales",
+                "Ingresa las mediciones y observaciones obtenidas en la práctica.",
+                LaboratorioPasoItem.TIPO_DATOS_EXPERIMENTALES,
+                true,
+                LaboratorioPasoItem.ESTADO_BLOQUEADO
+        ));
+
+        pasos.add(new LaboratorioPasoItem(
+                5,
+                "Práctica simulada AR",
+                "Ejecuta la práctica simulada en Unity y registra el resultado devuelto por la escena.",
+                LaboratorioPasoItem.TIPO_SIMULACION_AR,
+                true,
+                LaboratorioPasoItem.ESTADO_BLOQUEADO
+        ));
+
+        pasos.add(new LaboratorioPasoItem(
+                6,
+                "Comparar resultados",
+                "Compara los resultados experimentales con los resultados de la simulación.",
+                LaboratorioPasoItem.TIPO_COMPARACION,
+                true,
+                LaboratorioPasoItem.ESTADO_BLOQUEADO
+        ));
+
+        pasos.add(new LaboratorioPasoItem(
+                7,
+                "Informe y conclusiones",
+                "Revisa el resumen del laboratorio, escribe tus conclusiones y prepara la entrega.",
+                LaboratorioPasoItem.TIPO_INFORME,
+                true,
+                LaboratorioPasoItem.ESTADO_BLOQUEADO
+        ));
+
+        pasos.add(new LaboratorioPasoItem(
+                8,
+                "Enviar entrega",
+                "Envía tus respuestas, resultados y conclusiones para revisión.",
+                LaboratorioPasoItem.TIPO_ENVIO,
+                true,
+                LaboratorioPasoItem.ESTADO_BLOQUEADO
+        ));
+
+        callback.onComplete(AppResult.success(pasos, 200));
     }
 }
