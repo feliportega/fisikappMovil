@@ -289,24 +289,63 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:text="Registra tus datos y guarda tus evidencias."
+                android:text="Adjunta imágenes o documentos que respalden tu práctica experimental."
                 android:textColor="#64748B"
                 android:textSize="13sp" />
 
-            <!-- Área de evidencias -->
-            <FrameLayout
+            <LinearLayout
+                android:id="@+id/layoutAgregarEvidencia"
                 android:layout_width="match_parent"
-                android:layout_height="120dp"
+                android:layout_height="96dp"
                 android:layout_marginTop="16dp"
-                android:background="@drawable/input_recuperrar">
+                android:background="@drawable/input_recuperrar"
+                android:clickable="true"
+                android:focusable="true"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="12dp">
+
                 <ImageView
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_gravity="center"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
                     android:src="@android:drawable/ic_input_add"
                     app:tint="#FACC15"
                     android:contentDescription="Añadir evidencia" />
-            </FrameLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:text="+ Agregar evidencia"
+                    android:textColor="#001B6B"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:text="Imagen o documento"
+                    android:textColor="#64748B"
+                    android:textSize="12sp" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tvEstadoEvidencias"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:text="Aún no has agregado evidencias."
+                android:textColor="#64748B"
+                android:textSize="13sp" />
+
+            <LinearLayout
+                android:id="@+id/layoutEvidenciasContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:orientation="vertical" />
 
             <!-- Botones de Acción -->
             <LinearLayout
