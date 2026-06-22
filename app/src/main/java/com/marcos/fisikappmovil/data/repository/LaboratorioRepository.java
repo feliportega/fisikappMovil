@@ -139,15 +139,6 @@ public class LaboratorioRepository {
                 LaboratorioPasoItem.ESTADO_BLOQUEADO
         ));
 
-        pasos.add(new LaboratorioPasoItem(
-                8,
-                "Enviar entrega",
-                "Envía tus respuestas, resultados y conclusiones para revisión.",
-                LaboratorioPasoItem.TIPO_ENVIO,
-                true,
-                LaboratorioPasoItem.ESTADO_BLOQUEADO
-        ));
-
         callback.onComplete(AppResult.success(pasos, 200));
     }
 }

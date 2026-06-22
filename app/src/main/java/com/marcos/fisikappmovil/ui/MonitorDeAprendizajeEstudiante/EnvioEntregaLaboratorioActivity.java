@@ -14,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.marcos.fisikappmovil.R;
 import com.marcos.fisikappmovil.data.session.LaboratorioSessionStore;
+import com.marcos.fisikappmovil.ui.Laboratorio.GrupoLaboratoriosActivity;
 
 public class EnvioEntregaLaboratorioActivity extends AppCompatActivity {
 
@@ -22,6 +23,8 @@ public class EnvioEntregaLaboratorioActivity extends AppCompatActivity {
     private TextView tvResumenEntrega;
     private TextView tvCalificacionEstado;
     private Button btnEnviarEntrega;
+    private String grupoNombre;
+    private String grupoCurso;
 
     private LaboratorioSessionStore sessionStore;
 
@@ -50,6 +53,17 @@ public class EnvioEntregaLaboratorioActivity extends AppCompatActivity {
         laboratorioId = intent.getIntExtra(PasosLaboratorio.EXTRA_LABORATORIO_ID, -1);
         grupoId = intent.getIntExtra(PasosLaboratorio.EXTRA_GRUPO_ID, -1);
         ordenPaso = intent.getIntExtra(PasosLaboratorio.EXTRA_ORDEN_PASO, -1);
+
+        grupoNombre = intent.getStringExtra("GRUPO_NOMBRE");
+        grupoCurso = intent.getStringExtra("GRUPO_CURSO");
+
+        if (grupoNombre == null || grupoNombre.trim().isEmpty()) {
+            grupoNombre = "Grupo académico";
+        }
+
+        if (grupoCurso == null || grupoCurso.trim().isEmpty()) {
+            grupoCurso = "Física";
+        }
     }
 
     private void initViews() {
@@ -94,7 +108,7 @@ public class EnvioEntregaLaboratorioActivity extends AppCompatActivity {
 
     private void confirmarEnvio() {
         if (sessionStore.isEntregaEnviada(asignacionId)) {
-            completarPaso();
+            irAGrupoLaboratorios();
             return;
         }
 
@@ -113,7 +127,7 @@ public class EnvioEntregaLaboratorioActivity extends AppCompatActivity {
             sessionStore.marcarEntregaEnviada(asignacionId);
 
             setLoading(false);
-            pintarResumen();
+            //pintarResumen();
 
             Toast.makeText(
                     this,
@@ -121,7 +135,10 @@ public class EnvioEntregaLaboratorioActivity extends AppCompatActivity {
                     Toast.LENGTH_LONG
             ).show();
 
-            completarPaso();
+            irAGrupoLaboratorios();
+
+            //completarPaso();
+            //sessionStore.marcarEntregaEnviada(asignacionId);
 
         }, 900);
     }
@@ -142,8 +159,30 @@ public class EnvioEntregaLaboratorioActivity extends AppCompatActivity {
 
     private void completarPaso() {
         Intent data = new Intent();
-        data.putExtra(PasosLaboratorio.EXTRA_ORDEN_PASO, ordenPaso);
+
+        if (ordenPaso != -1) {
+            data.putExtra(PasosLaboratorio.EXTRA_ORDEN_PASO, ordenPaso);
+        }
+
         setResult(RESULT_OK, data);
+        finish();
+    }
+
+    private void irAGrupoLaboratorios() {
+        Intent intent = new Intent(this, GrupoLaboratoriosActivity.class);
+
+        intent.putExtra(GrupoLaboratoriosActivity.EXTRA_GRUPO_ID, grupoId);
+        intent.putExtra(GrupoLaboratoriosActivity.EXTRA_GRUPO_NOMBRE, grupoNombre);
+        intent.putExtra(GrupoLaboratoriosActivity.EXTRA_GRUPO_CURSO, grupoCurso);
+
+        /*
+         * Limpia las pantallas del laboratorio ya finalizado:
+         * EnvioEntrega → Pasos → Informe → etc.
+         */
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+
+        startActivity(intent);
         finish();
     }
 }

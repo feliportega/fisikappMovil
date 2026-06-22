@@ -2,6 +2,8 @@ package com.marcos.fisikappmovil.ui.MonitorDeAprendizajeEstudiante;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -36,6 +38,9 @@ public class PasosLaboratorio extends AppCompatActivity {
 
     private LaboratorioRepository laboratorioRepository;
     private LaboratorioSessionStore sessionStore;
+
+    private Button btnEnviarLaboratorio;
+    private TextView tvEntregaEnviada;
 
     private int asignacionId = -1;
     private int laboratorioId = -1;
@@ -75,6 +80,27 @@ public class PasosLaboratorio extends AppCompatActivity {
         cargarPasos();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        if (sessionStore != null && laboratorioRepository != null) {
+            cargarPasos();
+        }
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+
+        setIntent(intent);
+        readExtras();
+
+        if (sessionStore != null && laboratorioRepository != null) {
+            cargarPasos();
+        }
+    }
+
     private void initDependencies() {
         laboratorioRepository = new LaboratorioRepository();
         sessionStore = new LaboratorioSessionStore(this);
@@ -98,11 +124,15 @@ public class PasosLaboratorio extends AppCompatActivity {
         rvPasosLaboratorio = findViewById(R.id.rvPasosLaboratorio);
 
         rvPasosLaboratorio.setLayoutManager(new LinearLayoutManager(this));
-        rvPasosLaboratorio.setNestedScrollingEnabled(false);
+        //rvPasosLaboratorio.setNestedScrollingEnabled(false);
+
+        btnEnviarLaboratorio = findViewById(R.id.btnEnviarLaboratorio);
+        tvEntregaEnviada = findViewById(R.id.tvEntregaEnviada);
     }
 
     private void initListeners() {
         btnBackPasosLab.setOnClickListener(v -> finish());
+        btnEnviarLaboratorio.setOnClickListener(v -> abrirEnvioLaboratorio());
     }
 
     private void cargarPasos() {
@@ -130,8 +160,23 @@ public class PasosLaboratorio extends AppCompatActivity {
     }
 
     private void mostrarPasos(List<LaboratorioPasoItem> pasos) {
+
+        if (pasos != null) {
+            for (LaboratorioPasoItem paso : pasos) {
+                android.util.Log.d(
+                        "PASOS_DEBUG",
+                        "Paso " + paso.getOrden()
+                                + " | " + paso.getTitulo()
+                                + " | tipo=" + paso.getTipo()
+                                + " | estado=" + paso.getEstado()
+                );
+            }
+        }
+
         if (pasos == null || pasos.isEmpty()) {
             tvEstadoPasosLab.setText("Este laboratorio no tiene pasos configurados.");
+            btnEnviarLaboratorio.setVisibility(View.GONE);
+            tvEntregaEnviada.setVisibility(View.GONE);
             return;
         }
 
@@ -143,6 +188,7 @@ public class PasosLaboratorio extends AppCompatActivity {
         );
 
         rvPasosLaboratorio.setAdapter(adapter);
+        actualizarBotonEnvio(pasos);
     }
 
     private void abrirPaso(LaboratorioPasoItem paso) {
@@ -200,5 +246,59 @@ public class PasosLaboratorio extends AppCompatActivity {
         intent.putExtra(EXTRA_TIPO_PASO, paso.getTipo());
 
         pasoLauncher.launch(intent);
+    }
+
+    private void abrirEnvioLaboratorio() {
+        Intent intent = new Intent(this, EnvioEntregaLaboratorioActivity.class);
+
+        intent.putExtra(EXTRA_ASIGNACION_ID, asignacionId);
+        intent.putExtra(EXTRA_LABORATORIO_ID, laboratorioId);
+        intent.putExtra(EXTRA_GRUPO_ID, grupoId);
+
+        intent.putExtra("GRUPO_NOMBRE", getIntent().getStringExtra("GRUPO_NOMBRE"));
+        intent.putExtra("GRUPO_CURSO", getIntent().getStringExtra("GRUPO_CURSO"));
+
+        intent.putExtra(EXTRA_ORDEN_PASO, -1);
+
+        pasoLauncher.launch(intent);
+    }
+
+    private void actualizarBotonEnvio(List<LaboratorioPasoItem> pasos) {
+        boolean entregaEnviada = sessionStore.isEntregaEnviada(asignacionId);
+
+        if (entregaEnviada) {
+            btnEnviarLaboratorio.setVisibility(View.GONE);
+            tvEntregaEnviada.setVisibility(View.VISIBLE);
+            tvEstadoPasosLab.setText("Laboratorio enviado. La calificación está pendiente.");
+            return;
+        }
+
+        tvEntregaEnviada.setVisibility(View.GONE);
+
+        boolean todosCompletados = true;
+
+        for (LaboratorioPasoItem paso : pasos) {
+            if (paso.isObligatorio() && !paso.estaCompletado()) {
+                todosCompletados = false;
+                android.util.Log.d(
+                        "PASOS_DEBUG",
+                        "Falta completar paso: "
+                                + paso.getOrden()
+                                + " - "
+                                + paso.getTitulo()
+                                + " estado="
+                                + paso.getEstado()
+                );
+                break;
+            }
+        }
+
+        if (todosCompletados) {
+            btnEnviarLaboratorio.setVisibility(View.VISIBLE);
+            tvEstadoPasosLab.setText("Todos los pasos están completos. Ya puedes enviar el laboratorio.");
+        } else {
+            btnEnviarLaboratorio.setVisibility(View.GONE);
+            tvEstadoPasosLab.setText("Completa cada paso en orden para enviar tu laboratorio.");
+        }
     }
 }

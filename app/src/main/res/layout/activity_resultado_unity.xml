@@ -134,7 +134,7 @@
                 android:layout_marginTop="24dp"
                 android:backgroundTint="#001B6B"
                 android:padding="14dp"
-                android:text="Guardar resultado AR"
+                android:text="Finalizar"
                 android:textAllCaps="false"
                 android:textColor="@android:color/white"
                 android:textSize="15sp" />

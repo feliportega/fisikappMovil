@@ -23,6 +23,14 @@ public class LaboratorioSessionStore {
         return "asignacion_" + asignacionId + "_unity_result_json";
     }
 
+    private String keyUnityContextByRunId(String runId) {
+        return "unity_context_run_" + runId;
+    }
+
+    private String keyUnityContextByRequestId(String requestId) {
+        return "unity_context_request_" + requestId;
+    }
+
     private String keyEntregaEnviada(int asignacionId) {
         return "asignacion_" + asignacionId + "_entrega_enviada";
     }
@@ -94,24 +102,6 @@ public class LaboratorioSessionStore {
         return prefs.getBoolean(keyEntregaEnviada(asignacionId), false);
     }
 
-    public void resetLaboratorio(int asignacionId) {
-        SharedPreferences.Editor editor = prefs.edit();
-
-        for (int i = 1; i <= 12; i++) {
-            editor.remove(keyPaso(asignacionId, i));
-        }
-
-        editor.remove(keyUnityResult(asignacionId));
-        editor.remove(keyEntregaEnviada(asignacionId));
-        editor.remove(keyPreguntasJson(asignacionId));
-        editor.remove(keyDatosExperimentalesJson(asignacionId));
-        editor.remove(keyEvidenciasJson(asignacionId));
-        editor.remove(keyComparacionTexto(asignacionId));
-        editor.remove(keyConclusionesTexto(asignacionId));
-
-        editor.apply();
-    }
-
     private String keyPreguntasJson(int asignacionId) {
         return "asignacion_" + asignacionId + "_preguntas_json";
     }
@@ -171,4 +161,85 @@ public class LaboratorioSessionStore {
     public String getConclusionesTexto(int asignacionId) {
         return prefs.getString(keyConclusionesTexto(asignacionId), "");
     }
+
+    public void saveUnityLaunchContext(
+            String runId,
+            String requestId,
+            int asignacionId,
+            int laboratorioId,
+            int grupoId,
+            int ordenPaso
+    ) {
+        try {
+            org.json.JSONObject json = new org.json.JSONObject();
+
+            json.put("runId", runId);
+            json.put("requestId", requestId);
+            json.put("asignacionId", asignacionId);
+            json.put("laboratorioId", laboratorioId);
+            json.put("grupoId", grupoId);
+            json.put("ordenPaso", ordenPaso);
+
+            SharedPreferences.Editor editor = prefs.edit();
+
+            if (runId != null && !runId.trim().isEmpty()) {
+                editor.putString(keyUnityContextByRunId(runId), json.toString());
+            }
+
+            if (requestId != null && !requestId.trim().isEmpty()) {
+                editor.putString(keyUnityContextByRequestId(requestId), json.toString());
+            }
+
+            editor.apply();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public org.json.JSONObject getUnityLaunchContext(String runId, String requestId) {
+        try {
+            String json = null;
+
+            if (runId != null && !runId.trim().isEmpty()) {
+                json = prefs.getString(keyUnityContextByRunId(runId), null);
+            }
+
+            if ((json == null || json.trim().isEmpty())
+                    && requestId != null
+                    && !requestId.trim().isEmpty()) {
+                json = prefs.getString(keyUnityContextByRequestId(requestId), null);
+            }
+
+            if (json == null || json.trim().isEmpty()) {
+                return null;
+            }
+
+            return new org.json.JSONObject(json);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public void resetLaboratorio(int asignacionId) {
+        SharedPreferences.Editor editor = prefs.edit();
+
+        for (int i = 1; i <= 12; i++) {
+            editor.remove(keyPaso(asignacionId, i));
+        }
+
+        editor.remove(keyUnityResult(asignacionId));
+        editor.remove(keyEntregaEnviada(asignacionId));
+        editor.remove(keyPreguntasJson(asignacionId));
+        editor.remove(keyDatosExperimentalesJson(asignacionId));
+        editor.remove(keyEvidenciasJson(asignacionId));
+        editor.remove(keyComparacionTexto(asignacionId));
+        editor.remove(keyConclusionesTexto(asignacionId));
+
+        editor.apply();
+    }
+
+
 }

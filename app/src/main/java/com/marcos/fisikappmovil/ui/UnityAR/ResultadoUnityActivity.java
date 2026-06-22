@@ -2,6 +2,7 @@ package com.marcos.fisikappmovil.ui.UnityAR;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -9,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.marcos.fisikappmovil.R;
 import com.marcos.fisikappmovil.data.session.LaboratorioSessionStore;
+import com.marcos.fisikappmovil.ui.AccesoAlSistema.Dashboard;
 import com.marcos.fisikappmovil.ui.MonitorDeAprendizajeEstudiante.PasosLaboratorio;
 
 import org.json.JSONArray;
@@ -29,9 +31,16 @@ public class ResultadoUnityActivity extends AppCompatActivity {
     private LaboratorioSessionStore sessionStore;
 
     private int asignacionId = -1;
+    private int laboratorioId = -1;
+    private int grupoId = -1;
     private int ordenPaso = -1;
 
     private String resultJson;
+    private String runId;
+    private String requestId;
+
+    private boolean resultadoProcesado = false;
+    private boolean pasoArCompletado = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,15 +52,48 @@ public class ResultadoUnityActivity extends AppCompatActivity {
         readExtras();
         initViews();
         pintarResultado();
+
+        // Punto clave: guardar automáticamente apenas llega el resultado.
+        procesarResultadoInmediatamente();
+
         initListeners();
+
+        // Evita volver a Unity/Simulación con botón atrás.
+        getOnBackPressedDispatcher().addCallback(
+                this,
+                new androidx.activity.OnBackPressedCallback(true) {
+                    @Override
+                    public void handleOnBackPressed() {
+                        irAPasosLaboratorio();
+                    }
+                }
+        );
     }
+
+    private void initListeners() {
+        btnGuardarResultadoUnity.setText("Continuar laboratorio");
+        btnGuardarResultadoUnity.setOnClickListener(v -> irAPasosLaboratorio());
+    }
+
 
     private void readExtras() {
         Intent intent = getIntent();
 
         resultJson = intent.getStringExtra(EXTRA_UNITY_RESULT);
+
         asignacionId = intent.getIntExtra(PasosLaboratorio.EXTRA_ASIGNACION_ID, -1);
+        laboratorioId = intent.getIntExtra(PasosLaboratorio.EXTRA_LABORATORIO_ID, -1);
+        grupoId = intent.getIntExtra(PasosLaboratorio.EXTRA_GRUPO_ID, -1);
         ordenPaso = intent.getIntExtra(PasosLaboratorio.EXTRA_ORDEN_PASO, -1);
+
+        recuperarContextoDesdeJsonSiHaceFalta();
+
+        android.util.Log.d("RESULT_UNITY", "asignacionId=" + asignacionId);
+        android.util.Log.d("RESULT_UNITY", "laboratorioId=" + laboratorioId);
+        android.util.Log.d("RESULT_UNITY", "grupoId=" + grupoId);
+        android.util.Log.d("RESULT_UNITY", "ordenPaso=" + ordenPaso);
+        android.util.Log.d("RESULT_UNITY", "runId=" + runId);
+        android.util.Log.d("RESULT_UNITY", "requestId=" + requestId);
     }
 
     private void initViews() {
@@ -62,10 +104,6 @@ public class ResultadoUnityActivity extends AppCompatActivity {
         txtDistanciaUnity = findViewById(R.id.txtDistanciaUnity);
         txtDetalleIntentosUnity = findViewById(R.id.txtDetalleIntentosUnity);
         btnGuardarResultadoUnity = findViewById(R.id.btnGuardarResultadoUnity);
-    }
-
-    private void initListeners() {
-        btnGuardarResultadoUnity.setOnClickListener(v -> guardarYCompletar());
     }
 
     private void pintarResultado() {
@@ -168,14 +206,189 @@ public class ResultadoUnityActivity extends AppCompatActivity {
         return builder.toString();
     }
 
+    private void recuperarContextoDesdeJsonSiHaceFalta() {
+        if (resultJson == null || resultJson.trim().isEmpty()) {
+            return;
+        }
+
+        try {
+            JSONObject json = new JSONObject(resultJson);
+
+            runId = json.optString("runId", null);
+            requestId = json.optString("requestId", null);
+
+            JSONObject context = sessionStore.getUnityLaunchContext(runId, requestId);
+
+            if (context != null) {
+                if (asignacionId == -1) {
+                    asignacionId = context.optInt("asignacionId", -1);
+                }
+
+                if (laboratorioId == -1) {
+                    laboratorioId = context.optInt("laboratorioId", -1);
+                }
+
+                if (grupoId == -1) {
+                    grupoId = context.optInt("grupoId", -1);
+                }
+
+                if (ordenPaso == -1) {
+                    ordenPaso = context.optInt("ordenPaso", -1);
+                }
+            }
+
+            if (asignacionId == -1 || laboratorioId == -1) {
+                recuperarIdsDesdeRequestId(requestId);
+            }
+
+            // En tu mock actual el paso AR es el 5.
+            if (ordenPaso == -1) {
+                ordenPaso = 5;
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void recuperarIdsDesdeRequestId(String requestId) {
+        if (requestId == null || requestId.trim().isEmpty()) {
+            return;
+        }
+
+        try {
+            String[] parts = requestId.split("-");
+
+            for (int i = 0; i < parts.length; i++) {
+                if ("ASG".equalsIgnoreCase(parts[i]) && i + 1 < parts.length) {
+                    asignacionId = Integer.parseInt(parts[i + 1]);
+                }
+
+                if ("LAB".equalsIgnoreCase(parts[i]) && i + 1 < parts.length) {
+                    laboratorioId = Integer.parseInt(parts[i + 1]);
+                }
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
     private void guardarYCompletar() {
+        boolean completarPaso = false;
+
         if (resultJson != null && !resultJson.trim().isEmpty()) {
             sessionStore.saveUnityResultJson(asignacionId, resultJson);
+
+            try {
+                JSONObject json = new JSONObject(resultJson);
+                completarPaso = debeCompletarPasoAr(json);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
+
+        android.util.Log.d("RESULT_UNITY", "guardarYCompletar asignacionId=" + asignacionId);
+        android.util.Log.d("RESULT_UNITY", "guardarYCompletar ordenPaso=" + ordenPaso);
+        android.util.Log.d("RESULT_UNITY", "guardarYCompletar completarPaso=" + completarPaso);
 
         Intent data = new Intent();
         data.putExtra(PasosLaboratorio.EXTRA_ORDEN_PASO, ordenPaso);
-        setResult(RESULT_OK, data);
+
+        if (completarPaso) {
+            if (asignacionId != -1 && ordenPaso != -1) {
+                sessionStore.completarPasoYDesbloquearSiguiente(asignacionId, ordenPaso);
+            }
+
+            setResult(RESULT_OK, data);
+        } else {
+            setResult(RESULT_CANCELED, data);
+        }
+
         finish();
     }
+
+    private boolean debeCompletarPasoAr(JSONObject json) {
+        boolean completed = json.optBoolean("completed", false);
+        int remainingAttempts = json.optInt("remainingAttempts", -1);
+        String resultStatus = json.optString("resultStatus", "");
+        String exitReason = json.optString("exitReason", "");
+
+        android.util.Log.d("RESULT_UNITY", "completed=" + completed);
+        android.util.Log.d("RESULT_UNITY", "remainingAttempts=" + remainingAttempts);
+        android.util.Log.d("RESULT_UNITY", "resultStatus=" + resultStatus);
+        android.util.Log.d("RESULT_UNITY", "exitReason=" + exitReason);
+
+        if (completed) return true;
+
+        if ("completed".equalsIgnoreCase(resultStatus)) return true;
+
+        if (remainingAttempts == 0) return true;
+
+        if ("max_attempts".equalsIgnoreCase(exitReason)
+                || "MaxAttemptsReached".equalsIgnoreCase(exitReason)) {
+            return true;
+        }
+
+        return false;
+    }
+
+    private void procesarResultadoInmediatamente() {
+        if (resultadoProcesado) {
+            return;
+        }
+
+        resultadoProcesado = true;
+
+        if (resultJson == null || resultJson.trim().isEmpty()) {
+            txtEstadoUnity.setText("No se recibió resultado desde Unity");
+            pasoArCompletado = false;
+            return;
+        }
+
+        try {
+            JSONObject json = new JSONObject(resultJson);
+
+            pasoArCompletado = debeCompletarPasoAr(json);
+
+            if (asignacionId != -1) {
+                sessionStore.saveUnityResultJson(asignacionId, resultJson);
+            }
+
+            if (pasoArCompletado && asignacionId != -1 && ordenPaso != -1) {
+                sessionStore.completarPasoYDesbloquearSiguiente(asignacionId, ordenPaso);
+            }
+
+            android.util.Log.d("RESULT_UNITY", "AUTO_SAVE asignacionId=" + asignacionId);
+            android.util.Log.d("RESULT_UNITY", "AUTO_SAVE ordenPaso=" + ordenPaso);
+            android.util.Log.d("RESULT_UNITY", "AUTO_SAVE pasoArCompletado=" + pasoArCompletado);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            txtEstadoUnity.setText("Error guardando resultado AR");
+        }
+    }
+
+    private void irAPasosLaboratorio() {
+        Intent intent = new Intent(this, PasosLaboratorio.class);
+
+        intent.putExtra(PasosLaboratorio.EXTRA_ASIGNACION_ID, asignacionId);
+        intent.putExtra(PasosLaboratorio.EXTRA_LABORATORIO_ID, laboratorioId);
+        intent.putExtra(PasosLaboratorio.EXTRA_GRUPO_ID, grupoId);
+        intent.putExtra(PasosLaboratorio.EXTRA_ORDEN_PASO, ordenPaso);
+
+        /*
+         * CLEAR_TOP:
+         * Si PasosLaboratorio ya está debajo en la pila,
+         * elimina SimulacionARActivity, UnityArActivity y ResultadoUnityActivity.
+         *
+         * SINGLE_TOP:
+         * Reutiliza PasosLaboratorio si ya existe arriba después del CLEAR_TOP.
+         */
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+
+        startActivity(intent);
+        finish();
+    }
+
 }

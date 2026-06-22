@@ -42,7 +42,14 @@ public class SimulacionARActivity extends AppCompatActivity {
     private String displayName = "Movimiento parabólico";
     private String exerciseId = "EX-PARABOLIC-001";
 
-    private int maxAttempts = 3;
+    private String currentRequestId;
+    private String currentRunId;
+
+    private boolean arCompleted = false;
+    private boolean hitTarget = false;
+    private int remainingAttempts = 4;
+    private String lastResultStatus = "NO_REALIZADO";
+    private int maxAttempts = 4;
     private int usedAttempts = 0;
 
     private final ActivityResultLauncher<Intent> unityLauncher =
@@ -62,10 +69,15 @@ public class SimulacionARActivity extends AppCompatActivity {
                     }
             );
 
+
     private final ActivityResultLauncher<Intent> resultadoUnityLauncher =
             registerForActivityResult(
                     new ActivityResultContracts.StartActivityForResult(),
                     result -> {
+                        cargarEstadoArGuardado();
+                        debugEstadoAr("REGRESO_DE_RESULTADO_UNITY");
+                        pintarDatos();
+
                         if (result.getResultCode() == RESULT_OK) {
                             Intent data = new Intent();
                             data.putExtra(PasosLaboratorio.EXTRA_ORDEN_PASO, ordenPaso);
@@ -86,7 +98,21 @@ public class SimulacionARActivity extends AppCompatActivity {
         readExtras();
         initViews();
         initListeners();
+        cargarEstadoArGuardado();
+        debugEstadoAr("DESPUES_CARGAR_ESTADO");
         pintarDatos();
+        //pintarDatos();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        if (sessionStore != null) {
+            cargarEstadoArGuardado();
+            debugEstadoAr("ON_RESUME_SIMULACION_AR");
+            pintarDatos();
+        }
     }
 
     private void readExtras() {
@@ -125,7 +151,11 @@ public class SimulacionARActivity extends AppCompatActivity {
     }
 
     private void pintarDatos() {
+
+        debugEstadoAr("ANTES_PINTAR_DATOS");
+
         tvTituloAr.setText(displayName);
+
         tvDescripcionAr.setText(
                 "En esta práctica simulada AR configurarás potencia y ángulo de lanzamiento para impactar el objetivo."
         );
@@ -135,21 +165,84 @@ public class SimulacionARActivity extends AppCompatActivity {
                         "y(t) = y₀ + v₀ sin(θ)t - 1/2 gt²"
         );
 
-        tvIntentosAr.setText("Intentos disponibles: " + usedAttempts + "/" + maxAttempts);
+        tvIntentosAr.setText(
+                "Intentos usados: " + usedAttempts + "/" + maxAttempts +
+                        "\nIntentos disponibles: " + remainingAttempts
+        );
+
+        if ("NO_REALIZADO".equalsIgnoreCase(lastResultStatus)) {
+            tvObjetivoAr.setText(
+                    "Estado: no realizado.\n\n" +
+                            "Objetivo: impactar el target antes de agotar los intentos."
+            );
+
+            btnIniciarAr.setEnabled(true);
+            btnIniciarAr.setText("Iniciar práctica AR");
+            return;
+        }
+
+        if (arCompleted) {
+            tvObjetivoAr.setText(
+                    "Estado: finalizado.\n" +
+                            "Impactó el target: " + (hitTarget ? "Sí" : "No") + "\n" +
+                            "Intentos usados: " + usedAttempts + "/" + maxAttempts + "\n\n" +
+                            "La práctica AR ya fue finalizada y guardada."
+            );
+
+            btnIniciarAr.setEnabled(false);
+            btnIniciarAr.setText("Práctica AR finalizada");
+            return;
+        }
+
+        if (remainingAttempts > 0) {
+            tvObjetivoAr.setText(
+                    "Estado: incompleto.\n" +
+                            "Impactó el target: " + (hitTarget ? "Sí" : "No") + "\n" +
+                            "Intentos usados: " + usedAttempts + "/" + maxAttempts + "\n" +
+                            "Intentos disponibles: " + remainingAttempts + "\n\n" +
+                            "Puedes continuar la práctica AR."
+            );
+
+            btnIniciarAr.setEnabled(true);
+            btnIniciarAr.setText("Continuar práctica AR");
+            return;
+        }
 
         tvObjetivoAr.setText(
-                "Objetivo: impactar el target antes de agotar los intentos. " +
-                        "Unity devolverá distancia al objetivo, tipo de impacto e intentos usados."
+                "Estado: incompleto.\n" +
+                        "No quedan intentos disponibles."
         );
+
+        btnIniciarAr.setEnabled(false);
+        btnIniciarAr.setText("Sin intentos disponibles");
     }
 
     private void iniciarUnity() {
+        if (arCompleted) {
+            Toast.makeText(this, "La práctica AR ya fue completada.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        if (remainingAttempts <= 0) {
+            Toast.makeText(this, "No quedan intentos disponibles.", Toast.LENGTH_LONG).show();
+            return;
+        }
+
         String json = buildUnityConfigJson();
 
         if (json == null) {
             Toast.makeText(this, "No se pudo preparar la configuración AR.", Toast.LENGTH_LONG).show();
             return;
         }
+
+        sessionStore.saveUnityLaunchContext(
+                currentRunId,
+                currentRequestId,
+                asignacionId,
+                laboratorioId,
+                grupoId,
+                ordenPaso
+        );
 
         Intent intent = new Intent(this, UnityArActivity.class);
         intent.putExtra(UnityArActivity.EXTRA_EXERCISE_DATA, json);
@@ -162,8 +255,11 @@ public class SimulacionARActivity extends AppCompatActivity {
             JSONObject root = new JSONObject();
 
             root.put("schemaVersion", 1);
-            root.put("requestId", "REQ-ASG-" + asignacionId + "-LAB-" + laboratorioId);
-            root.put("runId", "RUN-ASG-" + asignacionId + "-" + System.currentTimeMillis());
+            currentRequestId = "REQ-ASG-" + asignacionId + "-LAB-" + laboratorioId;
+            currentRunId = "RUN-ASG-" + asignacionId + "-" + System.currentTimeMillis();
+
+            root.put("requestId", currentRequestId);
+            root.put("runId", currentRunId);
 
             JSONObject scene = new JSONObject();
             scene.put("labKey", labKey);
@@ -212,5 +308,60 @@ public class SimulacionARActivity extends AppCompatActivity {
         intent.putExtra(PasosLaboratorio.EXTRA_ORDEN_PASO, ordenPaso);
 
         resultadoUnityLauncher.launch(intent);
+    }
+
+    private void cargarEstadoArGuardado() {
+        String jsonGuardado = sessionStore.getUnityResultJson(asignacionId);
+
+        android.util.Log.d("AR_DEBUG", "Leyendo JSON guardado para asignacionId=" + asignacionId);
+        android.util.Log.d("AR_DEBUG", "jsonGuardado=" + jsonGuardado);
+
+        if (jsonGuardado == null || jsonGuardado.trim().isEmpty()) {
+            arCompleted = false;
+            hitTarget = false;
+            usedAttempts = 0;
+            remainingAttempts = maxAttempts;
+            lastResultStatus = "NO_REALIZADO";
+            return;
+        }
+
+        try {
+            JSONObject json = new JSONObject(jsonGuardado);
+
+            hitTarget = json.optBoolean("hitTarget", false);
+            usedAttempts = json.optInt("usedAttempts", 0);
+            remainingAttempts = json.optInt("remainingAttempts", maxAttempts - usedAttempts);
+            lastResultStatus = json.optString("resultStatus", "SIN_ESTADO");
+
+            boolean completedFromJson = json.optBoolean("completed", false);
+
+            arCompleted = completedFromJson || remainingAttempts <= 0;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+
+            arCompleted = false;
+            hitTarget = false;
+            usedAttempts = 0;
+            remainingAttempts = maxAttempts;
+            lastResultStatus = "ERROR_LECTURA";
+        }
+    }
+
+    private void debugEstadoAr(String punto) {
+        String jsonGuardado = sessionStore.getUnityResultJson(asignacionId);
+
+        android.util.Log.d("AR_DEBUG", "========== " + punto + " ==========");
+        android.util.Log.d("AR_DEBUG", "asignacionId=" + asignacionId);
+        android.util.Log.d("AR_DEBUG", "laboratorioId=" + laboratorioId);
+        android.util.Log.d("AR_DEBUG", "grupoId=" + grupoId);
+        android.util.Log.d("AR_DEBUG", "ordenPaso=" + ordenPaso);
+        android.util.Log.d("AR_DEBUG", "jsonGuardado=" + jsonGuardado);
+        android.util.Log.d("AR_DEBUG", "arCompleted=" + arCompleted);
+        android.util.Log.d("AR_DEBUG", "hitTarget=" + hitTarget);
+        android.util.Log.d("AR_DEBUG", "usedAttempts=" + usedAttempts);
+        android.util.Log.d("AR_DEBUG", "remainingAttempts=" + remainingAttempts);
+        android.util.Log.d("AR_DEBUG", "maxAttempts=" + maxAttempts);
+        android.util.Log.d("AR_DEBUG", "lastResultStatus=" + lastResultStatus);
     }
 }

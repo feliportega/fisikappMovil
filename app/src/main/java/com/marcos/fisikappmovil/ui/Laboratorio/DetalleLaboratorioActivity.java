@@ -10,7 +10,10 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.marcos.fisikappmovil.R;
+import com.marcos.fisikappmovil.data.session.LaboratorioSessionStore;
 import com.marcos.fisikappmovil.ui.MonitorDeAprendizajeEstudiante.PasosLaboratorio;
+
+import org.json.JSONObject;
 
 public class DetalleLaboratorioActivity extends AppCompatActivity {
 
@@ -71,6 +74,13 @@ public class DetalleLaboratorioActivity extends AppCompatActivity {
         initViews();
         initListeners();
         pintarDatos();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        actualizarEstadoLocal();
     }
 
     private void readExtras() {
@@ -178,5 +188,35 @@ public class DetalleLaboratorioActivity extends AppCompatActivity {
         intent.putExtra("UNITY_SCENE", unitySceneName);
 
         startActivity(intent);
+    }
+
+    private void actualizarEstadoLocal() {
+        LaboratorioSessionStore store = new LaboratorioSessionStore(this);
+        String unityJson = store.getUnityResultJson(asignacionId);
+
+        if (unityJson == null || unityJson.trim().isEmpty()) {
+            tvDetalleIntentosLab.setText("Intentos: " + intentosUsados + "/" + intentosMaximos);
+            return;
+        }
+
+        try {
+            JSONObject json = new JSONObject(unityJson);
+
+            int used = json.optInt("usedAttempts", intentosUsados);
+            int max = json.optInt("maxAttempts", intentosMaximos);
+            boolean completed = json.optBoolean("completed", false);
+            int remaining = json.optInt("remainingAttempts", max - used);
+
+            tvDetalleIntentosLab.setText("Intentos AR: " + used + "/" + max);
+
+            if (completed || remaining <= 0) {
+                tvDetalleEntregaLab.setText("Entrega: EN DESARROLLO - AR FINALIZADO");
+            } else {
+                tvDetalleEntregaLab.setText("Entrega: EN DESARROLLO - AR INCOMPLETO");
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
