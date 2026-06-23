@@ -46,6 +46,15 @@
         android:textSize="14sp" />
 
     <TextView
+        android:id="@+id/tvBadgeAr"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="AR"
+        android:textColor="#475569"
+        android:textSize="14sp" />
+
+    <TextView
         android:id="@+id/tvLabFecha"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

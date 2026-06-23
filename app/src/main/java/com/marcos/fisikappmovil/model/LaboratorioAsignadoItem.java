@@ -107,4 +107,12 @@ public class LaboratorioAsignadoItem {
         return "ABIERTO".equalsIgnoreCase(estadoAsignacion)
                 && intentosUsados < intentosMaximos;
     }
+
+    public boolean tienePracticaAr() {
+        return unitySceneName != null && !unitySceneName.trim().isEmpty();
+    }
+
+    public boolean tieneIntentos() {
+        return tienePracticaAr() && intentosMaximos > 0;
+    }
 }

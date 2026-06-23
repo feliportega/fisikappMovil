@@ -14,9 +14,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.marcos.fisikappmovil.R;
 import com.marcos.fisikappmovil.data.repository.LaboratorioRepository;
+import com.marcos.fisikappmovil.model.GrupoEstudianteItem;
 import com.marcos.fisikappmovil.model.LaboratorioAsignadoItem;
-import com.marcos.fisikappmovil.ui.Laboratorio.DetalleLaboratorioActivity;
 import com.marcos.fisikappmovil.model.TokenManager;
+import com.marcos.fisikappmovil.ui.common.ContentStateView;
 
 import java.util.List;
 
@@ -41,6 +42,8 @@ public class GrupoLaboratoriosActivity extends AppCompatActivity {
     private String grupoNombre;
     private String grupoCurso;
 
+    private ContentStateView stateGrupos;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,6 +61,7 @@ public class GrupoLaboratoriosActivity extends AppCompatActivity {
     private void initDependencies() {
         tokenManager = new TokenManager(this);
         laboratorioRepository = new LaboratorioRepository();
+        stateGrupos = new ContentStateView(findViewById(R.id.stateDashboardGrupos));
     }
 
     private void readExtras() {
@@ -108,15 +112,65 @@ public class GrupoLaboratoriosActivity extends AppCompatActivity {
         tvResumenGrupoLabs.setText("Laboratorios asignados a " + grupoNombre + ".");
     }
 
-    private void cargarLaboratorios() {
-        mostrarCargando();
+    private void abrirGrupo(GrupoEstudianteItem grupo) {
+        Intent intent = new Intent(this, GrupoLaboratoriosActivity.class);
 
-        laboratorioRepository.getLaboratoriosAsignadosPorGrupo(grupoId, result -> {
-            if (result.isSuccess()) {
-                mostrarLaboratorios(result.getData());
-            } else {
-                mostrarEstadoVacio(result.getErrorMessage());
-            }
+        intent.putExtra(GrupoLaboratoriosActivity.EXTRA_GRUPO_ID, grupo.getId());
+        intent.putExtra(GrupoLaboratoriosActivity.EXTRA_GRUPO_NOMBRE, grupo.getNombre());
+        intent.putExtra(GrupoLaboratoriosActivity.EXTRA_GRUPO_CURSO, "Física");
+
+        startActivity(intent);
+    }
+
+    private void cargarLaboratorios() {
+        String authHeader = tokenManager.getAuthorizationHeader();
+
+        if (authHeader == null || authHeader.trim().isEmpty()) {
+            Toast.makeText(this, "Sesión no válida.", Toast.LENGTH_SHORT).show();
+            finish();
+            return;
+        }
+
+        stateGrupos.showLoading(
+                "Cargando laboratorios",
+                "Estamos consultando los laboratorios asignados a este grupo."
+        );
+
+        rvLaboratoriosAsignados.setVisibility(View.GONE);
+
+        laboratorioRepository.getLaboratoriosPorGrupo(authHeader, grupoId, result -> {
+            runOnUiThread(() -> {
+                if (!result.isSuccess()) {
+
+                    stateGrupos.showError(
+                            "No se pudieron cargar los laboratorios",
+                            result.getStatusCode() == -1
+                                    ? "No se pudo conectar con el servidor. Revisa tu internet o intenta nuevamente."
+                                    : result.getErrorMessage(),
+                            v -> cargarLaboratorios()
+                    );
+
+                    rvLaboratoriosAsignados.setVisibility(View.GONE);
+                    return;
+                }
+
+                List<LaboratorioAsignadoItem> laboratorios = result.getData();
+
+                if (laboratorios == null || laboratorios.isEmpty()) {
+                    stateGrupos.showEmpty(
+                            "Sin laboratorios asignados",
+                            "Este grupo todavía no tiene laboratorios disponibles."
+                    );
+
+                    rvLaboratoriosAsignados.setVisibility(View.GONE);
+                    return;
+                }
+
+                stateGrupos.hide();
+                rvLaboratoriosAsignados.setVisibility(View.VISIBLE);
+
+                mostrarLaboratorios(laboratorios);
+            });
         });
     }
 

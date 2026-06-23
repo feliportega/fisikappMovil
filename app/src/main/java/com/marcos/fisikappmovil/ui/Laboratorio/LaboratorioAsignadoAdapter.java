@@ -52,9 +52,29 @@ public class LaboratorioAsignadoAdapter extends RecyclerView.Adapter<Laboratorio
                         + " · Entrega: " + lab.getEstadoEntrega()
         );
 
-        holder.tvLabIntentos.setText(
-                "Intentos: " + lab.getIntentosUsados() + "/" + lab.getIntentosMaximos()
-        );
+        //holder.tvLabIntentos.setText(
+        //        "Intentos: " + lab.getIntentosUsados() + "/" + lab.getIntentosMaximos()
+        //);
+
+        if (lab.tienePracticaAr()) {
+            holder.tvBadgeAr.setVisibility(View.VISIBLE);
+            holder.tvBadgeAr.setText("Incluye práctica AR");
+        } else {
+            holder.tvBadgeAr.setVisibility(View.GONE);
+        }
+
+        if (lab.tieneIntentos()) {
+            holder.tvLabIntentos.setVisibility(View.VISIBLE);
+            holder.tvLabIntentos.setText(
+                    "Intentos: "
+                            + lab.getIntentosUsados()
+                            + "/"
+                            + lab.getIntentosMaximos()
+            );
+        } else {
+            holder.tvLabIntentos.setVisibility(View.GONE);
+        }
+
 
         holder.tvLabFecha.setText("Fecha límite: " + lab.getFechaFin());
         holder.tvLabCalificacion.setText("Calificación: " + formatEstadoCalificacion(lab.getCalificacionEstado()));
@@ -105,6 +125,7 @@ public class LaboratorioAsignadoAdapter extends RecyclerView.Adapter<Laboratorio
         TextView tvLabTitulo;
         TextView tvLabKey;
         TextView tvLabEstado;
+        TextView tvBadgeAr;
         TextView tvLabIntentos;
         TextView tvLabFecha;
         TextView tvLabCalificacion;
@@ -116,6 +137,7 @@ public class LaboratorioAsignadoAdapter extends RecyclerView.Adapter<Laboratorio
             tvLabTitulo = itemView.findViewById(R.id.tvLabTitulo);
             tvLabKey = itemView.findViewById(R.id.tvLabKey);
             tvLabEstado = itemView.findViewById(R.id.tvLabEstado);
+            tvBadgeAr = itemView.findViewById(R.id.tvBadgeAr);
             tvLabIntentos = itemView.findViewById(R.id.tvLabIntentos);
             tvLabFecha = itemView.findViewById(R.id.tvLabFecha);
             tvLabCalificacion = itemView.findViewById(R.id.tvLabCalificacion);
