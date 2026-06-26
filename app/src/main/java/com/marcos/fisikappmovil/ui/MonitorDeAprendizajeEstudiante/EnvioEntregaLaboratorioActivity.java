@@ -15,6 +15,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.marcos.fisikappmovil.R;
 import com.marcos.fisikappmovil.data.session.LaboratorioSessionStore;
 import com.marcos.fisikappmovil.ui.Laboratorio.GrupoLaboratoriosActivity;
+import com.marcos.fisikappmovil.ui.common.LoadingOverlayView;
 
 public class EnvioEntregaLaboratorioActivity extends AppCompatActivity {
 
@@ -33,6 +34,8 @@ public class EnvioEntregaLaboratorioActivity extends AppCompatActivity {
     private int grupoId = -1;
     private int ordenPaso = -1;
 
+    private LoadingOverlayView loadingOverlay;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,6 +46,8 @@ public class EnvioEntregaLaboratorioActivity extends AppCompatActivity {
         readExtras();
         initViews();
         initListeners();
+        configurarBackPress();
+
         pintarResumen();
     }
 
@@ -72,10 +77,22 @@ public class EnvioEntregaLaboratorioActivity extends AppCompatActivity {
         tvResumenEntrega = findViewById(R.id.tvResumenEntrega);
         tvCalificacionEstado = findViewById(R.id.tvCalificacionEstado);
         btnEnviarEntrega = findViewById(R.id.btnEnviarEntrega);
+        loadingOverlay = new LoadingOverlayView(findViewById(R.id.loadingOverlay));
     }
 
     private void initListeners() {
-        btnBack.setOnClickListener(v -> finish());
+        btnBack.setOnClickListener(v -> {
+            if (loadingOverlay != null && loadingOverlay.isShowing()) {
+                Toast.makeText(
+                        this,
+                        "Espera a que termine el envío.",
+                        Toast.LENGTH_SHORT
+                ).show();
+                return;
+            }
+
+            finish();
+        });
 
         btnEnviarEntrega.setOnClickListener(v -> confirmarEnvio());
     }
@@ -121,13 +138,13 @@ public class EnvioEntregaLaboratorioActivity extends AppCompatActivity {
     }
 
     private void simularEnvio() {
+
         setLoading(true);
 
         new Handler(Looper.getMainLooper()).postDelayed(() -> {
             sessionStore.marcarEntregaEnviada(asignacionId);
 
             setLoading(false);
-            //pintarResumen();
 
             Toast.makeText(
                     this,
@@ -137,23 +154,20 @@ public class EnvioEntregaLaboratorioActivity extends AppCompatActivity {
 
             irAGrupoLaboratorios();
 
-            //completarPaso();
-            //sessionStore.marcarEntregaEnviada(asignacionId);
-
         }, 900);
     }
 
     private void setLoading(boolean loading) {
-        btnEnviarEntrega.setEnabled(!loading);
-
         if (loading) {
-            btnEnviarEntrega.setText("Enviando...");
-        } else {
-            btnEnviarEntrega.setText(
-                    sessionStore.isEntregaEnviada(asignacionId)
-                            ? "Finalizar"
-                            : "Enviar entrega"
+            loadingOverlay.show(
+                    "Enviando laboratorio",
+                    "Estamos registrando tu entrega. No cierres la aplicación."
             );
+
+            btnEnviarEntrega.setEnabled(false);
+        } else {
+            loadingOverlay.hide();
+            btnEnviarEntrega.setEnabled(true);
         }
     }
 
@@ -185,4 +199,26 @@ public class EnvioEntregaLaboratorioActivity extends AppCompatActivity {
         startActivity(intent);
         finish();
     }
+
+    private void configurarBackPress() {
+        getOnBackPressedDispatcher().addCallback(
+                this,
+                new androidx.activity.OnBackPressedCallback(true) {
+                    @Override
+                    public void handleOnBackPressed() {
+                        if (loadingOverlay != null && loadingOverlay.isShowing()) {
+                            Toast.makeText(
+                                    EnvioEntregaLaboratorioActivity.this,
+                                    "Espera a que termine el envío.",
+                                    Toast.LENGTH_SHORT
+                            ).show();
+                            return;
+                        }
+
+                        finish();
+                    }
+                }
+        );
+    }
+
 }

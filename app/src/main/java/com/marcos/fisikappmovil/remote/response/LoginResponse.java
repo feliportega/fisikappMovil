@@ -1,7 +1,7 @@
 package com.marcos.fisikappmovil.remote.response;
 
 import com.google.gson.annotations.SerializedName;
-import com.marcos.fisikappmovil.Temp.models.UserData;
+import com.marcos.fisikappmovil.model.UserData;
 
 public class LoginResponse {
 
