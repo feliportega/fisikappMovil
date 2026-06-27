@@ -15,7 +15,7 @@ import com.marcos.fisikappmovil.R;
 import com.marcos.fisikappmovil.data.session.LaboratorioSessionStore;
 import com.marcos.fisikappmovil.model.TokenManager;
 import com.marcos.fisikappmovil.ui.UnityAR.ResultadoUnityActivity;
-import com.marcos.fisikappmovil.ui.UnityAR.UnityArActivity;
+//import com.marcos.fisikappmovil.ui.UnityAR.UnityArActivity;
 
 import org.json.JSONObject;
 
@@ -244,10 +244,10 @@ public class SimulacionARActivity extends AppCompatActivity {
                 ordenPaso
         );
 
-        Intent intent = new Intent(this, UnityArActivity.class);
-        intent.putExtra(UnityArActivity.EXTRA_EXERCISE_DATA, json);
+        //Intent intent = new Intent(this, UnityArActivity.class);
+        //intent.putExtra(UnityArActivity.EXTRA_EXERCISE_DATA, json);
 
-        unityLauncher.launch(intent);
+        //unityLauncher.launch(intent);
     }
 
     private String buildUnityConfigJson() {
