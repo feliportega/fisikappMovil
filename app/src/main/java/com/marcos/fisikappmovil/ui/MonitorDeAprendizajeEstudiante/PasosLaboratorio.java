@@ -14,13 +14,19 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.gson.Gson;
 import com.marcos.fisikappmovil.R;
 import com.marcos.fisikappmovil.data.repository.LaboratorioRepository;
 import com.marcos.fisikappmovil.data.session.LaboratorioSessionStore;
+import com.marcos.fisikappmovil.remote.response.MobileResourceResponse;
+import com.marcos.fisikappmovil.remote.response.MobileStepResponse;
+import com.marcos.fisikappmovil.ui.Laboratorio.RenderContentActivity;
 import com.marcos.fisikappmovil.ui.MonitorDeAprendizajeEstudiante.SimulacionARActivity;
 import com.marcos.fisikappmovil.model.LaboratorioPasoItem;
 import com.marcos.fisikappmovil.ui.Laboratorio.PasoLaboratorioAdapter;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class PasosLaboratorio extends AppCompatActivity {
@@ -49,6 +55,47 @@ public class PasosLaboratorio extends AppCompatActivity {
     private PasoLaboratorioAdapter adapter;
     private List<LaboratorioPasoItem> pasosActuales;
 
+    private Gson gson;
+
+    private String mapMobileTypeToPasoTipo(String type) {
+        if (type == null) return LaboratorioPasoItem.TIPO_LECTURA;
+
+        switch (type) {
+            case "INTRODUCTION":
+            case "THEORY":
+            case "OBJECTIVES":
+            case "CONCEPTS":
+            case "FORMULAS":
+            case "PROCEDURES":
+                return LaboratorioPasoItem.TIPO_LECTURA;
+
+            case "QUESTIONS":
+                return LaboratorioPasoItem.TIPO_PREGUNTAS;
+
+            case "EXPERIMENTAL_PRACTICE":
+            case "PRACTICE":
+            case "GUIDED_PRACTICE":
+                return LaboratorioPasoItem.TIPO_PRACTICA_EXPERIMENTAL;
+
+            case "SIMULATION_AR":
+                return LaboratorioPasoItem.TIPO_SIMULACION_AR;
+
+            case "COMPARISON":
+                return LaboratorioPasoItem.TIPO_COMPARACION;
+
+            case "REPORT":
+                return LaboratorioPasoItem.TIPO_INFORME;
+
+            case "SUBMISSION":
+                return LaboratorioPasoItem.TIPO_ENVIO;
+
+            default:
+                return LaboratorioPasoItem.TIPO_LECTURA;
+        }
+    }
+
+    private List<MobileStepResponse> mobileStepsActuales = new ArrayList<>();
+
     private final ActivityResultLauncher<Intent> pasoLauncher =
             registerForActivityResult(
                     new ActivityResultContracts.StartActivityForResult(),
@@ -62,7 +109,7 @@ public class PasosLaboratorio extends AppCompatActivity {
                                         ordenCompletado
                                 );
 
-                                cargarPasos();
+                                cargarPasosDesdeMobileResource();
                             }
                         }
                     }
@@ -77,7 +124,7 @@ public class PasosLaboratorio extends AppCompatActivity {
         readExtras();
         initViews();
         initListeners();
-        cargarPasos();
+        cargarPasosDesdeMobileResource();
     }
 
     @Override
@@ -85,7 +132,7 @@ public class PasosLaboratorio extends AppCompatActivity {
         super.onResume();
 
         if (sessionStore != null && laboratorioRepository != null) {
-            cargarPasos();
+            cargarPasosDesdeMobileResource();
         }
     }
 
@@ -97,13 +144,14 @@ public class PasosLaboratorio extends AppCompatActivity {
         readExtras();
 
         if (sessionStore != null && laboratorioRepository != null) {
-            cargarPasos();
+            cargarPasosDesdeMobileResource();
         }
     }
 
     private void initDependencies() {
         laboratorioRepository = new LaboratorioRepository();
         sessionStore = new LaboratorioSessionStore(this);
+        gson = new Gson();
     }
 
     private void readExtras() {
@@ -135,30 +183,72 @@ public class PasosLaboratorio extends AppCompatActivity {
         btnEnviarLaboratorio.setOnClickListener(v -> abrirEnvioLaboratorio());
     }
 
-    private void cargarPasos() {
-        tvEstadoPasosLab.setText("Cargando pasos...");
+    private void cargarPasosDesdeMobileResource() {
+        String json = sessionStore.getMobileResourceJson(asignacionId);
 
-        laboratorioRepository.getPasosLaboratorioMock(asignacionId, laboratorioId, result -> {
-            if (!result.isSuccess()) {
-                tvEstadoPasosLab.setText(result.getErrorMessage());
+        if (json == null || json.trim().isEmpty()) {
+            tvEstadoPasosLab.setText("No se encontró información del laboratorio. Vuelve al detalle e intenta cargar nuevamente.");
+            btnEnviarLaboratorio.setVisibility(View.GONE);
+            tvEntregaEnviada.setVisibility(View.GONE);
+            rvPasosLaboratorio.setAdapter(null);
+            return;
+        }
+
+        try {
+            MobileResourceResponse response = gson.fromJson(json, MobileResourceResponse.class);
+
+            if (response == null || response.getSteps() == null || response.getSteps().isEmpty()) {
+                tvEstadoPasosLab.setText("Este laboratorio no tiene pasos configurados.");
+                btnEnviarLaboratorio.setVisibility(View.GONE);
+                tvEntregaEnviada.setVisibility(View.GONE);
+                rvPasosLaboratorio.setAdapter(null);
                 return;
             }
 
-            pasosActuales = result.getData();
-            aplicarEstadosGuardados(pasosActuales);
-            mostrarPasos(pasosActuales);
-        });
-    }
+            List<MobileStepResponse> steps = new ArrayList<>(response.getSteps());
 
-    private void aplicarEstadosGuardados(List<LaboratorioPasoItem> pasos) {
-        if (pasos == null) return;
+            Collections.sort(steps, (a, b) -> Integer.compare(a.getOrder(), b.getOrder()));
 
-        for (LaboratorioPasoItem paso : pasos) {
-            String estadoGuardado = sessionStore.getEstadoPaso(asignacionId, paso.getOrden());
-            paso.setEstado(estadoGuardado);
+            mostrarPasosMobile(steps);
+
+        } catch (Exception e) {
+            tvEstadoPasosLab.setText("No se pudo leer la información guardada del laboratorio.");
+            btnEnviarLaboratorio.setVisibility(View.GONE);
+            tvEntregaEnviada.setVisibility(View.GONE);
+            rvPasosLaboratorio.setAdapter(null);
         }
     }
 
+    private void mostrarPasosMobile(List<MobileStepResponse> steps) {
+        mobileStepsActuales = steps;
+
+        if (steps == null || steps.isEmpty()) {
+            tvEstadoPasosLab.setText("Este laboratorio no tiene pasos configurados.");
+            btnEnviarLaboratorio.setVisibility(View.GONE);
+            tvEntregaEnviada.setVisibility(View.GONE);
+            return;
+        }
+
+        List<LaboratorioPasoItem> pasos = new ArrayList<>();
+
+        for (MobileStepResponse step : steps) {
+            if (step == null) continue;
+
+            LaboratorioPasoItem item = new LaboratorioPasoItem(
+                    step.getOrder(),
+                    safe(step.getTitle()),
+                    buildDescripcionMobileStep(step),
+                    mapMobileTypeToPasoTipo(step.getType()),
+                    step.isRequired(),
+                    resolverEstadoInicial(step.getOrder())
+            );
+
+            pasos.add(item);
+        }
+
+        pasosActuales = pasos;
+        mostrarPasos(pasosActuales);
+    }
     private void mostrarPasos(List<LaboratorioPasoItem> pasos) {
 
         if (pasos != null) {
@@ -191,9 +281,60 @@ public class PasosLaboratorio extends AppCompatActivity {
         actualizarBotonEnvio(pasos);
     }
 
+    private void abrirPasoMobile(MobileStepResponse step) {
+        if (step == null || step.getType() == null) {
+            Toast.makeText(this, "Paso no disponible.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        switch (step.getType()) {
+            case "INTRODUCTION":
+            case "THEORY":
+            case "OBJECTIVES":
+            case "CONCEPTS":
+            case "PROCEDURES":
+                abrirRenderContent(step);
+                break;
+            case "FORMULAS":
+                abrirRenderContent(step);
+                break;
+
+            case "SIMULATION_AR":
+                abrirSimulacionAr(step);
+                break;
+
+            case "COMPARISON":
+                abrirComparacion(step);
+                break;
+
+            case "REPORT":
+                abrirInforme(step);
+                break;
+
+            case "SUBMISSION":
+                abrirEnvioEntrega(step);
+                break;
+
+            case "EXPERIMENTAL_PRACTICE":
+                abrirPracticaExperimental(step);
+                break;
+
+            default:
+                Toast.makeText(this, "Este paso todavía no está disponible.", Toast.LENGTH_SHORT).show();
+                break;
+        }
+    }
+
     private void abrirPaso(LaboratorioPasoItem paso) {
         if (paso.estaBloqueado()) {
             Toast.makeText(this, "Completa el paso anterior primero.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        MobileStepResponse mobileStep = findMobileStepByOrder(paso.getOrden());
+
+        if (mobileStep != null) {
+            abrirPasoMobile(mobileStep);
             return;
         }
 
@@ -248,6 +389,21 @@ public class PasosLaboratorio extends AppCompatActivity {
         pasoLauncher.launch(intent);
     }
 
+    private void abrirRenderContent(MobileStepResponse step) {
+        Intent intent = new Intent(this, RenderContentActivity.class);
+
+        intent.putExtra(RenderContentActivity.EXTRA_ASSIGNMENT_ID, asignacionId);
+        intent.putExtra(RenderContentActivity.EXTRA_STEP_ID, step.getId());
+        intent.putExtra(RenderContentActivity.EXTRA_STEP_TITLE, step.getTitle());
+
+        intent.putExtra(EXTRA_ASIGNACION_ID, asignacionId);
+        intent.putExtra(EXTRA_LABORATORIO_ID, laboratorioId);
+        intent.putExtra(EXTRA_GRUPO_ID, grupoId);
+        intent.putExtra(EXTRA_ORDEN_PASO, step.getOrder());
+        intent.putExtra(EXTRA_TIPO_PASO, step.getType());
+
+        pasoLauncher.launch(intent);
+    }
     private void abrirEnvioLaboratorio() {
         Intent intent = new Intent(this, EnvioEntregaLaboratorioActivity.class);
 
@@ -300,5 +456,149 @@ public class PasosLaboratorio extends AppCompatActivity {
             btnEnviarLaboratorio.setVisibility(View.GONE);
             tvEstadoPasosLab.setText("Completa cada paso en orden para enviar tu laboratorio.");
         }
+    }
+
+    private MobileStepResponse findMobileStepByOrder(int order) {
+        if (mobileStepsActuales == null || mobileStepsActuales.isEmpty()) {
+            return null;
+        }
+
+        for (MobileStepResponse step : mobileStepsActuales) {
+            if (step != null && step.getOrder() == order) {
+                return step;
+            }
+        }
+
+        return null;
+    }
+
+    private void abrirSimulacionAr(MobileStepResponse step) {
+        Intent intent = new Intent(this, SimulacionARActivity.class);
+
+        intent.putExtra(EXTRA_ASIGNACION_ID, asignacionId);
+        intent.putExtra(EXTRA_LABORATORIO_ID, laboratorioId);
+        intent.putExtra(EXTRA_GRUPO_ID, grupoId);
+        intent.putExtra(EXTRA_ORDEN_PASO, step.getOrder());
+        intent.putExtra(EXTRA_TIPO_PASO, step.getType());
+
+        intent.putExtra("LAB_KEY", "PARABOLIC-001");
+        intent.putExtra("UNITY_SCENE", "ParabolicMotionLab");
+
+        pasoLauncher.launch(intent);
+    }
+
+    private void abrirComparacion(MobileStepResponse step) {
+        Intent intent = new Intent(this, ComparacionResultadosActivity.class);
+
+        intent.putExtra(EXTRA_ASIGNACION_ID, asignacionId);
+        intent.putExtra(EXTRA_LABORATORIO_ID, laboratorioId);
+        intent.putExtra(EXTRA_GRUPO_ID, grupoId);
+        intent.putExtra(EXTRA_ORDEN_PASO, step.getOrder());
+        intent.putExtra(EXTRA_TIPO_PASO, step.getType());
+
+        pasoLauncher.launch(intent);
+    }
+
+    private void abrirInforme(MobileStepResponse step) {
+        Intent intent = new Intent(this, InformeLaboratorio.class);
+
+        intent.putExtra(EXTRA_ASIGNACION_ID, asignacionId);
+        intent.putExtra(EXTRA_LABORATORIO_ID, laboratorioId);
+        intent.putExtra(EXTRA_GRUPO_ID, grupoId);
+        intent.putExtra(EXTRA_ORDEN_PASO, step.getOrder());
+        intent.putExtra(EXTRA_TIPO_PASO, step.getType());
+
+        pasoLauncher.launch(intent);
+    }
+
+    private void abrirEnvioEntrega(MobileStepResponse step) {
+        Intent intent = new Intent(this, EnvioEntregaLaboratorioActivity.class);
+
+        intent.putExtra(EXTRA_ASIGNACION_ID, asignacionId);
+        intent.putExtra(EXTRA_LABORATORIO_ID, laboratorioId);
+        intent.putExtra(EXTRA_GRUPO_ID, grupoId);
+        intent.putExtra(EXTRA_ORDEN_PASO, step.getOrder());
+        intent.putExtra(EXTRA_TIPO_PASO, step.getType());
+
+        intent.putExtra("GRUPO_NOMBRE", getIntent().getStringExtra("GRUPO_NOMBRE"));
+        intent.putExtra("GRUPO_CURSO", getIntent().getStringExtra("GRUPO_CURSO"));
+
+        pasoLauncher.launch(intent);
+    }
+
+    private void abrirPracticaExperimental(MobileStepResponse step) {
+        Intent intent = new Intent(this, PracticaExperimental.class);
+
+        intent.putExtra(EXTRA_ASIGNACION_ID, asignacionId);
+        intent.putExtra(EXTRA_LABORATORIO_ID, laboratorioId);
+        intent.putExtra(EXTRA_GRUPO_ID, grupoId);
+        intent.putExtra(EXTRA_ORDEN_PASO, step.getOrder());
+        intent.putExtra(EXTRA_TIPO_PASO, step.getType());
+
+        pasoLauncher.launch(intent);
+    }
+
+    private String buildDescripcionMobileStep(MobileStepResponse step) {
+        if (step == null) return "";
+
+        String type = step.getType();
+
+        if (type == null) return "";
+
+        switch (type) {
+            case "INTRODUCTION":
+                return "Lee la introducción del laboratorio.";
+
+            case "THEORY":
+                return "Revisa el marco teórico.";
+
+            case "OBJECTIVES":
+                return "Consulta el objetivo general y los objetivos específicos.";
+
+            case "CONCEPTS":
+                return "Revisa los conceptos básicos del laboratorio.";
+
+            case "PROCEDURES":
+                return "Revisa el procedimiento que debes seguir en el laboratorio.";
+
+            case "FORMULAS":
+                return "Consulta las fórmulas necesarias para la práctica.";
+
+            case "SIMULATION_AR":
+                return "Realiza la simulación en realidad aumentada.";
+
+            case "COMPARISON":
+                return "Compara los resultados obtenidos.";
+
+            case "REPORT":
+                return "Completa el informe final del laboratorio.";
+
+            case "SUBMISSION":
+                return "Envía la entrega del laboratorio.";
+
+            case "EXPERIMENTAL_PRACTICE":
+                return "Realiza y registra la práctica experimental.";
+
+            default:
+                return "Completa este paso del laboratorio.";
+        }
+    }
+
+    private String resolverEstadoInicial(int order) {
+        String estadoGuardado = sessionStore.getEstadoPaso(asignacionId, order);
+
+        if (estadoGuardado != null && !estadoGuardado.trim().isEmpty()) {
+            return estadoGuardado;
+        }
+
+        if (order == 1) {
+            return LaboratorioPasoItem.ESTADO_DISPONIBLE;
+        }
+
+        return LaboratorioPasoItem.ESTADO_BLOQUEADO;
+    }
+
+    private String safe(String value) {
+        return value == null ? "" : value;
     }
 }

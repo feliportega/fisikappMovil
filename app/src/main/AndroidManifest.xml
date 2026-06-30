@@ -91,6 +91,10 @@
             android:name=".ui.MonitorDeAprendizajeEstudiante.PasosLaboratorio"
             android:exported="false" />
 
+
+        <activity android:name=".ui.Laboratorio.RenderContentActivity"
+            android:exported="false"/>
+
         <activity
             android:name=".ui.MonitorDeAprendizajeEstudiante.PracticaExperimental"
             android:exported="false" />
