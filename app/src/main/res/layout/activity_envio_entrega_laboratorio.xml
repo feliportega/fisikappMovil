@@ -5,6 +5,7 @@
     android:layout_height="match_parent">
 
     <ScrollView
+        android:id="@+id/contentDetalleLaboratorio"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#F8FAFC"
@@ -190,6 +191,14 @@
             </LinearLayout>
         </LinearLayout>
     </ScrollView>
+
+    <include
+        android:id="@+id/contentStateDetalleLaboratorio"
+        layout="@layout/view_content_state"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone" />
+
     <include
         android:id="@+id/loadingOverlay"
         layout="@layout/view_loading_overlay" />

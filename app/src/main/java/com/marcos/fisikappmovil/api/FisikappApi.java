@@ -7,6 +7,7 @@ import com.marcos.fisikappmovil.remote.response.GrupoEstudianteResponse;
 import com.marcos.fisikappmovil.remote.response.GrupoLaboratoriosResponse;
 import com.marcos.fisikappmovil.remote.response.LaboratorioEstudianteDetalleResponse;
 import com.marcos.fisikappmovil.remote.response.LoginResponse;
+import com.marcos.fisikappmovil.remote.response.MobileResourceResponse;
 import com.marcos.fisikappmovil.remote.response.PerfilResponse;
 import com.marcos.fisikappmovil.remote.response.PerfilUpdateResponse;
 
@@ -63,6 +64,12 @@ public interface FisikappApi {
     Call<LaboratorioEstudianteDetalleResponse> getLaboratorioEstudianteDetalle(
             @Header("Authorization") String token,
             @Path("laboratorio_id") int laboratorioId
+    );
+
+    @GET("api/mobile/resources/{asignacion_id}/")
+    Call<MobileResourceResponse> getMobileResource(
+            @Header("Authorization") String token,
+            @Path("asignacion_id") int asignacionId
     );
 
 }

@@ -12,6 +12,7 @@ public class LaboratorioPasoItem {
     public static final String TIPO_INFORME = "INFORME";
     public static final String TIPO_ENVIO = "ENVIO";
 
+    public static final String ESTADO_DISPONIBLE = "DISPONIBLE";
     public static final String ESTADO_BLOQUEADO = "BLOQUEADO";
     public static final String ESTADO_PENDIENTE = "PENDIENTE";
     public static final String ESTADO_EN_PROGRESO = "EN_PROGRESO";

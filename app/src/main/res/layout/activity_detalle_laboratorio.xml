@@ -1,33 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#001B6B"
-    android:fillViewport="true">
+    android:layout_height="match_parent">
 
-    <LinearLayout
+    <ScrollView
+        android:id="@+id/contentDetalleLaboratorio"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="match_parent"
+        android:background="#001B6B"
+        android:fillViewport="true">
 
-        <!-- HEADER -->
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="210dp"
-            android:gravity="center"
-            android:orientation="vertical"
-            android:padding="24dp">
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-            <ImageView
-                android:id="@+id/btnBackDetalleLab"
-                android:layout_width="38dp"
-                android:layout_height="38dp"
-                android:layout_gravity="start"
-                android:background="@drawable/white_circle"
-                android:padding="8dp"
-                android:src="@drawable/iconoretroceder"
-                />
+            <!-- HEADER -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="210dp"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="24dp">
+
+                <ImageView
+                    android:id="@+id/btnBackDetalleLab"
+                    android:layout_width="38dp"
+                    android:layout_height="38dp"
+                    android:layout_gravity="start"
+                    android:background="@drawable/white_circle"
+                    android:padding="8dp"
+                    android:src="@drawable/iconoretroceder"
+                    app:tint="#001B6B" />
 
             <ImageView
                 android:layout_width="96dp"
@@ -35,237 +40,244 @@
                 android:layout_marginTop="8dp"
                 android:src="@drawable/vector_main_logo" />
 
-            <TextView
-                android:id="@+id/tvDetalleTituloLab"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:gravity="center"
-                android:text="Tiro parabólico"
-                android:textColor="@android:color/white"
-                android:textSize="20sp"
-                android:textStyle="bold" />
+                <TextView
+                    android:id="@+id/tvDetalleTituloLab"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:gravity="center"
+                    android:text="Tiro parabólico"
+                    android:textColor="@android:color/white"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/tvDetalleSubtituloLab"
-                android:layout_width="wrap_content"
+                <TextView
+                    android:id="@+id/tvDetalleSubtituloLab"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:gravity="center"
+                    android:text="Laboratorio asignado"
+                    android:textColor="#D6D6D6"
+                    android:textSize="13sp" />
+
+            </LinearLayout>
+
+            <!-- CONTENIDO BLANCO -->
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:gravity="center"
-                android:text="Laboratorio asignado"
-                android:textColor="#D6D6D6"
-                android:textSize="13sp" />
+                android:layout_marginTop="-20dp"
+                android:background="@android:color/white"
+                android:orientation="vertical"
+                android:padding="24dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Objetivo"
+                    android:textColor="#001B6B"
+                    android:textSize="17sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tvDetalleObjetivoLab"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:lineSpacingExtra="4dp"
+                    android:text="Comprender el comportamiento del tiro parabólico observando la trayectoria de un objeto lanzado con un ángulo inicial determinado."
+                    android:textColor="#334155"
+                    android:textSize="14sp" />
+
+                <!-- CARD INFO -->
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    app:cardCornerRadius="18dp"
+                    app:cardElevation="2dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="18dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Información de la asignación"
+                            android:textColor="#001B6B"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/tvDetalleGrupoLab"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="12dp"
+                            android:text="Grupo: Grupo 10A"
+                            android:textColor="#475569"
+                            android:textSize="14sp" />
+
+                        <TextView
+                            android:id="@+id/tvDetalleEstadoLab"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="6dp"
+                            android:text="Estado: ABIERTO"
+                            android:textColor="#475569"
+                            android:textSize="14sp" />
+
+                        <TextView
+                            android:id="@+id/tvDetalleEntregaLab"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="6dp"
+                            android:text="Entrega: PENDIENTE"
+                            android:textColor="#475569"
+                            android:textSize="14sp" />
+
+                        <TextView
+                            android:id="@+id/tvDetalleIntentosLab"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="6dp"
+                            android:text="Intentos: 0/4"
+                            android:textColor="#475569"
+                            android:textSize="14sp" />
+
+                        <TextView
+                            android:id="@+id/tvDetalleFechaLab"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="6dp"
+                            android:text="Fecha límite: 2026-06-30"
+                            android:textColor="#475569"
+                            android:textSize="14sp" />
+
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+                <!-- CARD QUÉ HARÁS -->
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="18dp"
+                    app:cardCornerRadius="18dp"
+                    app:cardElevation="2dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="18dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="¿Qué harás?"
+                            android:textColor="#001B6B"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="12dp"
+                            android:text="• Leerás conceptos y fórmulas del movimiento parabólico."
+                            android:textColor="#334155"
+                            android:textSize="14sp" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:text="• Responderás preguntas de comprensión."
+                            android:textColor="#334155"
+                            android:textSize="14sp" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:text="• Realizarás práctica experimental y práctica simulada AR."
+                            android:textColor="#334155"
+                            android:textSize="14sp" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:text="• Registrarás datos, conclusiones y enviarás la entrega."
+                            android:textColor="#334155"
+                            android:textSize="14sp" />
+
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+                <!-- INFO UNITY -->
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="18dp"
+                    app:cardBackgroundColor="#FFF9C4"
+                    app:cardCornerRadius="18dp"
+                    app:cardElevation="0dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="18dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Práctica simulada AR"
+                            android:textColor="#001B6B"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/tvDetalleUnityLab"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:text="PARABOLIC-001 · ParabolicMotionLab"
+                            android:textColor="#475569"
+                            android:textSize="13sp" />
+
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+                <Button
+                    android:id="@+id/btnComenzarPasosLab"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:backgroundTint="#001B6B"
+                    android:padding="14dp"
+                    android:text="Comenzar laboratorio"
+                    android:textAllCaps="false"
+                    android:textColor="@android:color/white"
+                    android:textSize="16sp" />
+
+            </LinearLayout>
 
         </LinearLayout>
 
-        <!-- CONTENIDO BLANCO -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="-20dp"
-            android:background="@android:color/white"
-            android:orientation="vertical"
-            android:padding="24dp">
+    </ScrollView>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Objetivo"
-                android:textColor="#001B6B"
-                android:textSize="17sp"
-                android:textStyle="bold" />
+    <include
+        android:id="@+id/contentStateDetalleLaboratorio"
+        layout="@layout/view_content_state"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone" />
 
-            <TextView
-                android:id="@+id/tvDetalleObjetivoLab"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:lineSpacingExtra="4dp"
-                android:text="Comprender el comportamiento del tiro parabólico observando la trayectoria de un objeto lanzado con un ángulo inicial determinado."
-                android:textColor="#334155"
-                android:textSize="14sp" />
-
-            <!-- CARD INFO -->
-            <androidx.cardview.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                app:cardCornerRadius="18dp"
-                app:cardElevation="2dp"
-                android:backgroundTint="@color/white">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="18dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Información de la asignación"
-                        android:textColor="#001B6B"
-                        android:textSize="16sp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/tvDetalleGrupoLab"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="12dp"
-                        android:text="Grupo: Grupo 10A"
-                        android:textColor="#475569"
-                        android:textSize="14sp" />
-
-                    <TextView
-                        android:id="@+id/tvDetalleEstadoLab"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="6dp"
-                        android:text="Estado: ABIERTO"
-                        android:textColor="#475569"
-                        android:textSize="14sp" />
-
-                    <TextView
-                        android:id="@+id/tvDetalleEntregaLab"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="6dp"
-                        android:text="Entrega: PENDIENTE"
-                        android:textColor="#475569"
-                        android:textSize="14sp" />
-
-                    <TextView
-                        android:id="@+id/tvDetalleIntentosLab"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="6dp"
-                        android:text="Intentos: 0/4"
-                        android:textColor="#475569"
-                        android:textSize="14sp" />
-
-                    <TextView
-                        android:id="@+id/tvDetalleFechaLab"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="6dp"
-                        android:text="Fecha límite: 2026-06-30"
-                        android:textColor="#475569"
-                        android:textSize="14sp" />
-
-                </LinearLayout>
-
-            </androidx.cardview.widget.CardView>
-
-            <!-- CARD QUÉ HARÁS -->
-            <androidx.cardview.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="18dp"
-                app:cardCornerRadius="18dp"
-                app:cardElevation="2dp"
-                android:backgroundTint="@color/white">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="18dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="¿Qué harás?"
-                        android:textColor="#001B6B"
-                        android:textSize="16sp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="12dp"
-                        android:text="• Leerás conceptos y fórmulas del movimiento parabólico."
-                        android:textColor="#334155"
-                        android:textSize="14sp" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:text="• Responderás preguntas de comprensión."
-                        android:textColor="#334155"
-                        android:textSize="14sp" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:text="• Realizarás práctica experimental y práctica simulada AR."
-                        android:textColor="#334155"
-                        android:textSize="14sp" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:text="• Registrarás datos, conclusiones y enviarás la entrega."
-                        android:textColor="#334155"
-                        android:textSize="14sp" />
-
-                </LinearLayout>
-
-            </androidx.cardview.widget.CardView>
-
-            <!-- INFO UNITY -->
-            <androidx.cardview.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="18dp"
-                app:cardBackgroundColor="#FFF9C4"
-                app:cardCornerRadius="18dp"
-                app:cardElevation="0dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="18dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Práctica simulada AR"
-                        android:textColor="#001B6B"
-                        android:textSize="16sp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/tvDetalleUnityLab"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:text="PARABOLIC-001 · ParabolicMotionLab"
-                        android:textColor="#475569"
-                        android:textSize="13sp" />
-
-                </LinearLayout>
-
-            </androidx.cardview.widget.CardView>
-
-            <Button
-                android:id="@+id/btnComenzarPasosLab"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
-                android:backgroundTint="#001B6B"
-                android:padding="14dp"
-                android:text="Comenzar laboratorio"
-                android:textAllCaps="false"
-                android:textColor="@android:color/white"
-                android:textSize="16sp" />
-
-        </LinearLayout>
-
-    </LinearLayout>
-
-</ScrollView>
+</FrameLayout>

@@ -53,5 +53,7 @@ public class ContentStateView {
 
     public void hide() {
         root.setVisibility(View.GONE);
+        progressBar.setVisibility(View.GONE);
+        btnRetry.setVisibility(View.GONE);
     }
 }

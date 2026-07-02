@@ -11,9 +11,13 @@ import com.marcos.fisikappmovil.api.FisikappApi;
 import com.marcos.fisikappmovil.api.RetrofitClient;
 import com.marcos.fisikappmovil.remote.response.GrupoLaboratoriosResponse;
 import com.marcos.fisikappmovil.remote.response.LaboratorioGrupoResponse;
+import com.marcos.fisikappmovil.remote.response.MobileResourceResponse;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Response;
 
 public class LaboratorioRepository {
 
@@ -21,65 +25,6 @@ public class LaboratorioRepository {
 
     public LaboratorioRepository() {
         this.fisikappApi = RetrofitClient.getApi();
-    }
-
-    public void getLaboratoriosAsignadosPorGrupo(
-            int grupoId,
-            RepositoryCallback<List<LaboratorioAsignadoItem>> callback
-    ) {
-        List<LaboratorioAsignadoItem> laboratorios = new ArrayList<>();
-
-        // Mock principal para el flujo actual.
-        laboratorios.add(new LaboratorioAsignadoItem(
-                10,
-                1,
-                grupoId,
-                "Tiro parabólico",
-                "PARABOLIC-001",
-                "ParabolicMotionLab",
-                "ABIERTO",
-                "PENDIENTE",
-                "2026-06-01",
-                "2026-06-30",
-                0,
-                4,
-                "PENDIENTE"
-        ));
-
-        // Mock adicional para probar estados visuales.
-        laboratorios.add(new LaboratorioAsignadoItem(
-                11,
-                2,
-                grupoId,
-                "Leyes de Newton",
-                "NEWTON-001",
-                "NewtonLab",
-                "ABIERTO",
-                "ENVIADO",
-                "2026-06-01",
-                "2026-06-25",
-                2,
-                3,
-                "CALIFICACION_PENDIENTE"
-        ));
-
-        laboratorios.add(new LaboratorioAsignadoItem(
-                12,
-                3,
-                grupoId,
-                "Energía potencial",
-                "ENERGY-001",
-                "EnergyLab",
-                "CERRADO",
-                "NO_INICIADO",
-                "2026-05-01",
-                "2026-05-20",
-                0,
-                3,
-                "SIN_CALIFICACION"
-        ));
-
-        callback.onComplete(AppResult.success(laboratorios, 200));
     }
 
     public void getPasosLaboratorioMock(
@@ -311,6 +256,50 @@ public class LaboratorioRepository {
         }
 
         return "";
+    }
+
+    public void getMobileResource(
+            String authHeader,
+            int asignacionId,
+            RepositoryCallback<MobileResourceResponse> callback
+    ) {
+        fisikappApi.getMobileResource(authHeader, asignacionId)
+                .enqueue(new retrofit2.Callback<MobileResourceResponse>() {
+                    @Override
+                    public void onResponse(Call<MobileResourceResponse> call,
+                                           Response<MobileResourceResponse> response) {
+                        if (!response.isSuccessful()) {
+                            callback.onComplete(AppResult.error(
+                                    "No se pudo cargar el laboratorio. Código: " + response.code(),
+                                    response.code()
+                            ));
+                            return;
+                        }
+
+                        MobileResourceResponse body = response.body();
+
+                        if (body == null) {
+                            callback.onComplete(AppResult.error(
+                                    "Respuesta vacía del servidor.",
+                                    response.code()
+                            ));
+                            return;
+                        }
+
+                        callback.onComplete(AppResult.success(body, response.code()));
+                    }
+
+                    @Override
+                    public void onFailure(Call<MobileResourceResponse> call, Throwable t) {
+                        String message = "No se pudo conectar con el servidor.";
+
+                        if (t != null && t.getMessage() != null && !t.getMessage().trim().isEmpty()) {
+                            message = "Error de conexión: " + t.getMessage();
+                        }
+
+                        callback.onComplete(AppResult.error(message, -1));
+                    }
+                });
     }
 
 

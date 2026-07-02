@@ -130,12 +130,24 @@ public class LaboratorioSessionStore {
         return prefs.getString(keyPreguntasJson(asignacionId), null);
     }
 
-    public void saveDatosExperimentalesJson(int asignacionId, String json) {
-        prefs.edit().putString(keyDatosExperimentalesJson(asignacionId), json).apply();
+    public void saveDatosExperimentalesJson(int assignmentId, String json) {
+        prefs.edit()
+                .putString("datos_experimentales_json_" + assignmentId, json)
+                .apply();
     }
 
-    public String getDatosExperimentalesJson(int asignacionId) {
-        return prefs.getString(keyDatosExperimentalesJson(asignacionId), null);
+    public String getDatosExperimentalesJson(int assignmentId) {
+        return prefs.getString("datos_experimentales_json_" + assignmentId, null);
+    }
+
+    public void savePracticaExperimentalJson(int assignmentId, String json) {
+        prefs.edit()
+                .putString("practica_experimental_json_" + assignmentId, json)
+                .apply();
+    }
+
+    public String getPracticaExperimentalJson(int assignmentId) {
+        return prefs.getString("practica_experimental_json_" + assignmentId, null);
     }
 
     public void saveEvidenciasJson(int asignacionId, String json) {
@@ -241,5 +253,25 @@ public class LaboratorioSessionStore {
         editor.apply();
     }
 
+    public void saveMobileResourceJson(int assignmentId, String json) {
+        prefs.edit()
+                .putString("mobile_resource_json_" + assignmentId, json)
+                .apply();
+    }
+
+    public String getMobileResourceJson(int assignmentId) {
+        return prefs.getString("mobile_resource_json_" + assignmentId, null);
+    }
+
+    public boolean hasMobileResourceJson(int assignmentId) {
+        String json = getMobileResourceJson(assignmentId);
+        return json != null && !json.trim().isEmpty();
+    }
+
+    public void clearMobileResourceJson(int assignmentId) {
+        prefs.edit()
+                .remove("mobile_resource_json_" + assignmentId)
+                .apply();
+    }
 
 }
