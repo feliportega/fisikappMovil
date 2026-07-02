@@ -2,18 +2,41 @@ plugins {
     alias(libs.plugins.android.application)
 }
 
+val unityStreamingAssetsValue =
+    (findProperty("unityStreamingAssets") as? String).orEmpty()
+
+val unityNoCompressExtensions =
+    listOf(
+        ".unity3d",
+        ".ress",
+        ".resource",
+        ".obb",
+        ".bundle",
+        ".unityexp"
+    ) + unityStreamingAssetsValue
+        .split(",")
+        .map { it.trim() }
+        .filter { it.isNotEmpty() }
+
 android {
     namespace = "com.marcos.fisikappmovil"
     compileSdk = 36
 
     defaultConfig {
         applicationId = "com.marcos.fisikappmovil"
-        minSdk = 24
+        minSdk = 25
         targetSdk = 36
         versionCode = 1
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    androidResources {
+        ignoreAssetsPattern =
+            "!.svn:!.git:!.ds_store:!*.scc:!CVS:!thumbs.db:!picasa.ini:!*~"
+
+        noCompress += unityNoCompressExtensions
     }
 
     buildTypes {
@@ -29,6 +52,12 @@ android {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
+
+    packaging {
+        jniLibs {
+            useLegacyPackaging = true
+        }
+    }
 }
 
 dependencies {
@@ -36,11 +65,11 @@ dependencies {
     implementation(libs.activity)
     implementation(libs.constraintlayout)
 
-    // Usamos las versiones definidas en libs.versions.toml o las declaradas explícitamente, pero sin duplicar.
-    implementation("com.squareup.retrofit2:retrofit:2.11.0")
-    implementation("com.squareup.retrofit2:converter-gson:2.11.0")
-    implementation("com.squareup.okhttp3:logging-interceptor:4.12.0")
-    implementation("com.google.code.gson:gson:2.10.1")
+    // Retrofit
+    implementation(libs.com.google.code.gson.gson)
+    implementation(libs.retrofit)
+    implementation(libs.converter.gson)
+    implementation(libs.logging.interceptor)
 
     implementation("com.google.android.material:material:1.11.0")
     testImplementation(libs.junit)
@@ -48,6 +77,9 @@ dependencies {
     androidTestImplementation(libs.espresso.core)
 
     implementation(project(":facesdk"))
+    //implementation(project(":unityLibrary"))
+    implementation("androidx.appcompat:appcompat:1.6.1")
+
 
     // CameraX
     implementation("androidx.camera:camera-core:1.5.1")
@@ -55,6 +87,9 @@ dependencies {
     implementation("androidx.camera:camera-lifecycle:1.5.1")
     implementation("androidx.camera:camera-view:1.5.1")
     implementation("androidx.camera:camera-extensions:1.5.1")
+
+    // Barcode
+    implementation(libs.barcode.scanning)
 
     // Security
     implementation("androidx.security:security-crypto:1.1.0-alpha06")

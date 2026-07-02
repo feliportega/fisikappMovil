@@ -216,32 +216,6 @@
                 android:textColor="#1E293B"
                 android:textSize="14sp" />
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="16dp"
-            android:orientation="horizontal">
-
-            <Button
-                android:id="@+id/btnEnrolarRostro"
-                android:layout_width="150dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="right"
-                android:text="Enrol"
-                android:textColor="@color/black"
-                android:backgroundTint="#D8F0F0" />
-
-            <Button
-                android:id="@+id/btnReconocerRostro"
-                android:layout_width="150dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="right"
-                android:text="Reconocer"
-                android:textColor="@color/black"
-                android:backgroundTint="#D8F0F0" />
-        </LinearLayout>
-
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 

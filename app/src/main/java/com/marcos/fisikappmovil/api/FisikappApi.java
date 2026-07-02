@@ -1,140 +1,75 @@
 package com.marcos.fisikappmovil.api;
 
-import com.marcos.fisikappmovil.models.Conclusion;
-import com.marcos.fisikappmovil.models.Incripcion;
-import com.marcos.fisikappmovil.models.Informe;
-import com.marcos.fisikappmovil.models.LabResEstudiante;
-import com.marcos.fisikappmovil.models.Recomendacion;
-import com.marcos.fisikappmovil.models.Resultado;
-import com.marcos.fisikappmovil.remote.request.EmailRequest;
 import com.marcos.fisikappmovil.remote.request.LoginRequest;
-import com.marcos.fisikappmovil.remote.request.RegisterRequest;
-import com.marcos.fisikappmovil.remote.request.ResetPasswordRequest;
+import com.marcos.fisikappmovil.remote.request.PerfilUpdateRequest;
+import com.marcos.fisikappmovil.remote.response.AsignacionDetalleResponse;
+import com.marcos.fisikappmovil.remote.response.GrupoEstudianteResponse;
+import com.marcos.fisikappmovil.remote.response.GrupoLaboratoriosResponse;
+import com.marcos.fisikappmovil.remote.response.LaboratorioEstudianteDetalleResponse;
 import com.marcos.fisikappmovil.remote.response.LoginResponse;
-import com.marcos.fisikappmovil.models.UnirLaboratorio;
-import com.google.gson.JsonObject;
-import com.marcos.fisikappmovil.remote.request.LoginRequest;
-import com.marcos.fisikappmovil.remote.response.LoginResponse;
+import com.marcos.fisikappmovil.remote.response.MobileResourceResponse;
+import com.marcos.fisikappmovil.remote.response.PerfilResponse;
+import com.marcos.fisikappmovil.remote.response.PerfilUpdateResponse;
 
 import java.util.List;
 
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
-import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
+import retrofit2.http.Multipart;
 import retrofit2.http.PATCH;
 import retrofit2.http.POST;
-import retrofit2.http.PUT;
+import retrofit2.http.Part;
 import retrofit2.http.Path;
 
 
 public interface FisikappApi {
 
-    // Informes
-    @GET("api/informes/")
-    Call<List<Informe>> getInformes();
+    @POST("api/users/login/")
+    Call<LoginResponse> login(@Body LoginRequest request);
 
-    @POST("api/informes/")
-    Call<Informe> crearInforme(@Body Informe informe);
-
-    @GET("api/informes/{id}/")
-    Call<Informe> getInforme(@Path("id") int id);
-
-    @PUT("api/informes/{id}/")
-    Call<Informe> actualizarInforme(
-            @Path("id") int id,
-            @Body Informe informe
-    );
-
-    @PATCH("api/informes/{id}/")
-    Call<Informe> parchearInforme(
-            @Path("id") int id,
-            @Body Informe informe
-    );
-
-    @DELETE("api/informes/{id}/")
-    Call<Void> eliminarInforme(@Path("id") int id);
-
-    // Resultados
-    @GET("api/resultados/")
-    Call<List<Resultado>> getResultados();
-
-    @POST("api/resultados/")
-    Call<Resultado> crearResultado(@Body Resultado resultado);
-
-    @GET("api/resultados/{id}/")
-    Call<Resultado> getResultado(@Path("id") int id);
-
-    // Conclusiones
-    @GET("api/conclusiones/")
-    Call<List<Conclusion>> getConclusiones();
-
-    @POST("api/conclusiones/")
-    Call<Conclusion> crearConclusion(@Body Conclusion conclusion);
-
-    @GET("api/conclusiones/{id}/")
-    Call<Conclusion> getConclusion(@Path("id") int id);
-
-    // Recomendaciones
-    @GET("api/recomendaciones/")
-    Call<List<Recomendacion>> getRecomendaciones();
-
-    @POST("api/recomendaciones/")
-    Call<Recomendacion> crearRecomendacion(
-            @Body Recomendacion recomendacion
-    );
-
-    @GET("api/recomendaciones/{id}/")
-    Call<Recomendacion> getRecomendacion(
-            @Path("id") int id
-    );
-
-    // Laboratorios (¡Esta es la que usamos para el Dashboard!)
-    @GET("inscripciones/mis-laboratorios/")
-    Call<List<Incripcion>> getMisLaboratorios(
+    @GET("api/users/perfil/")
+    Call<PerfilResponse> getPerfil(
             @Header("Authorization") String token
     );
 
-    // Detalles del Laboratorio (¡Esta es la que llama el Adapter internamente!)
-    @GET("laboratorios/{id}/")
-    Call<com.google.gson.JsonObject> getLaboratorioPorId(
-            @Header("Authorization") String token, // <-- Agregamos esto
-            @Path("id") int id
-    );
-
-    // Unirse a laboratorio
-
-    @POST("inscribir/")
-    Call<JsonObject> postUnirlaboratorio(
+    @Multipart
+    @PATCH("api/users/perfil/")
+    Call<PerfilUpdateResponse> actualizarPerfilMultipart(
             @Header("Authorization") String token,
-            @Body UnirLaboratorio unirLaboratorio
+            @Part("autorizacion_datos") RequestBody autorizacionDatos,
+            @Part("embedding_facial") RequestBody embeddingFacial
     );
 
-    // --- MÉTODOS DE AUTENTICACIÓN (LOGIN, REGISTER, ETC) ---
-    @POST("users/register/")
-    Call<Void> register(@Body RegisterRequest request);
-
-    @POST("users/recuperar-contrasena/")
-    Call<Void> recuperarContrasena(@Body EmailRequest request);
-
-    @POST("users/restablecer-contrasena/")
-    Call<Void> restablecerContrasena(@Body ResetPasswordRequest request);
-
-
-    //login
-    @POST("users/login/")
-    Call<LoginResponse> login(@Body LoginRequest request);
-
-    //@GET("laboratorio-profesor/{id}/")
-  //  Call<LabResEstudiante> getLaab(
-  //          @Header("Authorization") String token,
- //           @Path("id") int id
-  //  );
-
-    @GET("laboratorio-profesor/{id}/")
-    Call<LabResEstudiante> getLaboratorio(
-            @Header("Authorization")
-            @Path("id") int id
+    @GET("api/inscripciones/mis-grupos/")
+    Call<List<GrupoEstudianteResponse>> getMisGrupos(
+            @Header("Authorization") String token
     );
+
+    @GET("api/estudiante/grupos/{grupo_id}/laboratorios/")
+    Call<GrupoLaboratoriosResponse> getLaboratoriosPorGrupo(
+            @Header("Authorization") String token,
+            @Path("grupo_id") int grupoId
+    );
+
+    @GET("api/estudiante/asignaciones/{asignacion_id}/detalle/")
+    Call<AsignacionDetalleResponse> getDetalleAsignacion(
+            @Header("Authorization") String token,
+            @Path("asignacion_id") int asignacionId
+    );
+
+    @GET("api/laboratorios-estudiante/{laboratorio_id}/")
+    Call<LaboratorioEstudianteDetalleResponse> getLaboratorioEstudianteDetalle(
+            @Header("Authorization") String token,
+            @Path("laboratorio_id") int laboratorioId
+    );
+
+    @GET("api/mobile/resources/{asignacion_id}/")
+    Call<MobileResourceResponse> getMobileResource(
+            @Header("Authorization") String token,
+            @Path("asignacion_id") int asignacionId
+    );
+
 }

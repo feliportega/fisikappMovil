@@ -1,15 +1,194 @@
-*.iml
-.gradle
-/local.properties
-/.idea/caches
-/.idea/libraries
-/.idea/modules.xml
-/.idea/workspace.xml
-/.idea/navEditor.xml
-/.idea/assetWizardSettings.xml
+# ----------------------------
+#	Version antigua
+# ----------------------------
+
+#*.iml
+#.gradle
+#/local.properties
+#/.idea/caches
+#/.idea/libraries
+#/.idea/modules.xml
+#/.idea/workspace.xml
+#/.idea/navEditor.xml
+#/.idea/assetWizardSettings.xml
+#.DS_Store
+#/build
+#/captures
+#.externalNativeBuild
+#.cxx
+#local.properties
+
+# ----------------------------
+
+
+
+
+# =========================
+# OS / IDE
+# =========================
 .DS_Store
-/build
-/captures
-.externalNativeBuild
-.cxx
+Thumbs.db
+*.swp
+*.swo
+
+.idea/
+*.iml
+.vscode/
+*.user
+*.suo
+*.userprefs
+
+# =========================
+# Android / Gradle
+# =========================
+.gradle/
+build/
+*/build/
+
 local.properties
+
+# Android Studio captures
+captures/
+
+# APK / AAB / outputs
+*.apk
+*.aab
+*.ap_
+*.aar
+*.dex
+
+# Signing - NO subir claves
+*.jks
+*.keystore
+keystore.properties
+signing.properties
+
+# Google / services local secrets
+google-services.json
+GoogleService-Info.plist
+
+# Logs
+*.log
+
+# =========================
+# Kotlin / Java generated
+# =========================
+.externalNativeBuild/
+.cxx/
+obj/
+bin/
+
+# =========================
+# Unity Project
+# =========================
+[Ll]ibrary/
+[Tt]emp/
+[Oo]bj/
+[Bb]uild/
+[Bb]uilds/
+[Ll]ogs/
+[Uu]ser[Ss]ettings/
+
+# Unity crash/debug
+sysinfo.txt
+*.stackdump
+
+# Unity generated solution/project files
+*.csproj
+*.sln
+*.suo
+*.tmp
+*.user
+*.userprefs
+*.pidb
+*.booproj
+*.svd
+*.pdb
+*.mdb
+*.opendb
+*.VC.db
+
+# Unity memory profiler
+*.snap
+
+# Unity Addressables build/cache
+[Aa]ssets/[Aa]ddressable[Aa]ssets[Dd]ata/*/*.bin*
+[Aa]ssets/[Ss]treamingAssets/aa.meta
+[Aa]ssets/[Ss]treamingAssets/aa/
+
+# Unity package cache backup
+[Pp]ackages/packages-lock.json.bak
+
+
+# =========================
+# Unity Android Export
+# =========================
+
+# Unity/Gradle generated build outputs
+unityLibrary/build/
+unityLibrary/.gradle/
+unityLibrary/out/
+
+# Unity generated Android binary data
+unityLibrary/src/main/assets/bin/Data/
+
+# Unity generated native libraries
+unityLibrary/src/main/jniLibs/
+
+# Unity symbols / debug symbols
+unityLibrary/symbols/
+unityLibrary/native-debug-symbols/
+unityLibrary/mapping/
+
+# IL2CPP generated/intermediate files
+**/il2cpp_cache/
+**/Il2CppOutputProject/
+**/il2cppOutput/
+**/libil2cpp/
+**/baselib/
+
+# Generated native/debug binaries from Unity
+**/libil2cpp.so
+**/libil2cpp.dbg.so
+**/libil2cpp.sym.so
+**/*.dbg.so
+**/*.sym.so
+
+
+# =========================
+# Secrets / signing
+# =========================
+*.jks
+*.keystore
+keystore.properties
+signing.properties
+.env
+.env.*
+!.env.example
+
+
+# =========================
+# OS / IDE
+# =========================
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.iml
+
+# =========================
+# Firebase / Play / Secrets
+# =========================
+service-account.json
+play-account.json
+*.p12
+*.pem
+
+# =========================
+# Backups
+# =========================
+*.bak
+*.backup
+*.orig
+*.tmp
+

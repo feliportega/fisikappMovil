@@ -1,48 +1,46 @@
 package com.marcos.fisikappmovil.ui.AccesoAlSistema;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
-import com.marcos.fisikappmovil.model.TokenManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.marcos.fisikappmovil.R;
-import com.marcos.fisikappmovil.api.FisikappApi;
-import com.marcos.fisikappmovil.api.RetrofitClient;
-import com.marcos.fisikappmovil.models.Incripcion;
-
-import com.marcos.fisikappmovil.ui.AccesoLaboratorio.UnirseLaboratorio;
+import com.marcos.fisikappmovil.data.repository.GrupoRepository;
+import com.marcos.fisikappmovil.data.repository.LaboratorioRepository;
+import com.marcos.fisikappmovil.model.GrupoAcademicoItem;
+import com.marcos.fisikappmovil.model.GrupoEstudianteItem;
+import com.marcos.fisikappmovil.model.TokenManager;
+import com.marcos.fisikappmovil.ui.Autenticacion.Login;
+import com.marcos.fisikappmovil.ui.GestionDePerfilDelEstudiante.Perfil_del_estudiante;
+import com.marcos.fisikappmovil.ui.common.ContentStateView;
 
 import java.util.List;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
-
 public class Dashboard extends AppCompatActivity {
 
-    Button btemp;
-    TextView txtLaboratorio;
-    TextView tvNombreBarra;
-
-    FisikappApi api;
-    RecyclerView recyclerView;
-    ImageView imgcerrar_sesion;
-    private ImageView imgLaboratorio;
+    private TextView txtTituloDashboard;
+    private TextView tvNombreBarra;
+    private TextView tvSubtituloDashboard;
+    private TextView tvEstadoVacio;
+    private RecyclerView recyclerView;
+    private ImageView imgCerrarSesion;
+    private Button btnUnirmeGrupo;
+    private TokenManager tokenManager;
+    private GrupoRepository grupoRepository;
+    private ActivityResultLauncher<Intent> joinGroupLauncher;
+    private LaboratorioRepository laboratorioRepository;
+    private ContentStateView stateGrupos;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,101 +48,196 @@ public class Dashboard extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_dashboard);
 
+        tokenManager = new TokenManager(this);
+        laboratorioRepository = new LaboratorioRepository();
+        stateGrupos = new ContentStateView(findViewById(R.id.stateDashboardGrupos));
 
-        imgcerrar_sesion = findViewById(R.id.imgcerrar_sesion);
-        imgLaboratorio = findViewById(R.id.imgLaboratorio);
-        txtLaboratorio = findViewById(R.id.txtLaboratorio);
+        initDependencies();
+        initViews();
+        initLaunchers();
+        initListeners();
+        setupUserInfo();
+        //cargarGrupos();
+        cargarGruposEstudiante();
+    }
+
+    private void initDependencies() {
+        tokenManager = new TokenManager(this);
+        grupoRepository = new GrupoRepository();
+    }
+
+    private void initLaunchers() {
+        joinGroupLauncher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    if (result.getResultCode() == RESULT_OK) {
+                        //cargarGrupos();
+                        cargarGruposEstudiante();
+                    }
+                }
+        );
+    }
+
+    private void initViews() {
+        imgCerrarSesion = findViewById(R.id.imgcerrar_sesion);
+
+        txtTituloDashboard = findViewById(R.id.txtLaboratorio);
         tvNombreBarra = findViewById(R.id.tvNombreUsuarioBarra);
-
+        tvSubtituloDashboard = findViewById(R.id.tvSubtituloDashboard);
+        tvEstadoVacio = findViewById(R.id.tvEstadoVacio);
 
         recyclerView = findViewById(R.id.tarjeta);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
-
         recyclerView.setHasFixedSize(false);
         recyclerView.setNestedScrollingEnabled(false);
 
-        btemp = findViewById(R.id.btemp);
-        api = RetrofitClient.getClient().create(FisikappApi.class);
+        btnUnirmeGrupo = findViewById(R.id.btemp);
+    }
+
+    private void initListeners() {
+        //imgCerrarSesion.setOnClickListener(v -> cerrarSesion());
 
 
-        String nombre = getIntent().getStringExtra("USER_NAME");
-        if (nombre != null && !nombre.isEmpty()) {
-            if (tvNombreBarra != null) tvNombreBarra.setText(nombre.toUpperCase());
-            if (txtLaboratorio != null) txtLaboratorio.setText("¡Bienvenido de nuevo, " + nombre + "!");
+        imgCerrarSesion.setOnClickListener(v -> {
+            Intent intent = new Intent(Dashboard.this, Perfil_del_estudiante.class);
+            startActivity(intent);
+        });
+
+        btnUnirmeGrupo.setOnClickListener(v -> {
+            Intent intent = new Intent(Dashboard.this, UnirseGrupoActivity.class);
+            joinGroupLauncher.launch(intent);
+        });
+    }
+
+    private void setupUserInfo() {
+        String nombre = tokenManager.getUserName();
+
+        if (nombre != null && !nombre.trim().isEmpty()) {
+            tvNombreBarra.setText(nombre.toUpperCase());
+            txtTituloDashboard.setText("Hola, " + nombre);
         } else {
-            if (txtLaboratorio != null) txtLaboratorio.setText("¡Bienvenido de nuevo!");
+            tvNombreBarra.setText("ESTUDIANTE");
+            txtTituloDashboard.setText("Hola, estudiante");
         }
 
-        cargarLaboratorio();
+        tvSubtituloDashboard.setText("Estos son tus grupos y actividades asignadas");
+    }
 
-        btemp.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent iremp = new Intent(Dashboard.this, UnirseLaboratorio.class);
-                startActivity(iremp);
+    private void cargarGrupos() {
+        mostrarEstadoCargando();
+
+        grupoRepository.getMisGrupos(result -> {
+            if (result.isSuccess()) {
+                List<GrupoAcademicoItem> grupos = result.getData();
+                mostrarGrupos(grupos);
+            } else {
+                mostrarEstadoVacio("No fue posible cargar tus grupos");
             }
         });
     }
 
+    private void cargarGruposEstudiante() {
+        String authHeader = tokenManager.getAuthorizationHeader();
 
-    private void cargarLaboratorio() {
-        TokenManager tokenManager = new TokenManager(this);
-        String tokenGuardado = tokenManager.getToken();
+        if (authHeader == null || authHeader.trim().isEmpty()) {
+            tokenManager.clearSession();
 
-        if (tokenGuardado == null || tokenGuardado.isEmpty()) {
-            Log.e("TOKEN", "No existe token en las preferencias");
-            actualizarVistaLaboratorio(null);
+            Intent intent = new Intent(Dashboard.this, Login.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+            finish();
             return;
         }
 
-        String token = "Bearer " + tokenGuardado;
+        stateGrupos.showLoading(
+                "Cargando grupos",
+                "Estamos consultando tus grupos asignados."
+        );
+        recyclerView.setVisibility(View.GONE);
 
-        api.getMisLaboratorios(token).enqueue(new Callback<List<Incripcion>>() {
-            @Override
-            public void onResponse(Call<List<Incripcion>> call, Response<List<Incripcion>> response) {
-                Log.d("CODIGO_RESPUESTA", "Código HTTP: " + response.code());
+        laboratorioRepository.getMisGruposEstudiante(authHeader, result -> {
+            runOnUiThread(() -> {
+                if (!result.isSuccess()) {
 
-                // Primero validamos si la respuesta del servidor fue exitosa (Códigos 200-299)
-                if (response.isSuccessful() && response.body() != null) {
-                    List<Incripcion> lista = response.body();
-                    Log.d("LABS_ENCONTRADOS", "Cantidad recibida: " + lista.size());
+                    if (result.getStatusCode() == 401 || result.getStatusCode() == 403) {
+                        tokenManager.clearSession();
 
-                    // Configurar el adaptador con la lista segura
-                    LaboratorioAdapter adapter = new LaboratorioAdapter(lista);
-                    recyclerView.setAdapter(adapter);
+                        Intent intent = new Intent(Dashboard.this, Login.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(intent);
+                        finish();
+                        return;
+                    }
 
-                    actualizarVistaLaboratorio(lista);
-                } else {
-                    Log.e("API_ERROR_SERVER", "El servidor respondió con error o cuerpo vacío.");
-                    actualizarVistaLaboratorio(null);
+                    stateGrupos.showError(
+                            "No se pudieron cargar los grupos",
+                            result.getStatusCode() == -1
+                                    ? "No se pudo conectar con el servidor. Revisa tu internet o intenta nuevamente."
+                                    : result.getErrorMessage(),
+                            v -> cargarGruposEstudiante()
+                    );
+
+                    recyclerView.setVisibility(View.GONE);
+                    return;
                 }
-            }
 
-            @Override
-            public void onFailure(Call<List<Incripcion>> call, Throwable throwable) {
-                Log.e("API_ERROR_CONEXION", "Fallo total de red: " + throwable.getMessage());
-                actualizarVistaLaboratorio(null);
-            }
+                List<GrupoAcademicoItem> grupos = result.getData();
+
+                if (grupos == null || grupos.isEmpty()) {
+                    stateGrupos.showEmpty(
+                            "Sin grupos asignados",
+                            "Todavía no tienes grupos académicos disponibles."
+                    );
+
+                    recyclerView.setVisibility(View.GONE);
+                    return;
+                }
+
+                stateGrupos.hide();
+                recyclerView.setVisibility(View.VISIBLE);
+                mostrarGrupos(grupos);
+            });
         });
     }
 
-
-    private void actualizarVistaLaboratorio(List<?> listaLaboratorio) {
-        if (listaLaboratorio != null && !listaLaboratorio.isEmpty()) {
-            if (imgLaboratorio != null) imgLaboratorio.setVisibility(View.GONE);
-
-
-            if (txtLaboratorio != null) txtLaboratorio.setVisibility(View.VISIBLE);
-            if (recyclerView != null) recyclerView.setVisibility(View.VISIBLE);
-        } else {
-
-            if (imgLaboratorio != null) imgLaboratorio.setVisibility(View.VISIBLE);
-            if (txtLaboratorio != null) {
-                txtLaboratorio.setVisibility(View.VISIBLE);
-                txtLaboratorio.setText("No hay laboratorios disponibles hoy");
-            }
-            if (recyclerView != null) recyclerView.setVisibility(View.GONE);
+    private void mostrarGrupos(List<GrupoAcademicoItem> grupos) {
+        if (grupos == null || grupos.isEmpty()) {
+            mostrarEstadoVacio("Aún no estás inscrito en ningún grupo");
+            return;
         }
+
+        tvEstadoVacio.setVisibility(View.GONE);
+        recyclerView.setVisibility(View.VISIBLE);
+
+        GrupoAcademicoAdapter adapter = new GrupoAcademicoAdapter(grupos, grupo -> {
+            Intent intent = new Intent(Dashboard.this, com.marcos.fisikappmovil.ui.Laboratorio.GrupoLaboratoriosActivity.class);
+            intent.putExtra(com.marcos.fisikappmovil.ui.Laboratorio.GrupoLaboratoriosActivity.EXTRA_GRUPO_ID, grupo.getId());
+            intent.putExtra(com.marcos.fisikappmovil.ui.Laboratorio.GrupoLaboratoriosActivity.EXTRA_GRUPO_NOMBRE, grupo.getNombre());
+            intent.putExtra(com.marcos.fisikappmovil.ui.Laboratorio.GrupoLaboratoriosActivity.EXTRA_GRUPO_CURSO, "Física");
+            startActivity(intent);
+        });
+
+        recyclerView.setAdapter(adapter);
+    }
+
+    private void mostrarEstadoCargando() {
+        recyclerView.setVisibility(View.GONE);
+        tvEstadoVacio.setVisibility(View.VISIBLE);
+        tvEstadoVacio.setText("Cargando tus grupos...");
+    }
+
+    private void mostrarEstadoVacio(String mensaje) {
+        recyclerView.setVisibility(View.GONE);
+        tvEstadoVacio.setVisibility(View.VISIBLE);
+        tvEstadoVacio.setText(mensaje);
+    }
+
+    private void cerrarSesion() {
+        tokenManager.clearSession();
+
+        Intent intent = new Intent(Dashboard.this, Login.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+        finish();
     }
 }

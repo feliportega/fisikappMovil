@@ -8,355 +8,193 @@
     android:orientation="vertical"
     tools:context=".ui.MonitorDeAprendizajeEstudiante.ConceptosBasicos">
 
-    <!-- Header -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:orientation="horizontal"
-        android:gravity="center_vertical"
-        android:paddingHorizontal="16dp"
-        android:background="#002B7F">
-
-        <ImageView
-            android:id="@+id/btnBack"
-            android:layout_width="36dp"
-            android:layout_height="36dp"
-            android:src="@drawable/iconoretroceder"
-            android:clickable="true"
-            android:focusable="true" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Tiro parabólico"
-            android:textColor="@android:color/white"
-            android:textSize="22sp"
-            android:textStyle="bold"
-            android:layout_marginStart="16dp"/>
-    </LinearLayout>
-
-
-    <!-- Tabs -->
+    <!-- 1. Barra Superior Blanca (Fisikapp + Usuario) -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:background="@android:color/white">
-
-        <!-- TAB CONCEPTOS -->
+        android:padding="12dp">
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/iconofisik" />
         <TextView
-            android:id="@+id/tabConceptos"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
             android:layout_weight="1"
-            android:text="Conceptos"
-            android:textAlignment="center"
-            android:textStyle="bold"
-            android:textColor="#4A5FE7"
+            android:text="Fisikapp"
+            android:textColor="@color/colorPrimario"
             android:textSize="16sp"
-            android:padding="16dp"/>
-
-        <!-- TAB FORMULAS -->
+            android:textStyle="bold" />
         <TextView
-            android:id="@+id/btnFormulas"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Fórmulas"
-            android:textAlignment="center"
-            android:textStyle="bold"
-            android:textColor="#808080"
-            android:textSize="16sp"
-            android:padding="16dp"/>
-
+            android:layout_marginEnd="8dp"
+            android:text="CRISTHIAN"
+            android:textColor="#7F8C8D"
+            android:textSize="12sp" />
+        <ImageView
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:src="@drawable/iconousuario" />
     </LinearLayout>
 
-    <!-- Línea indicador -->
-    <View
-        android:layout_width="120dp"
-        android:layout_height="3dp"
-        android:layout_marginStart="40dp"
-        android:background="#4A5FE7"/>
-
-    <!-- Contenido -->
-    <ScrollView
+    <!-- 2. Barra de Título Azul con Botón de Atrás (Diseño Figma) -->
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1">
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimario"
+        android:padding="16dp">
+
+        <ImageView
+            android:id="@+id/btnBack"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:src="@android:drawable/ic_menu_revert"
+            app:tint="#FFFFFF"
+            android:clickable="true"
+            android:focusable="true"
+            android:contentDescription="@string/btn_back_desc"
+            android:background="?attr/selectableItemBackgroundBorderless" />
+
+        <TextView
+            android:id="@+id/tvTituloToolbar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="Conceptos básicos"
+            android:textColor="@color/white"
+            android:textSize="22sp"
+            android:textStyle="bold" />
+    </RelativeLayout>
+
+    <!-- 3. Contenedor Blanco Redondeado (Hoja de Contenido que flota) -->
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="0dp"
+        app:cardBackgroundColor="@color/white"
+        app:cardCornerRadius="30dp"
+        app:cardElevation="0dp">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="vertical"
-            android:padding="20dp"
-            android:background="@android:color/white">
+            android:padding="24dp">
 
-            <LinearLayout
-                android:id="@+id/layoutConceptos"
+            <ScrollView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Titulo"
-                    android:textStyle="bold"
-                    android:textSize="18sp"
-                    android:layout_marginTop="16dp"/>
-
-                <TextView
-                    android:id="@+id/txtTituloLaboratorio"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Cargando título..."
-                    android:textStyle="bold"
-                    android:textSize="28sp"
-                    android:textColor="#000000"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Resumen"
-                    android:textStyle="bold"
-                    android:textSize="18sp"
-                    android:layout_marginTop="16dp"/>
-
-                <TextView
-                    android:id="@+id/txtResumen"
+                android:layout_height="0dp"
+                android:layout_weight="1">
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Cargando resumen..."
-                    android:textSize="16sp"
-                    android:textColor="#444444"
-                    android:layout_marginTop="8dp"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Prologo"
-                    android:textStyle="bold"
-                    android:textSize="18sp"
-                    android:layout_marginTop="16dp"/>
-
-                <TextView
-                    android:id="@+id/txtPrologo"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Cargando prólogo..."
-                    android:textSize="16sp"
-                    android:textColor="#444444"
-                    android:layout_marginTop="12dp"
-                    android:lineSpacingExtra="4dp"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Introduccion"
-                    android:textStyle="bold"
-                    android:textSize="18sp"
-                    android:layout_marginTop="16dp"/>
-
-                <TextView
-                    android:id="@+id/txtIntroduccion"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Cargando introducción..."
-                    android:textSize="16sp"
-                    android:textColor="#444444"
-                    android:layout_marginTop="12dp"
-                    android:lineSpacingExtra="4dp"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Marco Teórico"
-                    android:textStyle="bold"
-                    android:textSize="18sp"
-                    android:layout_marginTop="16dp"/>
-
-                <TextView
-                    android:id="@+id/txtMarcoTeorico"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Cargando información..."
-                    android:textSize="16sp"
-                    android:textColor="#444444"
-                    android:layout_marginTop="12dp"
-                    android:lineSpacingExtra="4dp"/>
-
-<!--
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="• En el eje horizontal (x) el movimiento es MRU."
-                    android:textSize="16sp"
-                    android:textColor="#444444"
-                    android:layout_marginTop="16dp"/>
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="• En el eje vertical (y) el movimiento es MRUA."
-                    android:textSize="16sp"
-                    android:textColor="#444444"
-                    android:layout_marginTop="10dp"/>
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="• La trayectoria que describe el objeto es una parábola."
-                    android:textSize="16sp"
-                    android:textColor="#444444"
-                    android:layout_marginTop="10dp"/>
-
-                 <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="24dp"
-                    android:background="@android:color/white"
-                    android:elevation="3dp"
-                    android:orientation="vertical"
-                    android:padding="16dp">
+                    android:orientation="vertical">
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:id="@+id/tvDescripcionPrincipal"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:text="Componentes del movimiento"
-                        android:textColor="#000000"
-                        android:textSize="18sp"
+                        android:text="@string/tiro_parabolico_desc"
+                        android:textColor="#475569"
+                        android:textSize="17sp"
+                        android:lineSpacingExtra="4dp" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:text="@string/movimientos_lista"
+                        android:textColor="#475569"
+                        android:textSize="17sp"
+                        android:lineSpacingExtra="4dp" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="32dp"
+                        android:text="Recursos"
+                        android:textColor="@color/colorPrimario"
+                        android:textSize="20sp"
                         android:textStyle="bold" />
 
-                    <ImageView
+                    <!-- Recurso Video (Estilo Card Figma) -->
+                    <androidx.cardview.widget.CardView
                         android:layout_width="match_parent"
-                        android:layout_height="220dp"
+                        android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
-                        android:scaleType="fitCenter"
-                        android:src="@drawable/parabolico" />
+                        app:cardBackgroundColor="#F1F5F9"
+                        app:cardCornerRadius="16dp"
+                        app:cardElevation="0dp">
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:padding="16dp">
+                            <ImageView
+                                android:layout_width="32dp"
+                                android:layout_height="32dp"
+                                android:src="@android:drawable/ic_menu_slideshow"
+                                app:tint="#64748B" />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="16dp"
+                                android:text="Video explicativo"
+                                android:textColor="@color/colorPrimario"
+                                android:textSize="16sp"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
 
+                    <!-- Recurso PDF (Estilo Card Figma) -->
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        app:cardBackgroundColor="#F1F5F9"
+                        app:cardCornerRadius="16dp"
+                        app:cardElevation="0dp">
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:padding="16dp">
+                            <ImageView
+                                android:layout_width="32dp"
+                                android:layout_height="32dp"
+                                android:src="@android:drawable/ic_menu_save"
+                                app:tint="#64748B" />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="16dp"
+                                android:text="PDF de apoyo"
+                                android:textColor="@color/colorPrimario"
+                                android:textSize="16sp"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
                 </LinearLayout>
+            </ScrollView>
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="El uso de vectores permite representar movimientos en diferentes direcciones y hacer operaciones matemáticas para calcular la trayectoria final de un objeto en movimiento."
-                android:textSize="16sp"
-                android:textColor="#444444"
-                android:layout_marginTop="12dp"
-                android:lineSpacingExtra="4dp"/> -->
-
-
-        </LinearLayout>
-        </LinearLayout>
-
-    </ScrollView>
-
-    <!-- BOTTOM NAVIGATION -->
-    <!-- MENU INFERIOR -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="70dp"
-        android:background="#001B6B"
-        android:gravity="center"
-        android:orientation="horizontal"
-        android:padding="8dp">
-
-        <!-- INICIO -->
-        <LinearLayout
-            android:id="@+id/btnInicio"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="vertical">
-
-            <ImageView
-                android:layout_width="22dp"
-                android:layout_height="22dp"
-                android:src="@drawable/baseline_home_24"
-                app:tint="@android:color/white"/>
-
-            <TextView
+            <Button
+                android:id="@+id/btnSiguienteEtapa"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="1dp"
-                android:text="Inicio"
-                android:textColor="@android:color/white"
-                android:textSize="11sp"/>
+                android:layout_gravity="end"
+                android:layout_margin="20dp"
+                android:text="@string/siguiente_etapa"
+                android:textAllCaps="false"
+                android:textColor="#FFFFFF"
+                android:backgroundTint="#2ECC71"
+                android:paddingStart="24dp" />
+
         </LinearLayout>
-
-        <!-- LABORATORIOS -->
-        <LinearLayout
-            android:id="@+id/btnLaboratorios"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="vertical">
-
-            <ImageView
-                android:layout_width="22dp"
-                android:layout_height="22dp"
-                android:src="@drawable/baseline_science_24"
-                app:tint="@android:color/white"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="1dp"
-                android:text="Laboratorios"
-                android:textColor="@android:color/white"
-                android:textSize="10sp"/>
-        </LinearLayout>
-
-        <!-- INFORMES -->
-        <LinearLayout
-            android:id="@+id/btnInformes"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="vertical">
-
-            <ImageView
-                android:layout_width="22dp"
-                android:layout_height="22dp"
-                android:src="@drawable/ic_report"
-                app:tint="@android:color/white"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="1dp"
-                android:text="Informes"
-                android:textColor="@android:color/white"
-                android:textSize="11sp"/>
-        </LinearLayout>
-
-        <!-- PERFIL -->
-        <LinearLayout
-            android:id="@+id/btnPerfil"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="vertical">
-
-            <ImageView
-                android:layout_width="22dp"
-                android:layout_height="22dp"
-                android:src="@drawable/ic_profile"
-                app:tint="@android:color/white"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="1dp"
-                android:text="Perfil"
-                android:textColor="@android:color/white"
-                android:textSize="11sp"/>
-        </LinearLayout>
-
-    </LinearLayout>
+    </androidx.cardview.widget.CardView>
 
 </LinearLayout>

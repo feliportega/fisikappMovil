@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:background="@color/colorPrimario"
     android:orientation="vertical"
-    tools:context=".ui.AccesoLaboratorio.UnirseLaboratorio">
+    tools:context=".ui.Laboratorio.UnirseLaboratorio">
 
     <!-- 1. Barra Superior Blanca (Consistencia Figma) -->
     <LinearLayout

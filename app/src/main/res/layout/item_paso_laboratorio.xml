@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layoutPasoItem"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:paddingVertical="4dp">
+
+    <LinearLayout
+        android:layout_width="42dp"
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tvNumeroPaso"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:background="@drawable/circle_yellow"
+            android:gravity="center"
+            android:text="1"
+            android:textColor="@android:color/black"
+            android:textStyle="bold" />
+
+        <View
+            android:id="@+id/viewLineaPaso"
+            android:layout_width="2dp"
+            android:layout_height="72dp"
+            android:background="#E0E0E0" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/cardContenidoPaso"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="14dp"
+        android:layout_weight="1"
+        android:background="?attr/selectableItemBackground"
+        android:clickable="true"
+        android:focusable="true"
+        android:orientation="vertical"
+        android:paddingBottom="14dp">
+
+        <TextView
+            android:id="@+id/tvTituloPaso"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Leer conceptos"
+            android:textColor="#001B6B"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tvDescripcionPaso"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:text="Revisa los conceptos básicos relacionados con el tiro parabólico."
+            android:textColor="#777777"
+            android:textSize="13sp" />
+
+        <TextView
+            android:id="@+id/tvEstadoPaso"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/edittext_redondo"
+            android:paddingHorizontal="10dp"
+            android:paddingVertical="4dp"
+            android:text="Pendiente"
+            android:textColor="#001B6B"
+            android:textSize="11sp"
+            android:textStyle="bold" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="14dp"
+            android:background="#EAEAEA" />
+
+    </LinearLayout>
+
+</LinearLayout>

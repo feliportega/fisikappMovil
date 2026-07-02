@@ -14,14 +14,6 @@
         android:gravity="center"
         android:orientation="vertical">
 
-        <ImageButton
-            android:id="@+id/btnRdash"
-            android:layout_width="46dp"
-            android:layout_height="36dp"
-            android:src="@drawable/iconoretroceder"
-            android:layout_gravity="left"
-            />
-
         <ImageView
             android:layout_width="120dp"
             android:layout_height="60dp"
@@ -118,7 +110,6 @@
                             android:background="@drawable/circle_blue"/>
 
                         <TextView
-                            android:id="@+id/tvConfig"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="16dp"
@@ -220,19 +211,18 @@
 
     </androidx.cardview.widget.CardView>
 
-    <!-- BOTTOM NAVIGATION -->
-    <!-- MENU INFERIOR -->
+      <!-- NAVBAR -->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="70dp"
-        android:background="#001B6B"
+        android:layout_height="75dp"
+        android:background="#001B5B"
         android:gravity="center"
         android:orientation="horizontal"
-        android:padding="8dp">
+        android:paddingTop="6dp"
+        android:paddingBottom="6dp">
 
         <!-- INICIO -->
         <LinearLayout
-            android:id="@+id/btnInicio"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -248,7 +238,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="1dp"
+                android:layout_marginTop="3dp"
                 android:text="Inicio"
                 android:textColor="@android:color/white"
                 android:textSize="11sp"/>
@@ -256,7 +246,6 @@
 
         <!-- LABORATORIOS -->
         <LinearLayout
-            android:id="@+id/btnLaboratorios"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -272,15 +261,14 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="1dp"
+                android:layout_marginTop="3dp"
                 android:text="Laboratorios"
                 android:textColor="@android:color/white"
-                android:textSize="10sp"/>
+                android:textSize="11sp"/>
         </LinearLayout>
 
         <!-- INFORMES -->
         <LinearLayout
-            android:id="@+id/btnInformes"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -296,7 +284,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="1dp"
+                android:layout_marginTop="3dp"
                 android:text="Informes"
                 android:textColor="@android:color/white"
                 android:textSize="11sp"/>
@@ -304,7 +292,6 @@
 
         <!-- PERFIL -->
         <LinearLayout
-            android:id="@+id/btnPerfil"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -320,7 +307,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="1dp"
+                android:layout_marginTop="3dp"
                 android:text="Perfil"
                 android:textColor="@android:color/white"
                 android:textSize="11sp"/>

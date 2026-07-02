@@ -1,134 +1,171 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.MonitorDeAprendizajeEstudiante.SimulacionAR">
+    android:background="#F8FAFC"
+    android:fillViewport="true">
 
-    <!-- Simulación de fondo de cámara (Placeholder) -->
-    <ImageView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scaleType="centerCrop"
-        android:src="@android:color/darker_gray" />
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
-    <!-- Overlay de información -->
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="20dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="160dp"
+            android:background="#001B6B"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="20dp">
 
-        <ImageView
-            android:id="@+id/btnBack"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:src="@android:drawable/ic_menu_revert"
-            app:tint="#FFFFFF"
-            android:background="?attr/selectableItemBackgroundBorderless" />
+            <ImageView
+                android:id="@+id/btnBackSimulacionAr"
+                android:layout_width="38dp"
+                android:layout_height="38dp"
+                android:background="@drawable/white_circle"
+                android:padding="8dp"
+                android:src="@drawable/iconoretroceder"
+                app:tint="#001B6B" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:text="Simulación AR"
-            android:textColor="#FFFFFF"
-            android:textSize="20sp"
-            android:textStyle="bold" />
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
 
-        <!-- Botón para ir a Conceptos (Punto 3 al 4) -->
-        <Button
-            android:id="@+id/btnIrAConceptos"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:text="Ver Conceptos →"
-            android:textSize="12sp"
-            android:backgroundTint="#F4B400"
-            android:textColor="#000000"
-            app:cornerRadius="20dp" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Práctica simulada AR"
+                    android:textColor="@android:color/white"
+                    android:textSize="22sp"
+                    android:textStyle="bold" />
 
-        <!-- Tarjetas de datos -->
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="Unity / Movimiento parabólico"
+                    android:textColor="#D6D6D6"
+                    android:textSize="13sp" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="60dp"
-            android:orientation="vertical">
+            android:layout_marginTop="-22dp"
+            android:background="@android:color/white"
+            android:orientation="vertical"
+            android:padding="22dp">
 
-            <LinearLayout
+            <TextView
+                android:id="@+id/tvTituloAr"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="#AA000000"
-                android:padding="15dp"
-                android:layout_marginBottom="10dp">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="DISTANCIA RECORRIDA:\n12.45 m"
-                    android:textColor="#FFFFFF"
-                    android:textStyle="bold" />
-            </LinearLayout>
+                android:text="Movimiento parabólico"
+                android:textColor="#001B6B"
+                android:textSize="20sp"
+                android:textStyle="bold" />
 
-            <LinearLayout
+            <TextView
+                android:id="@+id/tvDescripcionAr"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:layout_marginTop="10dp"
+                android:lineSpacingExtra="4dp"
+                android:textColor="#334155"
+                android:textSize="14sp" />
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="18dp"
+                app:cardBackgroundColor="#F1F5F9"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="0dp">
 
                 <LinearLayout
-                    android:layout_width="0dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:background="#AA000000"
-                    android:padding="15dp"
-                    android:layout_marginEnd="5dp">
+                    android:orientation="vertical"
+                    android:padding="18dp">
+
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="ALTURA MÁXIMA:\n4.20 m"
-                        android:textColor="#FFFFFF" />
+                        android:text="Fórmula aplicada"
+                        android:textColor="#001B6B"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tvFormulaAr"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:lineSpacingExtra="6dp"
+                        android:textColor="#334155"
+                        android:textSize="15sp" />
+
                 </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="18dp"
+                app:cardBackgroundColor="#FFF9C4"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="0dp">
 
                 <LinearLayout
-                    android:layout_width="0dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:background="#AA000000"
-                    android:padding="15dp"
-                    android:layout_marginStart="5dp">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="TIEMPO DE VUELO:\n2.84 s"
-                        android:textColor="#FFFFFF" />
-                </LinearLayout>
-            </LinearLayout>
-        </LinearLayout>
+                    android:orientation="vertical"
+                    android:padding="18dp">
 
-        <!-- Botones inferiores -->
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:orientation="horizontal"
-            android:layout_marginBottom="40dp">
+                    <TextView
+                        android:id="@+id/tvIntentosAr"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Intentos disponibles: 0/4"
+                        android:textColor="#001B6B"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tvObjetivoAr"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:lineSpacingExtra="4dp"
+                        android:textColor="#475569"
+                        android:textSize="14sp" />
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
 
             <Button
-                android:id="@+id/btnReiniciar"
-                android:layout_width="wrap_content"
+                android:id="@+id/btnIniciarAr"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Reiniciar"
-                android:backgroundTint="#AA000000"
-                android:textColor="#FFFFFF"
-                android:layout_marginEnd="10dp" />
+                android:layout_marginTop="24dp"
+                android:backgroundTint="#001B6B"
+                android:padding="14dp"
+                android:text="Iniciar práctica AR"
+                android:textAllCaps="false"
+                android:textColor="@android:color/white"
+                android:textSize="15sp" />
 
-            <ImageButton
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:src="@android:drawable/ic_media_play"
-                android:backgroundTint="#FFFFFF"
-                app:tint="#000000" />
         </LinearLayout>
 
-    </RelativeLayout>
-</FrameLayout>
+    </LinearLayout>
+
+</ScrollView>

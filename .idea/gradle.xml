@@ -11,6 +11,8 @@
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/facesdk" />
+            <option value="$PROJECT_DIR$/unityLibrary" />
+            <option value="$PROJECT_DIR$/unityLibrary/xrmanifest.androidlib" />
           </set>
         </option>
       </GradleProjectSettings>
