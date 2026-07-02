@@ -64,13 +64,13 @@
             android:padding="22dp">
 
             <TextView
-                android:id="@+id/tvTituloAr"
+                android:id="@+id/tvSubtituloAr"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Movimiento parabólico"
-                android:textColor="#001B6B"
-                android:textSize="20sp"
-                android:textStyle="bold" />
+                android:layout_marginTop="4dp"
+                android:text="Unity / Realidad aumentada"
+                android:textColor="#D6D6D6"
+                android:textSize="13sp" />
 
             <TextView
                 android:id="@+id/tvDescripcionAr"
@@ -103,14 +103,12 @@
                         android:textSize="16sp"
                         android:textStyle="bold" />
 
-                    <TextView
-                        android:id="@+id/tvFormulaAr"
+                    <WebView
+                        android:id="@+id/webFormulaAr"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:lineSpacingExtra="6dp"
-                        android:textColor="#334155"
-                        android:textSize="15sp" />
+                        android:layout_height="95dp"
+                        android:layout_marginTop="6dp"
+                        android:background="@android:color/transparent" />
 
                 </LinearLayout>
 
