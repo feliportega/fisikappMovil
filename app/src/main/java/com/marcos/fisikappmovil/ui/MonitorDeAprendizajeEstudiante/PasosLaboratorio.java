@@ -601,4 +601,5 @@ public class PasosLaboratorio extends AppCompatActivity {
     private String safe(String value) {
         return value == null ? "" : value;
     }
+
 }

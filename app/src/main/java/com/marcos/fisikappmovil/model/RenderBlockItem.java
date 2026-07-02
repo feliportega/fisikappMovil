@@ -20,47 +20,38 @@ public class RenderBlockItem {
     private final String title;
     private final String value;
     private final List<String> items;
+    private final String description;
 
-    public RenderBlockItem(String type, String title, String value, List<String> items) {
+    public RenderBlockItem(String type, String title, String value, List<String> items, String description) {
         this.type = type;
         this.title = title;
         this.value = value;
         this.items = items == null ? new ArrayList<>() : items;
+        this.description = description;
     }
 
     public static RenderBlockItem text(String value) {
-        return new RenderBlockItem(TYPE_TEXT, null, value, null);
+        return new RenderBlockItem(TYPE_TEXT, null, value, null, null);
     }
 
     public static RenderBlockItem title(String value) {
-        return new RenderBlockItem(TYPE_TITLE, null, value, null);
+        return new RenderBlockItem(TYPE_TITLE, null, value, null, null);
     }
 
     public static RenderBlockItem list(String title, List<String> items) {
-        return new RenderBlockItem(TYPE_LIST, title, null, items);
+        return new RenderBlockItem(TYPE_LIST, title, null, items, null);
     }
 
     public static RenderBlockItem formula(String title, String expression, String description) {
-        StringBuilder builder = new StringBuilder();
-
-        if (expression != null && !expression.trim().isEmpty()) {
-            builder.append(expression.trim());
-        }
-
-        if (description != null && !description.trim().isEmpty()) {
-            if (builder.length() > 0) builder.append("\n\n");
-            builder.append(description.trim());
-        }
-
-        return new RenderBlockItem(TYPE_FORMULA, title, builder.toString(), null);
+        return new RenderBlockItem(TYPE_FORMULA, title, expression, null, description);
     }
 
     public static RenderBlockItem card(String title, String value) {
-        return new RenderBlockItem(TYPE_CARD, title, value, null);
+        return new RenderBlockItem(TYPE_CARD, title, value, null, null);
     }
 
     public static RenderBlockItem numberedList(String title, List<String> items) {
-        return new RenderBlockItem(TYPE_NUMBERED_LIST, title, null, items);
+        return new RenderBlockItem(TYPE_NUMBERED_LIST, title, null, items, null);
     }
 
     public String getType() {
@@ -77,5 +68,9 @@ public class RenderBlockItem {
 
     public List<String> getItems() {
         return items;
+    }
+
+    public String getDescription() {
+        return description;
     }
 }
