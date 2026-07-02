@@ -268,7 +268,6 @@ public class FaceVerifyActivity extends AppCompatActivity {
             finish();
         }
     }
-
     private void startCamera() {
         ListenableFuture<ProcessCameraProvider> cameraProviderFuture =
                 ProcessCameraProvider.getInstance(this);
@@ -411,7 +410,6 @@ public class FaceVerifyActivity extends AppCompatActivity {
             } catch (Exception ignored) {}
         }
     }
-
 
     private void captureAndVerify() {
         if (imageCapture == null || isClosing || hasCompleted) {
@@ -641,6 +639,22 @@ public class FaceVerifyActivity extends AppCompatActivity {
             return;
         }
 
+        if (!esRolEstudiante(response)) {
+            CredentialVault.clearCredentials(this);
+            tokenManager.clearSession();
+
+            resultOverlay.showError(
+                    "Acceso no permitido",
+                    "Esta app móvil es solo para estudiantes"
+            );
+
+            mainHandler.postDelayed(() -> {
+                goToManualLogin();
+            }, 1800);
+
+            return;
+        }
+
         tokenManager.saveTokens(
                 response.getAccessToken(),
                 response.getRefreshToken()
@@ -817,5 +831,15 @@ public class FaceVerifyActivity extends AppCompatActivity {
         }
 
         super.onDestroy();
+    }
+
+    private boolean esRolEstudiante(LoginResponse response) {
+        if (response == null || response.getUser() == null) {
+            return false;
+        }
+
+        String rol = response.getUser().getRol();
+
+        return rol != null && rol.trim().equalsIgnoreCase("estudiante");
     }
 }

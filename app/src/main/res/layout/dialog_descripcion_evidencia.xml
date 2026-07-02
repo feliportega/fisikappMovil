@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="12dp">
+
+    <TextView
+        android:id="@+id/tvNombreArchivoDialog"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Archivo seleccionado"
+        android:textColor="#001B6B"
+        android:textSize="14sp"
+        android:textStyle="bold" />
+
+    <EditText
+        android:id="@+id/etDescripcionEvidencia"
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:layout_marginTop="12dp"
+        android:gravity="top"
+        android:hint="Describe qué muestra esta evidencia..."
+        android:inputType="textMultiLine"
+        android:padding="10dp" />
+
+</LinearLayout>

@@ -114,6 +114,10 @@
             android:textSize="15sp"
             android:visibility="gone" />
 
+        <include
+            android:id="@+id/stateDashboardGrupos"
+            layout="@layout/view_content_state" />
+
         <!-- RecyclerView CORRECTO -->
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/tarjeta"
