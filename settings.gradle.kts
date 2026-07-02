@@ -16,7 +16,7 @@ rootProject.name = "FisikappMovil"
 
 include(":app")
 include(":facesdk")
-include(":unityLibrary")
+//include(":unityLibrary")
 include(":unityLibrary:xrmanifest.androidlib")
 
 project(":unityLibrary:xrmanifest.androidlib").projectDir =

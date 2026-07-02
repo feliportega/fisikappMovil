@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F8FAFC"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:background="#001B6B"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="20dp">
+
+            <ImageView
+                android:id="@+id/btnBackDatosExperimentales"
+                android:layout_width="38dp"
+                android:layout_height="38dp"
+                android:background="@drawable/white_circle"
+                android:padding="8dp"
+                android:src="@drawable/iconoretroceder"
+                app:tint="#001B6B" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Datos experimentales"
+                    android:textColor="@android:color/white"
+                    android:textSize="22sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="Registra mediciones, observaciones o respuestas"
+                    android:textColor="#D6D6D6"
+                    android:textSize="13sp" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="-22dp"
+            android:background="@android:color/white"
+            android:orientation="vertical"
+            android:padding="22dp">
+
+            <TextView
+                android:id="@+id/tvEstadoDatosExperimentales"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Aún no has registrado datos experimentales."
+                android:textColor="#475569"
+                android:textSize="14sp" />
+
+            <Button
+                android:id="@+id/btnAgregarDatoExperimental"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="18dp"
+                android:backgroundTint="#FACC15"
+                android:padding="12dp"
+                android:text="+ Agregar dato"
+                android:textAllCaps="false"
+                android:textColor="#001B6B"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:id="@+id/layoutDatosExperimentalesContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="18dp"
+                android:orientation="vertical" />
+
+            <Button
+                android:id="@+id/btnCompletarDatosExperimentales"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:backgroundTint="#001B6B"
+                android:padding="14dp"
+                android:text="Guardar y continuar"
+                android:textAllCaps="false"
+                android:textColor="@android:color/white" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</ScrollView>

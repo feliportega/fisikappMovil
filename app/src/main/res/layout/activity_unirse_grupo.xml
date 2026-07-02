@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#EEF5FB">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="24dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Unirme a un grupo"
+            android:textColor="@color/colorPrimario"
+            android:textSize="26sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Escanea el código QR o ingresa manualmente el código entregado por tu instructor."
+            android:textColor="#64748B"
+            android:textSize="15sp" />
+
+        <!-- Área QR -->
+
+        <FrameLayout
+            android:id="@+id/qrContainer"
+            android:layout_width="match_parent"
+            android:layout_height="320dp"
+            android:layout_marginTop="28dp"
+            android:background="#FFFFFF">
+
+            <androidx.camera.view.PreviewView
+                android:id="@+id/previewQr"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="gone" />
+
+            <!-- Aquí puedes poner tu máscara/vector translúcido -->
+            <com.marcos.fisikappmovil.ui.AccesoAlSistema.QrGuideOverlayView
+                android:id="@+id/qrGuideOverlay"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="gone" />
+
+            <!-- Botón grande inicial -->
+            <LinearLayout
+                android:id="@+id/btnQrLarge"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:layout_gravity="center"
+                android:background="@drawable/bg_qr_button"
+                android:clickable="true"
+                android:focusable="true"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="QR"
+                    android:textColor="@android:color/white"
+                    android:textSize="36sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="SCAN"
+                    android:textColor="@android:color/white"
+                    android:textSize="16sp" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tvQrStatus"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:layout_margin="16dp"
+                android:background="#88000000"
+                android:padding="10dp"
+                android:text="Toca QR Scan para activar la cámara"
+                android:textAlignment="center"
+                android:textColor="@android:color/white"
+                android:textSize="14sp"
+                android:visibility="gone" />
+
+        </FrameLayout>
+
+        <EditText
+            android:id="@+id/edtCodigoGrupo"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginTop="24dp"
+            android:background="@drawable/edittext_redondo2"
+            android:hint="Código del grupo"
+            android:inputType="textCapCharacters"
+            android:paddingHorizontal="16dp"
+            android:textColor="#0F172A"
+            android:textColorHint="#94A3B8" />
+
+        <Button
+            android:id="@+id/btnUnirseGrupo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="18dp"
+            android:backgroundTint="@color/colorPrimario"
+            android:padding="14dp"
+            android:text="Ingresar código"
+            android:textAllCaps="false"
+            android:textColor="@color/white" />
+
+        <TextView
+            android:id="@+id/tvEstadoUnion"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="18dp"
+            android:text=""
+            android:textAlignment="center"
+            android:textColor="#64748B"
+            android:textSize="14sp" />
+
+    </LinearLayout>
+</ScrollView>

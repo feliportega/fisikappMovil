@@ -66,8 +66,10 @@ dependencies {
     implementation(libs.constraintlayout)
 
     // Retrofit
+    implementation(libs.com.google.code.gson.gson)
     implementation(libs.retrofit)
-    implementation(libs.retrofit.gson)
+    implementation(libs.converter.gson)
+    implementation(libs.logging.interceptor)
 
     implementation("com.google.android.material:material:1.11.0")
     testImplementation(libs.junit)
@@ -75,7 +77,7 @@ dependencies {
     androidTestImplementation(libs.espresso.core)
 
     implementation(project(":facesdk"))
-    implementation(project(":unityLibrary"))
+    //implementation(project(":unityLibrary"))
     implementation("androidx.appcompat:appcompat:1.6.1")
 
 
@@ -85,6 +87,9 @@ dependencies {
     implementation("androidx.camera:camera-lifecycle:1.5.1")
     implementation("androidx.camera:camera-view:1.5.1")
     implementation("androidx.camera:camera-extensions:1.5.1")
+
+    // Barcode
+    implementation(libs.barcode.scanning)
 
     // Security
     implementation("androidx.security:security-crypto:1.1.0-alpha06")

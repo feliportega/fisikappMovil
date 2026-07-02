@@ -182,17 +182,17 @@
                 </LinearLayout>
             </ScrollView>
 
-    <Button
-        android:id="@+id/btnSiguienteEtapa"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="end"
-        android:layout_margin="20dp"
-        android:text="@string/siguiente_etapa"
-        android:textAllCaps="false"
-        android:textColor="#FFFFFF"
-        android:backgroundTint="#2ECC71"
-        android:paddingStart="24dp" />
+            <Button
+                android:id="@+id/btnSiguienteEtapa"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:layout_margin="20dp"
+                android:text="@string/siguiente_etapa"
+                android:textAllCaps="false"
+                android:textColor="#FFFFFF"
+                android:backgroundTint="#2ECC71"
+                android:paddingStart="24dp" />
 
         </LinearLayout>
     </androidx.cardview.widget.CardView>

@@ -96,6 +96,7 @@ public class FaceEnrollActivity extends AppCompatActivity {
 
     private final Runnable timeoutRunnable = () -> {
         if (!hasCompleted && !isClosing) {
+            setResult(RESULT_CANCELED);
             Toast.makeText(FaceEnrollActivity.this, "Tiempo agotado. Intenta nuevamente", Toast.LENGTH_SHORT).show();
             safeCloseAndFinish();
         }
@@ -209,6 +210,7 @@ public class FaceEnrollActivity extends AppCompatActivity {
         );
 
         btnCancel.setOnClickListener(v -> {
+            setResult(RESULT_CANCELED);
             tvStatusTitle.setText("Cancelando...");
             tvStatusMsg.setText("Cerrando registro facial");
             safeCloseAndFinish();
@@ -245,6 +247,7 @@ public class FaceEnrollActivity extends AppCompatActivity {
                 grantResults[0] == PackageManager.PERMISSION_GRANTED) {
             startCamera();
         } else {
+            setResult(RESULT_CANCELED);
             Toast.makeText(this, "Permiso de cámara denegado", Toast.LENGTH_SHORT).show();
             finish();
         }
@@ -478,8 +481,27 @@ public class FaceEnrollActivity extends AppCompatActivity {
                                 );
 
                                 if (finalEmbedding != null) {
+                                    //FaceVault.saveEmbedding(FaceEnrollActivity.this, finalEmbedding);
+                                    //hasCompleted = true;
                                     FaceVault.saveEmbedding(FaceEnrollActivity.this, finalEmbedding);
+                                    boolean saved = FaceVault.hasEmbedding(FaceEnrollActivity.this);
+
+                                    if (!saved) {
+                                        runOnUiThread(() -> {
+                                            tvStatusTitle.setText("Error");
+                                            tvStatusMsg.setText("No se pudo guardar el rostro en el dispositivo");
+                                            Toast.makeText(
+                                                    FaceEnrollActivity.this,
+                                                    "No se pudo guardar el rostro localmente",
+                                                    Toast.LENGTH_LONG
+                                            ).show();
+                                            verifying = false;
+                                        });
+                                        return;
+                                    }
+
                                     hasCompleted = true;
+                                    setResult(RESULT_OK);
 
                                     runOnUiThread(() -> {
                                         tvSubtitle.setText("Correcto");
