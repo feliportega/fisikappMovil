@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ScrollView
+        android:id="@+id/contentDetalleLaboratorio"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#F8FAFC"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!-- HEADER -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:background="#001B6B"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="20dp">
+
+                <ImageView
+                    android:id="@+id/btnBackEnvioEntrega"
+                    android:layout_width="38dp"
+                    android:layout_height="38dp"
+                    android:background="@drawable/white_circle"
+                    android:padding="8dp"
+                    android:src="@drawable/iconoretroceder"
+                    app:tint="#001B6B" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Enviar entrega"
+                        android:textColor="@android:color/white"
+                        android:textSize="22sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:text="Revisa y envía tu laboratorio"
+                        android:textColor="#D6D6D6"
+                        android:textSize="13sp" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <!-- CONTENIDO -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="-22dp"
+                android:background="@android:color/white"
+                android:orientation="vertical"
+                android:padding="22dp">
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:cardBackgroundColor="#ECFDF5"
+                    app:cardCornerRadius="18dp"
+                    app:cardElevation="0dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="18dp">
+
+                        <TextView
+                            android:id="@+id/tvEstadoEnvio"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Lista para enviar"
+                            android:textColor="#15803D"
+                            android:textSize="18sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/tvCalificacionEstado"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:text="Calificación: pendiente"
+                            android:textColor="#166534"
+                            android:textSize="14sp" />
+
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="18dp"
+                    app:cardBackgroundColor="#F1F5F9"
+                    app:cardCornerRadius="18dp"
+                    app:cardElevation="0dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="18dp">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Resumen"
+                            android:textColor="#001B6B"
+                            android:textSize="17sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/tvResumenEntrega"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="12dp"
+                            android:lineSpacingExtra="5dp"
+                            android:text="Resumen de entrega"
+                            android:textColor="#334155"
+                            android:textSize="14sp" />
+
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="18dp"
+                    app:cardBackgroundColor="#FFF9C4"
+                    app:cardCornerRadius="18dp"
+                    app:cardElevation="0dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="18dp">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Aviso"
+                            android:textColor="#001B6B"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:lineSpacingExtra="4dp"
+                            android:text="La app móvil no calcula la calificación. Solo envía la entrega al servidor. La calificación quedará pendiente hasta que sea revisada por IA/instructor."
+                            android:textColor="#475569"
+                            android:textSize="14sp" />
+
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+                <Button
+                    android:id="@+id/btnEnviarEntrega"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:backgroundTint="#001B6B"
+                    android:padding="14dp"
+                    android:text="Enviar entrega"
+                    android:textAllCaps="false"
+                    android:textColor="@android:color/white"
+                    android:textSize="15sp" />
+
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+    <include
+        android:id="@+id/contentStateDetalleLaboratorio"
+        layout="@layout/view_content_state"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone" />
+
+    <include
+        android:id="@+id/loadingOverlay"
+        layout="@layout/view_loading_overlay" />
+</FrameLayout>

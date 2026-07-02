@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:background="@color/colorPrimario"
     android:orientation="vertical"
-    tools:context=".ui.AccesoLaboratorio.UnirseLaboratorio">
+    tools:context=".ui.Laboratorio.UnirseLaboratorio">
 
     <!-- 1. Barra Superior Blanca (Consistencia Figma) -->
     <LinearLayout
@@ -113,6 +113,7 @@
                 android:textSize="14sp" />
 
             <EditText
+                android:id="@+id/edit_unirse"
                 android:layout_width="match_parent"
                 android:layout_height="56dp"
                 android:layout_marginTop="32dp"
@@ -143,7 +144,7 @@
                 app:cornerRadius="12dp" />
 
             <Button
-                android:id="@+id/btnunir"
+                android:id="@+id/btnCancelarUA"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"

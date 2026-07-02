@@ -12,7 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.marcos.fisikappmovil.R;
 import com.marcos.fisikappmovil.security.FaceVault;
-import com.marcos.fisikappmovil.ui.faceNet.FaceEnrollActivity;
+//import com.marcos.fisikappmovil.ui.faceNet.FaceEnrollActivity;
 
 public class FaceConsentActivity extends AppCompatActivity {
 
@@ -26,7 +26,8 @@ public class FaceConsentActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         if (FaceVault.hasConsent(this)) {
-            startActivity(new Intent(this, FaceEnrollActivity.class));
+            //startActivity(new Intent(this, FaceEnrollActivity.class));
+            setResult(RESULT_OK);
             finish();
             return;
         }
@@ -51,9 +52,7 @@ public class FaceConsentActivity extends AppCompatActivity {
             }
 
             FaceVault.saveConsent(this, true);
-
-            Intent intent = new Intent(FaceConsentActivity.this, FaceEnrollActivity.class);
-            startActivity(intent);
+            setResult(RESULT_OK);
             finish();
         });
 

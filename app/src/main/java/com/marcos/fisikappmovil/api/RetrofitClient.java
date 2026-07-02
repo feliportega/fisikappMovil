@@ -8,15 +8,19 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetrofitClient {
+
     private static Retrofit retrofit = null;
-    private static final String BASE_URL = "https://backend-fisikapp.onrender.com/api/";
+
+    // Producción / Render
+    private static final String BASE_URL = "https://backend-fisikapp.onrender.com/";
 
     public static Retrofit getClient() {
         if (retrofit == null) {
+
             HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
             logging.setLevel(HttpLoggingInterceptor.Level.BODY);
 
-            // Aumentamos los timeouts para servidores lentos (como Onrender)
+            // Timeouts de 60 segundos para compensar la lentitud del servidor chimbo gratuito
             OkHttpClient client = new OkHttpClient.Builder()
                     .addInterceptor(logging)
                     .connectTimeout(60, TimeUnit.SECONDS)
@@ -30,6 +34,11 @@ public class RetrofitClient {
                     .client(client)
                     .build();
         }
+
         return retrofit;
+    }
+
+    public static FisikappApi getApi() {
+        return getClient().create(FisikappApi.class);
     }
 }

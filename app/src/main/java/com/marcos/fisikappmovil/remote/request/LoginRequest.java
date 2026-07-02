@@ -3,8 +3,11 @@ package com.marcos.fisikappmovil.remote.request;
 import com.google.gson.annotations.SerializedName;
 
 public class LoginRequest {
+
     @SerializedName("correo")
     private String correo;
+
+    @SerializedName("password")
     private String password;
 
     public LoginRequest(String correo, String password) {
