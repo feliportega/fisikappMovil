@@ -155,11 +155,7 @@ public class StepRenderMapper {
             if (description != null && !description.trim().isEmpty()) {
                 int number = procedure.getNumber();
 
-                if (number > 0) {
-                    items.add(number + ". " + description.trim());
-                } else {
-                    items.add(description.trim());
-                }
+                items.add(description.trim());
             }
         }
 
@@ -170,7 +166,6 @@ public class StepRenderMapper {
 
         blocks.add(RenderBlockItem.numberedList("Procedimiento", items));
     }
-
     private boolean notEmpty(String value) {
         return value != null && !value.trim().isEmpty();
     }

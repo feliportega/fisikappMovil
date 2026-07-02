@@ -250,6 +250,12 @@ public class LaboratorioSessionStore {
         editor.remove(keyComparacionTexto(asignacionId));
         editor.remove(keyConclusionesTexto(asignacionId));
 
+        editor.remove("comparacion_resultados_json_" + asignacionId);
+        editor.remove("informe_laboratorio_json_" + asignacionId);
+        editor.remove("unity_started_at_" + asignacionId);
+        editor.remove("unity_result_sent_" + asignacionId);
+        editor.remove("unity_result_send_error_" + asignacionId);
+
         editor.apply();
     }
 
@@ -272,6 +278,56 @@ public class LaboratorioSessionStore {
         prefs.edit()
                 .remove("mobile_resource_json_" + assignmentId)
                 .apply();
+    }
+
+    public void saveComparacionResultadosJson(int assignmentId, String json) {
+        prefs.edit()
+                .putString("comparacion_resultados_json_" + assignmentId, json)
+                .apply();
+    }
+
+    public String getComparacionResultadosJson(int assignmentId) {
+        return prefs.getString("comparacion_resultados_json_" + assignmentId, null);
+    }
+
+    public void saveInformeLaboratorioJson(int assignmentId, String json) {
+        prefs.edit()
+                .putString("informe_laboratorio_json_" + assignmentId, json)
+                .apply();
+    }
+
+    public String getInformeLaboratorioJson(int assignmentId) {
+        return prefs.getString("informe_laboratorio_json_" + assignmentId, null);
+    }
+
+    public void saveUnityStartedAt(int assignmentId, String startedAt) {
+        prefs.edit()
+                .putString("unity_started_at_" + assignmentId, startedAt)
+                .apply();
+    }
+
+    public String getUnityStartedAt(int assignmentId) {
+        return prefs.getString("unity_started_at_" + assignmentId, null);
+    }
+
+    public void marcarUnityResultEnviado(int assignmentId) {
+        prefs.edit()
+                .putBoolean("unity_result_sent_" + assignmentId, true)
+                .apply();
+    }
+
+    public boolean isUnityResultEnviado(int assignmentId) {
+        return prefs.getBoolean("unity_result_sent_" + assignmentId, false);
+    }
+
+    public void saveUnityResultSendError(int assignmentId, String error) {
+        prefs.edit()
+                .putString("unity_result_send_error_" + assignmentId, error)
+                .apply();
+    }
+
+    public String getUnityResultSendError(int assignmentId) {
+        return prefs.getString("unity_result_send_error_" + assignmentId, null);
     }
 
 }
