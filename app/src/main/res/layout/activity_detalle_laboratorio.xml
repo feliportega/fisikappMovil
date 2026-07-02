@@ -34,11 +34,11 @@
                     android:src="@drawable/iconoretroceder"
                     app:tint="#001B6B" />
 
-                <ImageView
-                    android:layout_width="96dp"
-                    android:layout_height="70dp"
-                    android:layout_marginTop="8dp"
-                    android:src="@drawable/physics" />
+            <ImageView
+                android:layout_width="96dp"
+                android:layout_height="70dp"
+                android:layout_marginTop="8dp"
+                android:src="@drawable/vector_main_logo" />
 
                 <TextView
                     android:id="@+id/tvDetalleTituloLab"
