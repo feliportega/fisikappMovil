@@ -1,8 +1,8 @@
-com.UnityTechnologies.XR.Manifest.xrmanifest.androidlib-pngs-0 C:\Sena\Nocturna\fisikappMovil\unityLibrary\xrmanifest.androidlib\build\generated\res\pngs\debug
-com.UnityTechnologies.XR.Manifest.xrmanifest.androidlib-updated_navigation_xml-1 C:\Sena\Nocturna\fisikappMovil\unityLibrary\xrmanifest.androidlib\build\generated\updated_navigation_xml\debug
-com.UnityTechnologies.XR.Manifest.xrmanifest.androidlib-mergeDebugResources-2 C:\Sena\Nocturna\fisikappMovil\unityLibrary\xrmanifest.androidlib\build\intermediates\incremental\debug\mergeDebugResources\merged.dir
-com.UnityTechnologies.XR.Manifest.xrmanifest.androidlib-mergeDebugResources-3 C:\Sena\Nocturna\fisikappMovil\unityLibrary\xrmanifest.androidlib\build\intermediates\incremental\debug\mergeDebugResources\stripped.dir
-com.UnityTechnologies.XR.Manifest.xrmanifest.androidlib-debug-4 C:\Sena\Nocturna\fisikappMovil\unityLibrary\xrmanifest.androidlib\build\intermediates\merged_res\debug\mergeDebugResources
-com.UnityTechnologies.XR.Manifest.xrmanifest.androidlib-debug-5 C:\Sena\Nocturna\fisikappMovil\unityLibrary\xrmanifest.androidlib\build\intermediates\packaged_res\debug\packageDebugResources
-com.UnityTechnologies.XR.Manifest.xrmanifest.androidlib-xrmanifest.androidlib-6 C:\Sena\Nocturna\fisikappMovil\unityLibrary\xrmanifest.androidlib\res
-com.UnityTechnologies.XR.Manifest.xrmanifest.androidlib-debug-7 C:\Sena\Nocturna\fisikappMovil\unityLibrary\xrmanifest.androidlib\src\debug\res
+com.UnityTechnologies.XR.Manifest.xrmanifest.androidlib-pngs-0 C:\Users\johns\AndroidStudioProjects\fisikappMovil\unityLibrary\xrmanifest.androidlib\build\generated\res\pngs\debug
+com.UnityTechnologies.XR.Manifest.xrmanifest.androidlib-updated_navigation_xml-1 C:\Users\johns\AndroidStudioProjects\fisikappMovil\unityLibrary\xrmanifest.androidlib\build\generated\updated_navigation_xml\debug
+com.UnityTechnologies.XR.Manifest.xrmanifest.androidlib-mergeDebugResources-2 C:\Users\johns\AndroidStudioProjects\fisikappMovil\unityLibrary\xrmanifest.androidlib\build\intermediates\incremental\debug\mergeDebugResources\merged.dir
+com.UnityTechnologies.XR.Manifest.xrmanifest.androidlib-mergeDebugResources-3 C:\Users\johns\AndroidStudioProjects\fisikappMovil\unityLibrary\xrmanifest.androidlib\build\intermediates\incremental\debug\mergeDebugResources\stripped.dir
+com.UnityTechnologies.XR.Manifest.xrmanifest.androidlib-debug-4 C:\Users\johns\AndroidStudioProjects\fisikappMovil\unityLibrary\xrmanifest.androidlib\build\intermediates\merged_res\debug\mergeDebugResources
+com.UnityTechnologies.XR.Manifest.xrmanifest.androidlib-debug-5 C:\Users\johns\AndroidStudioProjects\fisikappMovil\unityLibrary\xrmanifest.androidlib\build\intermediates\packaged_res\debug\packageDebugResources
+com.UnityTechnologies.XR.Manifest.xrmanifest.androidlib-xrmanifest.androidlib-6 C:\Users\johns\AndroidStudioProjects\fisikappMovil\unityLibrary\xrmanifest.androidlib\res
+com.UnityTechnologies.XR.Manifest.xrmanifest.androidlib-debug-7 C:\Users\johns\AndroidStudioProjects\fisikappMovil\unityLibrary\xrmanifest.androidlib\src\debug\res

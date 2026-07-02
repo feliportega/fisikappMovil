@@ -7,10 +7,10 @@
 5-->INJECTED
 6
 7    <application>
-7-->C:\Sena\Nocturna\fisikappMovil\unityLibrary\xrmanifest.androidlib\AndroidManifest.xml:3:3-5:17
+7-->C:\Users\johns\AndroidStudioProjects\fisikappMovil\unityLibrary\xrmanifest.androidlib\AndroidManifest.xml:3:3-5:17
 8        <activity android:name="com.unity3d.player.UnityPlayerActivity" />
-8-->C:\Sena\Nocturna\fisikappMovil\unityLibrary\xrmanifest.androidlib\AndroidManifest.xml:4:5-71
-8-->C:\Sena\Nocturna\fisikappMovil\unityLibrary\xrmanifest.androidlib\AndroidManifest.xml:4:15-68
+8-->C:\Users\johns\AndroidStudioProjects\fisikappMovil\unityLibrary\xrmanifest.androidlib\AndroidManifest.xml:4:5-71
+8-->C:\Users\johns\AndroidStudioProjects\fisikappMovil\unityLibrary\xrmanifest.androidlib\AndroidManifest.xml:4:15-68
 9    </application>
 10
 11</manifest>
