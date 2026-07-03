@@ -29,7 +29,7 @@ import org.json.JSONObject;
 public class SimulacionARActivity extends AppCompatActivity {
 
     private ImageView btnBack;
-    //private TextView tvTituloAr;
+    private TextView tvTituloAr;
     private TextView tvDescripcionAr;
     private TextView tvSubtituloAr;
     private WebView webFormulaAr;
@@ -150,7 +150,7 @@ public class SimulacionARActivity extends AppCompatActivity {
 
     private void initViews() {
         btnBack = findViewById(R.id.btnBackSimulacionAr);
-        //tvTituloAr = findViewById(R.id.tvTituloAr);
+        tvTituloAr = findViewById(R.id.tvTituloAr);
         tvSubtituloAr = findViewById(R.id.tvSubtituloAr);
         tvDescripcionAr = findViewById(R.id.tvDescripcionAr);
         webFormulaAr = findViewById(R.id.webFormulaAr);
@@ -170,7 +170,7 @@ public class SimulacionARActivity extends AppCompatActivity {
 
         debugEstadoAr("ANTES_PINTAR_DATOS");
 
-        //tvTituloAr.setText(simulationTitle);
+        tvTituloAr.setText(simulationTitle);
         tvSubtituloAr.setText("Unity / " + safe(labKey));
 
         tvDescripcionAr.setText(
@@ -264,6 +264,8 @@ public class SimulacionARActivity extends AppCompatActivity {
         );
 
         sessionStore.saveUnityStartedAt(asignacionId, currentStartedAt);
+
+        // Comentar para deshabilitar Unity
 
         //Intent intent = new Intent(this, UnityArActivity.class);
         //intent.putExtra(UnityArActivity.EXTRA_EXERCISE_DATA, json);
@@ -403,7 +405,8 @@ public class SimulacionARActivity extends AppCompatActivity {
             JSONObject simulationStep = findSimulationStep(steps);
 
             if (simulationStep != null) {
-                simulationTitle = simulationStep.optString("title", simulationTitle);
+                //simulationTitle = simulationStep.optString("title", simulationTitle);
+                simulationTitle = simulationStep.optString("intro_title", simulationTitle);
 
                 JSONObject simulationRef = simulationStep.optJSONObject("simulation_ref");
 
@@ -423,9 +426,10 @@ public class SimulacionARActivity extends AppCompatActivity {
             android.util.Log.d(
                     "SIM_AR_CONFIG",
                     "labKey=" + labKey
-                            + " | unitySceneName=" + unitySceneName
-                            + " | endpoint=" + simulationEndpoint
-                            + " | formula=" + formulaExpression
+                            + " | unitySceneName= " + unitySceneName
+                            + " | endpoint= " + simulationEndpoint
+                            + " | formula= " + formulaExpression
+                            + " | title= " +simulationTitle
             );
 
         } catch (Exception e) {
