@@ -3,9 +3,7 @@ package com.marcos.fisikappmovil;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.view.View;
 import android.view.WindowManager;
-import android.widget.ImageView;
 import android.widget.VideoView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,12 +18,9 @@ import com.marcos.fisikappmovil.ui.faceNet.FaceVerifyActivity;
 public class SplashAuthActivity extends AppCompatActivity {
 
     private VideoView videoView;
-    private ImageView staticSplash;
-
     private TokenManager tokenManager;
 
     private boolean alreadyNavigated = false;
-    private boolean videoInterrupted = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,10 +41,6 @@ public class SplashAuthActivity extends AppCompatActivity {
 
     private void initViews() {
         videoView = findViewById(R.id.videoIntro);
-        staticSplash = findViewById(R.id.staticSplash);
-
-        staticSplash.setVisibility(View.GONE);
-        videoView.setVisibility(View.VISIBLE);
     }
 
     private void startIntroVideo() {
@@ -61,7 +52,6 @@ public class SplashAuthActivity extends AppCompatActivity {
         videoView.setOnCompletionListener(mp -> resolveNextScreen());
 
         videoView.setOnErrorListener((mp, what, extra) -> {
-            showStaticSplash();
             resolveNextScreen();
             return true;
         });
@@ -71,33 +61,8 @@ public class SplashAuthActivity extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
 
-        videoInterrupted = true;
-
         if (videoView != null) {
             videoView.stopPlayback();
-            videoView.setVisibility(View.GONE);
-        }
-
-        showStaticSplash();
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-        if (videoInterrupted && !alreadyNavigated) {
-            showStaticSplash();
-            resolveNextScreen();
-        }
-    }
-
-    private void showStaticSplash() {
-        if (staticSplash != null) {
-            staticSplash.setVisibility(View.VISIBLE);
-        }
-
-        if (videoView != null) {
-            videoView.setVisibility(View.GONE);
         }
     }
 
@@ -136,19 +101,19 @@ public class SplashAuthActivity extends AppCompatActivity {
     }
 
     private void goToDashboard() {
-        Intent intent = new Intent(SplashAuthActivity.this, Dashboard.class);
+        Intent intent = new Intent(this, Dashboard.class);
         startActivity(intent);
         finish();
     }
 
     private void goToFaceVerify() {
-        Intent intent = new Intent(SplashAuthActivity.this, FaceVerifyActivity.class);
+        Intent intent = new Intent(this, FaceVerifyActivity.class);
         startActivity(intent);
         finish();
     }
 
     private void goToLogin() {
-        Intent intent = new Intent(SplashAuthActivity.this, Login.class);
+        Intent intent = new Intent(this, Login.class);
         startActivity(intent);
         finish();
     }
