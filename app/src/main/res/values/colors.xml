@@ -5,6 +5,7 @@
     <color name="white">#FFFFFFFF</color>
 
     <!-- Paleta de Colores Oficial Fisikapp -->
+    <color name="tormentazul">#002B6B</color>
     <color name="colorPrimario">#0F172A</color>
     <color name="colorSecundario">#2563EB</color>
     <color name="colorAcento">#7C3AED</color>
