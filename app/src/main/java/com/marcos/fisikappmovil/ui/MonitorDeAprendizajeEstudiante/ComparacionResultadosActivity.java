@@ -5,8 +5,15 @@ import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import android.graphics.Typeface;
+import android.text.InputType;
+import android.view.Gravity;
+import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -18,16 +25,17 @@ import org.json.JSONObject;
 
 public class ComparacionResultadosActivity extends AppCompatActivity {
 
-    private ImageView btnBack;
-
-    private TextView tvDistanciaSimulada;
-    private TextView tvDistanciaExperimental;
-    private TextView tvDiferenciaDistancia;
+    private TextView tvFuentesComparacion;
     private TextView tvResultadoAr;
     private TextView tvResumenDatosExperimentales;
+    private TextView tvComparacionInstructions;
+    private LinearLayout layoutComparisonFieldsContainer;
 
-    private EditText etAnalisisComparacion;
     private Button btnGuardarComparacion;
+
+    private JSONObject comparisonObject;
+    private JSONObject comparisonData = new JSONObject();
+    private ImageView btnBack;
 
     private LaboratorioSessionStore sessionStore;
 
@@ -36,10 +44,6 @@ public class ComparacionResultadosActivity extends AppCompatActivity {
     private int grupoId = -1;
     private int ordenPaso = -1;
 
-    private double distanciaSimulada = 0.0;
-    private double distanciaExperimental = 0.0;
-    private boolean tieneDistanciaSimulada = false;
-    private boolean tieneDistanciaExperimental = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,9 +56,13 @@ public class ComparacionResultadosActivity extends AppCompatActivity {
         initViews();
         initListeners();
 
+        cargarComparisonDesdeJson();
+        cargarComparacionGuardada();
+
+        pintarFuentesComparacion();
         cargarResumenUnity();
-        cargarDatosExperimentales();
-        cargarAnalisisGuardado();
+        cargarDatosPracticaExperimental();
+        renderComparisonFields();
     }
 
     private void readExtras() {
@@ -69,14 +77,13 @@ public class ComparacionResultadosActivity extends AppCompatActivity {
     private void initViews() {
         btnBack = findViewById(R.id.btnBackComparacion);
 
-        tvDistanciaSimulada = findViewById(R.id.tvDistanciaSimulada);
-        tvDistanciaExperimental = findViewById(R.id.tvDistanciaExperimental);
-        tvDiferenciaDistancia = findViewById(R.id.tvDiferenciaDistancia);
+        tvFuentesComparacion = findViewById(R.id.tvFuentesComparacion);
         tvResultadoAr = findViewById(R.id.tvResultadoAr);
-
         tvResumenDatosExperimentales = findViewById(R.id.tvResumenDatosExperimentales);
 
-        etAnalisisComparacion = findViewById(R.id.etAnalisisComparacion);
+        tvComparacionInstructions = findViewById(R.id.tvComparacionInstructions);
+        layoutComparisonFieldsContainer = findViewById(R.id.layoutComparisonFieldsContainer);
+
         btnGuardarComparacion = findViewById(R.id.btnGuardarComparacion);
     }
 
@@ -90,8 +97,6 @@ public class ComparacionResultadosActivity extends AppCompatActivity {
 
         if (unityJson == null || unityJson.trim().isEmpty()) {
             tvResultadoAr.setText("No hay resultado AR guardado.");
-            tvDistanciaSimulada.setText("-");
-            tvDiferenciaDistancia.setText("-");
             return;
         }
 
@@ -108,13 +113,9 @@ public class ComparacionResultadosActivity extends AppCompatActivity {
             String resultStatus = json.optString("resultStatus", "Sin estado");
             String exitReason = json.optString("exitReason", "");
 
-            distanciaSimulada = json.optDouble("straightDistance", 0.0);
-            tieneDistanciaSimulada = true;
-
             double horizontalDistance = json.optDouble("horizontalDistance", 0.0);
             double verticalDistance = json.optDouble("verticalDistance", 0.0);
-
-            tvDistanciaSimulada.setText(formatMetro(distanciaSimulada));
+            double straightDistance = json.optDouble("straightDistance", 0.0);
 
             tvResultadoAr.setText(
                     "Estado AR: " + resultStatus + "\n" +
@@ -122,8 +123,9 @@ public class ComparacionResultadosActivity extends AppCompatActivity {
                             "Impactó objetivo: " + (hitTarget ? "Sí" : "No") + "\n" +
                             "Intentos usados: " + usedAttempts + "/" + maxAttempts + "\n" +
                             "Intentos restantes: " + remainingAttempts + "\n" +
-                            "Distancia horizontal: " + formatMetro(horizontalDistance) + "\n" +
-                            "Distancia vertical: " + formatMetro(verticalDistance) +
+                            "Distancia horizontal AR: " + formatDecimal(horizontalDistance) + "\n" +
+                            "Distancia vertical AR: " + formatDecimal(verticalDistance) + "\n" +
+                            "Distancia directa AR: " + formatDecimal(straightDistance) +
                             (exitReason == null || exitReason.trim().isEmpty()
                                     ? ""
                                     : "\nSalida: " + exitReason)
@@ -131,158 +133,373 @@ public class ComparacionResultadosActivity extends AppCompatActivity {
 
         } catch (Exception e) {
             e.printStackTrace();
-
             tvResultadoAr.setText("No se pudo leer el resultado AR guardado.");
-            tvDistanciaSimulada.setText("-");
-            tvDiferenciaDistancia.setText("-");
         }
     }
 
-    private void cargarDatosExperimentales() {
-        String datosJson = sessionStore.getDatosExperimentalesJson(asignacionId);
+    private void cargarComparisonDesdeJson() {
+        String json = sessionStore.getMobileResourceJson(asignacionId);
 
-        if (datosJson == null || datosJson.trim().isEmpty()) {
-            tvResumenDatosExperimentales.setText("No hay datos experimentales registrados.");
-            tvDistanciaExperimental.setText("-");
-            calcularDiferencia();
+        if (json == null || json.trim().isEmpty()) {
+            tvComparacionInstructions.setText("No se encontró la configuración de comparación.");
             return;
         }
 
         try {
-            JSONArray array = new JSONArray(datosJson);
+            JSONObject root = new JSONObject(json);
+            JSONArray steps = root.optJSONArray("steps");
 
-            if (array.length() == 0) {
-                tvResumenDatosExperimentales.setText("No hay datos experimentales registrados.");
-                tvDistanciaExperimental.setText("-");
-                calcularDiferencia();
+            if (steps == null || steps.length() == 0) {
+                tvComparacionInstructions.setText("Este laboratorio no tiene pasos configurados.");
                 return;
             }
 
-            StringBuilder resumen = new StringBuilder();
-            resumen.append("Datos registrados: ").append(array.length()).append("\n\n");
+            JSONObject comparisonStep = findComparisonStep(steps);
 
-            /*
-             * Intentamos encontrar una distancia experimental dentro de los datos.
-             * Por ahora usamos una extracción flexible buscando números en textos que contengan:
-             * distancia, alcance o recorrido.
-             */
-            for (int i = 0; i < array.length(); i++) {
-                JSONObject item = array.optJSONObject(i);
-                if (item == null) continue;
-
-                String titulo = item.optString("titulo", "Dato experimental");
-                String descripcion = item.optString("descripcion", "");
-
-                resumen.append("• ")
-                        .append(titulo)
-                        .append(": ")
-                        .append(descripcion)
-                        .append("\n\n");
-
-                intentarExtraerDistanciaExperimental(titulo, descripcion);
+            if (comparisonStep == null) {
+                tvComparacionInstructions.setText("No se encontró el paso de comparación.");
+                return;
             }
 
-            tvResumenDatosExperimentales.setText(resumen.toString().trim());
+            comparisonObject = comparisonStep.optJSONObject("comparison");
 
-            if (tieneDistanciaExperimental) {
-                tvDistanciaExperimental.setText(formatMetro(distanciaExperimental));
-            } else {
-                tvDistanciaExperimental.setText("No detectada");
+            if (comparisonObject == null) {
+                tvComparacionInstructions.setText("El paso de comparación no tiene configuración.");
+                return;
             }
 
-            calcularDiferencia();
+            String instructions = comparisonObject.optString(
+                    "instructions",
+                    "Compare los resultados registrados en la práctica experimental con los resultados de la simulación AR."
+            );
+
+            tvComparacionInstructions.setText(instructions);
 
         } catch (Exception e) {
             e.printStackTrace();
-
-            tvResumenDatosExperimentales.setText("No se pudieron leer los datos experimentales.");
-            tvDistanciaExperimental.setText("-");
-            calcularDiferencia();
+            tvComparacionInstructions.setText("No se pudo leer la configuración de comparación.");
         }
     }
 
-    private void intentarExtraerDistanciaExperimental(String titulo, String descripcion) {
-        if (tieneDistanciaExperimental) {
-            return;
-        }
+    private JSONObject findComparisonStep(JSONArray steps) {
+        for (int i = 0; i < steps.length(); i++) {
+            JSONObject step = steps.optJSONObject(i);
+            if (step == null) continue;
 
-        String texto = ((titulo == null ? "" : titulo) + " " + (descripcion == null ? "" : descripcion)).toLowerCase();
+            String type = step.optString("type", "");
+            int order = step.optInt("order", -1);
 
-        boolean pareceDistancia = texto.contains("distancia")
-                || texto.contains("alcance")
-                || texto.contains("recorrido")
-                || texto.contains("horizontal");
-
-        if (!pareceDistancia) {
-            return;
-        }
-
-        Double valor = extraerPrimerNumero(texto);
-
-        if (valor != null) {
-            distanciaExperimental = valor;
-            tieneDistanciaExperimental = true;
-        }
-    }
-
-    private Double extraerPrimerNumero(String texto) {
-        if (texto == null) return null;
-
-        try {
-            java.util.regex.Pattern pattern = java.util.regex.Pattern.compile("(\\d+(?:[\\.,]\\d+)?)");
-            java.util.regex.Matcher matcher = pattern.matcher(texto);
-
-            if (matcher.find()) {
-                String numero = matcher.group(1).replace(",", ".");
-                return Double.parseDouble(numero);
+            if ("COMPARISON".equalsIgnoreCase(type)) {
+                return step;
             }
 
-        } catch (Exception e) {
-            e.printStackTrace();
+            if (ordenPaso > 0 && order == ordenPaso) {
+                return step;
+            }
         }
 
         return null;
     }
 
-    private void calcularDiferencia() {
-        if (!tieneDistanciaSimulada || !tieneDistanciaExperimental) {
-            tvDiferenciaDistancia.setText("-");
+    private void pintarFuentesComparacion() {
+        String leftSource = comparisonObject != null
+                ? comparisonObject.optString("left_source", "experimental_practice")
+                : "experimental_practice";
+
+        String rightSource = comparisonObject != null
+                ? comparisonObject.optString("right_source", "simulation_ar")
+                : "simulation_ar";
+
+        tvFuentesComparacion.setText(
+                "Fuente experimental: " + traducirFuente(leftSource) + "\n" +
+                        "Fuente simulada: " + traducirFuente(rightSource) + "\n\n" +
+                        "Revisa ambas fuentes y escribe una comparación según las instrucciones del laboratorio. " +
+                        "La comparación puede ser numérica, conceptual, cualitativa o de observación, según el tipo de práctica."
+        );
+    }
+
+    private void cargarDatosPracticaExperimental() {
+        String practicaJson = sessionStore.getPracticaExperimentalJson(asignacionId);
+
+        if (practicaJson == null || practicaJson.trim().isEmpty()) {
+            tvResumenDatosExperimentales.setText("No hay práctica experimental registrada.");
             return;
         }
 
-        double diferencia = Math.abs(distanciaSimulada - distanciaExperimental);
-        tvDiferenciaDistancia.setText(formatMetro(diferencia));
+        try {
+            JSONObject data = new JSONObject(practicaJson);
+
+            StringBuilder resumen = new StringBuilder();
+
+            if (data.has("observations")) {
+                resumen.append("Observaciones:\n")
+                        .append(data.optString("observations", ""))
+                        .append("\n\n");
+            }
+
+            if (data.has("calculations")) {
+                resumen.append("Cálculos realizados:\n")
+                        .append(data.optString("calculations", ""))
+                        .append("\n\n");
+            }
+
+            if (data.has("conclusions")) {
+                resumen.append("Conclusiones:\n")
+                        .append(data.optString("conclusions", ""))
+                        .append("\n\n");
+            }
+
+            String evidenciasJson = sessionStore.getEvidenciasJson(asignacionId);
+            if (evidenciasJson != null && !evidenciasJson.trim().isEmpty()) {
+                JSONArray evidencias = new JSONArray(evidenciasJson);
+                resumen.append("Evidencias agregadas: ")
+                        .append(evidencias.length());
+            }
+
+            if (resumen.length() == 0) {
+                resumen.append("La práctica experimental no tiene datos registrados.");
+            }
+
+            tvResumenDatosExperimentales.setText(resumen.toString().trim());
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            tvResumenDatosExperimentales.setText("No se pudo leer la práctica experimental registrada.");
+        }
     }
 
-    private void cargarAnalisisGuardado() {
-        String analisis = sessionStore.getComparacionTexto(asignacionId);
+    private void cargarComparacionGuardada() {
+        String json = sessionStore.getComparacionResultadosJson(asignacionId);
 
-        if (analisis != null && !analisis.trim().isEmpty()) {
-            etAnalisisComparacion.setText(analisis);
+        if (json == null || json.trim().isEmpty()) {
+            comparisonData = new JSONObject();
+
+            String textoViejo = sessionStore.getComparacionTexto(asignacionId);
+            if (textoViejo != null && !textoViejo.trim().isEmpty()) {
+                try {
+                    comparisonData.put("analysis", textoViejo);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+
+            return;
         }
+
+        try {
+            comparisonData = new JSONObject(json);
+        } catch (Exception e) {
+            e.printStackTrace();
+            comparisonData = new JSONObject();
+        }
+    }
+
+    private void renderComparisonFields() {
+        layoutComparisonFieldsContainer.removeAllViews();
+
+        if (comparisonObject == null) {
+            addTextInputField("analysis", "Análisis de la comparación", true);
+            return;
+        }
+
+        JSONArray fields = comparisonObject.optJSONArray("fields");
+
+        if (fields == null || fields.length() == 0) {
+            addTextInputField("analysis", "Análisis de la comparación", true);
+            return;
+        }
+
+        for (int i = 0; i < fields.length(); i++) {
+            JSONObject field = fields.optJSONObject(i);
+            if (field == null) continue;
+
+            String id = field.optString("id", "");
+            String label = field.optString("label", id);
+            String type = field.optString("type", "");
+            boolean required = field.optBoolean("required", false);
+
+            if ("TEXT".equalsIgnoreCase(type)) {
+                addTextInputField(id, label, required);
+            }
+        }
+    }
+
+    private void addTextInputField(String id, String label, boolean required) {
+        TextView tvLabel = new TextView(this);
+        tvLabel.setText(required ? label + " *" : label);
+        tvLabel.setTextColor(android.graphics.Color.parseColor("#001B6B"));
+        tvLabel.setTextSize(16);
+        tvLabel.setTypeface(null, Typeface.BOLD);
+
+        LinearLayout.LayoutParams labelParams = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+        );
+        labelParams.setMargins(0, dpToPx(8), 0, dpToPx(8));
+        tvLabel.setLayoutParams(labelParams);
+
+        EditText editText = new EditText(this);
+        editText.setTag(id);
+        editText.setMinLines(5);
+        editText.setGravity(Gravity.TOP);
+        editText.setHint("Escribe " + label.toLowerCase(java.util.Locale.ROOT));
+        editText.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_MULTI_LINE);
+        editText.setTextColor(android.graphics.Color.parseColor("#334155"));
+        editText.setTextSize(14);
+        editText.setBackgroundResource(R.drawable.edittext_redondo);
+        editText.setPadding(dpToPx(14), dpToPx(12), dpToPx(14), dpToPx(12));
+
+        String savedValue = comparisonData.optString(id, "");
+        editText.setText(savedValue);
+
+        LinearLayout.LayoutParams inputParams = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                dpToPx(150)
+        );
+        editText.setLayoutParams(inputParams);
+
+        layoutComparisonFieldsContainer.addView(tvLabel);
+        layoutComparisonFieldsContainer.addView(editText);
     }
 
     private void guardarAnalisisYCompletar() {
-        String analisis = etAnalisisComparacion.getText().toString().trim();
-
-        if (analisis.isEmpty()) {
-            etAnalisisComparacion.setError("Escribe tu análisis");
+        if (!validarComparisonFields()) {
             return;
         }
 
-        if (analisis.length() < 20) {
-            etAnalisisComparacion.setError("Escribe un análisis un poco más completo");
-            return;
-        }
+        guardarComparisonFields();
 
-        sessionStore.saveComparacionTexto(asignacionId, analisis);
-
-        Toast.makeText(this, "Análisis guardado", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Comparación guardada", Toast.LENGTH_SHORT).show();
 
         Intent data = new Intent();
         data.putExtra(PasosLaboratorio.EXTRA_ORDEN_PASO, ordenPaso);
         setResult(RESULT_OK, data);
         finish();
+    }
+
+    private boolean validarComparisonFields() {
+        if (comparisonObject == null) {
+            return validarCampoPorTag("analysis", "Análisis de la comparación", true);
+        }
+
+        JSONArray fields = comparisonObject.optJSONArray("fields");
+
+        if (fields == null || fields.length() == 0) {
+            return validarCampoPorTag("analysis", "Análisis de la comparación", true);
+        }
+
+        for (int i = 0; i < fields.length(); i++) {
+            JSONObject field = fields.optJSONObject(i);
+            if (field == null) continue;
+
+            String id = field.optString("id", "");
+            String label = field.optString("label", id);
+            String type = field.optString("type", "");
+            boolean required = field.optBoolean("required", false);
+
+            if ("TEXT".equalsIgnoreCase(type)) {
+                if (!validarCampoPorTag(id, label, required)) {
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    }
+
+    private boolean validarCampoPorTag(String id, String label, boolean required) {
+        if (!required) return true;
+
+        EditText editText = layoutComparisonFieldsContainer.findViewWithTag(id);
+
+        if (editText == null || editText.getText().toString().trim().isEmpty()) {
+            if (editText != null) {
+                editText.setError("Campo obligatorio");
+                editText.requestFocus();
+            }
+
+            Toast.makeText(this, "Completa el campo: " + label, Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        return true;
+    }
+
+    private void guardarComparisonFields() {
+        try {
+            JSONObject data = new JSONObject();
+
+            recogerInputsDesdeContenedor(layoutComparisonFieldsContainer, data);
+
+            data.put("left_source", comparisonObject != null
+                    ? comparisonObject.optString("left_source", "experimental_practice")
+                    : "experimental_practice");
+
+            data.put("right_source", comparisonObject != null
+                    ? comparisonObject.optString("right_source", "simulation_ar")
+                    : "simulation_ar");
+
+            data.put("updatedAt", obtenerFechaActual());
+
+            sessionStore.saveComparacionResultadosJson(asignacionId, data.toString());
+
+            String analysis = data.optString("analysis", "");
+            if (!analysis.trim().isEmpty()) {
+                sessionStore.saveComparacionTexto(asignacionId, analysis);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void recogerInputsDesdeContenedor(View view, JSONObject data) throws Exception {
+        if (view instanceof EditText) {
+            Object tag = view.getTag();
+
+            if (tag != null) {
+                String id = tag.toString();
+                String value = ((EditText) view).getText().toString().trim();
+                data.put(id, value);
+            }
+
+            return;
+        }
+
+        if (view instanceof ViewGroup) {
+            ViewGroup group = (ViewGroup) view;
+
+            for (int i = 0; i < group.getChildCount(); i++) {
+                recogerInputsDesdeContenedor(group.getChildAt(i), data);
+            }
+        }
+    }
+    // Helpers
+    private String traducirFuente(String source) {
+        if (source == null) return "No definida";
+
+        switch (source) {
+            case "experimental_practice":
+                return "Práctica experimental";
+            case "simulation_ar":
+                return "Simulación AR";
+            default:
+                return source;
+        }
+    }
+
+    private String obtenerFechaActual() {
+        return new java.text.SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", java.util.Locale.US)
+                .format(new java.util.Date());
+    }
+
+    private int dpToPx(int dp) {
+        float density = getResources().getDisplayMetrics().density;
+        return Math.round(dp * density);
+    }
+
+    private String formatDecimal(double value) {
+        return String.format(java.util.Locale.US, "%.2f", value);
     }
 
     private String formatMetro(double value) {
