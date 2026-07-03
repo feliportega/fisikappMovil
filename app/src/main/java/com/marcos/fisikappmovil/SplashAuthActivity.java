@@ -117,4 +117,5 @@ public class SplashAuthActivity extends AppCompatActivity {
         startActivity(intent);
         finish();
     }
+
 }
