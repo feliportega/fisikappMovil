@@ -8,8 +8,9 @@ import android.graphics.Typeface;
 import android.graphics.Color;
 import android.content.Intent;
 
-import android.webkit.WebSettings;
+
 import android.webkit.WebView;
+import com.marcos.fisikappmovil.ui.common.KatexWebViewRenderer;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -180,7 +181,7 @@ public class RenderContentActivity extends AppCompatActivity {
                 break;
 
             case RenderBlockItem.TYPE_FORMULA:
-                addFormula(block.getTitle(), block.getValue());
+                addFormula(block.getTitle(), block.getValue(), block.getDescription());
                 break;
 
             case RenderBlockItem.TYPE_CARD:
@@ -267,7 +268,7 @@ public class RenderContentActivity extends AppCompatActivity {
         return builder.toString().trim();
     }
 
-    private void addFormula(String title, String value) {
+    private void addFormula(String title, String value, String description) {
         LinearLayout card = createCardContainer();
 
         if (title != null && !title.trim().isEmpty()) {
@@ -275,77 +276,26 @@ public class RenderContentActivity extends AppCompatActivity {
         }
 
         WebView webView = new WebView(this);
-        webView.setBackgroundColor(Color.TRANSPARENT);
-
-        WebSettings settings = webView.getSettings();
-        settings.setJavaScriptEnabled(true);
-        settings.setDomStorageEnabled(true);
-        settings.setAllowFileAccess(true);
-        settings.setAllowContentAccess(true);
 
         LinearLayout.LayoutParams webParams = new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
-                dpToPx(90)
+                dpToPx(85)
         );
+        webParams.setMargins(0, dpToPx(2), 0, dpToPx(2));
         webView.setLayoutParams(webParams);
 
-        webView.loadDataWithBaseURL(
-                "file:///android_asset/katex/",
-                buildLatexHtml(value),
-                "text/html",
-                "UTF-8",
-                null
-        );
+        KatexWebViewRenderer.configure(webView);
+        KatexWebViewRenderer.render(webView, value);
 
         card.addView(webView);
 
+        if (description != null && !description.trim().isEmpty()) {
+            TextView tvDescription = createCardValue(description);
+            tvDescription.setPadding(0, dpToPx(2), 0, 0);
+            card.addView(tvDescription);
+        }
+
         layoutRenderContent.addView(card);
-    }
-
-    private String buildLatexHtml(String latex) {
-        String safeLatex = latex == null ? "" : latex;
-
-        return "<!DOCTYPE html>" +
-                "<html>" +
-                "<head>" +
-                "<meta name='viewport' content='width=device-width, initial-scale=1.0'>" +
-                "<link rel='stylesheet' href='katex.min.css'>" +
-                "<script src='katex.min.js'></script>" +
-                "<style>" +
-                "html, body {" +
-                "  margin: 0;" +
-                "  padding: 0;" +
-                "  background: transparent;" +
-                "  color: #0F172A;" +
-                "  overflow: hidden;" +
-                "}" +
-                "body {" +
-                "  display: flex;" +
-                "  align-items: center;" +
-                "  justify-content: center;" +
-                "  min-height: 80px;" +
-                "}" +
-                "#formula {" +
-                "  width: 100%;" +
-                "  text-align: center;" +
-                "  font-size: 20px;" +
-                "}" +
-                "</style>" +
-                "</head>" +
-                "<body>" +
-                "<div id='formula'></div>" +
-                "<script>" +
-                "try {" +
-                "  katex.render(String.raw`" + escapeForJsTemplate(safeLatex) + "`, document.getElementById('formula'), {" +
-                "    throwOnError: false," +
-                "    displayMode: true" +
-                "  });" +
-                "} catch (e) {" +
-                "  document.getElementById('formula').innerText = String.raw`" + escapeForJsTemplate(safeLatex) + "`;" +
-                "}" +
-                "</script>" +
-                "</body>" +
-                "</html>";
     }
 
     private void addCard(String title, String value) {
@@ -406,15 +356,6 @@ public class RenderContentActivity extends AppCompatActivity {
     }
 
     // Helpers
-    private String escapeForJsTemplate(String value) {
-        if (value == null) return "";
-
-        return value
-                .replace("\\", "\\\\")
-                .replace("`", "\\`")
-                .replace("${", "\\${");
-    }
-
     private int dpToPx(int dp) {
         float density = getResources().getDisplayMetrics().density;
         return Math.round(dp * density);

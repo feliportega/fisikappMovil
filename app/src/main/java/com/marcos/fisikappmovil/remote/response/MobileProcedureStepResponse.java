@@ -16,6 +16,7 @@ public class MobileProcedureStepResponse {
     private int order;
 
     public int getNumber() { return number; }
+
     public String getDescription() { return description; }
     public String getImage() { return image; }
     public int getOrder() { return order; }

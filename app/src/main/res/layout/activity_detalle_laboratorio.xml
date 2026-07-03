@@ -96,7 +96,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
                     app:cardCornerRadius="18dp"
-                    app:cardElevation="2dp">
+                    app:cardElevation="2dp"
+                    android:backgroundTint="@color/white">
 
                     <LinearLayout
                         android:layout_width="match_parent"
