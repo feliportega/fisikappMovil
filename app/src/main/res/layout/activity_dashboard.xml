@@ -5,8 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#EEF5FB"
-    tools:context=".ui.AccesoAlSistema.Dashboard"
-    >
+    tools:context=".ui.AccesoAlSistema.Dashboard">
 
     <LinearLayout
         android:layout_width="match_parent"
