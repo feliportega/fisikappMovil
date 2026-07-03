@@ -24,7 +24,7 @@
                 android:orientation="vertical"
                 android:padding="24dp">
 
-                <ImageView
+            <!--    <ImageView
                     android:id="@+id/btnBackDetalleLab"
                     android:layout_width="38dp"
                     android:layout_height="38dp"
@@ -32,7 +32,17 @@
                     android:background="@drawable/white_circle"
                     android:padding="8dp"
                     android:src="@drawable/iconoretroceder"
-                    app:tint="#001B6B" />
+                    app:tint="#001B6B" /> -->
+                <ImageView
+                    android:id="@+id/btnBackDetalleLab"
+                    android:layout_width="42dp"
+                    android:layout_height="42dp"
+                    android:layout_gravity="start"
+                    android:clickable="true"
+                    android:focusable="true"
+
+                    android:src="@drawable/outline_arrow_circle_left_24"
+                    app:tint="#DCFBFF" />
 
             <ImageView
                 android:layout_width="96dp"
@@ -168,7 +178,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="18dp"
                     app:cardCornerRadius="18dp"
-                    app:cardElevation="2dp">
+                    app:cardElevation="2dp"
+                    android:backgroundTint="@color/white">
 
                     <LinearLayout
                         android:layout_width="match_parent"

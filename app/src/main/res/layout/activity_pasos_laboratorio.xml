@@ -16,18 +16,21 @@
 
         <ImageView
             android:id="@+id/btnBackPasosLab"
-            android:layout_width="36dp"
-            android:layout_height="36dp"
-            android:background="@drawable/white_circle"
-            android:padding="8dp"
-            android:src="@drawable/iconoretroceder"
-            app:tint="#001B6B" />
+            android:layout_width="42dp"
+            android:layout_height="42dp"
+
+            android:clickable="true"
+            android:focusable="true"
+
+            android:src="@drawable/outline_arrow_circle_left_24"
+            app:tint="#DCFBFF" />
+
 
         <TextView
             android:id="@+id/tvTituloPasosLab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="18dp"
+            android:layout_marginTop="15dp"
             android:text="Pasos del laboratorio"
             android:textColor="@android:color/white"
             android:textSize="18sp"
@@ -69,7 +72,8 @@
             android:layout_marginTop="14dp"
             android:layout_weight="1"
             android:clipToPadding="false"
-            android:paddingBottom="12dp" />
+            android:paddingBottom="12dp"
+            />
 
         <Button
             android:id="@+id/btnEnviarLaboratorio"
