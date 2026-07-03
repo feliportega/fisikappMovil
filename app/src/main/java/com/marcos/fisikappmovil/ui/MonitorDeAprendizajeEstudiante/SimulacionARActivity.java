@@ -15,16 +15,24 @@ import com.marcos.fisikappmovil.R;
 import com.marcos.fisikappmovil.data.session.LaboratorioSessionStore;
 import com.marcos.fisikappmovil.model.TokenManager;
 import com.marcos.fisikappmovil.ui.UnityAR.ResultadoUnityActivity;
-//import com.marcos.fisikappmovil.ui.UnityAR.UnityArActivity;
+
+// import com.marcos.fisikappmovil.ui.UnityAR.UnityArActivity;
+
+import android.webkit.WebView;
+
+import com.marcos.fisikappmovil.ui.common.KatexWebViewRenderer;
+
+import org.json.JSONArray;
 
 import org.json.JSONObject;
 
 public class SimulacionARActivity extends AppCompatActivity {
 
     private ImageView btnBack;
-    private TextView tvTituloAr;
+    //private TextView tvTituloAr;
     private TextView tvDescripcionAr;
-    private TextView tvFormulaAr;
+    private TextView tvSubtituloAr;
+    private WebView webFormulaAr;
     private TextView tvIntentosAr;
     private TextView tvObjetivoAr;
     private Button btnIniciarAr;
@@ -37,10 +45,22 @@ public class SimulacionARActivity extends AppCompatActivity {
     private int grupoId = -1;
     private int ordenPaso = -1;
 
-    private String labKey = "PARABOLIC-001";
-    private String unitySceneName = "ParabolicMotionLab";
-    private String displayName = "Movimiento parabólico";
-    private String exerciseId = "EX-PARABOLIC-001";
+    private String stepId;
+    private String labKey;
+    private String unitySceneName;
+    private String simulationEndpoint;
+
+    private String displayName = "Simulación AR";
+    private String exerciseId = "EX-DEFAULT";
+
+    private String simulationTitle = "Práctica simulada AR";
+    private String simulationDescription = "Realiza la simulación en realidad aumentada.";
+
+    private String formulaName = "Fórmula aplicada";
+    private String formulaExpression = "";
+    private String formulaDescription = "";
+
+    private String currentStartedAt;
 
     private String currentRequestId;
     private String currentRunId;
@@ -96,12 +116,14 @@ public class SimulacionARActivity extends AppCompatActivity {
         tokenManager = new TokenManager(this);
 
         readExtras();
+        cargarConfiguracionSimulacionDesdeJson();
+
         initViews();
         initListeners();
+
         cargarEstadoArGuardado();
         debugEstadoAr("DESPUES_CARGAR_ESTADO");
         pintarDatos();
-        //pintarDatos();
     }
 
     @Override
@@ -123,26 +145,20 @@ public class SimulacionARActivity extends AppCompatActivity {
         grupoId = intent.getIntExtra(PasosLaboratorio.EXTRA_GRUPO_ID, -1);
         ordenPaso = intent.getIntExtra(PasosLaboratorio.EXTRA_ORDEN_PASO, -1);
 
-        String extraLabKey = intent.getStringExtra("LAB_KEY");
-        String extraUnityScene = intent.getStringExtra("UNITY_SCENE");
-
-        if (extraLabKey != null && !extraLabKey.trim().isEmpty()) {
-            labKey = extraLabKey;
-        }
-
-        if (extraUnityScene != null && !extraUnityScene.trim().isEmpty()) {
-            unitySceneName = extraUnityScene;
-        }
+        stepId = intent.getStringExtra("STEP_ID");
     }
 
     private void initViews() {
         btnBack = findViewById(R.id.btnBackSimulacionAr);
-        tvTituloAr = findViewById(R.id.tvTituloAr);
+        //tvTituloAr = findViewById(R.id.tvTituloAr);
+        tvSubtituloAr = findViewById(R.id.tvSubtituloAr);
         tvDescripcionAr = findViewById(R.id.tvDescripcionAr);
-        tvFormulaAr = findViewById(R.id.tvFormulaAr);
+        webFormulaAr = findViewById(R.id.webFormulaAr);
         tvIntentosAr = findViewById(R.id.tvIntentosAr);
         tvObjetivoAr = findViewById(R.id.tvObjetivoAr);
         btnIniciarAr = findViewById(R.id.btnIniciarAr);
+
+        KatexWebViewRenderer.configure(webFormulaAr);
     }
 
     private void initListeners() {
@@ -154,16 +170,16 @@ public class SimulacionARActivity extends AppCompatActivity {
 
         debugEstadoAr("ANTES_PINTAR_DATOS");
 
-        tvTituloAr.setText(displayName);
+        //tvTituloAr.setText(simulationTitle);
+        tvSubtituloAr.setText("Unity / " + safe(labKey));
 
         tvDescripcionAr.setText(
-                "En esta práctica simulada AR configurarás potencia y ángulo de lanzamiento para impactar el objetivo."
+                safe(simulationDescription).isEmpty()
+                        ? "Realiza la simulación en realidad aumentada."
+                        : simulationDescription
         );
 
-        tvFormulaAr.setText(
-                "x(t) = x₀ + v₀ cos(θ)t\n" +
-                        "y(t) = y₀ + v₀ sin(θ)t - 1/2 gt²"
-        );
+        KatexWebViewRenderer.render(webFormulaAr, formulaExpression);
 
         tvIntentosAr.setText(
                 "Intentos usados: " + usedAttempts + "/" + maxAttempts +
@@ -173,7 +189,10 @@ public class SimulacionARActivity extends AppCompatActivity {
         if ("NO_REALIZADO".equalsIgnoreCase(lastResultStatus)) {
             tvObjetivoAr.setText(
                     "Estado: no realizado.\n\n" +
-                            "Objetivo: impactar el target antes de agotar los intentos."
+                            "Simulación: " + safe(labKey) + "\n" +
+                            "Escena: " + safe(unitySceneName) + "\n\n" +
+                            "Fórmula: " + safe(formulaName) + "\n" +
+                            safe(formulaDescription)
             );
 
             btnIniciarAr.setEnabled(true);
@@ -244,6 +263,8 @@ public class SimulacionARActivity extends AppCompatActivity {
                 ordenPaso
         );
 
+        sessionStore.saveUnityStartedAt(asignacionId, currentStartedAt);
+
         //Intent intent = new Intent(this, UnityArActivity.class);
         //intent.putExtra(UnityArActivity.EXTRA_EXERCISE_DATA, json);
 
@@ -255,11 +276,14 @@ public class SimulacionARActivity extends AppCompatActivity {
             JSONObject root = new JSONObject();
 
             root.put("schemaVersion", 1);
+
             currentRequestId = "REQ-ASG-" + asignacionId + "-LAB-" + laboratorioId;
             currentRunId = "RUN-ASG-" + asignacionId + "-" + System.currentTimeMillis();
+            currentStartedAt = obtenerFechaActualUtc();
 
             root.put("requestId", currentRequestId);
             root.put("runId", currentRunId);
+            root.put("startedAt", currentStartedAt);
 
             JSONObject scene = new JSONObject();
             scene.put("labKey", labKey);
@@ -348,6 +372,167 @@ public class SimulacionARActivity extends AppCompatActivity {
         }
     }
 
+    private void cargarConfiguracionSimulacionDesdeJson() {
+        String json = sessionStore.getMobileResourceJson(asignacionId);
+
+        if (json == null || json.trim().isEmpty()) {
+            usarConfiguracionFallback();
+            return;
+        }
+
+        try {
+            JSONObject root = new JSONObject(json);
+
+            JSONObject resource = root.optJSONObject("resource");
+            if (resource != null) {
+                displayName = resource.optString("title", displayName);
+                simulationTitle = displayName;
+                simulationDescription = resource.optString(
+                        "summary",
+                        "Realiza la simulación en realidad aumentada."
+                );
+            }
+
+            JSONArray steps = root.optJSONArray("steps");
+
+            if (steps == null || steps.length() == 0) {
+                usarConfiguracionFallback();
+                return;
+            }
+
+            JSONObject simulationStep = findSimulationStep(steps);
+
+            if (simulationStep != null) {
+                simulationTitle = simulationStep.optString("title", simulationTitle);
+
+                JSONObject simulationRef = simulationStep.optJSONObject("simulation_ref");
+
+                if (simulationRef != null) {
+                    simulationEndpoint = simulationRef.optString("endpoint", "");
+                    labKey = simulationRef.optString("lab_key", "");
+                    unitySceneName = resolverUnityScenePorLabKey(labKey);
+                }
+            }
+
+            cargarFormulaDesdeSteps(steps);
+
+            if (labKey == null || labKey.trim().isEmpty()) {
+                usarConfiguracionFallback();
+            }
+
+            android.util.Log.d(
+                    "SIM_AR_CONFIG",
+                    "labKey=" + labKey
+                            + " | unitySceneName=" + unitySceneName
+                            + " | endpoint=" + simulationEndpoint
+                            + " | formula=" + formulaExpression
+            );
+
+        } catch (Exception e) {
+            android.util.Log.e("SIM_AR_CONFIG", "Error leyendo configuración AR", e);
+            usarConfiguracionFallback();
+        }
+    }
+
+    private JSONObject findSimulationStep(JSONArray steps) {
+        for (int i = 0; i < steps.length(); i++) {
+            JSONObject step = steps.optJSONObject(i);
+            if (step == null) continue;
+
+            String type = step.optString("type", "");
+            String id = step.optString("id", "");
+            int order = step.optInt("order", -1);
+
+            if (stepId != null && stepId.equals(id)) {
+                return step;
+            }
+
+            if ("SIMULATION_AR".equalsIgnoreCase(type)) {
+                return step;
+            }
+
+            if (ordenPaso > 0 && order == ordenPaso) {
+                return step;
+            }
+        }
+
+        return null;
+    }
+
+    private void cargarFormulaDesdeSteps(JSONArray steps) {
+        if (steps == null) return;
+
+        for (int i = 0; i < steps.length(); i++) {
+            JSONObject step = steps.optJSONObject(i);
+            if (step == null) continue;
+
+            String type = step.optString("type", "");
+
+            if (!"FORMULAS".equalsIgnoreCase(type)) {
+                continue;
+            }
+
+            JSONArray formulas = step.optJSONArray("formulas");
+
+            if (formulas == null || formulas.length() == 0) {
+                return;
+            }
+
+            JSONObject formula = formulas.optJSONObject(0);
+
+            if (formula == null) {
+                return;
+            }
+
+            formulaName = formula.optString("name", "Fórmula aplicada");
+            formulaExpression = formula.optString("expression", "");
+            formulaDescription = formula.optString("description", "");
+
+            return;
+        }
+    }
+
+    private String resolverUnityScenePorLabKey(String labKey) {
+        if (labKey == null) return "ParabolicMotionLab";
+
+        switch (labKey) {
+            case "PARABOLIC-001":
+                return "ParabolicMotionLab";
+
+            case "HOOKE-001":
+                return "HookeLawLab";
+
+            case "MRUV-001":
+                return "MruvLab";
+
+            case "FREE-FALL-001":
+                return "FreeFallLab";
+
+            default:
+                return "ParabolicMotionLab";
+        }
+    }
+
+    private void usarConfiguracionFallback() {
+        if (labKey == null || labKey.trim().isEmpty()) {
+            labKey = "PARABOLIC-001";
+        }
+
+        if (unitySceneName == null || unitySceneName.trim().isEmpty()) {
+            unitySceneName = resolverUnityScenePorLabKey(labKey);
+        }
+
+        if (simulationEndpoint == null) {
+            simulationEndpoint = "";
+        }
+
+        android.util.Log.w(
+                "SIM_AR_CONFIG",
+                "Usando configuración fallback: labKey=" + labKey
+                        + " | scene=" + unitySceneName
+        );
+    }
+
     private void debugEstadoAr(String punto) {
         String jsonGuardado = sessionStore.getUnityResultJson(asignacionId);
 
@@ -363,5 +548,19 @@ public class SimulacionARActivity extends AppCompatActivity {
         android.util.Log.d("AR_DEBUG", "remainingAttempts=" + remainingAttempts);
         android.util.Log.d("AR_DEBUG", "maxAttempts=" + maxAttempts);
         android.util.Log.d("AR_DEBUG", "lastResultStatus=" + lastResultStatus);
+    }
+
+    //Helper
+    private String safe(String value) {
+        return value == null ? "" : value.trim();
+    }
+
+    private String obtenerFechaActualUtc() {
+        java.text.SimpleDateFormat format =
+                new java.text.SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", java.util.Locale.US);
+
+        format.setTimeZone(java.util.TimeZone.getTimeZone("UTC"));
+
+        return format.format(new java.util.Date());
     }
 }
