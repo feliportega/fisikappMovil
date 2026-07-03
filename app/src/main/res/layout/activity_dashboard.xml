@@ -18,68 +18,106 @@
             android:layout_width="match_parent"
             android:layout_height="25dp"/>
 
-        <!-- Barra superior -->
-        <LinearLayout
+        <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/white"
-            android:gravity="center_vertical"
-            android:layout_margin="15dp"
-            android:orientation="horizontal"
-            android:padding="12dp">
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="16dp"
+            app:cardCornerRadius="18dp"
+            app:cardElevation="6dp"
+            app:cardBackgroundColor="@android:color/white">
 
-            <ImageView
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:src="@drawable/iconofisik"
-                />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:paddingHorizontal="18dp">
 
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_weight="1"
-                android:text="Fisikapp"
-                android:textColor="@color/colorPrimario"
-                android:textSize="18sp"
-                android:textStyle="bold" />
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:src="@drawable/ic_logo_fisikapp"
+                    app:tint="@null"/>
 
-            <TextView
-                android:id="@+id/tvNombreUsuarioBarra"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:text="Name"
-                android:textColor="#0A7DB6"
-                android:textSize="12sp" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:text="Fisikapp"
+                    android:textStyle="bold"
+                    android:textColor="@color/colorPrimario"
+                    android:textSize="22sp"/>
 
-            <ImageView
-                android:id="@+id/imgcerrar_sesion"
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                android:src="@drawable/iconousuario" />
-        </LinearLayout>
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_weight="1"/>
+
+                <TextView
+                    android:id="@+id/tvNombreUsuarioBarra"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="PEPITO"
+                    android:textStyle="bold"
+                    android:textColor="@color/colorSecundario"
+                    android:textSize="14sp"/>
+
+                <ImageView
+                    android:id="@+id/imgcerrar_sesion"
+                    android:layout_width="42dp"
+                    android:layout_height="42dp"
+                    android:layout_marginStart="12dp"
+                    android:background="@drawable/bg_circulo_gris"
+                    android:padding="8dp"
+                    android:src="@drawable/iconousuario"/>
+
+
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
 
         <!-- Buscador -->
-        <EditText
-            android:id="@+id/edtBuscar"
+        <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
-            android:layout_height="56dp"
-            android:background="@drawable/edittext_redondo2"
-            android:drawableStart="@android:drawable/ic_menu_search"
-            android:drawablePadding="12dp"
-            android:hint="Buscar grupos o actividades..."
-            android:paddingStart="16dp"
-            android:paddingEnd="16dp"
-            android:layout_marginHorizontal="24dp"/>
+            android:layout_height="58dp"
+            android:layout_marginStart="18dp"
+            android:layout_marginEnd="18dp"
+            android:layout_marginTop="20dp"
+            app:cardCornerRadius="28dp"
+            app:cardElevation="2dp"
+            app:cardBackgroundColor="@android:color/white">
 
-        <!--     <ImageView
-                 android:id="@+id/imgLaboratorio"
-                 android:layout_width="220dp"
-                 android:layout_height="220dp"
-                 android:layout_marginTop="40dp"
-                 android:layout_gravity="center"
-                 android:src="@drawable/tubo" /> -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingHorizontal="18dp">
+
+                <ImageView
+                    android:layout_width="22dp"
+                    android:layout_height="22dp"
+                    android:src="@android:drawable/ic_menu_search"
+                    app:tint="#94A3B8"/>
+
+                <EditText
+                    android:id="@+id/edtBuscar"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginStart="12dp"
+                    android:background="@null"
+                    android:hint="Buscar grupos o actividades..."
+                    android:inputType="text"
+                    android:textColor="@color/colorPrimario"
+                    android:textColorHint="#94A3B8"
+                    android:textSize="16sp"/>
+
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
 
         <TextView
             android:id="@+id/txtLaboratorio"
