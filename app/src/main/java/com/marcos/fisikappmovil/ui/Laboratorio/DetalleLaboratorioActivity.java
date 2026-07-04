@@ -93,7 +93,6 @@ public class DetalleLaboratorioActivity extends AppCompatActivity {
         readExtras();
         initViews();
         initListeners();
-        //pintarDatos();
 
         cargarDetalleMobileResource();
     }
@@ -127,35 +126,35 @@ public class DetalleLaboratorioActivity extends AppCompatActivity {
         unitySceneName = intent.getStringExtra(EXTRA_UNITY_SCENE);
 
         if (titulo == null || titulo.trim().isEmpty()) {
-            titulo = "Tiro parabólico";
+            titulo = "No encontrado";
         }
 
         if (resumen == null || resumen.trim().isEmpty()) {
-            resumen = "Comprender el comportamiento del tiro parabólico observando la trayectoria de un objeto lanzado con un ángulo inicial determinado.";
+            resumen = "No encontrado";
         }
 
         if (grupoNombre == null || grupoNombre.trim().isEmpty()) {
-            grupoNombre = "Grupo académico";
+            grupoNombre = "No encontrado";
         }
 
         if (estadoAsignacion == null || estadoAsignacion.trim().isEmpty()) {
-            estadoAsignacion = "ABIERTO";
+            estadoAsignacion = "No encontrado";
         }
 
         if (estadoEntrega == null || estadoEntrega.trim().isEmpty()) {
-            estadoEntrega = "PENDIENTE";
+            estadoEntrega = "No encontrado";
         }
 
         if (fechaFin == null || fechaFin.trim().isEmpty()) {
-            fechaFin = "Sin fecha límite";
+            fechaFin = "No encontrado";
         }
 
         if (labKey == null || labKey.trim().isEmpty()) {
-            labKey = "PARABOLIC-001";
+            labKey = "No encontrado";
         }
 
         if (unitySceneName == null || unitySceneName.trim().isEmpty()) {
-            unitySceneName = "ParabolicMotionLab";
+            unitySceneName = "No encontrado";
         }
     }
 
@@ -182,20 +181,6 @@ public class DetalleLaboratorioActivity extends AppCompatActivity {
         btnBackDetalleLab.setOnClickListener(v -> finish());
 
         btnComenzarPasosLab.setOnClickListener(v -> abrirPasosLaboratorio());
-    }
-
-    private void pintarDatos() {
-        tvDetalleTituloLab.setText(titulo);
-        tvDetalleSubtituloLab.setText("Laboratorio asignado");
-        tvDetalleObjetivoLab.setText(resumen);
-
-        tvDetalleGrupoLab.setText("Grupo: " + grupoNombre);
-        tvDetalleEstadoLab.setText("Estado: " + estadoAsignacion);
-        tvDetalleEntregaLab.setText("Entrega: " + estadoEntrega);
-        tvDetalleIntentosLab.setText("Intentos: " + intentosUsados + "/" + intentosMaximos);
-        tvDetalleFechaLab.setText("Fecha límite: " + fechaFin);
-
-        tvDetalleUnityLab.setText(labKey + " · " + unitySceneName);
     }
 
     private void abrirPasosLaboratorio() {
@@ -334,15 +319,15 @@ public class DetalleLaboratorioActivity extends AppCompatActivity {
         }
 
         if (estadoEntrega == null || estadoEntrega.trim().isEmpty()) {
-            estadoEntrega = "BORRADOR";
+            estadoEntrega = "No encontrado";
         }
 
         if (labKey == null || labKey.trim().isEmpty()) {
-            labKey = "PARABOLIC-001";
+            labKey = "No encontrado";
         }
 
         if (unitySceneName == null || unitySceneName.trim().isEmpty()) {
-            unitySceneName = "ParabolicMotionLab";
+            unitySceneName = "No encontrado";
         }
 
         tvDetalleTituloLab.setText(safe(titulo));

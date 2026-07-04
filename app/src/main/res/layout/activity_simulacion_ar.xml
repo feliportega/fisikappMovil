@@ -1,170 +1,230 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F8FAFC"
-    android:fillViewport="true">
+    android:background="#F8FAFC">
 
-    <LinearLayout
+    <ScrollView
+        android:id="@+id/contentSimulacionAr"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="match_parent"
+        android:background="#F8FAFC"
+        android:fillViewport="true">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="160dp"
-            android:background="#001B6B"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:padding="20dp">
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-            <ImageView
-                android:id="@+id/btnBackSimulacionAr"
-                android:layout_width="42dp"
-                android:layout_height="42dp"
-                android:clickable="true"
-                android:focusable="true"
-                android:src="@drawable/outline_arrow_circle_left_24"
-                app:tint="#DCFBFF" />
-
+            <!-- HEADER -->
             <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_weight="1"
-                android:orientation="vertical">
+                android:layout_width="match_parent"
+                android:layout_height="160dp"
+                android:background="#001B6B"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="20dp">
 
+                <ImageView
+                    android:id="@+id/btnBackSimulacionAr"
+                    android:layout_width="38dp"
+                    android:layout_height="38dp"
+                    android:background="@drawable/white_circle"
+                    android:padding="8dp"
+                    android:src="@drawable/iconoretroceder"
+                    app:tint="#001B6B" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Práctica simulada AR"
+                        android:textColor="@android:color/white"
+                        android:textSize="22sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tvTituloAr"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:text="Cargando simulación..."
+                        android:textColor="#D6D6D6"
+                        android:textSize="13sp" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <!-- CONTENIDO -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="-22dp"
+                android:background="@android:color/white"
+                android:orientation="vertical"
+                android:padding="22dp">
+
+                <!-- TÍTULO INTRODUCTORIO -->
                 <TextView
+                    android:id="@+id/tvSubtituloAr"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Práctica simulada AR"
-                    android:textColor="@android:color/white"
-                    android:textSize="22sp"
+                    android:text="Práctica AR"
+                    android:textColor="#001B6B"
+                    android:textSize="19sp"
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/tvTituloAr"
+                    android:id="@+id/tvDescripcionAr"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
-                    android:text="Unity / Movimiento parabólico"
-                    android:textColor="#D6D6D6"
-                    android:textSize="13sp" />
+                    android:layout_marginTop="10dp"
+                    android:lineSpacingExtra="4dp"
+                    android:text="Cargando descripción de la simulación..."
+                    android:textColor="#334155"
+                    android:textSize="14sp" />
+
+                <!-- FÓRMULA -->
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cardFormulaAr"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="18dp"
+                    app:cardBackgroundColor="#F1F5F9"
+                    app:cardCornerRadius="16dp"
+                    app:cardElevation="0dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="18dp">
+
+                        <TextView
+                            android:id="@+id/tvFormulaTitleAr"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Fórmula aplicada"
+                            android:textColor="#001B6B"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
+
+                        <WebView
+                            android:id="@+id/webFormulaAr"
+                            android:layout_width="match_parent"
+                            android:layout_height="95dp"
+                            android:layout_marginTop="6dp"
+                            android:background="@android:color/transparent" />
+
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+                <!-- INSTRUCCIONES -->
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cardInstructionsAr"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="18dp"
+                    app:cardBackgroundColor="#F8FAFC"
+                    app:cardCornerRadius="16dp"
+                    app:cardElevation="0dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="16dp">
+
+                        <TextView
+                            android:id="@+id/tvInstructionsTitleAr"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Instrucciones"
+                            android:textColor="#001B6B"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
+
+                        <LinearLayout
+                            android:id="@+id/layoutInstructionsAr"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:orientation="vertical" />
+
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+                <!-- ESTADO AR -->
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cardEstadoAr"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="18dp"
+                    app:cardBackgroundColor="#FFF9C4"
+                    app:cardCornerRadius="16dp"
+                    app:cardElevation="0dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="18dp">
+
+                        <TextView
+                            android:id="@+id/tvIntentosAr"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Intentos disponibles: 0/4"
+                            android:textColor="#001B6B"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/tvObjetivoAr"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:lineSpacingExtra="4dp"
+                            android:text="Cargando estado de la práctica AR..."
+                            android:textColor="#475569"
+                            android:textSize="14sp" />
+
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+                <Button
+                    android:id="@+id/btnIniciarAr"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:backgroundTint="#001B6B"
+                    android:padding="14dp"
+                    android:text="Iniciar práctica AR"
+                    android:textAllCaps="false"
+                    android:textColor="@android:color/white"
+                    android:textSize="15sp" />
 
             </LinearLayout>
 
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="-22dp"
-            android:background="@android:color/white"
-            android:orientation="vertical"
-            android:padding="22dp">
+    </ScrollView>
 
-            <TextView
-                android:id="@+id/tvSubtituloAr"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:text="Unity / Realidad aumentada"
-                android:textColor="#D6D6D6"
-                android:textSize="13sp" />
+    <include
+        android:id="@+id/stateSimulacionAr"
+        layout="@layout/view_content_state"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
-            <TextView
-                android:id="@+id/tvDescripcionAr"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:lineSpacingExtra="4dp"
-                android:textColor="#334155"
-                android:textSize="14sp" />
-
-            <androidx.cardview.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="18dp"
-                app:cardBackgroundColor="#F1F5F9"
-                app:cardCornerRadius="16dp"
-                app:cardElevation="0dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="18dp">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Fórmula aplicada"
-                        android:textColor="#001B6B"
-                        android:textSize="16sp"
-                        android:textStyle="bold" />
-
-                    <WebView
-                        android:id="@+id/webFormulaAr"
-                        android:layout_width="match_parent"
-                        android:layout_height="95dp"
-                        android:layout_marginTop="6dp"
-                        android:background="@android:color/transparent" />
-
-                </LinearLayout>
-
-            </androidx.cardview.widget.CardView>
-
-            <androidx.cardview.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="18dp"
-                app:cardBackgroundColor="#FFF9C4"
-                app:cardCornerRadius="16dp"
-                app:cardElevation="0dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="18dp">
-
-                    <TextView
-                        android:id="@+id/tvIntentosAr"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Intentos disponibles: 0/4"
-                        android:textColor="#001B6B"
-                        android:textSize="16sp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/tvObjetivoAr"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:lineSpacingExtra="4dp"
-                        android:textColor="#475569"
-                        android:textSize="14sp" />
-
-                </LinearLayout>
-
-            </androidx.cardview.widget.CardView>
-
-            <Button
-                android:id="@+id/btnIniciarAr"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
-                android:backgroundTint="#001B6B"
-                android:padding="14dp"
-                android:text="Iniciar práctica AR"
-                android:textAllCaps="false"
-                android:textColor="@android:color/white"
-                android:textSize="15sp" />
-
-        </LinearLayout>
-
-    </LinearLayout>
-
-</ScrollView>
+</FrameLayout>

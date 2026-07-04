@@ -330,4 +330,25 @@ public class LaboratorioSessionStore {
         return prefs.getString("unity_result_send_error_" + assignmentId, null);
     }
 
+    public void saveSimulationConfigJson(int simulationId, String json) {
+        prefs.edit()
+                .putString("simulation_config_json_" + simulationId, json)
+                .apply();
+    }
+
+    public String getSimulationConfigJson(int simulationId) {
+        return prefs.getString("simulation_config_json_" + simulationId, null);
+    }
+
+    public boolean hasSimulationConfigJson(int simulationId) {
+        String json = getSimulationConfigJson(simulationId);
+        return json != null && !json.trim().isEmpty();
+    }
+
+    public void clearSimulationConfigJson(int simulationId) {
+        prefs.edit()
+                .remove("simulation_config_json_" + simulationId)
+                .apply();
+    }
+
 }

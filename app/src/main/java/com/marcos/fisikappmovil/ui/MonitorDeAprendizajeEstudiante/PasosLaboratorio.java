@@ -473,6 +473,11 @@ public class PasosLaboratorio extends AppCompatActivity {
     }
 
     private void abrirSimulacionAr(MobileStepResponse step) {
+        if (step == null) {
+            Toast.makeText(this, "No se encontró la configuración de simulación.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         Intent intent = new Intent(this, SimulacionARActivity.class);
 
         intent.putExtra(EXTRA_ASIGNACION_ID, asignacionId);
@@ -481,8 +486,25 @@ public class PasosLaboratorio extends AppCompatActivity {
         intent.putExtra(EXTRA_ORDEN_PASO, step.getOrder());
         intent.putExtra(EXTRA_TIPO_PASO, step.getType());
 
-        intent.putExtra("LAB_KEY", "PARABOLIC-001");
-        intent.putExtra("UNITY_SCENE", "ParabolicMotionLab");
+        intent.putExtra("STEP_ID", step.getId());
+
+        if (step.getSimulationRef() != null) {
+            String endpoint = "";
+            String labKey = "";
+
+            if (step.getSimulationRef().has("endpoint")
+                    && !step.getSimulationRef().get("endpoint").isJsonNull()) {
+                endpoint = step.getSimulationRef().get("endpoint").getAsString();
+            }
+
+            if (step.getSimulationRef().has("lab_key")
+                    && !step.getSimulationRef().get("lab_key").isJsonNull()) {
+                labKey = step.getSimulationRef().get("lab_key").getAsString();
+            }
+
+            intent.putExtra("SIMULATION_ENDPOINT", endpoint);
+            intent.putExtra("LAB_KEY", labKey);
+        }
 
         pasoLauncher.launch(intent);
     }
