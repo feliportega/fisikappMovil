@@ -77,7 +77,7 @@ dependencies {
     androidTestImplementation(libs.espresso.core)
 
     implementation(project(":facesdk"))
-    //implementation(project(":unityLibrary"))
+    implementation(project(":unityLibrary"))
     implementation("androidx.appcompat:appcompat:1.6.1")
 
 

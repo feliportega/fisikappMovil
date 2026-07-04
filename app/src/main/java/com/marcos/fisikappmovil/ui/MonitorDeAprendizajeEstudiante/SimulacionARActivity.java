@@ -25,7 +25,8 @@ import com.marcos.fisikappmovil.model.TokenManager;
 import com.marcos.fisikappmovil.ui.UnityAR.ResultadoUnityActivity;
 import com.marcos.fisikappmovil.ui.common.ContentStateView;
 
-// import com.marcos.fisikappmovil.ui.UnityAR.UnityArActivity;
+    // Comentar para deshabilitar Unity
+import com.marcos.fisikappmovil.ui.UnityAR.UnityArActivity;
 
 import android.webkit.WebView;
 
@@ -341,10 +342,10 @@ public class SimulacionARActivity extends AppCompatActivity {
 
         // Comentar para deshabilitar Unity
 
-        //Intent intent = new Intent(this, UnityArActivity.class);
-        //intent.putExtra(UnityArActivity.EXTRA_EXERCISE_DATA, json);
+        Intent intent = new Intent(this, UnityArActivity.class);
+        intent.putExtra(UnityArActivity.EXTRA_EXERCISE_DATA, json);
 
-        //unityLauncher.launch(intent);
+        unityLauncher.launch(intent);
     }
 
     private String buildUnityConfigJson() {
