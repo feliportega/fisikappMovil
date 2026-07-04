@@ -19,7 +19,7 @@
             <!-- HEADER -->
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="210dp"
+                android:layout_height="240dp"
                 android:gravity="center"
                 android:orientation="vertical"
                 android:padding="24dp">
@@ -40,7 +40,6 @@
                     android:layout_gravity="start"
                     android:clickable="true"
                     android:focusable="true"
-
                     android:src="@drawable/outline_arrow_circle_left_24"
                     app:tint="#DCFBFF" />
 
