@@ -24,7 +24,7 @@
         <ImageView
             android:layout_width="32dp"
             android:layout_height="32dp"
-            android:src="@drawable/physics"
+            android:src="@drawable/ic_logo_fisikapp"
             app:tint="@color/colorPrimario"/>
 
         <TextView
@@ -69,7 +69,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="330dp"
                 android:layout_margin="16dp"
-                app:cardBackgroundColor="@color/colorPrimario"
+                app:cardBackgroundColor="@color/colorScreenCompany"
                 app:cardCornerRadius="28dp"
                 app:cardElevation="8dp">
 
@@ -105,18 +105,38 @@
 
                     </LinearLayout>
 
-                    <com.google.android.material.imageview.ShapeableImageView
 
-                        android:id="@+id/imgPerfil"
-                        android:layout_width="120dp"
-                        android:layout_height="120dp"
-                        android:layout_marginTop="8dp"
-                        android:padding="3dp"
-                        android:scaleType="centerCrop"
-                        android:src="@drawable/iconousuario"
-                        app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Full"
-                        app:strokeColor="@color/colorAdvertencia"
-                        app:strokeWidth="5dp"/>
+                    <FrameLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center">
+
+                        <com.google.android.material.imageview.ShapeableImageView
+                            android:id="@+id/imgPerfil"
+                            android:layout_width="120dp"
+                            android:layout_height="120dp"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/iconousuario"
+                            android:background="@android:color/white"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:foreground="?attr/selectableItemBackgroundBorderless"
+                            app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Full"
+                            app:strokeColor="@color/colorAdvertencia"
+                            app:strokeWidth="5dp"/>
+
+                        <ImageView
+                            android:id="@+id/btnCambiarFoto"
+                            android:layout_width="36dp"
+                            android:layout_height="36dp"
+                            android:layout_gravity="bottom|end"
+                            android:layout_margin="5dp"
+                            android:background="@drawable/fondo_camara"
+                            android:padding="7dp"
+                            android:src="@drawable/camarai"
+                            app:tint="@android:color/white"/>
+
+                    </FrameLayout>
 
                     <TextView
 
@@ -501,15 +521,6 @@
 
                     </LinearLayout>
 
-                    <TextView
-                        android:id="@+id/tvEstadoFacialPerfil"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="18dp"
-                        android:text="Estado facial: No registrado"
-                        android:textColor="#5E6472"
-                        android:textSize="15sp"/>
-
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/btnActivarRostro"
                         android:layout_width="match_parent"
@@ -543,27 +554,6 @@
                 </LinearLayout>
 
             </androidx.cardview.widget.CardView>
-
-
-
-            <!-- BOTÓN EDITAR -->
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnEditarPerfil"
-                android:layout_width="match_parent"
-                android:layout_height="56dp"
-                android:layout_marginHorizontal="16dp"
-                android:text="Editar perfil"
-                android:textAllCaps="false"
-                android:textColor="@android:color/white"
-                android:textSize="17sp"
-                android:textStyle="bold"
-                android:backgroundTint="@color/colorPrimario"
-                app:cornerRadius="18dp"
-                app:icon="@android:drawable/ic_menu_edit"
-                app:iconGravity="textStart"/>
-
-
 
             <!-- BOTÓN CERRAR SESIÓN -->
 
