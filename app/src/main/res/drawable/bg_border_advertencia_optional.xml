@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+
+    <!-- El fondo interior se mantiene transparente para que se vea la cámara -->
+    <solid android:color="@android:color/transparent" />
+
+    <!-- El borde amarillo llamativo de la imagen -->
+    <stroke
+        android:width="3dp"
+        android:color="@color/colorAdvertencia" />
+
+    <!-- Esquinas redondeadas idénticas a las del CardView (24dp) -->
+    <corners android:radius="24dp" />
+
+</shape>
