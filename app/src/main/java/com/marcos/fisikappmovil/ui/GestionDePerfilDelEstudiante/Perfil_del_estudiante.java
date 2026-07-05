@@ -1,7 +1,11 @@
 package com.marcos.fisikappmovil.ui.GestionDePerfilDelEstudiante;
 
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -9,10 +13,17 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+
+// Importaciones corregidas de Material 3 y tu Helper del paquete model
+import com.google.android.material.imageview.ShapeableImageView;
+import com.marcos.fisikappmovil.model.ImagePickerHelper;
 
 import com.marcos.fisikappmovil.R;
 import com.marcos.fisikappmovil.data.repository.AuthRepository;
@@ -27,12 +38,20 @@ import com.marcos.fisikappmovil.ui.Autenticacion.FaceConsentActivity;
 import com.marcos.fisikappmovil.ui.Autenticacion.Login;
 import com.marcos.fisikappmovil.ui.faceNet.FaceEnrollActivity;
 
-public class Perfil_del_estudiante extends AppCompatActivity {
+public class Perfil_del_estudiante extends AppCompatActivity implements ImagePickerHelper.ImagePickerListener {
 
     private ActivityResultLauncher<Intent> consentLauncher;
     private ActivityResultLauncher<Intent> enrollLauncher;
     private ImageView btnBack;
-    private ImageView imgPerfil;
+
+    // Se unificó usando tu ShapeableImageView de Material 3
+    private ShapeableImageView imgPerfil;
+    private ImageView btnCambiarFoto;
+
+    private ImagePickerHelper imagePickerHelper;
+
+    private ActivityResultLauncher<Intent> galleryLauncher;
+    private ActivityResultLauncher<Intent> cameraLauncher;
 
     private TextView tvNombrePerfil;
     private TextView tvRolInstitucion;
@@ -41,9 +60,6 @@ public class Perfil_del_estudiante extends AppCompatActivity {
     private TextView tvFechaNacimientoPerfil;
     private TextView tvEstadoCuentaPerfil;
     private TextView tvUltimoLoginPerfil;
-    private TextView tvEstadoFacialPerfil;
-
-    private Button btnEditarPerfil;
 
     private Button btnCerrarSesionPerfil;
     private Button btnActivarRostro;
@@ -51,9 +67,7 @@ public class Perfil_del_estudiante extends AppCompatActivity {
 
     private TokenManager tokenManager;
     private PerfilRepository perfilRepository;
-
     private PerfilResponse perfilActual;
-
     private AuthRepository authRepository;
 
     private boolean esperandoResultadoEnrolamiento = false;
@@ -64,11 +78,88 @@ public class Perfil_del_estudiante extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_perfil_del_estudiante);
 
+        // 1. Inicializar vistas básicas y del picker
+        imgPerfil = findViewById(R.id.imgPerfil);
+        btnCambiarFoto = findViewById(R.id.btnCambiarFoto);
+
+        // 2. Inicializar Helper pasando esta clase como Listener
+        imagePickerHelper = new ImagePickerHelper(this, this);
+
+        // 3. Inicializar los Launchers de Cámara y Galería
+        setupActivityResultLaunchers();
+
+        // 4. Configurar el click en el botón de cambiar foto
+        btnCambiarFoto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                imagePickerHelper.showImagePickerDialog();
+            }
+        });
+
+        // 5. Inicializaciones previas de tu proyecto
         initDependencies();
         initViews();
         initLaunchers();
         initListeners();
         cargarPerfil();
+    }
+
+    private void setupActivityResultLaunchers() {
+        // Inicializa el lanzador para abrir y procesar la Galería
+        galleryLauncher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                new ActivityResultCallback<ActivityResult>() {
+                    @Override
+                    public void onActivityResult(ActivityResult result) {
+                        if (result.getResultCode() == RESULT_OK && result.getData() != null) {
+                            Uri imageUri = result.getData().getData();
+                            imgPerfil.setImageURI(imageUri); // Asigna la URI de la imagen seleccionada
+                        }
+                    }
+                }
+        );
+
+        // Inicializa el lanzador para abrir y procesar la Cámara
+        cameraLauncher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                new ActivityResultCallback<ActivityResult>() {
+                    @Override
+                    public void onActivityResult(ActivityResult result) {
+                        if (result.getResultCode() == RESULT_OK && result.getData() != null) {
+                            Bundle extras = result.getData().getExtras();
+                            Bitmap imageBitmap = (Bitmap) extras.get("data");
+                            imgPerfil.setImageBitmap(imageBitmap); // Asigna la miniatura de la foto capturada
+                        }
+                    }
+                }
+        );
+    }
+
+    // --- Implementación obligatoria de los métodos de ImagePickerHelper.ImagePickerListener ---
+
+    @Override
+    public void onGallerySelected() {
+        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        galleryLauncher.launch(intent);
+    }
+
+    @Override
+    public void onCameraSelected() {
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        cameraLauncher.launch(intent);
+    }
+
+    // --- Gestión de la respuesta a la solicitud del permiso de cámara ---
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == ImagePickerHelper.CAMERA_PERMISSION_CODE) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                onCameraSelected();
+            } else {
+                Toast.makeText(this, "Permiso de cámara denegado", Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 
     private void initDependencies() {
@@ -79,7 +170,7 @@ public class Perfil_del_estudiante extends AppCompatActivity {
 
     private void initViews() {
         btnBack = findViewById(R.id.btnBack);
-        imgPerfil = findViewById(R.id.imgPerfil);
+        // Removido el duplicado innecesario de imgPerfil que sobreescribía la inicialización previa
 
         tvNombrePerfil = findViewById(R.id.tvNombrePerfil);
         tvRolInstitucion = findViewById(R.id.tvRolInstitucion);
@@ -88,9 +179,6 @@ public class Perfil_del_estudiante extends AppCompatActivity {
         tvFechaNacimientoPerfil = findViewById(R.id.tvFechaNacimientoPerfil);
         tvEstadoCuentaPerfil = findViewById(R.id.tvEstadoCuentaPerfil);
         tvUltimoLoginPerfil = findViewById(R.id.tvUltimoLoginPerfil);
-        tvEstadoFacialPerfil = findViewById(R.id.tvEstadoFacialPerfil);
-
-        btnEditarPerfil = findViewById(R.id.btnEditarPerfil);
         btnCerrarSesionPerfil = findViewById(R.id.btnCerrarSesionPerfil);
         btnActivarRostro = findViewById(R.id.btnActivarRostro);
         btnDesactivarRostro = findViewById(R.id.btnDesactivarRostro);
@@ -98,11 +186,6 @@ public class Perfil_del_estudiante extends AppCompatActivity {
 
     private void initListeners() {
         btnBack.setOnClickListener(v -> finish());
-
-        btnEditarPerfil.setOnClickListener(v -> {
-            Toast.makeText(this, "Próximamente: edición de perfil", Toast.LENGTH_SHORT).show();
-        });
-
         btnActivarRostro.setOnClickListener(v -> iniciarFlujoReconocimientoFacial());
         btnCerrarSesionPerfil.setOnClickListener(v -> confirmarCerrarSesion());
         btnDesactivarRostro.setOnClickListener(v -> confirmarDesactivarRostro());
@@ -150,21 +233,8 @@ public class Perfil_del_estudiante extends AppCompatActivity {
     }
 
     private void actualizarEstadoFacial(PerfilResponse perfil) {
-        boolean consentimientoBackend = perfil != null && perfil.isAutorizacionDatos();
-        boolean embeddingBackend = perfil != null && perfil.hasBackendFaceEmbedding();
-
         boolean consentimientoLocal = FaceVault.hasConsent(this);
         boolean embeddingLocal = FaceVault.hasEmbedding(this);
-        boolean credencialesLocales = CredentialVault.hasCredentials(this);
-
-        String estado =
-                "Autorización servidor: " + boolText(consentimientoBackend) + "\n" +
-                        "Rostro servidor: " + boolText(embeddingBackend) + "\n" +
-                        "Autorización dispositivo: " + boolText(consentimientoLocal) + "\n" +
-                        "Rostro dispositivo: " + boolText(embeddingLocal) + "\n" +
-                        "Ingreso facial rápido: " + boolText(consentimientoLocal && embeddingLocal && credencialesLocales);
-
-        tvEstadoFacialPerfil.setText(estado);
 
         if (consentimientoLocal && embeddingLocal) {
             btnActivarRostro.setText("Reemplazar rostro registrado");
@@ -205,20 +275,6 @@ public class Perfil_del_estudiante extends AppCompatActivity {
     private void abrirEnrollFacial() {
         Intent intent = new Intent(this, FaceEnrollActivity.class);
         enrollLauncher.launch(intent);
-    }
-
-    private void abrirFlujoFacial() {
-        esperandoResultadoEnrolamiento = true;
-
-        Intent intent;
-
-        if (FaceVault.hasConsent(this)) {
-            intent = new Intent(this, FaceEnrollActivity.class);
-        } else {
-            intent = new Intent(this, FaceConsentActivity.class);
-        }
-
-        startActivity(intent);
     }
 
     private void initLaunchers() {
@@ -262,7 +318,6 @@ public class Perfil_del_estudiante extends AppCompatActivity {
         }
     }
 
-
     private void sincronizarRostroConBackend() {
         float[] embedding = FaceVault.getEmbedding(this);
 
@@ -273,7 +328,6 @@ public class Perfil_del_estudiante extends AppCompatActivity {
         }
 
         String base64Embedding = FaceEmbeddingCodec.encode(embedding);
-
         String authHeader = tokenManager.getAuthorizationHeader();
 
         if (authHeader == null || authHeader.trim().isEmpty()) {
@@ -288,7 +342,7 @@ public class Perfil_del_estudiante extends AppCompatActivity {
 
             if (result.isSuccess()) {
                 perfilActual = result.getData();
-                Toast.makeText(this, "Rostro sincronizado correctamente", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Rostro synchronized correctamente", Toast.LENGTH_SHORT).show();
                 actualizarEstadoFacial(perfilActual);
                 mostrarDialogoConfirmarPassword();
             } else {
@@ -464,16 +518,11 @@ public class Perfil_del_estudiante extends AppCompatActivity {
     }
 
     private void setLoading(boolean loading) {
-        btnEditarPerfil.setEnabled(!loading);
         btnActivarRostro.setEnabled(!loading);
         btnDesactivarRostro.setEnabled(!loading);
     }
 
     private String valueOrDefault(String value, String fallback) {
         return value != null && !value.trim().isEmpty() ? value : fallback;
-    }
-
-    private String boolText(boolean value) {
-        return value ? "Sí" : "No";
     }
 }
