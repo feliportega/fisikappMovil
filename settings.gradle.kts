@@ -16,6 +16,7 @@ rootProject.name = "FisikappMovil"
 
 include(":app")
 include(":facesdk")
+
 // comentar para dashabilitar unity
 include(":unityLibrary")
 include(":unityLibrary:xrmanifest.androidlib")

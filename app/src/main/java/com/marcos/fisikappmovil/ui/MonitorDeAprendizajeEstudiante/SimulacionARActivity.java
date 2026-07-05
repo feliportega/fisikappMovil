@@ -25,8 +25,12 @@ import com.marcos.fisikappmovil.model.TokenManager;
 import com.marcos.fisikappmovil.ui.UnityAR.ResultadoUnityActivity;
 import com.marcos.fisikappmovil.ui.common.ContentStateView;
 
-    // Comentar para deshabilitar Unity
-import com.marcos.fisikappmovil.ui.UnityAR.UnityArActivity;
+// Comentar el import para deshabilitar Unity
+// Comentar la clase UnityAR.UnityArActivity.java
+// Comentar Unity library desde .Build.gradle.kts (:app)
+// Comentar Unity library desde setting.gradle.kts (FisicaappMovil)
+
+//import com.marcos.fisikappmovil.ui.UnityAR.UnityArActivity;
 
 import android.webkit.WebView;
 
@@ -340,12 +344,75 @@ public class SimulacionARActivity extends AppCompatActivity {
 
         sessionStore.saveUnityStartedAt(asignacionId, currentStartedAt);
 
+        // ================= BYPASS TEMPORAL UNITY =================
+        // Usar esto cuando Unity esté deshabilitado para que el equipo pueda compilar.
+        // Para usar Unity real: comentar este bloque y habilitar el Intent real de Unity.
+                try {
+                    org.json.JSONObject fakeResult = new org.json.JSONObject();
+
+                    fakeResult.put("schemaVersion", 1);
+                    fakeResult.put("requestId", currentRequestId);
+                    fakeResult.put("runId", currentRunId);
+                    fakeResult.put("startedAt", currentStartedAt);
+                    fakeResult.put("finishedAt", obtenerFechaActualUtc());
+
+                    fakeResult.put("labKey", labKey);
+                    fakeResult.put("unitySceneName", unitySceneName);
+                    fakeResult.put("exerciseId", exerciseId);
+
+                    fakeResult.put("participantId", "STUDENT-" + tokenManager.getUserEmail());
+                    fakeResult.put("participantName", tokenManager.getUserName() != null
+                            ? tokenManager.getUserName()
+                            : "Estudiante");
+
+                    fakeResult.put("organizationName", "Institución");
+                    fakeResult.put("courseName", "Física");
+                    fakeResult.put("groupName", "Grupo " + grupoId);
+
+                    fakeResult.put("horizontalDistance", 1.25);
+                    fakeResult.put("verticalDistance", 0.10);
+                    fakeResult.put("straightDistance", 1.26);
+
+                    fakeResult.put("hitTarget", true);
+                    fakeResult.put("maxAttempts", maxAttempts);
+                    fakeResult.put("usedAttempts", 1);
+                    fakeResult.put("remainingAttempts", Math.max(maxAttempts - 1, 0));
+                    fakeResult.put("completed", true);
+                    fakeResult.put("resultStatus", "completed");
+                    fakeResult.put("exitReason", "UNITY_BYPASS_TEMPORAL");
+
+                    org.json.JSONArray attempts = new org.json.JSONArray();
+
+                    org.json.JSONObject attempt = new org.json.JSONObject();
+                    attempt.put("attempt", 1);
+                    attempt.put("hit", true);
+                    attempt.put("power", 5.0);
+                    attempt.put("angle", 45.0);
+                    attempt.put("impactDistanceToTarget", 0.02);
+                    attempt.put("impactHorizontalDistance", 1.25);
+                    attempt.put("impactHeightDifference", 0.10);
+                    attempt.put("impactType", "HitTarget");
+
+                    attempts.put(attempt);
+
+                    fakeResult.put("attempts", attempts);
+
+                    abrirResultadoUnity(fakeResult.toString());
+                    return;
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    Toast.makeText(this, "No se pudo simular el resultado Unity.", Toast.LENGTH_LONG).show();
+                    return;
+                }
+        // ================= FIN BYPASS TEMPORAL UNITY =================
+
         // Comentar para deshabilitar Unity
 
-        Intent intent = new Intent(this, UnityArActivity.class);
-        intent.putExtra(UnityArActivity.EXTRA_EXERCISE_DATA, json);
+        //Intent intent = new Intent(this, UnityArActivity.class);
+        //intent.putExtra(UnityArActivity.EXTRA_EXERCISE_DATA, json);
 
-        unityLauncher.launch(intent);
+        //unityLauncher.launch(intent);
     }
 
     private String buildUnityConfigJson() {
