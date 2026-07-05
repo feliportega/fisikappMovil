@@ -55,6 +55,7 @@ public class LaboratorioSessionStore {
                 .apply();
     }
 
+    /*
     public void completarPasoYDesbloquearSiguiente(int asignacionId, int ordenPaso) {
         SharedPreferences.Editor editor = prefs.edit();
 
@@ -67,6 +68,37 @@ public class LaboratorioSessionStore {
                 keyPaso(asignacionId, ordenPaso + 1),
                 LaboratorioPasoItem.ESTADO_PENDIENTE
         );
+
+        editor.apply();
+    }*/
+
+    public void completarPasoYDesbloquearSiguiente(int asignacionId, int ordenPaso) {
+        SharedPreferences.Editor editor = prefs.edit();
+
+        editor.putString(
+                keyPaso(asignacionId, ordenPaso),
+                LaboratorioPasoItem.ESTADO_COMPLETADO
+        );
+
+        int siguientePaso = ordenPaso + 1;
+
+        String estadoSiguienteActual = prefs.getString(
+                keyPaso(asignacionId, siguientePaso),
+                LaboratorioPasoItem.ESTADO_BLOQUEADO
+        );
+
+        boolean siguienteYaCompletado = LaboratorioPasoItem.ESTADO_COMPLETADO
+                .equalsIgnoreCase(estadoSiguienteActual);
+
+        boolean siguienteYaPendiente = LaboratorioPasoItem.ESTADO_PENDIENTE
+                .equalsIgnoreCase(estadoSiguienteActual);
+
+        if (!siguienteYaCompletado && !siguienteYaPendiente) {
+            editor.putString(
+                    keyPaso(asignacionId, siguientePaso),
+                    LaboratorioPasoItem.ESTADO_PENDIENTE
+            );
+        }
 
         editor.apply();
     }
@@ -328,6 +360,27 @@ public class LaboratorioSessionStore {
 
     public String getUnityResultSendError(int assignmentId) {
         return prefs.getString("unity_result_send_error_" + assignmentId, null);
+    }
+
+    public void saveSimulationConfigJson(int simulationId, String json) {
+        prefs.edit()
+                .putString("simulation_config_json_" + simulationId, json)
+                .apply();
+    }
+
+    public String getSimulationConfigJson(int simulationId) {
+        return prefs.getString("simulation_config_json_" + simulationId, null);
+    }
+
+    public boolean hasSimulationConfigJson(int simulationId) {
+        String json = getSimulationConfigJson(simulationId);
+        return json != null && !json.trim().isEmpty();
+    }
+
+    public void clearSimulationConfigJson(int simulationId) {
+        prefs.edit()
+                .remove("simulation_config_json_" + simulationId)
+                .apply();
     }
 
 }

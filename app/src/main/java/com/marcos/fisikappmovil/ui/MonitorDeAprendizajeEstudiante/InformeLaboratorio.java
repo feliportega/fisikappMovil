@@ -8,6 +8,16 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import android.graphics.Color;
+import android.graphics.Typeface;
+import android.text.InputType;
+import android.view.Gravity;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.LinearLayout;
+
+import androidx.cardview.widget.CardView;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.marcos.fisikappmovil.R;
@@ -28,7 +38,6 @@ public class InformeLaboratorio extends AppCompatActivity {
     private TextView tvDatosExperimentalesInforme;
     private TextView tvComparacionInforme;
 
-    private EditText etConclusionesInforme;
     private Button btnGuardarInforme;
 
     private LaboratorioSessionStore sessionStore;
@@ -37,6 +46,15 @@ public class InformeLaboratorio extends AppCompatActivity {
     private int laboratorioId = -1;
     private int grupoId = -1;
     private int ordenPaso = -1;
+
+    private TextView tvReportInstructions;
+    private LinearLayout layoutReportSectionsContainer;
+
+    private CardView cardDatosExperimentalesInforme;
+    private CardView cardComparacionInforme;
+
+    private JSONObject reportObject;
+    private JSONObject reportData = new JSONObject();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,8 +67,11 @@ public class InformeLaboratorio extends AppCompatActivity {
         initViews();
         initListeners();
 
+        cargarReportDesdeJson();
+        cargarInformeGuardado();
+
         pintarInforme();
-        cargarConclusionesGuardadas();
+        renderReportSections();
     }
 
     private void readExtras() {
@@ -73,7 +94,12 @@ public class InformeLaboratorio extends AppCompatActivity {
         tvDatosExperimentalesInforme = findViewById(R.id.tvDatosExperimentalesInforme);
         tvComparacionInforme = findViewById(R.id.tvComparacionInforme);
 
-        etConclusionesInforme = findViewById(R.id.etConclusionesInforme);
+        tvReportInstructions = findViewById(R.id.tvReportInstructions);
+        layoutReportSectionsContainer = findViewById(R.id.layoutReportSectionsContainer);
+
+        cardDatosExperimentalesInforme = findViewById(R.id.cardDatosExperimentalesInforme);
+        cardComparacionInforme = findViewById(R.id.cardComparacionInforme);
+
         btnGuardarInforme = findViewById(R.id.btnGuardarInforme);
     }
 
@@ -82,13 +108,109 @@ public class InformeLaboratorio extends AppCompatActivity {
         btnGuardarInforme.setOnClickListener(v -> guardarInforme());
     }
 
+    private void cargarInformeGuardado() {
+        String json = sessionStore.getInformeLaboratorioJson(asignacionId);
+
+        if (json == null || json.trim().isEmpty()) {
+            reportData = new JSONObject();
+
+            String conclusionesViejas = sessionStore.getConclusionesTexto(asignacionId);
+            if (conclusionesViejas != null && !conclusionesViejas.trim().isEmpty()) {
+                try {
+                    reportData.put("conclusions", conclusionesViejas);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+
+            return;
+        }
+
+        try {
+            reportData = new JSONObject(json);
+        } catch (Exception e) {
+            e.printStackTrace();
+            reportData = new JSONObject();
+        }
+    }
+
+    private void guardarInforme() {
+        if (!validarReportSections()) {
+            return;
+        }
+
+        guardarReportSections();
+
+        Toast.makeText(this, "Informe guardado", Toast.LENGTH_SHORT).show();
+
+        Intent data = new Intent();
+        data.putExtra(PasosLaboratorio.EXTRA_ORDEN_PASO, ordenPaso);
+        setResult(RESULT_OK, data);
+        finish();
+    }
+
+    private void guardarReportSections() {
+        try {
+            JSONObject data = new JSONObject();
+
+            recogerInputsDesdeContenedor(layoutReportSectionsContainer, data);
+
+            data.put("include_practice", reportObject == null
+                    || reportObject.optBoolean("include_practice", true));
+
+            data.put("include_simulation", reportObject == null
+                    || reportObject.optBoolean("include_simulation", true));
+
+            data.put("include_comparison", reportObject == null
+                    || reportObject.optBoolean("include_comparison", true));
+
+            data.put("updatedAt", obtenerFechaActual());
+
+            sessionStore.saveInformeLaboratorioJson(asignacionId, data.toString());
+
+            String conclusions = data.optString("conclusions", "");
+            if (!conclusions.trim().isEmpty()) {
+                sessionStore.saveConclusionesTexto(asignacionId, conclusions);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void recogerInputsDesdeContenedor(View view, JSONObject data) throws Exception {
+        if (view instanceof EditText) {
+            Object tag = view.getTag();
+
+            if (tag != null) {
+                String id = tag.toString();
+                String value = ((EditText) view).getText().toString().trim();
+                data.put(id, value);
+            }
+
+            return;
+        }
+
+        if (view instanceof ViewGroup) {
+            ViewGroup group = (ViewGroup) view;
+
+            for (int i = 0; i < group.getChildCount(); i++) {
+                recogerInputsDesdeContenedor(group.getChildAt(i), data);
+            }
+        }
+    }
     private void pintarInforme() {
-        tvNombreLaboratorioInforme.setText("Laboratorio de Tiro Parabólico");
-        tvInfoGeneralInforme.setText("Física · Grupo " + grupoId + " · Asignación " + asignacionId);
+        if (tvNombreLaboratorioInforme.getText() == null
+                || tvNombreLaboratorioInforme.getText().toString().trim().isEmpty()
+                || "Laboratorio".equals(tvNombreLaboratorioInforme.getText().toString().trim())) {
+
+            tvNombreLaboratorioInforme.setText("Laboratorio");
+            tvInfoGeneralInforme.setText("Grupo " + grupoId + " · Asignación " + asignacionId);
+        }
 
         pintarResumenAr();
         pintarPreguntas();
-        pintarDatosExperimentales();
+        pintarDatosPracticaExperimental();
         pintarComparacion();
     }
 
@@ -244,48 +366,355 @@ public class InformeLaboratorio extends AppCompatActivity {
         }
     }
 
-    private void pintarComparacion() {
-        String comparacion = sessionStore.getComparacionTexto(asignacionId);
+    private void pintarDatosPracticaExperimental() {
+        boolean includePractice = reportObject == null
+                || reportObject.optBoolean("include_practice", true);
 
-        if (comparacion == null || comparacion.trim().isEmpty()) {
+        if (!includePractice) {
+            cardDatosExperimentalesInforme.setVisibility(View.GONE);
+            return;
+        }
+
+        cardDatosExperimentalesInforme.setVisibility(View.VISIBLE);
+
+        String practicaJson = sessionStore.getPracticaExperimentalJson(asignacionId);
+
+        if (practicaJson == null || practicaJson.trim().isEmpty()) {
+            tvDatosExperimentalesInforme.setText("No hay práctica experimental registrada.");
+            return;
+        }
+
+        try {
+            JSONObject data = new JSONObject(practicaJson);
+
+            StringBuilder builder = new StringBuilder();
+
+            if (data.has("observations")) {
+                builder.append("Observaciones:\n")
+                        .append(data.optString("observations", ""))
+                        .append("\n\n");
+            }
+
+            if (data.has("calculations")) {
+                builder.append("Cálculos realizados:\n")
+                        .append(data.optString("calculations", ""))
+                        .append("\n\n");
+            }
+
+            if (data.has("conclusions")) {
+                builder.append("Conclusiones:\n")
+                        .append(data.optString("conclusions", ""))
+                        .append("\n\n");
+            }
+
+            String evidenciasJson = sessionStore.getEvidenciasJson(asignacionId);
+            if (evidenciasJson != null && !evidenciasJson.trim().isEmpty()) {
+                JSONArray evidencias = new JSONArray(evidenciasJson);
+                builder.append("Evidencias agregadas: ")
+                        .append(evidencias.length());
+            }
+
+            if (builder.length() == 0) {
+                builder.append("La práctica experimental no tiene datos registrados.");
+            }
+
+            tvDatosExperimentalesInforme.setText(builder.toString().trim());
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            tvDatosExperimentalesInforme.setText("No se pudo leer la práctica experimental.");
+        }
+    }
+
+    private void pintarComparacion() {
+        boolean includeComparison = reportObject == null
+                || reportObject.optBoolean("include_comparison", true);
+
+        if (!includeComparison) {
+            cardComparacionInforme.setVisibility(View.GONE);
+            return;
+        }
+
+        cardComparacionInforme.setVisibility(View.VISIBLE);
+
+        String comparacionJson = sessionStore.getComparacionResultadosJson(asignacionId);
+
+        if (comparacionJson != null && !comparacionJson.trim().isEmpty()) {
+            try {
+                JSONObject data = new JSONObject(comparacionJson);
+
+                StringBuilder builder = new StringBuilder();
+
+                JSONArray names = data.names();
+
+                if (names != null) {
+                    for (int i = 0; i < names.length(); i++) {
+                        String key = names.optString(i, "");
+
+                        if ("left_source".equals(key)
+                                || "right_source".equals(key)
+                                || "updatedAt".equals(key)) {
+                            continue;
+                        }
+
+                        String value = data.optString(key, "");
+
+                        if (value == null || value.trim().isEmpty()) {
+                            continue;
+                        }
+
+                        builder.append(formatFieldTitle(key))
+                                .append(":\n")
+                                .append(value)
+                                .append("\n\n");
+                    }
+                }
+
+                if (builder.length() == 0) {
+                    builder.append("No hay análisis comparativo guardado.");
+                }
+
+                tvComparacionInforme.setText(builder.toString().trim());
+                return;
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        String comparacionVieja = sessionStore.getComparacionTexto(asignacionId);
+
+        if (comparacionVieja == null || comparacionVieja.trim().isEmpty()) {
             tvComparacionInforme.setText("No hay análisis comparativo guardado.");
             return;
         }
 
-        tvComparacionInforme.setText(comparacion);
+        tvComparacionInforme.setText(comparacionVieja);
     }
 
-    private void cargarConclusionesGuardadas() {
-        String conclusiones = sessionStore.getConclusionesTexto(asignacionId);
+    private void cargarReportDesdeJson() {
+        String json = sessionStore.getMobileResourceJson(asignacionId);
 
-        if (conclusiones != null && !conclusiones.trim().isEmpty()) {
-            etConclusionesInforme.setText(conclusiones);
-        }
-    }
-
-    private void guardarInforme() {
-        String conclusiones = etConclusionesInforme.getText().toString().trim();
-
-        if (conclusiones.isEmpty()) {
-            etConclusionesInforme.setError("Escribe tus conclusiones");
+        if (json == null || json.trim().isEmpty()) {
+            tvReportInstructions.setText("No se encontró la configuración del informe.");
             return;
         }
 
-        if (conclusiones.length() < 20) {
-            etConclusionesInforme.setError("Escribe una conclusión un poco más completa");
+        try {
+            JSONObject root = new JSONObject(json);
+
+            JSONObject resource = root.optJSONObject("resource");
+            if (resource != null) {
+                String title = resource.optString("title", "Laboratorio");
+                String category = resource.optString("category", "Sin categoría");
+                String teacher = resource.optString("teacher", "Sin docente");
+
+                tvNombreLaboratorioInforme.setText(title);
+                tvInfoGeneralInforme.setText(
+                        category + " · " +
+                                "Docente: " + teacher + " · " +
+                                "Grupo " + grupoId + " · " +
+                                "Asignación " + asignacionId
+                );
+            }
+
+            JSONArray steps = root.optJSONArray("steps");
+
+            if (steps == null || steps.length() == 0) {
+                tvReportInstructions.setText("Este laboratorio no tiene pasos configurados.");
+                return;
+            }
+
+            JSONObject reportStep = findReportStep(steps);
+
+            if (reportStep == null) {
+                tvReportInstructions.setText("No se encontró el paso de informe.");
+                return;
+            }
+
+            reportObject = reportStep.optJSONObject("report");
+
+            if (reportObject == null) {
+                tvReportInstructions.setText("El paso de informe no tiene configuración.");
+                return;
+            }
+
+            String instructions = reportObject.optString(
+                    "instructions",
+                    "Complete las secciones del informe de laboratorio."
+            );
+
+            tvReportInstructions.setText(instructions);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            tvReportInstructions.setText("No se pudo leer la configuración del informe.");
+        }
+    }
+
+    private JSONObject findReportStep(JSONArray steps) {
+        for (int i = 0; i < steps.length(); i++) {
+            JSONObject step = steps.optJSONObject(i);
+            if (step == null) continue;
+
+            String type = step.optString("type", "");
+            int order = step.optInt("order", -1);
+
+            if ("REPORT".equalsIgnoreCase(type)) {
+                return step;
+            }
+
+            if (ordenPaso > 0 && order == ordenPaso) {
+                return step;
+            }
+        }
+
+        return null;
+    }
+
+    private void renderReportSections() {
+        layoutReportSectionsContainer.removeAllViews();
+
+        if (reportObject == null) {
+            addReportTextInputField("conclusions", "Conclusiones", true);
             return;
         }
 
-        sessionStore.saveConclusionesTexto(asignacionId, conclusiones);
+        JSONArray sections = reportObject.optJSONArray("sections");
 
-        Toast.makeText(this, "Informe guardado", Toast.LENGTH_SHORT).show();
+        if (sections == null || sections.length() == 0) {
+            addReportTextInputField("results", "Resultados obtenidos", true);
+            addReportTextInputField("analysis", "Análisis", true);
+            addReportTextInputField("conclusions", "Conclusiones", true);
+            return;
+        }
 
-        Intent data = new Intent();
-        data.putExtra(PasosLaboratorio.EXTRA_ORDEN_PASO, ordenPaso);
-        setResult(RESULT_OK, data);
-        finish();
+        for (int i = 0; i < sections.length(); i++) {
+            JSONObject section = sections.optJSONObject(i);
+            if (section == null) continue;
+
+            String id = section.optString("id", "");
+            String label = section.optString("label", id);
+            String type = section.optString("type", "");
+            boolean required = section.optBoolean("required", false);
+
+            if ("TEXT".equalsIgnoreCase(type)) {
+                addReportTextInputField(id, label, required);
+            }
+        }
     }
 
+    private void addReportTextInputField(String id, String label, boolean required) {
+        TextView tvLabel = new TextView(this);
+        tvLabel.setText(required ? label + " *" : label);
+        tvLabel.setTextColor(Color.parseColor("#001B6B"));
+        tvLabel.setTextSize(16);
+        tvLabel.setTypeface(null, Typeface.BOLD);
+
+        LinearLayout.LayoutParams labelParams = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+        );
+        labelParams.setMargins(0, dpToPx(8), 0, dpToPx(8));
+        tvLabel.setLayoutParams(labelParams);
+
+        EditText editText = new EditText(this);
+        editText.setTag(id);
+        editText.setMinLines(5);
+        editText.setGravity(Gravity.TOP);
+        editText.setHint("Escribe " + label.toLowerCase(java.util.Locale.ROOT));
+        editText.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_MULTI_LINE);
+        editText.setTextColor(Color.parseColor("#334155"));
+        editText.setTextSize(14);
+        editText.setBackgroundResource(R.drawable.edittext_redondo);
+        editText.setPadding(dpToPx(14), dpToPx(12), dpToPx(14), dpToPx(12));
+
+        String savedValue = reportData.optString(id, "");
+        editText.setText(savedValue);
+
+        LinearLayout.LayoutParams inputParams = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                dpToPx(150)
+        );
+        inputParams.setMargins(0, 0, 0, dpToPx(10));
+        editText.setLayoutParams(inputParams);
+
+        layoutReportSectionsContainer.addView(tvLabel);
+        layoutReportSectionsContainer.addView(editText);
+    }
+
+    private boolean validarReportSections() {
+        if (reportObject == null) {
+            return validarCampoPorTag("conclusions", "Conclusiones", true);
+        }
+
+        JSONArray sections = reportObject.optJSONArray("sections");
+
+        if (sections == null || sections.length() == 0) {
+            return validarCampoPorTag("results", "Resultados obtenidos", true)
+                    && validarCampoPorTag("analysis", "Análisis", true)
+                    && validarCampoPorTag("conclusions", "Conclusiones", true);
+        }
+
+        for (int i = 0; i < sections.length(); i++) {
+            JSONObject section = sections.optJSONObject(i);
+            if (section == null) continue;
+
+            String id = section.optString("id", "");
+            String label = section.optString("label", id);
+            String type = section.optString("type", "");
+            boolean required = section.optBoolean("required", false);
+
+            if ("TEXT".equalsIgnoreCase(type)) {
+                if (!validarCampoPorTag(id, label, required)) {
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    }
+
+    private boolean validarCampoPorTag(String id, String label, boolean required) {
+        if (!required) return true;
+
+        EditText editText = layoutReportSectionsContainer.findViewWithTag(id);
+
+        if (editText == null || editText.getText().toString().trim().isEmpty()) {
+            if (editText != null) {
+                editText.setError("Campo obligatorio");
+                editText.requestFocus();
+            }
+
+            Toast.makeText(this, "Completa el campo: " + label, Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        return true;
+    }
+
+    // Helpers
+
+    private String obtenerFechaActual() {
+        return new java.text.SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", java.util.Locale.US)
+                .format(new java.util.Date());
+    }
+
+    private int dpToPx(int dp) {
+        float density = getResources().getDisplayMetrics().density;
+        return Math.round(dp * density);
+    }
+
+    private String formatFieldTitle(String key) {
+        if (key == null || key.trim().isEmpty()) {
+            return "Campo";
+        }
+
+        String clean = key.replace("_", " ").trim();
+
+        return clean.substring(0, 1).toUpperCase(java.util.Locale.ROOT)
+                + clean.substring(1);
+    }
     private String formatMetro(double value) {
         return String.format(java.util.Locale.US, "%.2f m", value);
     }

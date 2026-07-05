@@ -94,6 +94,7 @@ public class MobileStepResponse {
         return simulationRef;
     }
 
+
     public List<MobileContentBlockResponse> getContent() {
         return content;
     }

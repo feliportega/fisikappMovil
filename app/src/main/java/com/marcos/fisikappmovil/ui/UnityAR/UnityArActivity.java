@@ -1,11 +1,12 @@
 package com.marcos.fisikappmovil.ui.UnityAR;
 
+/*
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 
-/*
 import com.unity3d.player.UnityPlayerActivity;
+
 
 public class UnityArActivity extends UnityPlayerActivity {
 
@@ -35,7 +36,4 @@ public class UnityArActivity extends UnityPlayerActivity {
         startActivity(intent);
         finish();
     }
-}
-
-
- */
+}*/

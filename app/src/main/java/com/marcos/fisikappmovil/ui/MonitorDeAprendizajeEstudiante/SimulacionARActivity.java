@@ -2,8 +2,11 @@ package com.marcos.fisikappmovil.ui.MonitorDeAprendizajeEstudiante;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -11,20 +14,35 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.gson.Gson;
 import com.marcos.fisikappmovil.R;
+import com.marcos.fisikappmovil.data.callback.RepositoryCallback;
+import com.marcos.fisikappmovil.data.repository.SimulacionRepository;
+import com.marcos.fisikappmovil.data.result.AppResult;
+import com.marcos.fisikappmovil.remote.response.MobileSimulationResponse;
 import com.marcos.fisikappmovil.data.session.LaboratorioSessionStore;
 import com.marcos.fisikappmovil.model.TokenManager;
 import com.marcos.fisikappmovil.ui.UnityAR.ResultadoUnityActivity;
+import com.marcos.fisikappmovil.ui.common.ContentStateView;
 
-// import com.marcos.fisikappmovil.ui.UnityAR.UnityArActivity;
+// Comentar el import para deshabilitar Unity
+// Comentar la clase UnityAR.UnityArActivity.java
+// Comentar Unity library desde .Build.gradle.kts (:app)
+// Comentar Unity library desde setting.gradle.kts (FisicaappMovil)
+
+//import com.marcos.fisikappmovil.ui.UnityAR.UnityArActivity;
 
 import android.webkit.WebView;
 
 import com.marcos.fisikappmovil.ui.common.KatexWebViewRenderer;
 
-import org.json.JSONArray;
+import android.graphics.Color;
 
+
+import org.json.JSONArray;
 import org.json.JSONObject;
+import java.util.ArrayList;
+import java.util.List;
 
 public class SimulacionARActivity extends AppCompatActivity {
 
@@ -50,6 +68,8 @@ public class SimulacionARActivity extends AppCompatActivity {
     private String unitySceneName;
     private String simulationEndpoint;
 
+    private int simulationId = -1;
+
     private String displayName = "Simulación AR";
     private String exerciseId = "EX-DEFAULT";
 
@@ -71,6 +91,23 @@ public class SimulacionARActivity extends AppCompatActivity {
     private String lastResultStatus = "NO_REALIZADO";
     private int maxAttempts = 4;
     private int usedAttempts = 0;
+
+    private ScrollView contentSimulacionAr;
+    private ContentStateView stateSimulacionAr;
+
+    private TextView tvInstructionsTitleAr;
+    private LinearLayout layoutInstructionsAr;
+
+    private SimulacionRepository simulacionRepository;
+
+    private String introTitle = "Práctica simulada AR";
+    private String introText = "Cargando descripción de la simulación...";
+
+    private final List<String> instructions = new ArrayList<>();
+
+    private final Gson gson = new Gson();
+
+    private boolean simulationConfigLoaded = false;
 
     private final ActivityResultLauncher<Intent> unityLauncher =
             registerForActivityResult(
@@ -114,16 +151,23 @@ public class SimulacionARActivity extends AppCompatActivity {
 
         sessionStore = new LaboratorioSessionStore(this);
         tokenManager = new TokenManager(this);
+        simulacionRepository = new SimulacionRepository();
 
         readExtras();
-        cargarConfiguracionSimulacionDesdeJson();
-
         initViews();
         initListeners();
 
+        resolverSimulationRefDesdeMobileResource();
+
+        boolean loadedFromCache = cargarConfiguracionSimulacionDesdeCache();
+
+        cargarConfiguracionSimulacionDesdeJson();
+        cargarConfiguracionSimulacionDesdeExtrasOCache();
         cargarEstadoArGuardado();
-        debugEstadoAr("DESPUES_CARGAR_ESTADO");
         pintarDatos();
+
+        consultarConfiguracionSimulacionBackend(!loadedFromCache);
+        debugEstadoAr("DESPUES_CARGAR_ESTADO");
     }
 
     @Override
@@ -146,19 +190,37 @@ public class SimulacionARActivity extends AppCompatActivity {
         ordenPaso = intent.getIntExtra(PasosLaboratorio.EXTRA_ORDEN_PASO, -1);
 
         stepId = intent.getStringExtra("STEP_ID");
+        simulationEndpoint = intent.getStringExtra("SIMULATION_ENDPOINT");
+
+        String extraLabKey = intent.getStringExtra("LAB_KEY");
+        if (extraLabKey != null && !extraLabKey.trim().isEmpty()) {
+            labKey = extraLabKey;
+        }
+
+        simulationId = extraerSimulationIdDesdeEndpoint(simulationEndpoint);
     }
 
     private void initViews() {
+        contentSimulacionAr = findViewById(R.id.contentSimulacionAr);
+        stateSimulacionAr = new ContentStateView(findViewById(R.id.stateSimulacionAr));
+
         btnBack = findViewById(R.id.btnBackSimulacionAr);
+
         tvTituloAr = findViewById(R.id.tvTituloAr);
         tvSubtituloAr = findViewById(R.id.tvSubtituloAr);
         tvDescripcionAr = findViewById(R.id.tvDescripcionAr);
+
         webFormulaAr = findViewById(R.id.webFormulaAr);
+        KatexWebViewRenderer.configure(webFormulaAr);
+
+        tvInstructionsTitleAr = findViewById(R.id.tvInstructionsTitleAr);
+        layoutInstructionsAr = findViewById(R.id.layoutInstructionsAr);
+
         tvIntentosAr = findViewById(R.id.tvIntentosAr);
         tvObjetivoAr = findViewById(R.id.tvObjetivoAr);
         btnIniciarAr = findViewById(R.id.btnIniciarAr);
 
-        KatexWebViewRenderer.configure(webFormulaAr);
+        stateSimulacionAr.hide();
     }
 
     private void initListeners() {
@@ -167,19 +229,29 @@ public class SimulacionARActivity extends AppCompatActivity {
     }
 
     private void pintarDatos() {
-
         debugEstadoAr("ANTES_PINTAR_DATOS");
 
-        tvTituloAr.setText(simulationTitle);
-        tvSubtituloAr.setText("Unity / " + safe(labKey));
+        tvTituloAr.setText(
+                notEmpty(displayName)
+                        ? "Unity / " + displayName
+                        : "Unity / Realidad aumentada"
+        );
+
+        tvSubtituloAr.setText(
+                notEmpty(introTitle)
+                        ? introTitle
+                        : "Práctica simulada AR"
+        );
 
         tvDescripcionAr.setText(
-                safe(simulationDescription).isEmpty()
-                        ? "Realiza la simulación en realidad aumentada."
-                        : simulationDescription
+                notEmpty(introText)
+                        ? introText
+                        : "Realiza la simulación en realidad aumentada."
         );
 
         KatexWebViewRenderer.render(webFormulaAr, formulaExpression);
+
+        renderInstructions();
 
         tvIntentosAr.setText(
                 "Intentos usados: " + usedAttempts + "/" + maxAttempts +
@@ -190,13 +262,16 @@ public class SimulacionARActivity extends AppCompatActivity {
             tvObjetivoAr.setText(
                     "Estado: no realizado.\n\n" +
                             "Simulación: " + safe(labKey) + "\n" +
-                            "Escena: " + safe(unitySceneName) + "\n\n" +
-                            "Fórmula: " + safe(formulaName) + "\n" +
-                            safe(formulaDescription)
+                            "Escena Unity: " + safe(unitySceneName) + "\n\n" +
+                            "Objetivo: realiza la práctica AR siguiendo las instrucciones."
             );
 
-            btnIniciarAr.setEnabled(true);
-            btnIniciarAr.setText("Iniciar práctica AR");
+            btnIniciarAr.setEnabled(simulationConfigLoaded);
+            btnIniciarAr.setText(
+                    simulationConfigLoaded
+                            ? "Iniciar práctica AR"
+                            : "Cargando simulación..."
+            );
             return;
         }
 
@@ -222,8 +297,12 @@ public class SimulacionARActivity extends AppCompatActivity {
                             "Puedes continuar la práctica AR."
             );
 
-            btnIniciarAr.setEnabled(true);
-            btnIniciarAr.setText("Continuar práctica AR");
+            btnIniciarAr.setEnabled(simulationConfigLoaded);
+            btnIniciarAr.setText(
+                    simulationConfigLoaded
+                            ? "Continuar práctica AR"
+                            : "Cargando simulación..."
+            );
             return;
         }
 
@@ -264,6 +343,69 @@ public class SimulacionARActivity extends AppCompatActivity {
         );
 
         sessionStore.saveUnityStartedAt(asignacionId, currentStartedAt);
+
+        // ================= BYPASS TEMPORAL UNITY =================
+        // Usar esto cuando Unity esté deshabilitado para que el equipo pueda compilar.
+        // Para usar Unity real: comentar este bloque y habilitar el Intent real de Unity.
+                try {
+                    org.json.JSONObject fakeResult = new org.json.JSONObject();
+
+                    fakeResult.put("schemaVersion", 1);
+                    fakeResult.put("requestId", currentRequestId);
+                    fakeResult.put("runId", currentRunId);
+                    fakeResult.put("startedAt", currentStartedAt);
+                    fakeResult.put("finishedAt", obtenerFechaActualUtc());
+
+                    fakeResult.put("labKey", labKey);
+                    fakeResult.put("unitySceneName", unitySceneName);
+                    fakeResult.put("exerciseId", exerciseId);
+
+                    fakeResult.put("participantId", "STUDENT-" + tokenManager.getUserEmail());
+                    fakeResult.put("participantName", tokenManager.getUserName() != null
+                            ? tokenManager.getUserName()
+                            : "Estudiante");
+
+                    fakeResult.put("organizationName", "Institución");
+                    fakeResult.put("courseName", "Física");
+                    fakeResult.put("groupName", "Grupo " + grupoId);
+
+                    fakeResult.put("horizontalDistance", 1.25);
+                    fakeResult.put("verticalDistance", 0.10);
+                    fakeResult.put("straightDistance", 1.26);
+
+                    fakeResult.put("hitTarget", true);
+                    fakeResult.put("maxAttempts", maxAttempts);
+                    fakeResult.put("usedAttempts", 1);
+                    fakeResult.put("remainingAttempts", Math.max(maxAttempts - 1, 0));
+                    fakeResult.put("completed", true);
+                    fakeResult.put("resultStatus", "completed");
+                    fakeResult.put("exitReason", "UNITY_BYPASS_TEMPORAL");
+
+                    org.json.JSONArray attempts = new org.json.JSONArray();
+
+                    org.json.JSONObject attempt = new org.json.JSONObject();
+                    attempt.put("attempt", 1);
+                    attempt.put("hit", true);
+                    attempt.put("power", 5.0);
+                    attempt.put("angle", 45.0);
+                    attempt.put("impactDistanceToTarget", 0.02);
+                    attempt.put("impactHorizontalDistance", 1.25);
+                    attempt.put("impactHeightDifference", 0.10);
+                    attempt.put("impactType", "HitTarget");
+
+                    attempts.put(attempt);
+
+                    fakeResult.put("attempts", attempts);
+
+                    abrirResultadoUnity(fakeResult.toString());
+                    return;
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    Toast.makeText(this, "No se pudo simular el resultado Unity.", Toast.LENGTH_LONG).show();
+                    return;
+                }
+        // ================= FIN BYPASS TEMPORAL UNITY =================
 
         // Comentar para deshabilitar Unity
 
@@ -412,8 +554,35 @@ public class SimulacionARActivity extends AppCompatActivity {
 
                 if (simulationRef != null) {
                     simulationEndpoint = simulationRef.optString("endpoint", "");
-                    labKey = simulationRef.optString("lab_key", "");
-                    unitySceneName = resolverUnityScenePorLabKey(labKey);
+
+                    labKey = simulationRef.optString(
+                            "lab_key",
+                            simulationRef.optString("labKey", "")
+                    );
+
+                    unitySceneName = simulationRef.optString(
+                            "unity_scene_name",
+                            simulationRef.optString("unitySceneName", resolverUnityScenePorLabKey(labKey))
+                    );
+
+                    displayName = simulationRef.optString(
+                            "display_name",
+                            simulationRef.optString("displayName", displayName)
+                    );
+
+                    introTitle = simulationRef.optString(
+                            "intro_title",
+                            simulationRef.optString("introTitle", simulationTitle)
+                    );
+
+                    introText = simulationRef.optString(
+                            "intro_text",
+                            simulationRef.optString("introText", simulationDescription)
+                    );
+
+                    maxAttempts = simulationRef.optInt("max_attempts", maxAttempts);
+
+                    cargarInstructionsDesdeJson(simulationRef.optJSONArray("instructions"));
                 }
             }
 
@@ -517,6 +686,73 @@ public class SimulacionARActivity extends AppCompatActivity {
         }
     }
 
+    private void resolverSimulationRefDesdeMobileResource() {
+        if (simulationId > 0 && notEmpty(simulationEndpoint)) {
+            return;
+        }
+
+        String json = sessionStore.getMobileResourceJson(asignacionId);
+
+        if (json == null || json.trim().isEmpty()) {
+            android.util.Log.d("SIM_AR_CONFIG", "No hay mobile_resource_json para resolver simulation_ref.");
+            return;
+        }
+
+        try {
+            org.json.JSONObject root = new org.json.JSONObject(json);
+            org.json.JSONArray steps = root.optJSONArray("steps");
+
+            if (steps == null) return;
+
+            for (int i = 0; i < steps.length(); i++) {
+                org.json.JSONObject step = steps.optJSONObject(i);
+                if (step == null) continue;
+
+                String id = step.optString("id", "");
+                String type = step.optString("type", "");
+                int order = step.optInt("order", -1);
+
+                boolean isTargetStep =
+                        ("SIMULATION_AR".equalsIgnoreCase(type))
+                                || (stepId != null && stepId.equals(id))
+                                || (ordenPaso > 0 && ordenPaso == order);
+
+                if (!isTargetStep) continue;
+
+                org.json.JSONObject simulationRef = step.optJSONObject("simulation_ref");
+
+                if (simulationRef == null) {
+                    return;
+                }
+
+                if (!notEmpty(simulationEndpoint)) {
+                    simulationEndpoint = simulationRef.optString("endpoint", "");
+                }
+
+                if (!notEmpty(labKey)) {
+                    labKey = simulationRef.optString("lab_key", "");
+                }
+
+                simulationId = extraerSimulationIdDesdeEndpoint(simulationEndpoint);
+
+                android.util.Log.d(
+                        "SIM_AR_CONFIG",
+                        "simulation_ref resuelto desde cache: endpoint="
+                                + simulationEndpoint
+                                + " simulationId="
+                                + simulationId
+                                + " labKey="
+                                + labKey
+                );
+
+                return;
+            }
+
+        } catch (Exception e) {
+            android.util.Log.e("SIM_AR_CONFIG", "Error resolviendo simulation_ref", e);
+        }
+    }
+
     private void usarConfiguracionFallback() {
         if (labKey == null || labKey.trim().isEmpty()) {
             labKey = "PARABOLIC-001";
@@ -554,11 +790,340 @@ public class SimulacionARActivity extends AppCompatActivity {
         android.util.Log.d("AR_DEBUG", "lastResultStatus=" + lastResultStatus);
     }
 
-    //Helper
+    private void cargarInstructionsDesdeJson(JSONArray array) {
+        instructions.clear();
+
+        if (array == null || array.length() == 0) {
+            return;
+        }
+
+        for (int i = 0; i < array.length(); i++) {
+            String item = array.optString(i, "");
+
+            if (item != null && !item.trim().isEmpty()) {
+                instructions.add(item.trim());
+            }
+        }
+    }
+
+    private void renderInstructions() {
+        layoutInstructionsAr.removeAllViews();
+
+        if (instructions.isEmpty()) {
+            TextView empty = new TextView(this);
+            empty.setText("No hay instrucciones configuradas para esta simulación.");
+            empty.setTextColor(Color.parseColor("#64748B"));
+            empty.setTextSize(14);
+            empty.setLineSpacing(4f, 1.1f);
+            layoutInstructionsAr.addView(empty);
+            return;
+        }
+
+        for (int i = 0; i < instructions.size(); i++) {
+            TextView itemView = new TextView(this);
+
+            itemView.setText((i + 1) + ". " + instructions.get(i));
+            itemView.setTextColor(Color.parseColor("#334155"));
+            itemView.setTextSize(14);
+            itemView.setLineSpacing(4f, 1.15f);
+            itemView.setPadding(0, 0, 0, dpToPx(8));
+
+            layoutInstructionsAr.addView(itemView);
+        }
+    }
+    private void cargarConfiguracionSimulacionDesdeExtrasOCache() {
+        if (simulationId > 0) {
+            String cached = sessionStore.getSimulationConfigJson(simulationId);
+
+            if (cached != null && !cached.trim().isEmpty()) {
+                try {
+                    MobileSimulationResponse cachedResponse =
+                            new com.google.gson.Gson().fromJson(
+                                    cached,
+                                    MobileSimulationResponse.class
+                            );
+
+                    aplicarSimulationResponse(cachedResponse);
+
+                    android.util.Log.d(
+                            "SIM_AR_CONFIG",
+                            "Configuración cargada desde cache simulationId=" + simulationId
+                    );
+
+                    return;
+
+                } catch (Exception e) {
+                    android.util.Log.e("SIM_AR_CONFIG", "Error leyendo cache de simulación", e);
+                }
+            }
+        }
+
+        // Fallback mínimo mientras carga el backend.
+        if (labKey == null || labKey.trim().isEmpty()) {
+            labKey = "LAB-GENERICO";
+        }
+
+        if (unitySceneName == null || unitySceneName.trim().isEmpty()) {
+            unitySceneName = "";
+        }
+
+        if (displayName == null || displayName.trim().isEmpty()) {
+            displayName = "Simulación AR";
+        }
+
+        introTitle = displayName;
+        introText = "Cargando configuración de simulación...";
+    }
+
+    private void aplicarSimulationResponse(MobileSimulationResponse response) {
+        if (response == null) return;
+
+        if (notEmpty(response.getLabKey())) {
+            labKey = response.getLabKey();
+        }
+
+        if (notEmpty(response.getUnitySceneName())) {
+            unitySceneName = response.getUnitySceneName();
+        }
+
+        if (notEmpty(response.getDisplayName())) {
+            displayName = response.getDisplayName();
+            simulationTitle = response.getDisplayName();
+        }
+
+        if (notEmpty(response.getIntroTitle())) {
+            introTitle = response.getIntroTitle();
+        } else if (notEmpty(displayName)) {
+            introTitle = displayName;
+        }
+
+        if (notEmpty(response.getIntroText())) {
+            introText = response.getIntroText();
+            simulationDescription = response.getIntroText();
+        }
+
+        if (response.getMaxAttempts() > 0) {
+            maxAttempts = response.getMaxAttempts();
+        }
+
+        instructions.clear();
+
+        if (response.getInstructions() != null) {
+            for (String item : response.getInstructions()) {
+                if (notEmpty(item)) {
+                    instructions.add(item.trim());
+                }
+            }
+        }
+
+        if (!arCompleted && usedAttempts == 0) {
+            remainingAttempts = maxAttempts;
+        }
+    }
+
+    private boolean cargarConfiguracionSimulacionDesdeCache() {
+        if (simulationId <= 0) {
+            return false;
+        }
+
+        String cached = sessionStore.getSimulationConfigJson(simulationId);
+
+        if (cached == null || cached.trim().isEmpty()) {
+            return false;
+        }
+
+        try {
+            MobileSimulationResponse response = gson.fromJson(
+                    cached,
+                    MobileSimulationResponse.class
+            );
+
+            aplicarSimulationResponse(response);
+
+            simulationConfigLoaded = true;
+
+            android.util.Log.d(
+                    "SIM_AR_CONFIG",
+                    "Configuración AR cargada desde cache. simulationId=" + simulationId
+            );
+
+            return true;
+
+        } catch (Exception e) {
+            android.util.Log.e("SIM_AR_CONFIG", "Error leyendo cache de simulación", e);
+            return false;
+        }
+    }
+
+    private void consultarConfiguracionSimulacionBackend(boolean showFullLoading) {
+        if (simulationId <= 0) {
+            stateSimulacionAr.showError(
+                    "No se encontró la simulación",
+                    "El laboratorio no tiene un endpoint de simulación AR válido.",
+                    v -> consultarConfiguracionSimulacionBackend(true)
+            );
+
+            contentSimulacionAr.setVisibility(View.GONE);
+            return;
+        }
+
+        String token = tokenManager.getAccessToken();
+
+        if (token == null || token.trim().isEmpty()) {
+            stateSimulacionAr.showError(
+                    "Sesión no válida",
+                    "No se encontró un token activo. Inicia sesión nuevamente.",
+                    v -> consultarConfiguracionSimulacionBackend(true)
+            );
+
+            contentSimulacionAr.setVisibility(View.GONE);
+            return;
+        }
+
+        if (showFullLoading) {
+            stateSimulacionAr.showLoading(
+                    "Cargando simulación",
+                    "Estamos consultando la configuración de la práctica AR."
+            );
+            contentSimulacionAr.setVisibility(View.GONE);
+        } else {
+            btnIniciarAr.setEnabled(false);
+            btnIniciarAr.setText("Actualizando simulación...");
+        }
+
+        simulacionRepository.getMobileSimulationConfig(
+                "Bearer " + token,
+                simulationId,
+                new RepositoryCallback<MobileSimulationResponse>() {
+                    @Override
+                    public void onComplete(AppResult<MobileSimulationResponse> result) {
+                        runOnUiThread(() -> {
+                            if (!result.isSuccess()) {
+                                manejarErrorConfiguracionSimulacion(result, showFullLoading);
+                                return;
+                            }
+
+                            MobileSimulationResponse response = result.getData();
+
+                            if (response == null) {
+                                manejarErrorConfiguracionVacia(showFullLoading);
+                                return;
+                            }
+
+                            aplicarSimulationResponse(response);
+                            simulationConfigLoaded = true;
+
+                            try {
+                                sessionStore.saveSimulationConfigJson(
+                                        simulationId,
+                                        gson.toJson(response)
+                                );
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+
+                            stateSimulacionAr.hide();
+                            contentSimulacionAr.setVisibility(View.VISIBLE);
+
+                            android.util.Log.d(
+                                    "SIM_AR_CONFIG",
+                                    "Configuración AR aplicada. instructions="
+                                            + (response.getInstructions() == null
+                                            ? 0
+                                            : response.getInstructions().size())
+                            );
+
+                            pintarDatos();
+                        });
+                    }
+                }
+        );
+    }
+
+    private void manejarErrorConfiguracionVacia(boolean showFullLoading) {
+        if (simulationConfigLoaded || !showFullLoading) {
+            stateSimulacionAr.hide();
+            contentSimulacionAr.setVisibility(View.VISIBLE);
+            pintarDatos();
+
+            Toast.makeText(
+                    this,
+                    "La configuración de simulación llegó vacía.",
+                    Toast.LENGTH_LONG
+            ).show();
+
+            return;
+        }
+
+        stateSimulacionAr.showEmpty(
+                "Simulación sin configuración",
+                "El backend no entregó datos para esta práctica AR."
+        );
+
+        contentSimulacionAr.setVisibility(View.GONE);
+    }
+
+    // Helper
+    private int extraerSimulationIdDesdeEndpoint(String endpoint) {
+        if (endpoint == null || endpoint.trim().isEmpty()) {
+            return -1;
+        }
+
+        try {
+            java.util.regex.Pattern pattern =
+                    java.util.regex.Pattern.compile("/simulation/(\\d+)/?");
+
+            java.util.regex.Matcher matcher = pattern.matcher(endpoint);
+
+            if (matcher.find()) {
+                return Integer.parseInt(matcher.group(1));
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return -1;
+    }
+
+    private void manejarErrorConfiguracionSimulacion(
+            AppResult<MobileSimulationResponse> result,
+            boolean showFullLoading
+    ) {
+        String message = result.getStatusCode() == -1
+                ? "No se pudo conectar con el servidor. Revisa tu internet o intenta nuevamente."
+                : result.getErrorMessage();
+
+        if (simulationConfigLoaded || !showFullLoading) {
+            stateSimulacionAr.hide();
+            contentSimulacionAr.setVisibility(View.VISIBLE);
+            pintarDatos();
+
+            Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        stateSimulacionAr.showError(
+                "No se pudo cargar la simulación",
+                message,
+                v -> consultarConfiguracionSimulacionBackend(true)
+        );
+
+        contentSimulacionAr.setVisibility(View.GONE);
+    }
+
+    private boolean notEmpty(String value) {
+        return value != null && !value.trim().isEmpty();
+    }
+
     private String safe(String value) {
         return value == null ? "" : value.trim();
     }
 
+    private int dpToPx(int dp) {
+        float density = getResources().getDisplayMetrics().density;
+        return Math.round(dp * density);
+    }
     private String obtenerFechaActualUtc() {
         java.text.SimpleDateFormat format =
                 new java.text.SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", java.util.Locale.US);
@@ -567,4 +1132,5 @@ public class SimulacionARActivity extends AppCompatActivity {
 
         return format.format(new java.util.Date());
     }
+
 }

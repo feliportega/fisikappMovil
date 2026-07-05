@@ -77,7 +77,9 @@ dependencies {
     androidTestImplementation(libs.espresso.core)
 
     implementation(project(":facesdk"))
-    //implementation(project(":unityLibrary"))
+
+    // Comentar para deshabilitar Unity library
+//    implementation(project(":unityLibrary"))
     implementation("androidx.appcompat:appcompat:1.6.1")
 
 

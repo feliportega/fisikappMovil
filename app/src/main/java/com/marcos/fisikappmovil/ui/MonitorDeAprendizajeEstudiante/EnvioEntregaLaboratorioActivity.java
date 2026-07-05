@@ -110,51 +110,70 @@ public class EnvioEntregaLaboratorioActivity extends AppCompatActivity {
             btnEnviarEntrega.setText("Enviar entrega");
         }
 
+        boolean tienePractica = existeJson(sessionStore.getPracticaExperimentalJson(asignacionId));
+        boolean tieneEvidencias = existeJson(sessionStore.getEvidenciasJson(asignacionId));
+        boolean tieneAr = existeJson(sessionStore.getUnityResultJson(asignacionId));
+        boolean tieneComparacion = existeJson(sessionStore.getComparacionResultadosJson(asignacionId));
+        boolean tieneInforme = existeJson(sessionStore.getInformeLaboratorioJson(asignacionId));
+
         tvResumenEntrega.setText(
                 "Resumen de entrega\n\n" +
-                        "• Lectura y conceptos: completados\n" +
-                        "• Preguntas de comprensión: completadas\n" +
-                        "• Práctica experimental: completada\n" +
-                        "• Datos experimentales: registrados\n" +
-                        "• Práctica simulada AR: completada\n" +
-                        "• Comparación de resultados: completada\n" +
-                        "• Informe y conclusiones: completados\n\n" +
-                        "Al enviar, la información quedará pendiente de revisión por IA/instructor."
+                        "• Práctica experimental: " + estadoTexto(tienePractica) + "\n" +
+                        "• Evidencias: " + estadoTexto(tieneEvidencias) + "\n" +
+                        "• Práctica simulada AR: " + estadoTexto(tieneAr) + "\n" +
+                        "• Comparación de resultados: " + estadoTexto(tieneComparacion) + "\n" +
+                        "• Informe de laboratorio: " + estadoTexto(tieneInforme) + "\n\n" +
+                        "Al enviar, la información quedará pendiente de sincronización con el backend final."
         );
     }
 
+    private boolean existeJson(String json) {
+        return json != null && !json.trim().isEmpty();
+    }
+
+    private String estadoTexto(boolean ok) {
+        return ok ? "registrada" : "pendiente";
+    }
     private void confirmarEnvio() {
         if (sessionStore.isEntregaEnviada(asignacionId)) {
-            irAGrupoLaboratorios();
+            Intent data = new Intent();
+            data.putExtra(PasosLaboratorio.EXTRA_ORDEN_PASO, ordenPaso);
+            setResult(RESULT_OK, data);
+            finish();
             return;
         }
 
-        new AlertDialog.Builder(this)
+        new androidx.appcompat.app.AlertDialog.Builder(this)
                 .setTitle("Enviar entrega")
-                .setMessage("¿Deseas enviar tu laboratorio? Después de enviarlo quedará pendiente de calificación.")
-                .setPositiveButton("Enviar", (dialog, which) -> simularEnvio())
+                .setMessage("La entrega quedará guardada localmente. La sincronización final dependerá del backend.")
+                .setPositiveButton("Guardar entrega", (dialog, which) -> simularEnvio())
                 .setNegativeButton("Cancelar", null)
                 .show();
     }
 
     private void simularEnvio() {
-
         setLoading(true);
 
-        new Handler(Looper.getMainLooper()).postDelayed(() -> {
-            sessionStore.marcarEntregaEnviada(asignacionId);
-
+        new android.os.Handler(android.os.Looper.getMainLooper()).postDelayed(() -> {
             setLoading(false);
+
+            sessionStore.marcarEntregaEnviada(asignacionId);
 
             Toast.makeText(
                     this,
-                    "Entrega enviada. Calificación pendiente.",
+                    "Entrega guardada localmente. Sincronización final pendiente de backend.",
                     Toast.LENGTH_LONG
             ).show();
 
-            irAGrupoLaboratorios();
+            pintarResumen();
 
-        }, 900);
+            Intent data = new Intent();
+            data.putExtra(PasosLaboratorio.EXTRA_ORDEN_PASO, ordenPaso);
+            setResult(RESULT_OK, data);
+
+            finish();
+
+        }, 1200);
     }
 
     private void setLoading(boolean loading) {
@@ -219,6 +238,21 @@ public class EnvioEntregaLaboratorioActivity extends AppCompatActivity {
                     }
                 }
         );
+    }
+
+    private void enviarEntrega() {
+        Toast.makeText(
+                this,
+                "La entrega final está pendiente de ajuste en backend. Se guardará localmente.",
+                Toast.LENGTH_LONG
+        ).show();
+
+        sessionStore.marcarEntregaEnviada(asignacionId);
+        pintarResumen();
+
+        Intent data = new Intent();
+        data.putExtra(PasosLaboratorio.EXTRA_ORDEN_PASO, ordenPaso);
+        setResult(RESULT_OK, data);
     }
 
 }
