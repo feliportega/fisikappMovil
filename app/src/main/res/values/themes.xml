@@ -1,14 +1,24 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
     <style name="Base.Theme.FisikappMovil" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
     </style>
 
     <style name="Theme.App.Splash" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Fondo mientras arranca -->
         <item name="android:windowBackground">@color/colorScreenCompany</item>
     </style>
 
-    <style name="Theme.FisikappMovil" parent="Base.Theme.FisikappMovil" />
+    <style name="Theme.FisikappMovil" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="alertDialogTheme">@style/EstiloDialogoPersonalizado</item>
+    </style>
+
+    <style name="EstiloDialogoPersonalizado" parent="Theme.MaterialComponents.Light.Dialog.Alert">
+        <item name="backgroundColor">#0A1128</item>
+        <item name="colorPrimary">#FFFFFF</item>
+        <item name="android:textColorPrimary">#FFFFFF</item>
+        <item name="android:textColorSecondary">#A0A0A0</item>
+        <item name="shapeAppearanceOverlay">@style/EsquinasRedondeadasDialogo</item>
+    </style>
+
+    <style name="EsquinasRedondeadasDialogo" parent="">
+        <item name="cornerSize">16dp</item>
+    </style>
 </resources>
