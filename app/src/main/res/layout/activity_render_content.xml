@@ -36,7 +36,7 @@
                 android:layout_weight="1"
                 android:ellipsize="end"
                 android:maxLines="2"
-                android:text="Contenido"
+                android:text="Fórmulas"
                 android:textColor="#FFFFFF"
                 android:textSize="18sp"
                 android:textStyle="bold" />
@@ -52,11 +52,14 @@
             <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="20dp">
+                android:paddingTop="20dp"
+                android:paddingBottom="20dp">
 
                 <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginEnd="20dp"
                     app:cardBackgroundColor="#FFFFFF"
                     app:cardCornerRadius="24dp"
                     app:cardElevation="4dp"
@@ -68,7 +71,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        android:padding="24dp" />
+                        android:padding="24dp" >
+
+                    </LinearLayout>
 
                 </androidx.cardview.widget.CardView>
 
@@ -82,7 +87,7 @@
             android:layout_height="54dp"
             android:layout_margin="16dp"
             android:backgroundTint="@color/colorAdvertencia"
-            android:text="Continuar"
+            android:text="Regresar"
             android:textAllCaps="false"
             android:textColor="@color/black"
             android:textSize="16sp"
