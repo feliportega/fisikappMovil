@@ -18,11 +18,10 @@ import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-// Importaciones corregidas de Material 3 y tu Helper del paquete model
 import com.google.android.material.imageview.ShapeableImageView;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder; // Importación para los nuevos diálogos
 import com.marcos.fisikappmovil.model.ImagePickerHelper;
 
 import com.marcos.fisikappmovil.R;
@@ -44,7 +43,6 @@ public class Perfil_del_estudiante extends AppCompatActivity implements ImagePic
     private ActivityResultLauncher<Intent> enrollLauncher;
     private ImageView btnBack;
 
-    // Se unificó usando tu ShapeableImageView de Material 3
     private ShapeableImageView imgPerfil;
     private ImageView btnCambiarFoto;
 
@@ -78,17 +76,13 @@ public class Perfil_del_estudiante extends AppCompatActivity implements ImagePic
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_perfil_del_estudiante);
 
-        // 1. Inicializar vistas básicas y del picker
         imgPerfil = findViewById(R.id.imgPerfil);
         btnCambiarFoto = findViewById(R.id.btnCambiarFoto);
 
-        // 2. Inicializar Helper pasando esta clase como Listener
         imagePickerHelper = new ImagePickerHelper(this, this);
 
-        // 3. Inicializar los Launchers de Cámara y Galería
         setupActivityResultLaunchers();
 
-        // 4. Configurar el click en el botón de cambiar foto
         btnCambiarFoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -96,7 +90,6 @@ public class Perfil_del_estudiante extends AppCompatActivity implements ImagePic
             }
         });
 
-        // 5. Inicializaciones previas de tu proyecto
         initDependencies();
         initViews();
         initLaunchers();
@@ -104,8 +97,8 @@ public class Perfil_del_estudiante extends AppCompatActivity implements ImagePic
         cargarPerfil();
     }
 
+
     private void setupActivityResultLaunchers() {
-        // Inicializa el lanzador para abrir y procesar la Galería
         galleryLauncher = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
                 new ActivityResultCallback<ActivityResult>() {
@@ -113,13 +106,12 @@ public class Perfil_del_estudiante extends AppCompatActivity implements ImagePic
                     public void onActivityResult(ActivityResult result) {
                         if (result.getResultCode() == RESULT_OK && result.getData() != null) {
                             Uri imageUri = result.getData().getData();
-                            imgPerfil.setImageURI(imageUri); // Asigna la URI de la imagen seleccionada
+                            imgPerfil.setImageURI(imageUri);
                         }
                     }
                 }
         );
 
-        // Inicializa el lanzador para abrir y procesar la Cámara
         cameraLauncher = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
                 new ActivityResultCallback<ActivityResult>() {
@@ -128,14 +120,12 @@ public class Perfil_del_estudiante extends AppCompatActivity implements ImagePic
                         if (result.getResultCode() == RESULT_OK && result.getData() != null) {
                             Bundle extras = result.getData().getExtras();
                             Bitmap imageBitmap = (Bitmap) extras.get("data");
-                            imgPerfil.setImageBitmap(imageBitmap); // Asigna la miniatura de la foto capturada
+                            imgPerfil.setImageBitmap(imageBitmap);
                         }
                     }
                 }
         );
     }
-
-    // --- Implementación obligatoria de los métodos de ImagePickerHelper.ImagePickerListener ---
 
     @Override
     public void onGallerySelected() {
@@ -149,7 +139,6 @@ public class Perfil_del_estudiante extends AppCompatActivity implements ImagePic
         cameraLauncher.launch(intent);
     }
 
-    // --- Gestión de la respuesta a la solicitud del permiso de cámara ---
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -170,8 +159,6 @@ public class Perfil_del_estudiante extends AppCompatActivity implements ImagePic
 
     private void initViews() {
         btnBack = findViewById(R.id.btnBack);
-        // Removido el duplicado innecesario de imgPerfil que sobreescribía la inicialización previa
-
         tvNombrePerfil = findViewById(R.id.tvNombrePerfil);
         tvRolInstitucion = findViewById(R.id.tvRolInstitucion);
         tvCorreoPerfil = findViewById(R.id.tvCorreoPerfil);
@@ -252,7 +239,8 @@ public class Perfil_del_estudiante extends AppCompatActivity implements ImagePic
         }
 
         if (FaceVault.hasEmbedding(this)) {
-            new AlertDialog.Builder(this)
+            // CORREGIDO: Diálogo 1 de Material
+            new MaterialAlertDialogBuilder(this)
                     .setTitle("Rostro ya registrado")
                     .setMessage("Ya existe un rostro guardado en este dispositivo. ¿Deseas reemplazarlo?")
                     .setPositiveButton("Sí, reemplazar", (dialog, which) -> iniciarConsentimientoOEnroll())
@@ -342,7 +330,7 @@ public class Perfil_del_estudiante extends AppCompatActivity implements ImagePic
 
             if (result.isSuccess()) {
                 perfilActual = result.getData();
-                Toast.makeText(this, "Rostro synchronized correctamente", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Rostro sincronizado correctamente", Toast.LENGTH_SHORT).show();
                 actualizarEstadoFacial(perfilActual);
                 mostrarDialogoConfirmarPassword();
             } else {
@@ -367,7 +355,8 @@ public class Perfil_del_estudiante extends AppCompatActivity implements ImagePic
         inputPassword.setSingleLine(true);
         inputPassword.setPadding(40, 20, 40, 20);
 
-        androidx.appcompat.app.AlertDialog dialog = new androidx.appcompat.app.AlertDialog.Builder(this)
+        // CORREGIDO: Diálogo 2 usando MaterialAlertDialogBuilder completo y sin errores de sintaxis
+        androidx.appcompat.app.AlertDialog dialog = new MaterialAlertDialogBuilder(this)
                 .setTitle("Activar ingreso facial")
                 .setMessage("Confirma tu contraseña para activar el ingreso facial rápido en este dispositivo.")
                 .setView(inputPassword)
@@ -463,7 +452,8 @@ public class Perfil_del_estudiante extends AppCompatActivity implements ImagePic
     }
 
     private void confirmarDesactivarRostro() {
-        new AlertDialog.Builder(this)
+        // CORREGIDO: Diálogo 3 de Material
+        new MaterialAlertDialogBuilder(this)
                 .setTitle("Desactivar reconocimiento facial")
                 .setMessage("Se eliminará el rostro guardado en este dispositivo y se desactivará el acceso facial en tu cuenta.")
                 .setPositiveButton("Desactivar", (dialog, which) -> desactivarRostro())
@@ -500,7 +490,8 @@ public class Perfil_del_estudiante extends AppCompatActivity implements ImagePic
     }
 
     private void confirmarCerrarSesion() {
-        new AlertDialog.Builder(this)
+        // CORREGIDO: Diálogo 4 de Material
+        new MaterialAlertDialogBuilder(this)
                 .setTitle("Cerrar sesión")
                 .setMessage("¿Deseas cerrar tu sesión actual?")
                 .setPositiveButton("Cerrar sesión", (dialog, which) -> cerrarSesion())

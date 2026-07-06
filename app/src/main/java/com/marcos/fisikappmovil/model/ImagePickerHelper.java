@@ -5,9 +5,12 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
-import androidx.appcompat.app.AlertDialog;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+
+// Importación corregida para usar los diálogos modernos de Material 3
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.marcos.fisikappmovil.ui.Notificacion;
 
 public class ImagePickerHelper {
 
@@ -29,7 +32,8 @@ public class ImagePickerHelper {
     public void showImagePickerDialog() {
         CharSequence[] options = {"Tomar foto", "Elegir de galería", "Cancelar"};
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        // CORREGIDO: Ahora usa MaterialAlertDialogBuilder para heredar la estética de Fisikapp
+        MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(context);
         builder.setTitle("Cambiar foto de perfil");
         builder.setItems(options, new DialogInterface.OnClickListener() {
             @Override
