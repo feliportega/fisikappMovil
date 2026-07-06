@@ -1,5 +1,8 @@
 package com.marcos.fisikappmovil.ui.MonitorDeAprendizajeEstudiante;
 
+import static java.security.AccessController.getContext;
+
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -150,11 +153,21 @@ public class EnvioEntregaLaboratorioActivity extends AppCompatActivity {
             return;
         }
 
-        new androidx.appcompat.app.AlertDialog.Builder(this)
+        new com.google.android.material.dialog.MaterialAlertDialogBuilder(EnvioEntregaLaboratorioActivity.this)
                 .setTitle("Enviar entrega")
                 .setMessage("La entrega quedará guardada localmente. La sincronización final dependerá del backend.")
-                .setPositiveButton("Guardar entrega", (dialog, which) -> simularEnvio())
-                .setNegativeButton("Cancelar", null)
+                .setPositiveButton("Guardar entrega", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                })
+                .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                })
                 .show();
     }
 

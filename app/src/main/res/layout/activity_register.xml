@@ -9,51 +9,40 @@
     android:orientation="vertical"
     tools:context=".ui.Autenticacion.Register">
 
-    <!-- Sección Superior con Logo -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="0.8"
+        android:layout_weight="1.0"
         android:gravity="center"
         android:orientation="vertical"
         android:padding="24dp">
 
         <ImageView
-            android:layout_width="120dp"
-            android:layout_height="120dp"
-            android:src="@drawable/logo"
+            android:layout_width="140dp"
+            android:layout_height="140dp"
+            android:src="@drawable/vector_main_logo"
             android:contentDescription="Logo Fisikapp" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="Fisikapp"
-            android:textColor="@color/white"
-            android:textSize="32sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
+            android:layout_marginTop="6dp"
             android:text="Registro - Crear cuenta"
-            android:textColor="#D1D5DB"
-            android:textSize="18sp"
+            android:textColor="#E2E8F0"
+            android:textSize="20sp"
             android:textAlignment="center" />
     </LinearLayout>
 
-    <!-- Tarjeta de Registro con Fondo Degradado Verde/Cian (Estilo Figma) -->
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="2.4"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginBottom="-20dp"
-        app:cardBackgroundColor="#3EDBA0"
-        app:cardCornerRadius="24dp"
-        app:cardElevation="0dp">
+        android:layout_weight="2.2"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="32dp"
+        app:cardBackgroundColor="#FFFFFFFF"
+        app:cardCornerRadius="32dp"
+        app:cardElevation="6dp">
 
         <ScrollView
             android:layout_width="match_parent"
@@ -63,126 +52,122 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:padding="24dp">
+                android:padding="28dp">
 
-                <!-- Campo Nombre -->
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Nombre completo"
-                    android:textColor="#064E3B"
+                    android:textColor="#475569"
                     android:textStyle="bold"
-                    android:textSize="14sp" />
+                    android:textSize="15sp" />
                 <EditText
                     android:id="@+id/edtNombrecompleto"
                     android:layout_width="match_parent"
-                    android:layout_height="52dp"
-                    android:layout_marginTop="8dp"
-                    android:background="@drawable/edittext_redondo"
+                    android:layout_height="56dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/edittext_moderno"
                     android:backgroundTint="@color/white"
                     android:drawableStart="@drawable/iconousuario"
-                    android:drawablePadding="12dp"
+                    android:drawablePadding="14dp"
                     android:hint="cristian eduardo"
-                    android:paddingStart="16dp"
-                    android:paddingEnd="16dp"
-                    android:textSize="14sp" />
+                    android:paddingStart="20dp"
+                    android:paddingEnd="20dp"
+                    android:textSize="15sp" />
 
-                <!-- Campo Correo -->
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
+                    android:layout_marginTop="18dp"
                     android:text="Correo electrónico"
-                    android:textColor="#064E3B"
+                    android:textColor="#475569"
                     android:textStyle="bold"
-                    android:textSize="14sp" />
+                    android:textSize="15sp" />
                 <EditText
                     android:id="@+id/editTextText"
                     android:layout_width="match_parent"
-                    android:layout_height="52dp"
-                    android:layout_marginTop="8dp"
-                    android:background="@drawable/edittext_redondo"
+                    android:layout_height="56dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/edittext_moderno"
                     android:backgroundTint="@color/white"
                     android:drawableStart="@drawable/ci_email"
-                    android:drawablePadding="12dp"
+                    android:drawablePadding="14dp"
                     android:hint="cristian@soy.sena.com"
                     android:inputType="textEmailAddress"
-                    android:paddingStart="16dp"
-                    android:paddingEnd="16dp"
-                    android:textSize="14sp" />
+                    android:paddingStart="20dp"
+                    android:paddingEnd="20dp"
+                    android:textSize="15sp" />
 
-                <!-- Campo Contraseña -->
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
+                    android:layout_marginTop="18dp"
                     android:text="Contraseña"
-                    android:textColor="#064E3B"
+                    android:textColor="#475569"
                     android:textStyle="bold"
-                    android:textSize="14sp" />
+                    android:textSize="15sp" />
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="52dp"
-                    android:layout_marginTop="8dp">
+                    android:layout_height="56dp"
+                    android:layout_marginTop="10dp">
                     <EditText
                         android:id="@+id/editText"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:background="@drawable/edittext_redondo"
+                        android:background="@drawable/edittext_moderno"
                         android:backgroundTint="@color/white"
                         android:drawableStart="@drawable/baseline_lock_24"
-                        android:drawablePadding="12dp"
+                        android:drawablePadding="14dp"
                         android:hint="........."
                         android:inputType="textPassword"
-                        android:paddingStart="16dp"
-                        android:paddingEnd="48dp"
-                        android:textSize="14sp" />
+                        android:paddingStart="20dp"
+                        android:paddingEnd="56dp"
+                        android:textSize="15sp" />
                     <ImageView
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
+                        android:layout_width="28dp"
+                        android:layout_height="28dp"
                         android:layout_alignParentEnd="true"
                         android:layout_centerVertical="true"
-                        android:layout_marginEnd="16dp"
+                        android:layout_marginEnd="18dp"
                         android:src="@android:drawable/ic_menu_view"
-                        app:tint="#64748B" />
+                        app:tint="#94A3B8" />
                 </RelativeLayout>
 
-                <!-- Confirmar Contraseña -->
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
+                    android:layout_marginTop="18dp"
                     android:text="Confirmar contraseña"
-                    android:textColor="#064E3B"
+                    android:textColor="#475569"
                     android:textStyle="bold"
-                    android:textSize="14sp" />
+                    android:textSize="15sp" />
                 <EditText
                     android:id="@+id/edtConfirmarcont"
                     android:layout_width="match_parent"
-                    android:layout_height="52dp"
-                    android:layout_marginTop="8dp"
-                    android:background="@drawable/edittext_redondo"
+                    android:layout_height="56dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/edittext_moderno"
                     android:backgroundTint="@color/white"
                     android:drawableStart="@drawable/baseline_lock_24"
-                    android:drawablePadding="12dp"
+                    android:drawablePadding="14dp"
                     android:hint="........."
                     android:inputType="textPassword"
-                    android:paddingStart="16dp"
-                    android:paddingEnd="16dp"
-                    android:textSize="14sp" />
+                    android:paddingStart="20dp"
+                    android:paddingEnd="20dp"
+                    android:textSize="15sp" />
 
-                <!-- Botón Crear Cuenta -->
                 <Button
                     android:id="@+id/btnCrearCuenta"
                     android:layout_width="match_parent"
-                    android:layout_height="56dp"
-                    android:layout_marginTop="24dp"
-                    android:backgroundTint="@color/colorPrimario"
+                    android:layout_height="60dp"
+                    android:layout_marginTop="32dp"
+                    android:backgroundTint="@color/white"
                     android:text="Crear cuenta ->"
                     android:textAllCaps="false"
-                    android:textColor="@color/white"
-                    android:textSize="16sp"
-                    app:cornerRadius="12dp" />
+                    android:textColor="@color/colorPrimario"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    app:cornerRadius="16dp" />
 
                 <View
                     android:layout_width="match_parent"
@@ -192,17 +177,16 @@
         </ScrollView>
     </androidx.cardview.widget.CardView>
 
-    <!-- Footer -->
     <TextView
         android:id="@+id/btnYaTienesCuenta"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="20dp"
-        android:layout_marginBottom="24dp"
+        android:layout_marginBottom="28dp"
         android:text="¿Ya tienes cuenta? Inicia sesión"
-        android:textColor="@color/white"
-        android:textSize="14sp"
+        android:textColor="@color/colorAdvertencia"
+        android:textSize="15sp"
         android:textStyle="bold" />
 
 </LinearLayout>
