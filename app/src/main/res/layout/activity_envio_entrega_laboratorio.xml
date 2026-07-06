@@ -16,23 +16,23 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <!-- HEADER -->
+            <!-- HEADER CON BORDES INFERIORES REDONDEADOS -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="150dp"
-                android:background="#001B6B"
+                android:background="@drawable/bg_toolbar_rounded"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
                 android:padding="20dp">
 
                 <ImageView
                     android:id="@+id/btnBackEnvioEntrega"
-                    android:layout_width="38dp"
-                    android:layout_height="38dp"
-                    android:background="@drawable/white_circle"
-                    android:padding="8dp"
-                    android:src="@drawable/iconoretroceder"
-                    app:tint="#001B6B" />
+                    android:layout_width="42dp"
+                    android:layout_height="42dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:src="@drawable/outline_arrow_circle_left_24"
+                    app:tint="#DCFBFF"  />
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -61,21 +61,20 @@
 
             </LinearLayout>
 
-            <!-- CONTENIDO -->
+            <!-- CONTENIDO FLUIDO EN TARJETAS ESTILIZADAS -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="-22dp"
-                android:background="@android:color/white"
                 android:orientation="vertical"
-                android:padding="22dp">
+                android:padding="20dp">
 
+                <!-- ESTADO: LISTA PARA ENVIAR (Verde Suave) -->
                 <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:cardBackgroundColor="#ECFDF5"
-                    app:cardCornerRadius="18dp"
-                    app:cardElevation="0dp">
+                    app:cardCornerRadius="24dp"
+                    app:cardElevation="4dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -105,13 +104,14 @@
 
                 </androidx.cardview.widget.CardView>
 
+                <!-- RESUMEN (Tarjeta Blanca Elegante) -->
                 <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="18dp"
-                    app:cardBackgroundColor="#F1F5F9"
-                    app:cardCornerRadius="18dp"
-                    app:cardElevation="0dp">
+                    android:layout_marginTop="16dp"
+                    app:cardBackgroundColor="#FFFFFF"
+                    app:cardCornerRadius="24dp"
+                    app:cardElevation="4dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -141,13 +141,14 @@
 
                 </androidx.cardview.widget.CardView>
 
+                <!-- AVISO (Tarjeta de Advertencia Suave) -->
                 <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="18dp"
-                    app:cardBackgroundColor="#FFF9C4"
-                    app:cardCornerRadius="18dp"
-                    app:cardElevation="0dp">
+                    android:layout_marginTop="16dp"
+                    app:cardBackgroundColor="#FFFDE7"
+                    app:cardCornerRadius="24dp"
+                    app:cardElevation="4dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -176,17 +177,20 @@
 
                 </androidx.cardview.widget.CardView>
 
+                <!-- BOTÓN PRINCIPAL ESTILO PÍLDORA -->
                 <Button
                     android:id="@+id/btnEnviarEntrega"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="24dp"
-                    android:backgroundTint="#001B6B"
-                    android:padding="14dp"
+                    android:layout_height="54dp"
+                    android:layout_marginTop="28dp"
+                    android:layout_marginBottom="12dp"
+                    android:backgroundTint="@color/colorAdvertencia"
                     android:text="Enviar entrega"
                     android:textAllCaps="false"
-                    android:textColor="@android:color/white"
-                    android:textSize="15sp" />
+                    android:textColor="@android:color/black"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    app:cornerRadius="27dp" />
 
             </LinearLayout>
         </LinearLayout>

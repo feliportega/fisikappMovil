@@ -22,12 +22,12 @@
 
             <ImageView
                 android:id="@+id/btnBackComparacion"
-                android:layout_width="38dp"
-                android:layout_height="38dp"
-                android:background="@drawable/white_circle"
-                android:padding="8dp"
-                android:src="@drawable/iconoretroceder"
-                app:tint="#001B6B" />
+                android:layout_width="42dp"
+                android:layout_height="42dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:src="@drawable/outline_arrow_circle_left_24"
+                app:tint="#DCFBFF" />
 
             <LinearLayout
                 android:layout_width="0dp"

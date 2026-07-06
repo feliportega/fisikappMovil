@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     android:background="#F8FAFC">
 
     <ScrollView
@@ -17,23 +18,22 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <!-- HEADER -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="160dp"
-                android:background="#001B6B"
+                android:background="@drawable/bg_toolbar_rounded"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
                 android:padding="20dp">
 
                 <ImageView
                     android:id="@+id/btnBackSimulacionAr"
-                    android:layout_width="38dp"
-                    android:layout_height="38dp"
-                    android:background="@drawable/white_circle"
-                    android:padding="8dp"
-                    android:src="@drawable/iconoretroceder"
-                    app:tint="#001B6B" />
+                    android:layout_width="42dp"
+                    android:layout_height="42dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:src="@drawable/outline_arrow_circle_left_24"
+                    app:tint="#DCFBFF"  />
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -63,20 +63,17 @@
 
             </LinearLayout>
 
-            <!-- CONTENIDO -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="-22dp"
-                android:background="@android:color/white"
                 android:orientation="vertical"
-                android:padding="22dp">
+                android:padding="20dp">
 
-                <!-- TÍTULO INTRODUCTORIO -->
                 <TextView
                     android:id="@+id/tvSubtituloAr"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
                     android:text="Práctica AR"
                     android:textColor="#001B6B"
                     android:textSize="19sp"
@@ -86,27 +83,27 @@
                     android:id="@+id/tvDescripcionAr"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginStart="4dp"
+                    android:layout_marginTop="8dp"
                     android:lineSpacingExtra="4dp"
                     android:text="Cargando descripción de la simulación..."
                     android:textColor="#334155"
                     android:textSize="14sp" />
 
-                <!-- FÓRMULA -->
                 <androidx.cardview.widget.CardView
                     android:id="@+id/cardFormulaAr"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="18dp"
-                    app:cardBackgroundColor="#F1F5F9"
-                    app:cardCornerRadius="16dp"
-                    app:cardElevation="0dp">
+                    android:layout_marginTop="20dp"
+                    app:cardBackgroundColor="#FFFFFF"
+                    app:cardCornerRadius="24dp"
+                    app:cardElevation="4dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        android:padding="18dp">
+                        android:padding="20dp">
 
                         <TextView
                             android:id="@+id/tvFormulaTitleAr"
@@ -121,28 +118,27 @@
                             android:id="@+id/webFormulaAr"
                             android:layout_width="match_parent"
                             android:layout_height="95dp"
-                            android:layout_marginTop="6dp"
-                            android:background="@android:color/transparent" />
-
+                            android:layout_marginTop="8dp"
+                            android:background="@android:color/transparent"
+                            tools:ignore="WebViewLayout" />
                     </LinearLayout>
 
                 </androidx.cardview.widget.CardView>
 
-                <!-- INSTRUCCIONES -->
                 <androidx.cardview.widget.CardView
                     android:id="@+id/cardInstructionsAr"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="18dp"
-                    app:cardBackgroundColor="#F8FAFC"
-                    app:cardCornerRadius="16dp"
-                    app:cardElevation="0dp">
+                    android:layout_marginTop="16dp"
+                    app:cardBackgroundColor="#FFFFFF"
+                    app:cardCornerRadius="24dp"
+                    app:cardElevation="4dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        android:padding="16dp">
+                        android:padding="20dp">
 
                         <TextView
                             android:id="@+id/tvInstructionsTitleAr"
@@ -164,21 +160,20 @@
 
                 </androidx.cardview.widget.CardView>
 
-                <!-- ESTADO AR -->
                 <androidx.cardview.widget.CardView
                     android:id="@+id/cardEstadoAr"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="18dp"
-                    app:cardBackgroundColor="#FFF9C4"
-                    app:cardCornerRadius="16dp"
-                    app:cardElevation="0dp">
+                    android:layout_marginTop="16dp"
+                    app:cardBackgroundColor="#FFFDE7"
+                    app:cardCornerRadius="24dp"
+                    app:cardElevation="3dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        android:padding="18dp">
+                        android:padding="20dp">
 
                         <TextView
                             android:id="@+id/tvIntentosAr"
@@ -193,7 +188,7 @@
                             android:id="@+id/tvObjetivoAr"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="10dp"
+                            android:layout_marginTop="8dp"
                             android:lineSpacingExtra="4dp"
                             android:text="Cargando estado de la práctica AR..."
                             android:textColor="#475569"
@@ -206,14 +201,16 @@
                 <Button
                     android:id="@+id/btnIniciarAr"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="24dp"
-                    android:backgroundTint="#001B6B"
-                    android:padding="14dp"
+                    android:layout_height="54dp"
+                    android:layout_marginTop="28dp"
+                    android:layout_marginBottom="12dp"
+                    android:backgroundTint="@color/colorAdvertencia"
                     android:text="Iniciar práctica AR"
                     android:textAllCaps="false"
-                    android:textColor="@android:color/white"
-                    android:textSize="15sp" />
+                    android:textColor="@android:color/black"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    app:cornerRadius="27dp" />
 
             </LinearLayout>
 

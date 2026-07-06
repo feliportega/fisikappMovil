@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#F8FAFC">
@@ -12,21 +13,20 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="72dp"
-            android:background="#001B6B"
+            android:background="@drawable/bg_toolbar_rounded"
             android:gravity="center_vertical"
             android:orientation="horizontal"
             android:paddingStart="16dp"
             android:paddingEnd="16dp">
 
-            <TextView
+            <ImageView
                 android:id="@+id/btnBack"
                 android:layout_width="42dp"
                 android:layout_height="42dp"
-                android:gravity="center"
-                android:text="‹"
-                android:textColor="#FFFFFF"
-                android:textSize="34sp"
-                android:textStyle="bold" />
+                android:clickable="true"
+                android:focusable="true"
+                android:src="@drawable/outline_arrow_circle_left_24"
+                app:tint="#DCFBFF"  />
 
             <TextView
                 android:id="@+id/tvRenderTitle"
@@ -49,12 +49,30 @@
             android:layout_weight="1"
             android:fillViewport="true">
 
-            <LinearLayout
-                android:id="@+id/layoutRenderContent"
+            <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="16dp" />
+                android:padding="20dp">
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:cardBackgroundColor="#FFFFFF"
+                    app:cardCornerRadius="24dp"
+                    app:cardElevation="4dp"
+                    app:cardMaxElevation="6dp"
+                    app:cardPreventCornerOverlap="true">
+
+                    <LinearLayout
+                        android:id="@+id/layoutRenderContent"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="24dp" />
+
+                </androidx.cardview.widget.CardView>
+
+            </FrameLayout>
 
         </ScrollView>
 
@@ -63,12 +81,13 @@
             android:layout_width="match_parent"
             android:layout_height="54dp"
             android:layout_margin="16dp"
-            android:backgroundTint="#001B6B"
+            android:backgroundTint="@color/colorAdvertencia"
             android:text="Continuar"
             android:textAllCaps="false"
-            android:textColor="#FFFFFF"
+            android:textColor="@color/black"
             android:textSize="16sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            app:cornerRadius="27dp" />
 
     </LinearLayout>
 

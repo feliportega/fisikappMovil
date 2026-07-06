@@ -2,6 +2,7 @@ package com.marcos.fisikappmovil.ui.Laboratorio;
 
 import android.os.Bundle;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.graphics.Typeface;
@@ -32,7 +33,7 @@ public class RenderContentActivity extends AppCompatActivity {
     public static final String EXTRA_STEP_ID = "step_id";
     public static final String EXTRA_STEP_TITLE = "step_title";
 
-    private TextView btnBack;
+    private ImageView btnBack;
     private TextView tvRenderTitle;
     private LinearLayout layoutRenderContent;
     private Button btnCompleteStep;
