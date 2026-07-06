@@ -50,8 +50,8 @@ public class GrupoAcademicoAdapter extends RecyclerView.Adapter<GrupoAcademicoAd
                         + grupo.getPendientes() + " pendientes"
         );
 
-        holder.tvPendientes.setText("Pendientes: " + grupo.getPendientes());
-        holder.tvEntregadas.setText("Entregadas: " + grupo.getEntregadas());
+        holder.tvPendientes.setText(String.valueOf(grupo.getPendientes()));
+        holder.tvEntregadas.setText(String.valueOf(grupo.getEntregadas()));
 
         holder.btnVerGrupo.setOnClickListener(v -> {
             if (listener != null) {
