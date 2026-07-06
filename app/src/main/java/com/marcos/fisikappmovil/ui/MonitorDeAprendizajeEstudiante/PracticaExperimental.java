@@ -21,6 +21,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.marcos.fisikappmovil.R;
 import com.marcos.fisikappmovil.data.session.LaboratorioSessionStore;
+import com.marcos.fisikappmovil.ui.common.StepCompletionOverlay;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -79,23 +80,15 @@ public class PracticaExperimental extends AppCompatActivity {
 
         readExtras();
         initViews();
+
         cargarEvidenciasGuardadas();
         cargarExpectedInputsGuardados();
         cargarPracticaExperimentalDesdeJson();
+
         renderEvidencias();
+
         initListeners();
-
-        /*readExtras();
-        initViews();
-
-        cargarPracticaExperimentalDesdeJson();
-
-        cargarEvidenciasGuardadas();
-        cargarExpectedInputsGuardados();
-
-        renderEvidencias();
-
-        initListeners();*/
+        configurarModoPantalla();
     }
 
     private void readExtras() {
@@ -129,7 +122,12 @@ public class PracticaExperimental extends AppCompatActivity {
         }
 
         if (layoutAgregarEvidencia != null) {
-            layoutAgregarEvidencia.setOnClickListener(v -> mostrarOpcionesEvidencia());
+            layoutAgregarEvidencia.setOnClickListener(v -> {
+                if (modoSoloLectura()){
+                    return;
+                }
+                mostrarOpcionesEvidencia();
+            });
         }
 
         if (btnContinuar != null) {
@@ -427,6 +425,11 @@ public class PracticaExperimental extends AppCompatActivity {
         return true;
     }
     private void completarPaso() {
+        if (modoSoloLectura()) {
+            finish();
+            return;
+        }
+
         if (!validarExpectedInputs()) {
             return;
         }
@@ -436,8 +439,11 @@ public class PracticaExperimental extends AppCompatActivity {
 
         Intent data = new Intent();
         data.putExtra(PasosLaboratorio.EXTRA_ORDEN_PASO, ordenPaso);
-        setResult(RESULT_OK, data);
-        finish();
+
+        StepCompletionOverlay.show(this, () -> {
+            setResult(RESULT_OK, data);
+            finish();
+        });
     }
 
     private void cargarPracticaExperimentalDesdeJson() {
@@ -798,6 +804,67 @@ public class PracticaExperimental extends AppCompatActivity {
     private int dpToPx(int dp) {
         float density = getResources().getDisplayMetrics().density;
         return Math.round(dp * density);
+    }
+
+    private void configurarModoPantalla() {
+        if (modoSoloLectura()) {
+            btnContinuar.setText("Regresar");
+
+            setEditableRecursive(layoutExpectedInputsContainer, false);
+
+            if (layoutAgregarEvidencia != null) {
+                layoutAgregarEvidencia.setEnabled(false);
+                layoutAgregarEvidencia.setAlpha(0.45f);
+                layoutAgregarEvidencia.setVisibility(View.GONE);
+            }
+
+        } else {
+            btnContinuar.setText("Guardar y continuar");
+
+            setEditableRecursive(layoutExpectedInputsContainer, true);
+
+            if (layoutAgregarEvidencia != null) {
+                layoutAgregarEvidencia.setEnabled(true);
+                layoutAgregarEvidencia.setAlpha(1f);
+                layoutAgregarEvidencia.setVisibility(View.VISIBLE);
+            }
+        }
+    }
+
+    // Helper
+    private void setEditableRecursive(View view, boolean enabled) {
+        if (view instanceof EditText) {
+            EditText editText = (EditText) view;
+            editText.setEnabled(enabled);
+            editText.setFocusable(enabled);
+            editText.setFocusableInTouchMode(enabled);
+            editText.setCursorVisible(enabled);
+            return;
+        }
+
+        if (view instanceof ViewGroup) {
+            ViewGroup group = (ViewGroup) view;
+
+            for (int i = 0; i < group.getChildCount(); i++) {
+                setEditableRecursive(group.getChildAt(i), enabled);
+            }
+        }
+    }
+
+    // Helper de estado
+    private boolean pasoYaCompletado() {
+        return asignacionId > 0
+                && ordenPaso > 0
+                && sessionStore.estaPasoCompletado(asignacionId, ordenPaso);
+    }
+
+    private boolean laboratorioYaEntregado() {
+        return asignacionId > 0
+                && sessionStore.isEntregaEnviada(asignacionId);
+    }
+
+    private boolean modoSoloLectura() {
+        return pasoYaCompletado() || laboratorioYaEntregado();
     }
 
 }

@@ -19,6 +19,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.marcos.fisikappmovil.R;
 import com.marcos.fisikappmovil.data.session.LaboratorioSessionStore;
+import com.marcos.fisikappmovil.ui.common.StepCompletionOverlay;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -63,6 +64,7 @@ public class ComparacionResultadosActivity extends AppCompatActivity {
         cargarResumenUnity();
         cargarDatosPracticaExperimental();
         renderComparisonFields();
+        configurarModoPantalla();
     }
 
     private void readExtras() {
@@ -85,6 +87,16 @@ public class ComparacionResultadosActivity extends AppCompatActivity {
         layoutComparisonFieldsContainer = findViewById(R.id.layoutComparisonFieldsContainer);
 
         btnGuardarComparacion = findViewById(R.id.btnGuardarComparacion);
+    }
+
+    private void configurarModoPantalla() {
+        if (modoSoloLectura()) {
+            btnGuardarComparacion.setText("Regresar");
+            setEditableRecursive(layoutComparisonFieldsContainer, false);
+        } else {
+            btnGuardarComparacion.setText("Guardar comparación");
+            setEditableRecursive(layoutComparisonFieldsContainer, true);
+        }
     }
 
     private void initListeners() {
@@ -362,6 +374,7 @@ public class ComparacionResultadosActivity extends AppCompatActivity {
         layoutComparisonFieldsContainer.addView(editText);
     }
 
+    /*
     private void guardarAnalisisYCompletar() {
         if (!validarComparisonFields()) {
             return;
@@ -375,6 +388,28 @@ public class ComparacionResultadosActivity extends AppCompatActivity {
         data.putExtra(PasosLaboratorio.EXTRA_ORDEN_PASO, ordenPaso);
         setResult(RESULT_OK, data);
         finish();
+    }
+     */
+
+    private void guardarAnalisisYCompletar() {
+        if (modoSoloLectura()) {
+            finish();
+            return;
+        }
+
+        if (!validarComparisonFields()) {
+            return;
+        }
+
+        guardarComparisonFields();
+
+        Intent data = new Intent();
+        data.putExtra(PasosLaboratorio.EXTRA_ORDEN_PASO, ordenPaso);
+
+        StepCompletionOverlay.show(this, () -> {
+            setResult(RESULT_OK, data);
+            finish();
+        });
     }
 
     private boolean validarComparisonFields() {
@@ -505,4 +540,40 @@ public class ComparacionResultadosActivity extends AppCompatActivity {
     private String formatMetro(double value) {
         return String.format(java.util.Locale.US, "%.2f m", value);
     }
+
+    private void setEditableRecursive(View view, boolean enabled) {
+        if (view instanceof EditText) {
+            EditText editText = (EditText) view;
+            editText.setEnabled(enabled);
+            editText.setFocusable(enabled);
+            editText.setFocusableInTouchMode(enabled);
+            editText.setCursorVisible(enabled);
+            return;
+        }
+
+        if (view instanceof ViewGroup) {
+            ViewGroup group = (ViewGroup) view;
+
+            for (int i = 0; i < group.getChildCount(); i++) {
+                setEditableRecursive(group.getChildAt(i), enabled);
+            }
+        }
+    }
+
+    // Helper de estado
+    private boolean pasoYaCompletado() {
+        return asignacionId > 0
+                && ordenPaso > 0
+                && sessionStore.estaPasoCompletado(asignacionId, ordenPaso);
+    }
+
+    private boolean laboratorioYaEntregado() {
+        return asignacionId > 0
+                && sessionStore.isEntregaEnviada(asignacionId);
+    }
+
+    private boolean modoSoloLectura() {
+        return pasoYaCompletado() || laboratorioYaEntregado();
+    }
+
 }

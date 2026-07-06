@@ -22,6 +22,7 @@ import com.marcos.fisikappmovil.model.RenderBlockItem;
 import com.marcos.fisikappmovil.remote.response.MobileResourceResponse;
 import com.marcos.fisikappmovil.remote.response.MobileStepResponse;
 import com.marcos.fisikappmovil.ui.MonitorDeAprendizajeEstudiante.PasosLaboratorio;
+import com.marcos.fisikappmovil.ui.common.StepCompletionOverlay;
 
 import java.util.List;
 
@@ -37,6 +38,7 @@ public class RenderContentActivity extends AppCompatActivity {
     private Button btnCompleteStep;
 
     private int assignmentId;
+    private int ordenPaso = -1;
     private String stepId;
     private String stepTitle;
 
@@ -45,6 +47,8 @@ public class RenderContentActivity extends AppCompatActivity {
     private final StepRenderMapper mapper = new StepRenderMapper();
 
     private MobileResourceResponse mobileResourceResponse;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +60,9 @@ public class RenderContentActivity extends AppCompatActivity {
         initListeners();
 
         sessionStore = new LaboratorioSessionStore(this);
+
+        configurarBotonFinal();
+        initListeners();
 
         tvRenderTitle.setText(stepTitle == null || stepTitle.trim().isEmpty() ? "Contenido" : stepTitle);
 
@@ -121,6 +128,16 @@ public class RenderContentActivity extends AppCompatActivity {
         Intent intent = getIntent();
 
         assignmentId = intent.getIntExtra(EXTRA_ASSIGNMENT_ID, -1);
+
+        if (assignmentId == -1) {
+            assignmentId = intent.getIntExtra(PasosLaboratorio.EXTRA_ASIGNACION_ID, -1);
+        }
+
+        ordenPaso = intent.getIntExtra(
+                PasosLaboratorio.EXTRA_ORDEN_PASO,
+                -1
+        );
+
         stepId = intent.getStringExtra(EXTRA_STEP_ID);
         stepTitle = intent.getStringExtra(EXTRA_STEP_TITLE);
     }
@@ -136,16 +153,18 @@ public class RenderContentActivity extends AppCompatActivity {
         btnBack.setOnClickListener(v -> finish());
 
         btnCompleteStep.setOnClickListener(v -> {
-            int ordenPaso = getIntent().getIntExtra(
-                    PasosLaboratorio.EXTRA_ORDEN_PASO,
-                    -1
-            );
+            if (modoSoloLectura()) {
+                finish();
+                return;
+            }
 
             Intent result = new Intent();
             result.putExtra(PasosLaboratorio.EXTRA_ORDEN_PASO, ordenPaso);
 
-            setResult(RESULT_OK, result);
-            finish();
+            StepCompletionOverlay.show(this, () -> {
+                setResult(RESULT_OK, result);
+                finish();
+            });
         });
     }
 
@@ -359,5 +378,32 @@ public class RenderContentActivity extends AppCompatActivity {
     private int dpToPx(int dp) {
         float density = getResources().getDisplayMetrics().density;
         return Math.round(dp * density);
+    }
+
+    private boolean pasoYaCompletado() {
+        return assignmentId > 0
+                && ordenPaso > 0
+                && sessionStore.estaPasoCompletado(assignmentId, ordenPaso);
+    }
+
+    private boolean laboratorioYaEntregado() {
+        return assignmentId > 0
+                && sessionStore.isEntregaEnviada(assignmentId);
+    }
+
+    private boolean modoSoloLectura() {
+        return pasoYaCompletado() || laboratorioYaEntregado();
+    }
+
+    private void configurarBotonFinal() {
+        if (btnCompleteStep == null || sessionStore == null) {
+            return;
+        }
+
+        if (modoSoloLectura()) {
+            btnCompleteStep.setText("Regresar");
+        } else {
+            btnCompleteStep.setText("Completar");
+        }
     }
 }
