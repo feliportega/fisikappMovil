@@ -11,23 +11,22 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <!-- HEADER -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="150dp"
-            android:background="#001B6B"
+            android:background="@drawable/bg_toolbar_rounded"
             android:gravity="center_vertical"
             android:orientation="horizontal"
             android:padding="20dp">
 
             <ImageView
                 android:id="@+id/btnBackInformeLab"
-                android:layout_width="38dp"
-                android:layout_height="38dp"
-                android:background="@drawable/white_circle"
-                android:padding="8dp"
-                android:src="@drawable/iconoretroceder"
-                app:tint="#001B6B" />
+                android:layout_width="42dp"
+                android:layout_height="42dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:src="@drawable/outline_arrow_circle_left_24"
+                app:tint="#DCFBFF" />
 
             <LinearLayout
                 android:layout_width="0dp"
@@ -56,20 +55,17 @@
 
         </LinearLayout>
 
-        <!-- CONTENIDO -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="-22dp"
-            android:background="@android:color/white"
             android:orientation="vertical"
-            android:padding="22dp">
+            android:padding="20dp">
 
-            <!-- INFO GENERAL -->
             <TextView
                 android:id="@+id/tvNombreLaboratorioInforme"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
                 android:text="Laboratorio"
                 android:textColor="#001B6B"
                 android:textSize="19sp"
@@ -79,26 +75,26 @@
                 android:id="@+id/tvInfoGeneralInforme"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
                 android:layout_marginTop="6dp"
                 android:lineSpacingExtra="3dp"
                 android:text="Información general del laboratorio"
                 android:textColor="#64748B"
                 android:textSize="14sp" />
 
-            <!-- RESUMEN AR -->
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="18dp"
-                app:cardBackgroundColor="#FFF9C4"
-                app:cardCornerRadius="16dp"
-                app:cardElevation="0dp">
+                android:layout_marginTop="20dp"
+                app:cardBackgroundColor="#FFFDE7"
+                app:cardCornerRadius="24dp"
+                app:cardElevation="4dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:padding="16dp">
+                    android:padding="18dp">
 
                     <TextView
                         android:layout_width="match_parent"
@@ -112,7 +108,7 @@
                         android:id="@+id/tvResumenArInforme"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
+                        android:layout_marginTop="8dp"
                         android:lineSpacingExtra="4dp"
                         android:text="No hay resultado AR guardado."
                         android:textColor="#475569"
@@ -122,20 +118,19 @@
 
             </androidx.cardview.widget.CardView>
 
-            <!-- INTENTOS AR -->
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                app:cardBackgroundColor="#F8FAFC"
-                app:cardCornerRadius="16dp"
-                app:cardElevation="0dp">
+                app:cardBackgroundColor="#FFFFFF"
+                app:cardCornerRadius="24dp"
+                app:cardElevation="4dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:padding="16dp">
+                    android:padding="18dp">
 
                     <TextView
                         android:layout_width="match_parent"
@@ -149,7 +144,7 @@
                         android:id="@+id/tvIntentosArInforme"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
+                        android:layout_marginTop="8dp"
                         android:lineSpacingExtra="4dp"
                         android:text="Sin intentos registrados."
                         android:textColor="#475569"
@@ -159,20 +154,19 @@
 
             </androidx.cardview.widget.CardView>
 
-            <!-- PREGUNTAS -->
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                app:cardBackgroundColor="#F1F5F9"
-                app:cardCornerRadius="16dp"
-                app:cardElevation="0dp">
+                app:cardBackgroundColor="#FFFFFF"
+                app:cardCornerRadius="24dp"
+                app:cardElevation="4dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:padding="16dp">
+                    android:padding="18dp">
 
                     <TextView
                         android:layout_width="match_parent"
@@ -186,7 +180,7 @@
                         android:id="@+id/tvPreguntasInforme"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
+                        android:layout_marginTop="8dp"
                         android:lineSpacingExtra="4dp"
                         android:text="No hay preguntas respondidas."
                         android:textColor="#475569"
@@ -196,21 +190,20 @@
 
             </androidx.cardview.widget.CardView>
 
-            <!-- PRÁCTICA EXPERIMENTAL -->
             <androidx.cardview.widget.CardView
                 android:id="@+id/cardDatosExperimentalesInforme"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                app:cardBackgroundColor="#F8FAFC"
-                app:cardCornerRadius="16dp"
-                app:cardElevation="0dp">
+                app:cardBackgroundColor="#FFFFFF"
+                app:cardCornerRadius="24dp"
+                app:cardElevation="4dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:padding="16dp">
+                    android:padding="18dp">
 
                     <TextView
                         android:layout_width="match_parent"
@@ -224,7 +217,7 @@
                         android:id="@+id/tvDatosExperimentalesInforme"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
+                        android:layout_marginTop="8dp"
                         android:lineSpacingExtra="4dp"
                         android:text="No hay datos experimentales registrados."
                         android:textColor="#475569"
@@ -234,21 +227,20 @@
 
             </androidx.cardview.widget.CardView>
 
-            <!-- COMPARACIÓN -->
             <androidx.cardview.widget.CardView
                 android:id="@+id/cardComparacionInforme"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                app:cardBackgroundColor="#F1F5F9"
-                app:cardCornerRadius="16dp"
-                app:cardElevation="0dp">
+                app:cardBackgroundColor="#FFFFFF"
+                app:cardCornerRadius="24dp"
+                app:cardElevation="4dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:padding="16dp">
+                    android:padding="18dp">
 
                     <TextView
                         android:layout_width="match_parent"
@@ -262,7 +254,7 @@
                         android:id="@+id/tvComparacionInforme"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
+                        android:layout_marginTop="8dp"
                         android:lineSpacingExtra="4dp"
                         android:text="No hay análisis comparativo guardado."
                         android:textColor="#475569"
@@ -272,18 +264,17 @@
 
             </androidx.cardview.widget.CardView>
 
-            <!-- INSTRUCCIONES DEL INFORME -->
             <TextView
                 android:id="@+id/tvReportInstructions"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="22dp"
+                android:layout_marginTop="24dp"
+                android:layout_marginStart="4dp"
                 android:lineSpacingExtra="4dp"
                 android:text="Completa las secciones del informe."
                 android:textColor="#475569"
                 android:textSize="14sp" />
 
-            <!-- SECCIONES DINÁMICAS DEL BACKEND -->
             <LinearLayout
                 android:id="@+id/layoutReportSectionsContainer"
                 android:layout_width="match_parent"
@@ -294,14 +285,16 @@
             <Button
                 android:id="@+id/btnGuardarInforme"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="22dp"
-                android:backgroundTint="#001B6B"
-                android:padding="14dp"
+                android:layout_height="54dp"
+                android:layout_marginTop="28dp"
+                android:layout_marginBottom="12dp"
+                android:backgroundTint="@color/colorAdvertencia"
                 android:text="Guardar informe"
                 android:textAllCaps="false"
-                android:textColor="@android:color/white"
-                android:textSize="15sp" />
+                android:textColor="@android:color/black"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:cornerRadius="27dp" />
 
         </LinearLayout>
 

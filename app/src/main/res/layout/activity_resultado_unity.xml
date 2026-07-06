@@ -14,7 +14,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="150dp"
-            android:background="#001B6B"
+            android:background="@drawable/bg_toolbar_rounded"
             android:gravity="center_vertical"
             android:orientation="vertical"
             android:padding="22dp">
@@ -42,24 +42,22 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="-22dp"
-            android:background="@android:color/white"
             android:orientation="vertical"
-            android:padding="22dp">
+            android:padding="20dp">
 
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:cardBackgroundColor="#ECFDF5"
-                app:cardCornerRadius="16dp"
-                app:cardElevation="0dp">
+                app:cardCornerRadius="24dp"
+                app:cardElevation="4dp">
 
                 <TextView
                     android:id="@+id/txtResumenUnity"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:lineSpacingExtra="5dp"
-                    android:padding="16dp"
+                    android:padding="18dp"
                     android:text="Resumen"
                     android:textColor="#166534"
                     android:textSize="14sp" />
@@ -70,16 +68,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                app:cardBackgroundColor="#F1F5F9"
-                app:cardCornerRadius="16dp"
-                app:cardElevation="0dp">
+                app:cardBackgroundColor="#FFFFFF"
+                app:cardCornerRadius="24dp"
+                app:cardElevation="4dp">
 
                 <TextView
                     android:id="@+id/txtIntentosUnity"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:lineSpacingExtra="5dp"
-                    android:padding="16dp"
+                    android:padding="18dp"
                     android:text="Intentos"
                     android:textColor="#334155"
                     android:textSize="14sp" />
@@ -90,16 +88,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                app:cardBackgroundColor="#FFF9C4"
-                app:cardCornerRadius="16dp"
-                app:cardElevation="0dp">
+                app:cardBackgroundColor="#FFFDE7"
+                app:cardCornerRadius="24dp"
+                app:cardElevation="4dp">
 
                 <TextView
                     android:id="@+id/txtDistanciaUnity"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:lineSpacingExtra="5dp"
-                    android:padding="16dp"
+                    android:padding="18dp"
                     android:text="Distancias"
                     android:textColor="#475569"
                     android:textSize="14sp" />
@@ -109,35 +107,46 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="22dp"
+                android:layout_marginTop="24dp"
+                android:layout_marginStart="4dp"
                 android:text="Detalle de intentos"
                 android:textColor="#001B6B"
                 android:textSize="17sp"
                 android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/txtDetalleIntentosUnity"
+            <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:background="#F1F5F9"
-                android:lineSpacingExtra="5dp"
-                android:padding="16dp"
-                android:text="Sin intentos"
-                android:textColor="#334155"
-                android:textSize="14sp" />
+                android:layout_marginTop="12dp"
+                app:cardBackgroundColor="#FFFFFF"
+                app:cardCornerRadius="24dp"
+                app:cardElevation="4dp">
+
+                <TextView
+                    android:id="@+id/txtDetalleIntentosUnity"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:lineSpacingExtra="5dp"
+                    android:padding="18dp"
+                    android:text="Sin intentos"
+                    android:textColor="#334155"
+                    android:textSize="14sp" />
+
+            </androidx.cardview.widget.CardView>
 
             <Button
                 android:id="@+id/btnGuardarResultadoUnity"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
-                android:backgroundTint="#001B6B"
-                android:padding="14dp"
+                android:layout_height="54dp"
+                android:layout_marginTop="28dp"
+                android:layout_marginBottom="12dp"
+                android:backgroundTint="@color/colorAdvertencia"
                 android:text="Finalizar"
                 android:textAllCaps="false"
-                android:textColor="@android:color/white"
-                android:textSize="15sp" />
+                android:textColor="@android:color/black"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:cornerRadius="27dp" />
 
         </LinearLayout>
 
