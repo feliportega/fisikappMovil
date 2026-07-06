@@ -22,6 +22,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.marcos.fisikappmovil.R;
 import com.marcos.fisikappmovil.data.session.LaboratorioSessionStore;
+import com.marcos.fisikappmovil.ui.common.StepCompletionOverlay;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -72,6 +73,7 @@ public class InformeLaboratorio extends AppCompatActivity {
 
         pintarInforme();
         renderReportSections();
+        configurarModoPantalla();
     }
 
     private void readExtras() {
@@ -134,6 +136,7 @@ public class InformeLaboratorio extends AppCompatActivity {
         }
     }
 
+    /*
     private void guardarInforme() {
         if (!validarReportSections()) {
             return;
@@ -147,6 +150,29 @@ public class InformeLaboratorio extends AppCompatActivity {
         data.putExtra(PasosLaboratorio.EXTRA_ORDEN_PASO, ordenPaso);
         setResult(RESULT_OK, data);
         finish();
+    }
+
+     */
+
+    private void guardarInforme() {
+        if (modoSoloLectura()) {
+            finish();
+            return;
+        }
+
+        if (!validarReportSections()) {
+            return;
+        }
+
+        guardarReportSections();
+
+        Intent data = new Intent();
+        data.putExtra(PasosLaboratorio.EXTRA_ORDEN_PASO, ordenPaso);
+
+        StepCompletionOverlay.show(this, () -> {
+            setResult(RESULT_OK, data);
+            finish();
+        });
     }
 
     private void guardarReportSections() {
@@ -721,5 +747,51 @@ public class InformeLaboratorio extends AppCompatActivity {
 
     private String formatDecimal(double value) {
         return String.format(java.util.Locale.US, "%.2f", value);
+    }
+
+    private void configurarModoPantalla() {
+        if (modoSoloLectura()) {
+            btnGuardarInforme.setText("Regresar");
+            setEditableRecursive(layoutReportSectionsContainer, false);
+        } else {
+            btnGuardarInforme.setText("Guardar informe");
+            setEditableRecursive(layoutReportSectionsContainer, true);
+        }
+    }
+
+    // Helpers
+    private void setEditableRecursive(View view, boolean enabled) {
+        if (view instanceof EditText) {
+            EditText editText = (EditText) view;
+            editText.setEnabled(enabled);
+            editText.setFocusable(enabled);
+            editText.setFocusableInTouchMode(enabled);
+            editText.setCursorVisible(enabled);
+            return;
+        }
+
+        if (view instanceof ViewGroup) {
+            ViewGroup group = (ViewGroup) view;
+
+            for (int i = 0; i < group.getChildCount(); i++) {
+                setEditableRecursive(group.getChildAt(i), enabled);
+            }
+        }
+    }
+
+    // Helpers de estado
+    private boolean pasoYaCompletado() {
+        return asignacionId > 0
+                && ordenPaso > 0
+                && sessionStore.estaPasoCompletado(asignacionId, ordenPaso);
+    }
+
+    private boolean laboratorioYaEntregado() {
+        return asignacionId > 0
+                && sessionStore.isEntregaEnviada(asignacionId);
+    }
+
+    private boolean modoSoloLectura() {
+        return pasoYaCompletado() || laboratorioYaEntregado();
     }
 }

@@ -225,7 +225,14 @@ public class SimulacionARActivity extends AppCompatActivity {
 
     private void initListeners() {
         btnBack.setOnClickListener(v -> finish());
-        btnIniciarAr.setOnClickListener(v -> iniciarUnity());
+        btnIniciarAr.setOnClickListener(v -> {
+            if (modoSoloLectura()) {
+                finish();
+                return;
+            }
+
+            iniciarUnity();
+        });
     }
 
     private void pintarDatos() {
@@ -258,6 +265,32 @@ public class SimulacionARActivity extends AppCompatActivity {
                         "\nIntentos disponibles: " + remainingAttempts
         );
 
+        if (laboratorioYaEntregado()) {
+            tvObjetivoAr.setText(
+                    "Estado: laboratorio entregado.\n\n" +
+                            "Simulación: " + safe(labKey) + "\n" +
+                            "Escena Unity: " + safe(unitySceneName) + "\n\n" +
+                            "La entrega ya fue guardada. No se puede volver a modificar la práctica AR."
+            );
+
+            btnIniciarAr.setEnabled(true);
+            btnIniciarAr.setText("Regresar");
+            return;
+        }
+
+        if (arCompleted) {
+            tvObjetivoAr.setText(
+                    "Estado: completado.\n\n" +
+                            "Simulación: " + safe(labKey) + "\n" +
+                            "Escena Unity: " + safe(unitySceneName) + "\n\n" +
+                            "La práctica AR ya fue realizada."
+            );
+
+            btnIniciarAr.setEnabled(true);
+            btnIniciarAr.setText("Regresar");
+            return;
+        }
+
         if ("NO_REALIZADO".equalsIgnoreCase(lastResultStatus)) {
             tvObjetivoAr.setText(
                     "Estado: no realizado.\n\n" +
@@ -272,19 +305,6 @@ public class SimulacionARActivity extends AppCompatActivity {
                             ? "Iniciar práctica AR"
                             : "Cargando simulación..."
             );
-            return;
-        }
-
-        if (arCompleted) {
-            tvObjetivoAr.setText(
-                    "Estado: finalizado.\n" +
-                            "Impactó el target: " + (hitTarget ? "Sí" : "No") + "\n" +
-                            "Intentos usados: " + usedAttempts + "/" + maxAttempts + "\n\n" +
-                            "La práctica AR ya fue finalizada y guardada."
-            );
-
-            btnIniciarAr.setEnabled(false);
-            btnIniciarAr.setText("Práctica AR finalizada");
             return;
         }
 
@@ -1131,6 +1151,22 @@ public class SimulacionARActivity extends AppCompatActivity {
         format.setTimeZone(java.util.TimeZone.getTimeZone("UTC"));
 
         return format.format(new java.util.Date());
+    }
+
+    // Helpers
+    private boolean pasoYaCompletado() {
+        return asignacionId > 0
+                && ordenPaso > 0
+                && sessionStore.estaPasoCompletado(asignacionId, ordenPaso);
+    }
+
+    private boolean laboratorioYaEntregado() {
+        return asignacionId > 0
+                && sessionStore.isEntregaEnviada(asignacionId);
+    }
+
+    private boolean modoSoloLectura() {
+        return arCompleted || pasoYaCompletado() || laboratorioYaEntregado();
     }
 
 }

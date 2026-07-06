@@ -16,6 +16,7 @@ import com.marcos.fisikappmovil.R;
 import com.marcos.fisikappmovil.data.session.LaboratorioSessionStore;
 import com.marcos.fisikappmovil.ui.Laboratorio.GrupoLaboratoriosActivity;
 import com.marcos.fisikappmovil.ui.common.LoadingOverlayView;
+import com.marcos.fisikappmovil.ui.common.StepCompletionOverlay;
 
 public class EnvioEntregaLaboratorioActivity extends AppCompatActivity {
 
@@ -94,7 +95,13 @@ public class EnvioEntregaLaboratorioActivity extends AppCompatActivity {
             finish();
         });
 
-        btnEnviarEntrega.setOnClickListener(v -> confirmarEnvio());
+        btnEnviarEntrega.setOnClickListener(v -> {
+            if (laboratorioYaEntregado()) {
+                finish();
+                return;
+            }
+            confirmarEnvio();
+        });
     }
 
     private void pintarResumen() {
@@ -159,19 +166,33 @@ public class EnvioEntregaLaboratorioActivity extends AppCompatActivity {
 
             sessionStore.marcarEntregaEnviada(asignacionId);
 
+            if (asignacionId > 0 && ordenPaso > 0) {
+                sessionStore.completarPasoYDesbloquearSiguiente(asignacionId, ordenPaso);
+            }
+
+            /*
             Toast.makeText(
                     this,
                     "Entrega guardada localmente. Sincronización final pendiente de backend.",
                     Toast.LENGTH_LONG
-            ).show();
+            ).show();*/
 
             pintarResumen();
 
             Intent data = new Intent();
             data.putExtra(PasosLaboratorio.EXTRA_ORDEN_PASO, ordenPaso);
-            setResult(RESULT_OK, data);
 
-            finish();
+            /*
+            StepCompletionOverlay.show(this, () -> {
+                setResult(RESULT_OK, data);
+                finish();
+            });*/
+            StepCompletionOverlay.show(this, () -> {
+                new Handler(Looper.getMainLooper()).postDelayed(() -> {
+                    setResult(RESULT_OK, data);
+                    finish();
+                }, 900L);
+            });
 
         }, 1200);
     }
@@ -188,35 +209,6 @@ public class EnvioEntregaLaboratorioActivity extends AppCompatActivity {
             loadingOverlay.hide();
             btnEnviarEntrega.setEnabled(true);
         }
-    }
-
-    private void completarPaso() {
-        Intent data = new Intent();
-
-        if (ordenPaso != -1) {
-            data.putExtra(PasosLaboratorio.EXTRA_ORDEN_PASO, ordenPaso);
-        }
-
-        setResult(RESULT_OK, data);
-        finish();
-    }
-
-    private void irAGrupoLaboratorios() {
-        Intent intent = new Intent(this, GrupoLaboratoriosActivity.class);
-
-        intent.putExtra(GrupoLaboratoriosActivity.EXTRA_GRUPO_ID, grupoId);
-        intent.putExtra(GrupoLaboratoriosActivity.EXTRA_GRUPO_NOMBRE, grupoNombre);
-        intent.putExtra(GrupoLaboratoriosActivity.EXTRA_GRUPO_CURSO, grupoCurso);
-
-        /*
-         * Limpia las pantallas del laboratorio ya finalizado:
-         * EnvioEntrega → Pasos → Informe → etc.
-         */
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-
-        startActivity(intent);
-        finish();
     }
 
     private void configurarBackPress() {
@@ -238,21 +230,13 @@ public class EnvioEntregaLaboratorioActivity extends AppCompatActivity {
                     }
                 }
         );
+
     }
 
-    private void enviarEntrega() {
-        Toast.makeText(
-                this,
-                "La entrega final está pendiente de ajuste en backend. Se guardará localmente.",
-                Toast.LENGTH_LONG
-        ).show();
-
-        sessionStore.marcarEntregaEnviada(asignacionId);
-        pintarResumen();
-
-        Intent data = new Intent();
-        data.putExtra(PasosLaboratorio.EXTRA_ORDEN_PASO, ordenPaso);
-        setResult(RESULT_OK, data);
+    // Helper de estado
+    private boolean laboratorioYaEntregado() {
+        return asignacionId > 0
+                && sessionStore.isEntregaEnviada(asignacionId);
     }
 
 }

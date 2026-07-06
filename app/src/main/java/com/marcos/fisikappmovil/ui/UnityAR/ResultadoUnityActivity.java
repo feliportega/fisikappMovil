@@ -12,6 +12,7 @@ import com.marcos.fisikappmovil.R;
 import com.marcos.fisikappmovil.data.session.LaboratorioSessionStore;
 import com.marcos.fisikappmovil.ui.AccesoAlSistema.Dashboard;
 import com.marcos.fisikappmovil.ui.MonitorDeAprendizajeEstudiante.PasosLaboratorio;
+import com.marcos.fisikappmovil.ui.common.StepCompletionOverlay;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -42,6 +43,10 @@ public class ResultadoUnityActivity extends AppCompatActivity {
     private boolean resultadoProcesado = false;
     private boolean pasoArCompletado = false;
 
+    private boolean pasoYaEstabaCompletadoAntes = false;
+    private boolean laboratorioYaEntregado = false;
+    private boolean mostrarOverlayAlContinuar = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,8 +76,20 @@ public class ResultadoUnityActivity extends AppCompatActivity {
     }
 
     private void initListeners() {
-        btnGuardarResultadoUnity.setText("Continuar laboratorio");
-        btnGuardarResultadoUnity.setOnClickListener(v -> irAPasosLaboratorio());
+        if (laboratorioYaEntregado || pasoYaEstabaCompletadoAntes) {
+            btnGuardarResultadoUnity.setText("Regresar");
+        } else {
+            btnGuardarResultadoUnity.setText("Continuar laboratorio");
+        }
+
+        btnGuardarResultadoUnity.setOnClickListener(v -> {
+            if (mostrarOverlayAlContinuar) {
+                StepCompletionOverlay.show(this, this::irAPasosLaboratorio);
+                return;
+            }
+
+            irAPasosLaboratorio();
+        });
     }
 
 
@@ -273,39 +290,6 @@ public class ResultadoUnityActivity extends AppCompatActivity {
             e.printStackTrace();
         }
     }
-    private void guardarYCompletar() {
-        boolean completarPaso = false;
-
-        if (resultJson != null && !resultJson.trim().isEmpty()) {
-            sessionStore.saveUnityResultJson(asignacionId, resultJson);
-
-            try {
-                JSONObject json = new JSONObject(resultJson);
-                completarPaso = debeCompletarPasoAr(json);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-
-        android.util.Log.d("RESULT_UNITY", "guardarYCompletar asignacionId=" + asignacionId);
-        android.util.Log.d("RESULT_UNITY", "guardarYCompletar ordenPaso=" + ordenPaso);
-        android.util.Log.d("RESULT_UNITY", "guardarYCompletar completarPaso=" + completarPaso);
-
-        Intent data = new Intent();
-        data.putExtra(PasosLaboratorio.EXTRA_ORDEN_PASO, ordenPaso);
-
-        if (completarPaso) {
-            if (asignacionId != -1 && ordenPaso != -1) {
-                sessionStore.completarPasoYDesbloquearSiguiente(asignacionId, ordenPaso);
-            }
-
-            setResult(RESULT_OK, data);
-        } else {
-            setResult(RESULT_CANCELED, data);
-        }
-
-        finish();
-    }
 
     private boolean debeCompletarPasoAr(JSONObject json) {
         boolean completed = json.optBoolean("completed", false);
@@ -339,6 +323,13 @@ public class ResultadoUnityActivity extends AppCompatActivity {
 
         resultadoProcesado = true;
 
+        pasoYaEstabaCompletadoAntes = asignacionId > 0
+                && ordenPaso > 0
+                && sessionStore.estaPasoCompletado(asignacionId, ordenPaso);
+
+        laboratorioYaEntregado = asignacionId > 0
+                && sessionStore.isEntregaEnviada(asignacionId);
+
         if (resultJson == null || resultJson.trim().isEmpty()) {
             txtEstadoUnity.setText("No se recibió resultado desde Unity");
             pasoArCompletado = false;
@@ -355,7 +346,10 @@ public class ResultadoUnityActivity extends AppCompatActivity {
             }
 
             if (pasoArCompletado && asignacionId != -1 && ordenPaso != -1) {
-                sessionStore.completarPasoYDesbloquearSiguiente(asignacionId, ordenPaso);
+                if (!pasoYaEstabaCompletadoAntes && !laboratorioYaEntregado) {
+                    sessionStore.completarPasoYDesbloquearSiguiente(asignacionId, ordenPaso);
+                    mostrarOverlayAlContinuar = true;
+                }
             }
 
             android.util.Log.d("RESULT_UNITY", "AUTO_SAVE asignacionId=" + asignacionId);

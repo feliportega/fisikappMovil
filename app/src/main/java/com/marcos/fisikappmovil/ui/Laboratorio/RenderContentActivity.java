@@ -166,23 +166,6 @@ public class RenderContentActivity extends AppCompatActivity {
                 finish();
             });
         });
-        /*
-        btnCompleteStep.setOnClickListener(v -> {
-
-            int ordenPaso = getIntent().getIntExtra(
-                    PasosLaboratorio.EXTRA_ORDEN_PASO,
-                    -1
-            );
-
-            Intent result = new Intent();
-            result.putExtra(PasosLaboratorio.EXTRA_ORDEN_PASO, ordenPaso);
-
-            StepCompletionOverlay.show(this, () -> {
-                setResult(RESULT_OK, result);
-                finish();
-            });
-        });
-         */
     }
 
     private void renderStep(MobileStepResponse step) {

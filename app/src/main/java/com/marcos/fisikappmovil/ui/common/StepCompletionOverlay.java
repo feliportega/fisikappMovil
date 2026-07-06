@@ -85,13 +85,6 @@ public class StepCompletionOverlay {
         }, 180L);
 
         new Handler(Looper.getMainLooper()).postDelayed(() -> {
-            if (!activity.isFinishing()) {
-                try {
-                    decorView.removeView(overlay);
-                } catch (Exception ignored) {
-                }
-            }
-
             if (onComplete != null) {
                 onComplete.run();
             }
