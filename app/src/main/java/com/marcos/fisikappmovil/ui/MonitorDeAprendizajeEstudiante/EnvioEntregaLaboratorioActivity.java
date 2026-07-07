@@ -1,7 +1,5 @@
 package com.marcos.fisikappmovil.ui.MonitorDeAprendizajeEstudiante;
 
-import static java.security.AccessController.getContext;
-
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,12 +10,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.marcos.fisikappmovil.R;
 import com.marcos.fisikappmovil.data.session.LaboratorioSessionStore;
-import com.marcos.fisikappmovil.ui.Laboratorio.GrupoLaboratoriosActivity;
 import com.marcos.fisikappmovil.ui.common.LoadingOverlayView;
 import com.marcos.fisikappmovil.ui.common.StepCompletionOverlay;
 
@@ -156,12 +152,7 @@ public class EnvioEntregaLaboratorioActivity extends AppCompatActivity {
         new com.google.android.material.dialog.MaterialAlertDialogBuilder(EnvioEntregaLaboratorioActivity.this)
                 .setTitle("Enviar entrega")
                 .setMessage("La entrega quedará guardada localmente. La sincronización final dependerá del backend.")
-                .setPositiveButton("Guardar entrega", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-
-                    }
-                })
+                .setPositiveButton("Guardar entrega", (dialog, which) -> simularEnvio())
                 .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
