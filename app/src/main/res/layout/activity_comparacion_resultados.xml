@@ -27,7 +27,7 @@
                 android:clickable="true"
                 android:focusable="true"
                 android:src="@drawable/outline_arrow_circle_left_24"
-                app:tint="#DCFBFF" />
+                app:tint="#DCFBFF"/>
 
             <LinearLayout
                 android:layout_width="0dp"

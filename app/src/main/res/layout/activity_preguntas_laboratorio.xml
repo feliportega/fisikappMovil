@@ -64,11 +64,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="22dp"
-            android:backgroundTint="#001B6B"
+            android:backgroundTint="@color/colorAdvertencia"
             android:padding="14dp"
             android:text="Guardar respuestas"
             android:textAllCaps="false"
-            android:textColor="@android:color/white" />
+            android:textColor="@android:color/black" />
 
     </LinearLayout>
 
