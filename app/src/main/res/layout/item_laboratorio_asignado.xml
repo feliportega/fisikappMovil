@@ -2,204 +2,83 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_marginHorizontal="20dp"
     android:layout_marginTop="14dp"
     android:background="@drawable/edittext_redondo2"
     android:orientation="vertical"
     android:padding="16dp">
 
-
-    <androidx.cardview.widget.CardView
+    <TextView
+        android:id="@+id/tvLabTitulo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:cardBackgroundColor="@color/colorAdvertencia"
-        app:cardCornerRadius="10dp"
-        app:cardElevation="8dp"
-        app:cardMaxElevation="10dp"
-        >
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="15dp"
-            >
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Nombre Laboratorio"
-                android:textColor="#75777C"
-                android:textSize="12sp"
-                android:textStyle="bold"/>
-            <TextView
-                android:id="@+id/tvLabTitulo"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Tiro parabólico"
-                android:textColor="@color/colorPrimario"
-                android:textSize="20sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/tvLabKey"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:text="PARABOLIC-001"
-                android:textColor="#64748B"
-                android:textSize="13sp" />
-
-        </LinearLayout>
-    </androidx.cardview.widget.CardView>
+        android:text="Tiro parabólico"
+        android:textColor="@color/colorPrimario"
+        android:textSize="20sp"
+        android:textStyle="bold" />
 
     <TextView
-        android:layout_width="wrap_content"
+        android:id="@+id/tvLabKey"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Estado Actual"
-        android:textSize="17sp"
-        android:textStyle="bold"
-        android:layout_marginTop="10dp"
-        android:textColor="#076390"
-        />
+        android:layout_marginTop="4dp"
+        android:text="PARABOLIC-001"
+        android:textColor="#64748B"
+        android:textSize="13sp" />
 
-    <LinearLayout
+    <TextView
         android:id="@+id/tvLabEstado"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:padding="5dp"
-        >
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Asignacion:"
-            android:textStyle="bold"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="ABIERTO"
-            android:textStyle="bold"
-            android:textColor="@color/colorExito"
-            android:layout_marginLeft="5dp"
-            />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Entrega: "
-            android:textStyle="bold"
-            android:layout_marginLeft="13dp"
-            />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="PENDIENTE"
-            android:textStyle="bold"
-            android:textColor="#DEB50C"
-            />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:paddingLeft="5dp"
-        >
-        <TextView
-            android:id="@+id/tvLabIntentos"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Intentos: "
-            android:textColor="#475569"
-            android:textSize="14sp" />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="0/4"
-            android:textStyle="bold"
-            />
-
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        >
-        <TextView
-            android:id="@+id/tvBadgeAr"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="Incluye práctica AR"
-            android:textColor="#475569"
-            android:textSize="14sp"
-            android:textStyle="bold"/>
-
-    </LinearLayout>
-    <View
         android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:background="#BB4E4E4E"
+        android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        />
+        android:text="Asignación: ABIERTO · Entrega: PENDIENTE"
+        android:textColor="#0A7DB6"
+        android:textSize="14sp"
+        android:textStyle="bold" />
 
     <TextView
-        android:layout_width="wrap_content"
+        android:id="@+id/tvLabIntentos"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Plazo y Calificación"
-        android:textStyle="bold"
-        android:textColor="#076390"
-        android:layout_marginTop="10dp"
-        android:textSize="16dp"
-        />
-    <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Intentos: 0/4"
+        android:textColor="#475569"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/tvBadgeAr"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
+        android:layout_marginTop="8dp"
+        android:text="AR"
+        android:textColor="#475569"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/tvLabFecha"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginTop="6dp"
-        >
-        <TextView
-            android:id="@+id/tvLabFecha"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Fecha límite: "
-            android:textColor="#475569"
-            android:textSize="14sp" />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="2026-06-30"
-            android:textStyle="bold"/>
+        android:text="Fecha límite: 2026-06-30"
+        android:textColor="#475569"
+        android:textSize="14sp" />
 
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="wrap_content"
+    <TextView
+        android:id="@+id/tvLabCalificacion"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="5dp">
-        <TextView
-            android:id="@+id/tvLabCalificacion"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Calificación: "
-            android:textColor="#64748B"
-            android:textSize="14sp" />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Pendiente"
-            android:textStyle="bold"/>
-
-    </LinearLayout>
+        android:layout_marginTop="6dp"
+        android:text="Calificación: Pendiente"
+        android:textColor="#64748B"
+        android:textSize="14sp" />
 
     <Button
         android:id="@+id/btnVerLaboratorio"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="14dp"
-        android:background="@drawable/btn_bordeyellow"
-        app:backgroundTint="@null" android:text="Ver laboratorio"
-        android:textSize="17sp"
+        android:backgroundTint="@color/tormentazul"
+        android:text="Ver laboratorio"
         android:textAllCaps="false"
         android:textColor="@color/white" />
 
