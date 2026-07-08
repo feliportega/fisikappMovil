@@ -95,11 +95,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
-                android:backgroundTint="#001B6B"
+                android:backgroundTint="@color/colorAdvertencia"
                 android:padding="14dp"
                 android:text="Guardar y continuar"
                 android:textAllCaps="false"
-                android:textColor="@android:color/white" />
+                android:textColor="@android:color/black" />
 
         </LinearLayout>
 
