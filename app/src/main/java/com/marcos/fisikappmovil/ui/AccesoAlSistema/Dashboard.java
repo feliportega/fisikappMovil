@@ -48,22 +48,21 @@ public class Dashboard extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_dashboard);
 
-        tokenManager = new TokenManager(this);
-        laboratorioRepository = new LaboratorioRepository();
-        stateGrupos = new ContentStateView(findViewById(R.id.stateDashboardGrupos));
-
         initDependencies();
         initViews();
+
+        stateGrupos = new ContentStateView(findViewById(R.id.stateDashboardGrupos));
+
         initLaunchers();
         initListeners();
         setupUserInfo();
-        //cargarGrupos();
-        cargarGruposEstudiante();
+
+        cargarGrupos();
     }
 
     private void initDependencies() {
         tokenManager = new TokenManager(this);
-        grupoRepository = new GrupoRepository();
+        grupoRepository = new GrupoRepository(this);
     }
 
     private void initLaunchers() {
@@ -71,8 +70,7 @@ public class Dashboard extends AppCompatActivity {
                 new ActivityResultContracts.StartActivityForResult(),
                 result -> {
                     if (result.getResultCode() == RESULT_OK) {
-                        //cargarGrupos();
-                        cargarGruposEstudiante();
+                        cargarGrupos();
                     }
                 }
         );
@@ -124,15 +122,56 @@ public class Dashboard extends AppCompatActivity {
     }
 
     private void cargarGrupos() {
-        mostrarEstadoCargando();
+        stateGrupos.showLoading(
+                "Cargando grupos",
+                "Estamos consultando tus grupos asignados."
+        );
+
+        recyclerView.setVisibility(View.GONE);
+        tvEstadoVacio.setVisibility(View.GONE);
 
         grupoRepository.getMisGrupos(result -> {
-            if (result.isSuccess()) {
+            runOnUiThread(() -> {
+                if (!result.isSuccess()) {
+
+                    if (result.getStatusCode() == 401 || result.getStatusCode() == 403) {
+                        tokenManager.clearSession();
+
+                        Intent intent = new Intent(Dashboard.this, Login.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(intent);
+                        finish();
+                        return;
+                    }
+
+                    stateGrupos.showError(
+                            "No se pudieron cargar los grupos",
+                            result.getStatusCode() == -1
+                                    ? "No se pudo conectar con el servidor. Revisa tu internet o intenta nuevamente."
+                                    : result.getErrorMessage(),
+                            v -> cargarGrupos()
+                    );
+
+                    recyclerView.setVisibility(View.GONE);
+                    return;
+                }
+
                 List<GrupoAcademicoItem> grupos = result.getData();
+
+                if (grupos == null || grupos.isEmpty()) {
+                    stateGrupos.showEmpty(
+                            "Sin grupos asignados",
+                            "Todavía no tienes grupos académicos disponibles. Puedes unirte con un código o QR."
+                    );
+
+                    recyclerView.setVisibility(View.GONE);
+                    return;
+                }
+
+                stateGrupos.hide();
+                recyclerView.setVisibility(View.VISIBLE);
                 mostrarGrupos(grupos);
-            } else {
-                mostrarEstadoVacio("No fue posible cargar tus grupos");
-            }
+            });
         });
     }
 

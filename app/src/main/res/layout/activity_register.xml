@@ -62,7 +62,7 @@
                     android:textStyle="bold"
                     android:textSize="15sp" />
                 <EditText
-                    android:id="@+id/edtNombrecompleto"
+                    android:id="@+id/edtNombreCompleto"
                     android:layout_width="match_parent"
                     android:layout_height="56dp"
                     android:layout_marginTop="10dp"
@@ -70,7 +70,7 @@
                     android:backgroundTint="@color/white"
                     android:drawableStart="@drawable/iconousuario"
                     android:drawablePadding="14dp"
-                    android:hint="cristian eduardo"
+                    android:hint="nombre de ejemplo"
                     android:paddingStart="20dp"
                     android:paddingEnd="20dp"
                     android:textSize="15sp" />
@@ -84,7 +84,7 @@
                     android:textStyle="bold"
                     android:textSize="15sp" />
                 <EditText
-                    android:id="@+id/editTextText"
+                    android:id="@+id/edtCorreoRegistro"
                     android:layout_width="match_parent"
                     android:layout_height="56dp"
                     android:layout_marginTop="10dp"
@@ -92,8 +92,32 @@
                     android:backgroundTint="@color/white"
                     android:drawableStart="@drawable/ci_email"
                     android:drawablePadding="14dp"
-                    android:hint="cristian@soy.sena.com"
+                    android:hint="ejemplo@soy.sena.com"
                     android:inputType="textEmailAddress"
+                    android:paddingStart="20dp"
+                    android:paddingEnd="20dp"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="18dp"
+                    android:text="Identificación"
+                    android:textColor="#475569"
+                    android:textStyle="bold"
+                    android:textSize="15sp" />
+
+                <EditText
+                    android:id="@+id/edtIdentificacionRegistro"
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/edittext_moderno"
+                    android:backgroundTint="@color/white"
+                    android:drawableStart="@drawable/iconousuario"
+                    android:drawablePadding="14dp"
+                    android:hint="100003"
+                    android:inputType="number"
                     android:paddingStart="20dp"
                     android:paddingEnd="20dp"
                     android:textSize="15sp" />
@@ -111,7 +135,7 @@
                     android:layout_height="56dp"
                     android:layout_marginTop="10dp">
                     <EditText
-                        android:id="@+id/editText"
+                        android:id="@+id/edtPasswordRegistro"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:background="@drawable/edittext_moderno"
@@ -142,7 +166,7 @@
                     android:textStyle="bold"
                     android:textSize="15sp" />
                 <EditText
-                    android:id="@+id/edtConfirmarcont"
+                    android:id="@+id/edtConfirmarPasswordRegistro"
                     android:layout_width="match_parent"
                     android:layout_height="56dp"
                     android:layout_marginTop="10dp"

@@ -10,7 +10,17 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import com.marcos.fisikappmovil.data.repository.LaboratorioRepository;
+import com.marcos.fisikappmovil.model.TokenManager;
+import com.marcos.fisikappmovil.remote.response.SubmitLaboratorioResponse;
+
 import androidx.appcompat.app.AppCompatActivity;
+import com.marcos.fisikappmovil.ui.AccesoAlSistema.Dashboard;
 
 import com.marcos.fisikappmovil.R;
 import com.marcos.fisikappmovil.data.session.LaboratorioSessionStore;
@@ -36,12 +46,18 @@ public class EnvioEntregaLaboratorioActivity extends AppCompatActivity {
 
     private LoadingOverlayView loadingOverlay;
 
+    private LaboratorioRepository laboratorioRepository;
+    private TokenManager tokenManager;
+    private final Gson gson = new Gson();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_envio_entrega_laboratorio);
 
         sessionStore = new LaboratorioSessionStore(this);
+        laboratorioRepository = new LaboratorioRepository();
+        tokenManager = new TokenManager(this);
 
         readExtras();
         initViews();
@@ -120,6 +136,7 @@ public class EnvioEntregaLaboratorioActivity extends AppCompatActivity {
         boolean tieneEvidencias = existeJson(sessionStore.getEvidenciasJson(asignacionId));
         boolean tieneAr = existeJson(sessionStore.getUnityResultJson(asignacionId));
         boolean tieneComparacion = existeJson(sessionStore.getComparacionResultadosJson(asignacionId));
+        boolean tienePreguntas = existeJson(sessionStore.getPreguntasJson(asignacionId));
         boolean tieneInforme = existeJson(sessionStore.getInformeLaboratorioJson(asignacionId));
 
         tvResumenEntrega.setText(
@@ -128,8 +145,9 @@ public class EnvioEntregaLaboratorioActivity extends AppCompatActivity {
                         "• Evidencias: " + estadoTexto(tieneEvidencias) + "\n" +
                         "• Práctica simulada AR: " + estadoTexto(tieneAr) + "\n" +
                         "• Comparación de resultados: " + estadoTexto(tieneComparacion) + "\n" +
+                        "• Preguntas: " + estadoTexto(tienePreguntas) + "\n" +
                         "• Informe de laboratorio: " + estadoTexto(tieneInforme) + "\n\n" +
-                        "Al enviar, la información quedará pendiente de sincronización con el backend final."
+                        "Al enviar, la información será registrada en el backend para revisión."
         );
     }
 
@@ -140,65 +158,123 @@ public class EnvioEntregaLaboratorioActivity extends AppCompatActivity {
     private String estadoTexto(boolean ok) {
         return ok ? "registrada" : "pendiente";
     }
+
     private void confirmarEnvio() {
         if (sessionStore.isEntregaEnviada(asignacionId)) {
-            Intent data = new Intent();
-            data.putExtra(PasosLaboratorio.EXTRA_ORDEN_PASO, ordenPaso);
-            setResult(RESULT_OK, data);
+            Intent intent = new Intent(EnvioEntregaLaboratorioActivity.this, Dashboard.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
             finish();
             return;
         }
 
         new com.google.android.material.dialog.MaterialAlertDialogBuilder(EnvioEntregaLaboratorioActivity.this)
                 .setTitle("Enviar entrega")
-                .setMessage("La entrega quedará guardada localmente. La sincronización final dependerá del backend.")
-                .setPositiveButton("Guardar entrega", (dialog, which) -> simularEnvio())
-                .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                })
+                .setMessage("La entrega será enviada al backend para revisión y calificación.")
+                .setPositiveButton("Enviar entrega", (dialog, which) -> enviarEntregaBackend())
+                .setNegativeButton("Cancelar", (dialog, which) -> dialog.dismiss())
                 .show();
     }
 
-    private void simularEnvio() {
+    private void enviarEntregaBackend() {
+        if (asignacionId <= 0) {
+            Toast.makeText(this, "No se recibió la asignación del laboratorio.", Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        String authHeader = tokenManager.getAuthorizationHeader();
+
+        if (authHeader == null || authHeader.trim().isEmpty()) {
+            Toast.makeText(this, "Sesión no válida. Inicia sesión nuevamente.", Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        JsonObject payload = buildSubmitPayload();
+
+        if (payload == null) {
+            Toast.makeText(this, "No se pudo construir la entrega.", Toast.LENGTH_LONG).show();
+            return;
+        }
+
         setLoading(true);
 
-        new android.os.Handler(android.os.Looper.getMainLooper()).postDelayed(() -> {
-            setLoading(false);
+        android.util.Log.d("SUBMIT_DEBUG", "Iniciando envío real al backend");
+        android.util.Log.d("SUBMIT_DEBUG", "assignmentId=" + asignacionId);
+        android.util.Log.d("SUBMIT_DEBUG", "authHeader existe=" + (authHeader != null && !authHeader.trim().isEmpty()));
+        android.util.Log.d("SUBMIT_DEBUG", "payload=" + payload.toString());
 
-            sessionStore.marcarEntregaEnviada(asignacionId);
+        laboratorioRepository.submitMobileAssignment(
+                authHeader,
+                asignacionId,
+                payload,
+                result -> runOnUiThread(() -> {
+                    setLoading(false);
 
-            if (asignacionId > 0 && ordenPaso > 0) {
-                sessionStore.completarPasoYDesbloquearSiguiente(asignacionId, ordenPaso);
-            }
+                    android.util.Log.d("SUBMIT_DEBUG", "Respuesta recibida. success=" + result.isSuccess());
+                    android.util.Log.d("SUBMIT_DEBUG", "statusCode=" + result.getStatusCode());
 
-            /*
-            Toast.makeText(
-                    this,
-                    "Entrega guardada localmente. Sincronización final pendiente de backend.",
-                    Toast.LENGTH_LONG
-            ).show();*/
+                    if (!result.isSuccess()) {
+                        Toast.makeText(
+                                this,
+                                result.getErrorMessage(),
+                                Toast.LENGTH_LONG
+                        ).show();
+                        return;
+                    }
 
-            pintarResumen();
+                    SubmitLaboratorioResponse response = result.getData();
 
-            Intent data = new Intent();
-            data.putExtra(PasosLaboratorio.EXTRA_ORDEN_PASO, ordenPaso);
+                    sessionStore.marcarEntregaEnviada(asignacionId);
 
-            /*
-            StepCompletionOverlay.show(this, () -> {
-                setResult(RESULT_OK, data);
-                finish();
-            });*/
-            StepCompletionOverlay.show(this, () -> {
-                new Handler(Looper.getMainLooper()).postDelayed(() -> {
-                    setResult(RESULT_OK, data);
-                    finish();
-                }, 900L);
-            });
+                    if (asignacionId > 0 && ordenPaso > 0) {
+                        sessionStore.completarPasoYDesbloquearSiguiente(asignacionId, ordenPaso);
+                    }
 
-        }, 1200);
+                    pintarResumen();
+
+                    String message = "Entrega enviada correctamente.";
+
+                    if (response != null
+                            && response.getMessage() != null
+                            && !response.getMessage().trim().isEmpty()) {
+                        message = response.getMessage();
+                    }
+
+                    Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+
+                    Intent data = new Intent();
+                    data.putExtra(PasosLaboratorio.EXTRA_ORDEN_PASO, ordenPaso);
+
+                    StepCompletionOverlay.show(this, () -> {
+                        new Handler(Looper.getMainLooper()).postDelayed(() -> {
+                            Intent intent = new Intent(EnvioEntregaLaboratorioActivity.this, Dashboard.class);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                            //intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                            startActivity(intent);
+                            finish();
+                        }, 900L);
+                    });
+                })
+        );
+    }
+
+    private JsonObject buildSubmitPayload() {
+        try {
+            JsonObject root = new JsonObject();
+
+            root.add("practice", parseObjectOrEmpty(sessionStore.getPracticaExperimentalJson(asignacionId)));
+            root.add("simulation", parseObjectOrEmpty(sessionStore.getUnityResultJson(asignacionId)));
+            root.add("comparison", parseObjectOrEmpty(sessionStore.getComparacionResultadosJson(asignacionId)));
+            root.add("questions", parseArrayOrEmpty(sessionStore.getPreguntasJson(asignacionId)));
+            root.add("report", parseObjectOrEmpty(sessionStore.getInformeLaboratorioJson(asignacionId)));
+            root.add("device", buildDeviceJson());
+
+            return root;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     private void setLoading(boolean loading) {
@@ -235,6 +311,58 @@ public class EnvioEntregaLaboratorioActivity extends AppCompatActivity {
                 }
         );
 
+    }
+
+    private JsonObject parseObjectOrEmpty(String json) {
+        if (json == null || json.trim().isEmpty()) {
+            return new JsonObject();
+        }
+
+        try {
+            JsonElement element = JsonParser.parseString(json);
+
+            if (element != null && element.isJsonObject()) {
+                return element.getAsJsonObject();
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return new JsonObject();
+    }
+
+    private JsonArray parseArrayOrEmpty(String json) {
+        if (json == null || json.trim().isEmpty()) {
+            return new JsonArray();
+        }
+
+        try {
+            JsonElement element = JsonParser.parseString(json);
+
+            if (element != null && element.isJsonArray()) {
+                return element.getAsJsonArray();
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return new JsonArray();
+    }
+
+    private JsonObject buildDeviceJson() {
+        JsonObject device = new JsonObject();
+
+        device.addProperty("platform", "android");
+        device.addProperty("manufacturer", android.os.Build.MANUFACTURER);
+        device.addProperty("model", android.os.Build.MODEL);
+        device.addProperty("brand", android.os.Build.BRAND);
+        device.addProperty("android_version", android.os.Build.VERSION.RELEASE);
+        device.addProperty("sdk_int", android.os.Build.VERSION.SDK_INT);
+        device.addProperty("app_context", "fisikapp_movil");
+
+        return device;
     }
 
     // Helper de estado

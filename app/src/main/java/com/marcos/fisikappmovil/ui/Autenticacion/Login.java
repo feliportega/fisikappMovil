@@ -143,14 +143,6 @@ public class Login extends AppCompatActivity {
                 response.getRefreshToken()
         );
 
-        //Log.d("AUTH", "Access guardado: " + tokenManager.getAccessToken());
-        //Log.d("AUTH", "Refresh guardado: " + tokenManager.getRefreshToken());
-        //Log.d("AUTH", "Header: " + tokenManager.getAuthorizationHeader());
-
-        //Solo Test
-        //if (FaceVault.hasConsent(this) && FaceVault.hasEmbedding(this)) {
-        //    CredentialVault.saveCredentials(this, email, password);
-        //}
 
         String nombreUsuario = obtenerNombreUsuario(response);
 

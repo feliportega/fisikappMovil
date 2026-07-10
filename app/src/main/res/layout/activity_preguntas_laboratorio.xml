@@ -1,17 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/scrollPreguntas"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#F8FAFC"
     android:fillViewport="true">
 
     <LinearLayout
+        android:id="@+id/layoutPreguntasRoot"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:padding="20dp">
 
         <TextView
+            android:id="@+id/tvTituloPreguntas"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Preguntas de comprensión"
@@ -20,44 +23,27 @@
             android:textStyle="bold" />
 
         <TextView
+            android:id="@+id/tvDescripcionPreguntas"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="Responde las preguntas del laboratorio."
+            android:textColor="#64748B"
+            android:textSize="15sp" />
+
+        <LinearLayout
+            android:id="@+id/layoutFormulasPreguntas"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="18dp"
-            android:text="1. ¿Cómo afecta el ángulo de lanzamiento al alcance horizontal?"
-            android:textColor="#334155"
-            android:textSize="15sp"
-            android:textStyle="bold" />
+            android:orientation="vertical" />
 
-        <EditText
-            android:id="@+id/etRespuesta1"
-            android:layout_width="match_parent"
-            android:layout_height="120dp"
-            android:layout_marginTop="8dp"
-            android:background="@drawable/edittext_redondo"
-            android:gravity="top"
-            android:hint="Escribe tu respuesta..."
-            android:inputType="textMultiLine"
-            android:padding="12dp" />
-
-        <TextView
+        <LinearLayout
+            android:id="@+id/layoutPreguntasContainer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="18dp"
-            android:text="2. ¿Qué relación existe entre velocidad inicial y altura máxima?"
-            android:textColor="#334155"
-            android:textSize="15sp"
-            android:textStyle="bold" />
-
-        <EditText
-            android:id="@+id/etRespuesta2"
-            android:layout_width="match_parent"
-            android:layout_height="120dp"
-            android:layout_marginTop="8dp"
-            android:background="@drawable/edittext_redondo"
-            android:gravity="top"
-            android:hint="Escribe tu respuesta..."
-            android:inputType="textMultiLine"
-            android:padding="12dp" />
+            android:orientation="vertical" />
 
         <Button
             android:id="@+id/btnGuardarPreguntas"
