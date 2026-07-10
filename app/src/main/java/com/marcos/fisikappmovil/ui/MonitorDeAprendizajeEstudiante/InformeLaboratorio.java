@@ -29,7 +29,8 @@ import org.json.JSONObject;
 
 public class InformeLaboratorio extends AppCompatActivity {
 
-    private ImageView btnBackInformeLab;
+    // CORREGIDO: Se cambia el nombre de la variable para que coincida con el XML unificado
+    private ImageView btnBackPasosLab;
 
     private TextView tvNombreLaboratorioInforme;
     private TextView tvInfoGeneralInforme;
@@ -86,7 +87,8 @@ public class InformeLaboratorio extends AppCompatActivity {
     }
 
     private void initViews() {
-        btnBackInformeLab = findViewById(R.id.btnBackInformeLab);
+        // CORREGIDO: Enlace modificado al ID correcto del XML
+        btnBackPasosLab = findViewById(R.id.btnBackPasosLab);
 
         tvNombreLaboratorioInforme = findViewById(R.id.tvNombreLaboratorioInforme);
         tvInfoGeneralInforme = findViewById(R.id.tvInfoGeneralInforme);
@@ -106,7 +108,8 @@ public class InformeLaboratorio extends AppCompatActivity {
     }
 
     private void initListeners() {
-        btnBackInformeLab.setOnClickListener(v -> finish());
+        // CORREGIDO: Listener apuntando a la variable actualizada
+        btnBackPasosLab.setOnClickListener(v -> finish());
         btnGuardarInforme.setOnClickListener(v -> guardarInforme());
     }
 
@@ -135,24 +138,6 @@ public class InformeLaboratorio extends AppCompatActivity {
             reportData = new JSONObject();
         }
     }
-
-    /*
-    private void guardarInforme() {
-        if (!validarReportSections()) {
-            return;
-        }
-
-        guardarReportSections();
-
-        Toast.makeText(this, "Informe guardado", Toast.LENGTH_SHORT).show();
-
-        Intent data = new Intent();
-        data.putExtra(PasosLaboratorio.EXTRA_ORDEN_PASO, ordenPaso);
-        setResult(RESULT_OK, data);
-        finish();
-    }
-
-     */
 
     private void guardarInforme() {
         if (modoSoloLectura()) {
@@ -225,6 +210,7 @@ public class InformeLaboratorio extends AppCompatActivity {
             }
         }
     }
+
     private void pintarInforme() {
         if (tvNombreLaboratorioInforme.getText() == null
                 || tvNombreLaboratorioInforme.getText().toString().trim().isEmpty()
@@ -361,7 +347,7 @@ public class InformeLaboratorio extends AppCompatActivity {
         }
     }
 
-    private void pintarDatosExperimentales() {
+    private void pintarDatosExperimental() {
         String datosJson = sessionStore.getDatosExperimentalesJson(asignacionId);
 
         if (datosJson == null || datosJson.trim().isEmpty()) {
@@ -741,6 +727,7 @@ public class InformeLaboratorio extends AppCompatActivity {
         return clean.substring(0, 1).toUpperCase(java.util.Locale.ROOT)
                 + clean.substring(1);
     }
+
     private String formatMetro(double value) {
         return String.format(java.util.Locale.US, "%.2f m", value);
     }

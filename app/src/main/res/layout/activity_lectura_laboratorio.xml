@@ -35,10 +35,10 @@
         android:id="@+id/btnCompletarLecturaLab"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:backgroundTint="#001B6B"
+        android:backgroundTint="@color/colorAdvertencia"
         android:padding="14dp"
         android:text="Marcar como leído"
         android:textAllCaps="false"
-        android:textColor="@android:color/white" />
+        android:textColor="@android:color/black" />
 
 </LinearLayout>
