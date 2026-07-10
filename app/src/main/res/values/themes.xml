@@ -1,6 +1,9 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <style name="Base.Theme.FisikappMovil" parent="Theme.Material3.DayNight.NoActionBar">
-    </style>
+        <item name="android:windowTranslucentStatus">false</item>
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="android:statusBarColor">@android:color/white</item>
+        <item name="android:windowLightStatusBar">true</item> </style>
 
     <style name="Theme.App.Splash" parent="Theme.Material3.DayNight.NoActionBar">
         <item name="android:windowBackground">@color/colorScreenCompany</item>
@@ -8,6 +11,12 @@
 
     <style name="Theme.FisikappMovil" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <item name="alertDialogTheme">@style/EstiloDialogoPersonalizado</item>
+        <item name="android:windowTranslucentStatus">false</item>
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="android:windowLightStatusBar">true</item>
+
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:windowLayoutInDisplayCutoutMode" tools:targetApi="o_mr1">shortEdges</item>
     </style>
 
     <style name="EstiloDialogoPersonalizado" parent="Theme.MaterialComponents.Light.Dialog.Alert">

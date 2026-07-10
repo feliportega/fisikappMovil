@@ -12,33 +12,39 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="72dp"
-            android:background="@drawable/bg_toolbar_rounded"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:paddingStart="16dp"
-            android:paddingEnd="16dp">
+            android:layout_height="250dp"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:background="#001B6B"
+            android:padding="24dp">
 
             <ImageView
                 android:id="@+id/btnBack"
                 android:layout_width="42dp"
                 android:layout_height="42dp"
+                android:layout_gravity="start"
                 android:clickable="true"
                 android:focusable="true"
                 android:src="@drawable/outline_arrow_circle_left_24"
-                app:tint="#DCFBFF"  />
+                app:tint="#DCFBFF" />
+
+            <ImageView
+                android:layout_width="96dp"
+                android:layout_height="70dp"
+                android:layout_marginTop="4dp"
+                android:src="@drawable/vector_main_logo" />
 
             <TextView
                 android:id="@+id/tvRenderTitle"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_weight="1"
+                android:layout_marginTop="12dp"
+                android:gravity="center"
                 android:ellipsize="end"
                 android:maxLines="2"
                 android:text="Fórmulas"
-                android:textColor="#FFFFFF"
-                android:textSize="18sp"
+                android:textColor="@android:color/white"
+                android:textSize="24sp"
                 android:textStyle="bold" />
 
         </LinearLayout>
@@ -47,13 +53,20 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:fillViewport="true">
+            android:fillViewport="true"
+            android:layout_marginTop="-30dp"> <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="28dp"
+            app:cardElevation="0dp"
+            app:cardBackgroundColor="@android:color/white">
 
-            <FrameLayout
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingTop="20dp"
-                android:paddingBottom="20dp">
+                android:orientation="vertical"
+                android:paddingTop="30dp"
+                android:paddingBottom="30dp">
 
                 <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
@@ -71,13 +84,13 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        android:padding="24dp" >
-
-                    </LinearLayout>
+                        android:padding="24dp" />
 
                 </androidx.cardview.widget.CardView>
 
-            </FrameLayout>
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
 
         </ScrollView>
 
