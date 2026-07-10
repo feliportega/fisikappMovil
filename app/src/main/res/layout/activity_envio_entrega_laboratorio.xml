@@ -8,7 +8,7 @@
         android:id="@+id/contentDetalleLaboratorio"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#F8FAFC"
+        android:background="@color/colorPrimario"
         android:fillViewport="true">
 
         <LinearLayout
@@ -19,10 +19,10 @@
             <!-- HEADER CON BORDES INFERIORES REDONDEADOS -->
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="150dp"
+                android:layout_height="230dp"
                 android:background="@drawable/bg_toolbar_rounded"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
+                android:gravity="center_horizontal"
+                android:orientation="vertical"
                 android:padding="20dp">
 
                 <ImageView
@@ -31,8 +31,32 @@
                     android:layout_height="42dp"
                     android:clickable="true"
                     android:focusable="true"
+                    android:layout_gravity="start"
                     android:src="@drawable/outline_arrow_circle_left_24"
                     app:tint="#DCFBFF"  />
+
+                <ImageView
+                    android:layout_width="96dp"
+                    android:layout_height="70dp"
+                    android:layout_marginTop="6dp"
+                    android:src="@drawable/vector_main_logo"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="18dp"
+                    android:text="Enviar entrega"
+                    android:textColor="@android:color/white"
+                    android:textStyle="bold"
+                    android:textSize="24sp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:text="Revisa y envía tu laboratorio"
+                    android:textColor="#B4C6EF"
+                    android:textSize="14sp"/>
+
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -46,7 +70,7 @@
                         android:layout_height="wrap_content"
                         android:text="Enviar entrega"
                         android:textColor="@android:color/white"
-                        android:textSize="22sp"
+                        android:textSize="24sp"
                         android:textStyle="bold" />
 
                     <TextView
@@ -54,8 +78,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
                         android:text="Revisa y envía tu laboratorio"
-                        android:textColor="#D6D6D6"
-                        android:textSize="13sp" />
+                        android:textColor="#B4C6EF"
+                        android:textSize="14sp" />
 
                 </LinearLayout>
 
@@ -73,21 +97,21 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:cardBackgroundColor="#ECFDF5"
-                    app:cardCornerRadius="24dp"
+                    app:cardCornerRadius="28dp"
                     app:cardElevation="4dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        android:padding="18dp">
+                        android:padding="20dp">
 
                         <TextView
                             android:id="@+id/tvEstadoEnvio"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="Lista para enviar"
-                            android:textColor="#15803D"
+                            android:textColor="#001B6B"
                             android:textSize="18sp"
                             android:textStyle="bold" />
 
@@ -124,7 +148,7 @@
                             android:layout_height="wrap_content"
                             android:text="Resumen"
                             android:textColor="#001B6B"
-                            android:textSize="17sp"
+                            android:textSize="18sp"
                             android:textStyle="bold" />
 
                         <TextView
@@ -135,7 +159,7 @@
                             android:lineSpacingExtra="5dp"
                             android:text="Resumen de entrega"
                             android:textColor="#334155"
-                            android:textSize="14sp" />
+                            android:textSize="15sp" />
 
                     </LinearLayout>
 
@@ -161,7 +185,7 @@
                             android:layout_height="wrap_content"
                             android:text="Aviso"
                             android:textColor="#001B6B"
-                            android:textSize="16sp"
+                            android:textSize="18sp"
                             android:textStyle="bold" />
 
                         <TextView
@@ -181,16 +205,16 @@
                 <Button
                     android:id="@+id/btnEnviarEntrega"
                     android:layout_width="match_parent"
-                    android:layout_height="54dp"
+                    android:layout_height="56dp"
                     android:layout_marginTop="28dp"
                     android:layout_marginBottom="12dp"
                     android:backgroundTint="@color/colorAdvertencia"
                     android:text="Enviar entrega"
                     android:textAllCaps="false"
                     android:textColor="@android:color/black"
-                    android:textSize="16sp"
+                    android:textSize="18sp"
                     android:textStyle="bold"
-                    app:cornerRadius="27dp" />
+                    app:cornerRadius="28dp" />
 
             </LinearLayout>
         </LinearLayout>
