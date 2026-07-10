@@ -104,12 +104,12 @@ public class LaboratorioAsignadoItem {
     }
 
     public boolean estaDisponible() {
-        return "ABIERTO".equalsIgnoreCase(estadoAsignacion)
-                && intentosUsados < intentosMaximos;
+        return "ACTIVO".equalsIgnoreCase(estadoAsignacion)
+                || "ABIERTO".equalsIgnoreCase(estadoAsignacion);
     }
 
     public boolean tienePracticaAr() {
-        return unitySceneName != null && !unitySceneName.trim().isEmpty();
+        return labKey != null && !labKey.trim().isEmpty();
     }
 
     public boolean tieneIntentos() {

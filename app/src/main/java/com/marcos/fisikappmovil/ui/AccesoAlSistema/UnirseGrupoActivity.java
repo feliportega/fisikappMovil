@@ -1,6 +1,7 @@
 package com.marcos.fisikappmovil.ui.AccesoAlSistema;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Rect;
 import android.graphics.RectF;
@@ -75,7 +76,7 @@ public class UnirseGrupoActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_unirse_grupo);
 
-        repository = new GrupoJoinRepository();
+        repository = new GrupoJoinRepository(this);
 
         initViews();
         initScanner();
@@ -335,17 +336,34 @@ public class UnirseGrupoActivity extends AppCompatActivity {
 
         setLoading(true, "Validando código...");
 
-        repository.unirseGrupo(codigo, result -> {
+        repository.unirseGrupo(codigo, result -> runOnUiThread(() -> {
             setLoading(false, "");
 
             if (result.isSuccess()) {
-                tvEstadoUnion.setText("Te uniste correctamente al grupo.");
-                setResult(RESULT_OK);
+                String message = "Te uniste correctamente al grupo.";
+
+                if (result.getData() != null
+                        && result.getData().getMessage() != null
+                        && !result.getData().getMessage().trim().isEmpty()) {
+                    message = result.getData().getMessage();
+                }
+
+                tvEstadoUnion.setText(message);
+
+                Intent data = new Intent();
+
+                if (result.getData() != null && result.getData().getGrupo() != null) {
+                    data.putExtra("GRUPO_ID", result.getData().getGrupo().getGrupoId());
+                    data.putExtra("GRUPO_NOMBRE", result.getData().getGrupo().getGrupoNombre());
+                }
+
+                setResult(RESULT_OK, data);
                 finish();
+
             } else {
                 tvEstadoUnion.setText(result.getErrorMessage());
             }
-        });
+        }));
     }
 
     private void setLoading(boolean loading, String message) {

@@ -22,6 +22,8 @@ import com.marcos.fisikappmovil.data.result.AppResult;
 import com.marcos.fisikappmovil.remote.response.MobileSimulationResponse;
 import com.marcos.fisikappmovil.data.session.LaboratorioSessionStore;
 import com.marcos.fisikappmovil.model.TokenManager;
+import com.marcos.fisikappmovil.ui.MonitorDeAprendizajeEstudiante.ar.ArStepConfig;
+import com.marcos.fisikappmovil.ui.MonitorDeAprendizajeEstudiante.ar.ArStepResolver;
 import com.marcos.fisikappmovil.ui.UnityAR.ResultadoUnityActivity;
 import com.marcos.fisikappmovil.ui.common.ContentStateView;
 
@@ -66,9 +68,8 @@ public class SimulacionARActivity extends AppCompatActivity {
     private String stepId;
     private String labKey;
     private String unitySceneName;
-    private String simulationEndpoint;
 
-    private int simulationId = -1;
+    private int arId = -1;
 
     private String displayName = "Simulación AR";
     private String exerciseId = "EX-DEFAULT";
@@ -157,7 +158,7 @@ public class SimulacionARActivity extends AppCompatActivity {
         initViews();
         initListeners();
 
-        resolverSimulationRefDesdeMobileResource();
+        resolverArStepConfigDesdeMobileResource();
 
         boolean loadedFromCache = cargarConfiguracionSimulacionDesdeCache();
 
@@ -190,14 +191,25 @@ public class SimulacionARActivity extends AppCompatActivity {
         ordenPaso = intent.getIntExtra(PasosLaboratorio.EXTRA_ORDEN_PASO, -1);
 
         stepId = intent.getStringExtra("STEP_ID");
-        simulationEndpoint = intent.getStringExtra("SIMULATION_ENDPOINT");
+
+        arId = intent.getIntExtra("AR_ID", -1);
 
         String extraLabKey = intent.getStringExtra("LAB_KEY");
         if (extraLabKey != null && !extraLabKey.trim().isEmpty()) {
             labKey = extraLabKey;
         }
 
-        simulationId = extraerSimulationIdDesdeEndpoint(simulationEndpoint);
+        String extraUnitySceneName = intent.getStringExtra("UNITY_SCENE");
+        if (extraUnitySceneName != null && !extraUnitySceneName.trim().isEmpty()) {
+            unitySceneName = extraUnitySceneName;
+        }
+
+        String extraDisplayName = intent.getStringExtra("DISPLAY_NAME");
+        if (extraDisplayName != null && !extraDisplayName.trim().isEmpty()) {
+            displayName = extraDisplayName;
+            simulationTitle = extraDisplayName;
+            introTitle = extraDisplayName;
+        }
     }
 
     private void initViews() {
@@ -573,7 +585,9 @@ public class SimulacionARActivity extends AppCompatActivity {
                 JSONObject simulationRef = simulationStep.optJSONObject("simulation_ref");
 
                 if (simulationRef != null) {
-                    simulationEndpoint = simulationRef.optString("endpoint", "");
+                    if (arId <= 0) {
+                        arId = simulationRef.optInt("ar_id", -1);
+                    }
 
                     labKey = simulationRef.optString(
                             "lab_key",
@@ -616,7 +630,7 @@ public class SimulacionARActivity extends AppCompatActivity {
                     "SIM_AR_CONFIG",
                     "labKey=" + labKey
                             + " | unitySceneName= " + unitySceneName
-                            + " | endpoint= " + simulationEndpoint
+                            + " | arId= " + arId
                             + " | formula= " + formulaExpression
                             + " | title= " +simulationTitle
             );
@@ -706,71 +720,56 @@ public class SimulacionARActivity extends AppCompatActivity {
         }
     }
 
-    private void resolverSimulationRefDesdeMobileResource() {
-        if (simulationId > 0 && notEmpty(simulationEndpoint)) {
+    private void resolverArStepConfigDesdeMobileResource() {
+        if (arId > 0 && notEmpty(labKey) && notEmpty(unitySceneName)) {
             return;
         }
 
         String json = sessionStore.getMobileResourceJson(asignacionId);
 
-        if (json == null || json.trim().isEmpty()) {
-            android.util.Log.d("SIM_AR_CONFIG", "No hay mobile_resource_json para resolver simulation_ref.");
+        ArStepConfig config = ArStepResolver.resolve(
+                json,
+                stepId,
+                ordenPaso
+        );
+
+        if (config == null) {
+            android.util.Log.d(
+                    "SIM_AR_CONFIG",
+                    "No se pudo resolver configuración AR desde mobile_resource_json."
+            );
             return;
         }
 
-        try {
-            org.json.JSONObject root = new org.json.JSONObject(json);
-            org.json.JSONArray steps = root.optJSONArray("steps");
-
-            if (steps == null) return;
-
-            for (int i = 0; i < steps.length(); i++) {
-                org.json.JSONObject step = steps.optJSONObject(i);
-                if (step == null) continue;
-
-                String id = step.optString("id", "");
-                String type = step.optString("type", "");
-                int order = step.optInt("order", -1);
-
-                boolean isTargetStep =
-                        ("SIMULATION_AR".equalsIgnoreCase(type))
-                                || (stepId != null && stepId.equals(id))
-                                || (ordenPaso > 0 && ordenPaso == order);
-
-                if (!isTargetStep) continue;
-
-                org.json.JSONObject simulationRef = step.optJSONObject("simulation_ref");
-
-                if (simulationRef == null) {
-                    return;
-                }
-
-                if (!notEmpty(simulationEndpoint)) {
-                    simulationEndpoint = simulationRef.optString("endpoint", "");
-                }
-
-                if (!notEmpty(labKey)) {
-                    labKey = simulationRef.optString("lab_key", "");
-                }
-
-                simulationId = extraerSimulationIdDesdeEndpoint(simulationEndpoint);
-
-                android.util.Log.d(
-                        "SIM_AR_CONFIG",
-                        "simulation_ref resuelto desde cache: endpoint="
-                                + simulationEndpoint
-                                + " simulationId="
-                                + simulationId
-                                + " labKey="
-                                + labKey
-                );
-
-                return;
-            }
-
-        } catch (Exception e) {
-            android.util.Log.e("SIM_AR_CONFIG", "Error resolviendo simulation_ref", e);
+        if (arId <= 0 && config.getArId() > 0) {
+            arId = config.getArId();
         }
+
+        if (!notEmpty(labKey)) {
+            labKey = config.getLabKey();
+        }
+
+        if (!notEmpty(unitySceneName)) {
+            unitySceneName = config.getUnitySceneName();
+        }
+
+        if (!notEmpty(displayName)) {
+            displayName = config.getDisplayName();
+            simulationTitle = displayName;
+            introTitle = displayName;
+        }
+
+        android.util.Log.d(
+                "SIM_AR_CONFIG",
+                "AR resuelto desde resolver: arId="
+                        + arId
+                        + " labKey="
+                        + labKey
+                        + " unitySceneName="
+                        + unitySceneName
+                        + " displayName="
+                        + displayName
+        );
     }
 
     private void usarConfiguracionFallback() {
@@ -780,10 +779,6 @@ public class SimulacionARActivity extends AppCompatActivity {
 
         if (unitySceneName == null || unitySceneName.trim().isEmpty()) {
             unitySceneName = resolverUnityScenePorLabKey(labKey);
-        }
-
-        if (simulationEndpoint == null) {
-            simulationEndpoint = "";
         }
 
         android.util.Log.w(
@@ -801,6 +796,7 @@ public class SimulacionARActivity extends AppCompatActivity {
         android.util.Log.d("AR_DEBUG", "laboratorioId=" + laboratorioId);
         android.util.Log.d("AR_DEBUG", "grupoId=" + grupoId);
         android.util.Log.d("AR_DEBUG", "ordenPaso=" + ordenPaso);
+        android.util.Log.d("AR_DEBUG", "arId=" + arId);
         android.util.Log.d("AR_DEBUG", "jsonGuardado=" + jsonGuardado);
         android.util.Log.d("AR_DEBUG", "arCompleted=" + arCompleted);
         android.util.Log.d("AR_DEBUG", "hitTarget=" + hitTarget);
@@ -852,8 +848,8 @@ public class SimulacionARActivity extends AppCompatActivity {
         }
     }
     private void cargarConfiguracionSimulacionDesdeExtrasOCache() {
-        if (simulationId > 0) {
-            String cached = sessionStore.getSimulationConfigJson(simulationId);
+        if (arId > 0) {
+            String cached = sessionStore.getSimulationConfigJson(arId);
 
             if (cached != null && !cached.trim().isEmpty()) {
                 try {
@@ -867,7 +863,7 @@ public class SimulacionARActivity extends AppCompatActivity {
 
                     android.util.Log.d(
                             "SIM_AR_CONFIG",
-                            "Configuración cargada desde cache simulationId=" + simulationId
+                            "Configuración cargada desde cache simulationId=" + arId
                     );
 
                     return;
@@ -942,11 +938,11 @@ public class SimulacionARActivity extends AppCompatActivity {
     }
 
     private boolean cargarConfiguracionSimulacionDesdeCache() {
-        if (simulationId <= 0) {
+        if (arId <= 0) {
             return false;
         }
 
-        String cached = sessionStore.getSimulationConfigJson(simulationId);
+        String cached = sessionStore.getSimulationConfigJson(arId);
 
         if (cached == null || cached.trim().isEmpty()) {
             return false;
@@ -964,7 +960,7 @@ public class SimulacionARActivity extends AppCompatActivity {
 
             android.util.Log.d(
                     "SIM_AR_CONFIG",
-                    "Configuración AR cargada desde cache. simulationId=" + simulationId
+                    "Configuración AR cargada desde cache. arId=" + arId
             );
 
             return true;
@@ -976,10 +972,10 @@ public class SimulacionARActivity extends AppCompatActivity {
     }
 
     private void consultarConfiguracionSimulacionBackend(boolean showFullLoading) {
-        if (simulationId <= 0) {
+        if (arId <= 0) {
             stateSimulacionAr.showError(
                     "No se encontró la simulación",
-                    "El laboratorio no tiene un endpoint de simulación AR válido.",
+                    "El laboratorio no tiene una práctica AR válida configurada.",
                     v -> consultarConfiguracionSimulacionBackend(true)
             );
 
@@ -1013,7 +1009,7 @@ public class SimulacionARActivity extends AppCompatActivity {
 
         simulacionRepository.getMobileSimulationConfig(
                 "Bearer " + token,
-                simulationId,
+                arId,
                 new RepositoryCallback<MobileSimulationResponse>() {
                     @Override
                     public void onComplete(AppResult<MobileSimulationResponse> result) {
@@ -1035,7 +1031,7 @@ public class SimulacionARActivity extends AppCompatActivity {
 
                             try {
                                 sessionStore.saveSimulationConfigJson(
-                                        simulationId,
+                                        arId,
                                         gson.toJson(response)
                                 );
                             } catch (Exception e) {
@@ -1084,28 +1080,6 @@ public class SimulacionARActivity extends AppCompatActivity {
     }
 
     // Helper
-    private int extraerSimulationIdDesdeEndpoint(String endpoint) {
-        if (endpoint == null || endpoint.trim().isEmpty()) {
-            return -1;
-        }
-
-        try {
-            java.util.regex.Pattern pattern =
-                    java.util.regex.Pattern.compile("/simulation/(\\d+)/?");
-
-            java.util.regex.Matcher matcher = pattern.matcher(endpoint);
-
-            if (matcher.find()) {
-                return Integer.parseInt(matcher.group(1));
-            }
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return -1;
-    }
-
     private void manejarErrorConfiguracionSimulacion(
             AppResult<MobileSimulationResponse> result,
             boolean showFullLoading
@@ -1144,6 +1118,7 @@ public class SimulacionARActivity extends AppCompatActivity {
         float density = getResources().getDisplayMetrics().density;
         return Math.round(dp * density);
     }
+
     private String obtenerFechaActualUtc() {
         java.text.SimpleDateFormat format =
                 new java.text.SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", java.util.Locale.US);

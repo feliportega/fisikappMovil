@@ -6,7 +6,7 @@ import java.util.List;
 public class MobileResourceResponse {
 
     @SerializedName("assignment")
-    private MobileAssignmentResponse assignment;
+    private MobileResourceAssignmentResponse assignment;
 
     @SerializedName("resource")
     private MobileResourceInfoResponse resource;
@@ -14,10 +14,9 @@ public class MobileResourceResponse {
     @SerializedName("steps")
     private List<MobileStepResponse> steps;
 
-    public MobileAssignmentResponse getAssignment() {
+    public MobileResourceAssignmentResponse getAssignment() {
         return assignment;
     }
-
     public MobileResourceInfoResponse getResource() {
         return resource;
     }

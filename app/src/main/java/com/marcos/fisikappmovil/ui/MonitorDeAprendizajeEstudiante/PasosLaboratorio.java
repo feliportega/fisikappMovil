@@ -319,6 +319,10 @@ public class PasosLaboratorio extends AppCompatActivity {
                 abrirPracticaExperimental(step);
                 break;
 
+            case "QUESTIONS":
+                abrirPreguntas(step);
+                break;
+
             default:
                 Toast.makeText(this, "Este paso todavía no está disponible.", Toast.LENGTH_SHORT).show();
                 break;
@@ -489,12 +493,14 @@ public class PasosLaboratorio extends AppCompatActivity {
         intent.putExtra("STEP_ID", step.getId());
 
         if (step.getSimulationRef() != null) {
-            String endpoint = "";
+            int arId = -1;
             String labKey = "";
+            String unitySceneName = "";
+            String displayName = "";
 
-            if (step.getSimulationRef().has("endpoint")
-                    && !step.getSimulationRef().get("endpoint").isJsonNull()) {
-                endpoint = step.getSimulationRef().get("endpoint").getAsString();
+            if (step.getSimulationRef().has("ar_id")
+                    && !step.getSimulationRef().get("ar_id").isJsonNull()) {
+                arId = step.getSimulationRef().get("ar_id").getAsInt();
             }
 
             if (step.getSimulationRef().has("lab_key")
@@ -502,8 +508,20 @@ public class PasosLaboratorio extends AppCompatActivity {
                 labKey = step.getSimulationRef().get("lab_key").getAsString();
             }
 
-            intent.putExtra("SIMULATION_ENDPOINT", endpoint);
+            if (step.getSimulationRef().has("unity_scene_name")
+                    && !step.getSimulationRef().get("unity_scene_name").isJsonNull()) {
+                unitySceneName = step.getSimulationRef().get("unity_scene_name").getAsString();
+            }
+
+            if (step.getSimulationRef().has("display_name")
+                    && !step.getSimulationRef().get("display_name").isJsonNull()) {
+                displayName = step.getSimulationRef().get("display_name").getAsString();
+            }
+
+            intent.putExtra("AR_ID", arId);
             intent.putExtra("LAB_KEY", labKey);
+            intent.putExtra("UNITY_SCENE", unitySceneName);
+            intent.putExtra("DISPLAY_NAME", displayName);
         }
 
         pasoLauncher.launch(intent);
@@ -556,6 +574,21 @@ public class PasosLaboratorio extends AppCompatActivity {
         intent.putExtra(EXTRA_GRUPO_ID, grupoId);
         intent.putExtra(EXTRA_ORDEN_PASO, step.getOrder());
         intent.putExtra(EXTRA_TIPO_PASO, step.getType());
+
+        pasoLauncher.launch(intent);
+    }
+
+    private void abrirPreguntas(MobileStepResponse step) {
+        Intent intent = new Intent(this, PreguntasLaboratorioActivity.class);
+
+        intent.putExtra(EXTRA_ASIGNACION_ID, asignacionId);
+        intent.putExtra(EXTRA_LABORATORIO_ID, laboratorioId);
+        intent.putExtra(EXTRA_GRUPO_ID, grupoId);
+        intent.putExtra(EXTRA_ORDEN_PASO, step.getOrder());
+        intent.putExtra(EXTRA_TIPO_PASO, step.getType());
+
+        intent.putExtra("STEP_ID", step.getId());
+        intent.putExtra("STEP_TITLE", step.getTitle());
 
         pasoLauncher.launch(intent);
     }
