@@ -60,11 +60,12 @@ public interface FisikappApi {
             @Header("Authorization") String token
     );
 
+    /*
     @GET("api/estudiante/grupos/{grupo_id}/laboratorios/")
     Call<GrupoLaboratoriosResponse> getLaboratoriosPorGrupo(
             @Header("Authorization") String token,
             @Path("grupo_id") int grupoId
-    );
+    );*/
 
     @GET("api/mobile/resources/{asignacion_id}/")
     Call<MobileResourceResponse> getMobileResource(
@@ -72,6 +73,7 @@ public interface FisikappApi {
             @Path("asignacion_id") int asignacionId
     );
 
+    /*
     @GET("api/mobile/simulation/{simulationId}/")
     Call<MobileSimulationResponse> getMobileSimulationConfig(
             @Header("Authorization") String authHeader,
@@ -88,7 +90,7 @@ public interface FisikappApi {
     Call<LaboratorioEstudianteDetalleResponse> getLaboratorioEstudianteDetalle(
             @Header("Authorization") String token,
             @Path("laboratorio_id") int laboratorioId
-    );
+    );*/
 
     @POST("api/mobile/groups/join/")
     Call<JoinGroupResponse> joinMobileGroup(
