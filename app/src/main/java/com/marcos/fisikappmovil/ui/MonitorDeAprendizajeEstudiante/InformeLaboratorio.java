@@ -88,7 +88,7 @@ public class InformeLaboratorio extends AppCompatActivity {
 
     private void initViews() {
         // CORREGIDO: Enlace modificado al ID correcto del XML
-        btnBackPasosLab = findViewById(R.id.btnBackPasosLab);
+        btnBackPasosLab = findViewById(R.id.btnBackDetalleLab);
 
         tvNombreLaboratorioInforme = findViewById(R.id.tvNombreLaboratorioInforme);
         tvInfoGeneralInforme = findViewById(R.id.tvInfoGeneralInforme);

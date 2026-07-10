@@ -14,6 +14,7 @@ public class RetrofitClient {
     // Producción / Render
     private static final String BASE_URL = "https://backend-fisikapp.onrender.com/";
     //private static final String BASE_URL ="http://192.168.1.14:8000/";
+
     public static Retrofit getClient() {
         if (retrofit == null) {
 
