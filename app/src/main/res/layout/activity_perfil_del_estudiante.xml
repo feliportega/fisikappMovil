@@ -8,6 +8,7 @@
     android:layout_height="match_parent"
     android:background="#F4F7FC"
     android:orientation="vertical"
+    android:fitsSystemWindows="true"
     tools:context=".ui.GestionDePerfilDelEstudiante.Perfil_del_estudiante">
 
     <!-- Barra superior -->
