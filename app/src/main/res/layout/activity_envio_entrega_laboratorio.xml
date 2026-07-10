@@ -16,7 +16,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <!-- HEADER CON BORDES INFERIORES REDONDEADOS -->
+            <!-- HEADER -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="230dp"
@@ -29,25 +29,26 @@
                     android:id="@+id/btnBackEnvioEntrega"
                     android:layout_width="42dp"
                     android:layout_height="42dp"
+                    android:layout_gravity="start"
                     android:clickable="true"
                     android:focusable="true"
-                    android:layout_gravity="start"
                     android:src="@drawable/outline_arrow_circle_left_24"
-                    app:tint="#DCFBFF"  />
+                    app:tint="#DCFBFF"/>
 
                 <ImageView
                     android:layout_width="96dp"
                     android:layout_height="70dp"
                     android:layout_marginTop="6dp"
                     android:src="@drawable/vector_main_logo"/>
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="18dp"
                     android:text="Enviar entrega"
                     android:textColor="@android:color/white"
-                    android:textStyle="bold"
-                    android:textSize="24sp"/>
+                    android:textSize="24sp"
+                    android:textStyle="bold"/>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -57,45 +58,22 @@
                     android:textColor="#B4C6EF"
                     android:textSize="14sp"/>
 
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_weight="1"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Enviar entrega"
-                        android:textColor="@android:color/white"
-                        android:textSize="24sp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="4dp"
-                        android:text="Revisa y envía tu laboratorio"
-                        android:textColor="#B4C6EF"
-                        android:textSize="14sp" />
-
-                </LinearLayout>
-
             </LinearLayout>
 
-            <!-- CONTENIDO FLUIDO EN TARJETAS ESTILIZADAS -->
+            <!-- CONTENEDOR BLANCO -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="-22dp"
+                android:background="@drawable/bg_card_rounded"
                 android:orientation="vertical"
                 android:padding="20dp">
 
-                <!-- ESTADO: LISTA PARA ENVIAR (Verde Suave) -->
+                <!-- ESTADO -->
                 <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
                     app:cardBackgroundColor="#ECFDF5"
                     app:cardCornerRadius="28dp"
                     app:cardElevation="4dp">
@@ -113,7 +91,7 @@
                             android:text="Lista para enviar"
                             android:textColor="#001B6B"
                             android:textSize="18sp"
-                            android:textStyle="bold" />
+                            android:textStyle="bold"/>
 
                         <TextView
                             android:id="@+id/tvCalificacionEstado"
@@ -122,13 +100,13 @@
                             android:layout_marginTop="8dp"
                             android:text="Calificación: pendiente"
                             android:textColor="#166534"
-                            android:textSize="14sp" />
+                            android:textSize="14sp"/>
 
                     </LinearLayout>
 
                 </androidx.cardview.widget.CardView>
 
-                <!-- RESUMEN (Tarjeta Blanca Elegante) -->
+                <!-- RESUMEN -->
                 <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -149,7 +127,7 @@
                             android:text="Resumen"
                             android:textColor="#001B6B"
                             android:textSize="18sp"
-                            android:textStyle="bold" />
+                            android:textStyle="bold"/>
 
                         <TextView
                             android:id="@+id/tvResumenEntrega"
@@ -159,13 +137,13 @@
                             android:lineSpacingExtra="5dp"
                             android:text="Resumen de entrega"
                             android:textColor="#334155"
-                            android:textSize="15sp" />
+                            android:textSize="15sp"/>
 
                     </LinearLayout>
 
                 </androidx.cardview.widget.CardView>
 
-                <!-- AVISO (Tarjeta de Advertencia Suave) -->
+                <!-- AVISO -->
                 <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -186,7 +164,7 @@
                             android:text="Aviso"
                             android:textColor="#001B6B"
                             android:textSize="18sp"
-                            android:textStyle="bold" />
+                            android:textStyle="bold"/>
 
                         <TextView
                             android:layout_width="match_parent"
@@ -195,13 +173,13 @@
                             android:lineSpacingExtra="4dp"
                             android:text="La app móvil no calcula la calificación. Solo envía la entrega al servidor. La calificación quedará pendiente hasta que sea revisada por IA/instructor."
                             android:textColor="#475569"
-                            android:textSize="14sp" />
+                            android:textSize="14sp"/>
 
                     </LinearLayout>
 
                 </androidx.cardview.widget.CardView>
 
-                <!-- BOTÓN PRINCIPAL ESTILO PÍLDORA -->
+                <!-- BOTÓN -->
                 <Button
                     android:id="@+id/btnEnviarEntrega"
                     android:layout_width="match_parent"
@@ -214,10 +192,12 @@
                     android:textColor="@android:color/black"
                     android:textSize="18sp"
                     android:textStyle="bold"
-                    app:cornerRadius="28dp" />
+                    app:cornerRadius="28dp"/>
 
             </LinearLayout>
+
         </LinearLayout>
+
     </ScrollView>
 
     <include
@@ -225,9 +205,10 @@
         layout="@layout/view_content_state"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="gone" />
+        android:visibility="gone"/>
 
     <include
         android:id="@+id/loadingOverlay"
-        layout="@layout/view_loading_overlay" />
+        layout="@layout/view_loading_overlay"/>
+
 </FrameLayout>
