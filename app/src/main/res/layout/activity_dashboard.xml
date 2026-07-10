@@ -4,77 +4,72 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#EEF5FB"
-    android:fitsSystemWindows="true"
+    android:background="@color/colorPrimario"
     tools:context=".ui.AccesoAlSistema.Dashboard">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
-        android:orientation="vertical">
-        <ImageView
-            android:layout_width="140dp"
-            android:layout_height="90dp"
-            android:layout_gravity="center"
-            android:layout_marginTop="28dp"
-            android:src="@drawable/vector_main_logo"
-            app:tint="@null"/>
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="16dp"
             android:layout_marginTop="16dp"
+            app:cardBackgroundColor="@android:color/white"
             app:cardCornerRadius="28dp"
-            app:cardElevation="4dp"
-            app:cardBackgroundColor="@android:color/white">
+            app:cardElevation="4dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="90dp"
-                android:orientation="horizontal"
+                android:layout_height="82dp"
                 android:gravity="center_vertical"
+                android:orientation="horizontal"
                 android:paddingHorizontal="22dp">
+
                 <ImageView
                     android:layout_width="42dp"
                     android:layout_height="42dp"
                     android:src="@drawable/vector_main_logo"
-                    app:tint="@null"/>
+                    app:tint="@null" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="12dp"
-                    android:text="Fisikapp"
-                    android:textStyle="bold"
-                    android:textColor="@color/colorPrimario"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="18dp"
                     android:letterSpacing="0.02"
-                    android:textSize="22sp"/>
+                    android:text="Fisikapp"
+                    android:textColor="@color/colorPrimario"
+                    android:textSize="22sp"
+                    android:textStyle="bold" />
 
                 <View
                     android:layout_width="0dp"
                     android:layout_height="1dp"
-                    android:layout_weight="1"/>
+                    android:layout_weight="1" />
 
                 <TextView
                     android:id="@+id/tvNombreUsuarioBarra"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:gravity="end"
+                    android:maxWidth="85dp"
+                    android:singleLine="true"
                     android:text="PEPITO"
-                    android:textStyle="normal"
                     android:textColor="#64748B"
-                    android:textSize="15sp"/>
+                    android:textSize="15sp" />
 
                 <ImageView
                     android:id="@+id/imgcerrar_sesion"
                     android:layout_width="42dp"
                     android:layout_height="42dp"
-                    android:layout_marginStart="7dp"
+                    android:layout_marginStart="12dp"
                     android:background="@drawable/bg_circulo_gris"
                     android:padding="16dp"
-                    android:src="@drawable/iconousuario"/>
-
+                    android:src="@drawable/iconousuario" />
 
             </LinearLayout>
 
@@ -84,11 +79,11 @@
             android:id="@+id/txtLaboratorio"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="18dp"
             android:layout_marginStart="24dp"
+            android:layout_marginTop="14dp"
             android:text="¡Bienvenido de nuevo!"
-            android:textColor="@color/white"
-            android:textSize="34sp"
+            android:textColor="@android:color/white"
+            android:textSize="30sp"
             android:textStyle="bold" />
 
         <TextView
@@ -96,62 +91,72 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="6dp"
             android:text="Selecciona uno de tus grupos para comenzar"
             android:textColor="#B4C6EF"
-            android:textSize="16sp"/>
+            android:textSize="16sp" />
 
-        <TextView
-            android:id="@+id/tvEstadoVacio"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:layout_marginHorizontal="24dp"
-            android:text="Cargando tus grupos..."
-            android:textAlignment="center"
-            android:textColor="#64748B"
-            android:textSize="15sp"
-            android:visibility="gone" />
+            android:layout_marginTop="14dp"
+            android:background="@drawable/bg_card_rounded"
+            android:orientation="vertical"
+            android:padding="18dp">
 
-        <include
-            android:id="@+id/stateDashboardGrupos"
-            layout="@layout/view_content_state" />
+            <TextView
+                android:id="@+id/tvEstadoVacio"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="24dp"
+                android:layout_marginTop="16dp"
+                android:text="Cargando tus grupos..."
+                android:textAlignment="center"
+                android:textColor="#475569"
+                android:textSize="15sp"
+                android:visibility="gone" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="24dp"
-            android:layout_marginBottom="14dp"
-            android:text="Tus grupos"
-            android:textColor="@android:color/white"
-            android:textSize="20sp"
-            android:textStyle="bold"/>
+            <include
+                android:id="@+id/stateDashboardGrupos"
+                layout="@layout/view_content_state" />
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:text="Tus grupos"
+                android:textColor="@color/colorPrimario"
+                android:textSize="20sp"
+                android:textStyle="bold" />
 
-        <!-- RecyclerView CORRECTO -->
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/tarjeta"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:nestedScrollingEnabled="false"/>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/tarjeta"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:layout_marginBottom="12dp"
+                android:nestedScrollingEnabled="false" />
 
+        </LinearLayout>
 
         <Button
             android:id="@+id/btemp"
             android:layout_width="300dp"
             android:layout_height="56dp"
             android:layout_gravity="center"
-            android:layout_marginTop="24dp"
-            android:layout_marginBottom="40dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="28dp"
             android:backgroundTint="@color/colorAdvertencia"
+            android:elevation="3dp"
             android:text="Unirme a un grupo"
             android:textAllCaps="false"
             android:textColor="@color/colorPrimario"
-            android:textStyle="bold"
             android:textSize="17sp"
-            android:elevation="3dp"
-            app:cornerRadius="28dp"/>
+            android:textStyle="bold"
+            app:cornerRadius="28dp" />
+
     </LinearLayout>
 
 </ScrollView>
