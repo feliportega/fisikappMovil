@@ -21,7 +21,7 @@ public class MobileConceptResponse {
     private String type;
 
     @SerializedName("resources")
-    private List<Object> resources;
+    private List<MobileResourceLinkResponse> resources;
 
     public int getId() {
         return id;
@@ -43,7 +43,7 @@ public class MobileConceptResponse {
         return type;
     }
 
-    public List<Object> getResources() {
+    public List<MobileResourceLinkResponse> getResources() {
         return resources;
     }
 }
