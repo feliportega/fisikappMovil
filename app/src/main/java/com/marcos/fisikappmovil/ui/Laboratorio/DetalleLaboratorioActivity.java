@@ -309,6 +309,8 @@ public class DetalleLaboratorioActivity extends AppCompatActivity {
         titulo = response.getResource().getTitle();
         resumen = response.getResource().getSummary();
 
+        resolverPracticaArDesdeSteps(response);
+
         String categoria = response.getResource().getCategory();
         String docente = response.getResource().getTeacher();
 
@@ -323,11 +325,11 @@ public class DetalleLaboratorioActivity extends AppCompatActivity {
         }
 
         if (labKey == null || labKey.trim().isEmpty()) {
-            labKey = "No encontrado";
+            labKey = "";
         }
 
         if (unitySceneName == null || unitySceneName.trim().isEmpty()) {
-            unitySceneName = "No encontrado";
+            unitySceneName = "";
         }
 
         tvDetalleTituloLab.setText(safe(titulo));
@@ -340,9 +342,59 @@ public class DetalleLaboratorioActivity extends AppCompatActivity {
         tvDetalleIntentosLab.setText("Intentos: " + intentosUsados + "/" + intentosMaximos);
         tvDetalleFechaLab.setText("Fecha límite: " + safe(fechaFin));
 
-        tvDetalleUnityLab.setText(safe(labKey) + " · " + safe(unitySceneName));
+        if (!safe(labKey).isEmpty() || !safe(unitySceneName).isEmpty()) {
+            tvDetalleUnityLab.setText("Práctica AR: " + safe(labKey) + " · " + safe(unitySceneName));
+        } else {
+            tvDetalleUnityLab.setText("Práctica AR: no configurada");
+        }
 
         detalleCargado = true;
+    }
+
+    private void resolverPracticaArDesdeSteps(MobileResourceResponse response) {
+        if (response == null || response.getSteps() == null) {
+            return;
+        }
+
+        for (com.marcos.fisikappmovil.remote.response.MobileStepResponse step : response.getSteps()) {
+            if (step == null || step.getType() == null) {
+                continue;
+            }
+
+            if (!"SIMULATION_AR".equalsIgnoreCase(step.getType())) {
+                continue;
+            }
+
+            if (step.getSimulationRef() == null) {
+                return;
+            }
+
+            try {
+                if (step.getSimulationRef().has("lab_key")
+                        && !step.getSimulationRef().get("lab_key").isJsonNull()) {
+                    labKey = step.getSimulationRef().get("lab_key").getAsString();
+                }
+
+                if (step.getSimulationRef().has("unity_scene_name")
+                        && !step.getSimulationRef().get("unity_scene_name").isJsonNull()) {
+                    unitySceneName = step.getSimulationRef().get("unity_scene_name").getAsString();
+                }
+
+                if (step.getSimulationRef().has("display_name")
+                        && !step.getSimulationRef().get("display_name").isJsonNull()) {
+                    String displayName = step.getSimulationRef().get("display_name").getAsString();
+
+                    if (displayName != null && !displayName.trim().isEmpty()) {
+                        unitySceneName = displayName + " · " + safe(unitySceneName);
+                    }
+                }
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            return;
+        }
     }
 
     // Helpers

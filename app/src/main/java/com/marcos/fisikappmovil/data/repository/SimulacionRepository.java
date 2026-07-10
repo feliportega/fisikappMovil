@@ -19,20 +19,19 @@ public class SimulacionRepository {
 
     public void getMobileSimulationConfig(
             String authHeader,
-            int simulationId,
+            int arId,
             RepositoryCallback<MobileSimulationResponse> callback
     ) {
-        fisikappApi.getMobileSimulationConfig(authHeader, simulationId)
+        fisikappApi.getMobileArConfig(authHeader, arId)
                 .enqueue(new retrofit2.Callback<MobileSimulationResponse>() {
                     @Override
                     public void onResponse(
-                            Call<MobileSimulationResponse> call,
-                            Response<MobileSimulationResponse> response
+                            retrofit2.Call<MobileSimulationResponse> call,
+                            retrofit2.Response<MobileSimulationResponse> response
                     ) {
                         if (!response.isSuccessful()) {
                             callback.onComplete(AppResult.error(
-                                    "No se pudo cargar la configuración de simulación. Código: " + response.code()
-                                            + leerError(response),
+                                    "No se pudo cargar la configuración AR. Código: " + response.code(),
                                     response.code()
                             ));
                             return;
@@ -53,7 +52,7 @@ public class SimulacionRepository {
 
                     @Override
                     public void onFailure(
-                            Call<MobileSimulationResponse> call,
+                            retrofit2.Call<MobileSimulationResponse> call,
                             Throwable t
                     ) {
                         String message = "No se pudo conectar con el servidor.";

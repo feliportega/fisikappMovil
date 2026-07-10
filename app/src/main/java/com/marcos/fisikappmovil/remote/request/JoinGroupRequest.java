@@ -2,16 +2,12 @@ package com.marcos.fisikappmovil.remote.request;
 
 import com.google.gson.annotations.SerializedName;
 
-public class UnirseGrupoRequest {
+public class JoinGroupRequest {
 
     @SerializedName("codigo")
-    private String codigo;
+    private final String codigo;
 
-    public UnirseGrupoRequest(String codigo) {
+    public JoinGroupRequest(String codigo) {
         this.codigo = codigo;
-    }
-
-    public String getCodigo() {
-        return codigo;
     }
 }

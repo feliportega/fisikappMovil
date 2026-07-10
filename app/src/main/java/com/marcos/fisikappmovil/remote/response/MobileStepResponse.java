@@ -3,6 +3,7 @@ package com.marcos.fisikappmovil.remote.response;
 import com.google.gson.annotations.SerializedName;
 import java.util.List;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonArray;
 
 public class MobileStepResponse {
 
@@ -53,6 +54,9 @@ public class MobileStepResponse {
 
     @SerializedName("simulation_ref")
     private JsonObject simulationRef;
+
+    @SerializedName("questions")
+    private JsonArray questions;
 
     public String getId() {
         return id;
@@ -117,5 +121,9 @@ public class MobileStepResponse {
 
     public List<MobileProcedureStepResponse> getProcedureSteps() {
         return procedureSteps;
+    }
+
+    public JsonArray getQuestions() {
+        return questions;
     }
 }

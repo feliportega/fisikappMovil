@@ -1,16 +1,23 @@
 package com.marcos.fisikappmovil.api;
 
+import com.marcos.fisikappmovil.remote.request.JoinGroupRequest;
 import com.marcos.fisikappmovil.remote.request.LoginRequest;
-import com.marcos.fisikappmovil.remote.request.PerfilUpdateRequest;
+import com.marcos.fisikappmovil.remote.request.RegisterRequest;
 import com.marcos.fisikappmovil.remote.response.AsignacionDetalleResponse;
 import com.marcos.fisikappmovil.remote.response.GrupoEstudianteResponse;
 import com.marcos.fisikappmovil.remote.response.GrupoLaboratoriosResponse;
+import com.marcos.fisikappmovil.remote.response.JoinGroupResponse;
 import com.marcos.fisikappmovil.remote.response.LaboratorioEstudianteDetalleResponse;
 import com.marcos.fisikappmovil.remote.response.LoginResponse;
+import com.marcos.fisikappmovil.remote.response.MobileGroupAssignmentsResponse;
+import com.marcos.fisikappmovil.remote.response.MobileGroupResponse;
 import com.marcos.fisikappmovil.remote.response.MobileResourceResponse;
 import com.marcos.fisikappmovil.remote.response.MobileSimulationResponse;
 import com.marcos.fisikappmovil.remote.response.PerfilResponse;
 import com.marcos.fisikappmovil.remote.response.PerfilUpdateResponse;
+import com.marcos.fisikappmovil.remote.response.RegisterResponse;
+import com.google.gson.JsonObject;
+import com.marcos.fisikappmovil.remote.response.SubmitLaboratorioResponse;
 
 import java.util.List;
 
@@ -30,6 +37,9 @@ public interface FisikappApi {
 
     @POST("api/users/login/")
     Call<LoginResponse> login(@Body LoginRequest request);
+
+    @POST("api/users/register/")
+    Call<RegisterResponse> register(@Body RegisterRequest request);
 
     @GET("api/users/perfil/")
     Call<PerfilResponse> getPerfil(
@@ -80,4 +90,33 @@ public interface FisikappApi {
             @Path("laboratorio_id") int laboratorioId
     );
 
+    @POST("api/mobile/groups/join/")
+    Call<JoinGroupResponse> joinMobileGroup(
+            @Header("Authorization") String token,
+            @Body JoinGroupRequest request
+    );
+
+    @GET("api/mobile/groups/")
+    Call<List<MobileGroupResponse>> getMobileGroups(
+            @Header("Authorization") String token
+    );
+
+    @GET("api/mobile/groups/{grupo_id}/assignments/")
+    Call<MobileGroupAssignmentsResponse> getMobileGroupAssignments(
+            @Header("Authorization") String token,
+            @Path("grupo_id") int grupoId
+    );
+
+    @GET("api/mobile/ar/{arId}/")
+    Call<MobileSimulationResponse> getMobileArConfig(
+            @Header("Authorization") String authHeader,
+            @Path("arId") int arId
+    );
+
+    @POST("api/mobile/assignments/{assignment_id}/submit/")
+    Call<SubmitLaboratorioResponse> submitMobileAssignment(
+            @Header("Authorization") String token,
+            @Path("assignment_id") int assignmentId,
+            @Body JsonObject body
+    );
 }

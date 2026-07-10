@@ -9,9 +9,12 @@ import com.marcos.fisikappmovil.remote.response.GrupoEstudianteResponse;
 
 import com.marcos.fisikappmovil.api.FisikappApi;
 import com.marcos.fisikappmovil.api.RetrofitClient;
-import com.marcos.fisikappmovil.remote.response.GrupoLaboratoriosResponse;
-import com.marcos.fisikappmovil.remote.response.LaboratorioGrupoResponse;
+import com.marcos.fisikappmovil.remote.response.MobileAssignmentResponse;
+import com.marcos.fisikappmovil.remote.response.MobileGroupAssignmentsResponse;
 import com.marcos.fisikappmovil.remote.response.MobileResourceResponse;
+import com.marcos.fisikappmovil.remote.response.SubmitLaboratorioResponse;
+import com.google.gson.JsonObject;
+import com.marcos.fisikappmovil.remote.response.SubmitLaboratorioResponse;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,79 +28,6 @@ public class LaboratorioRepository {
 
     public LaboratorioRepository() {
         this.fisikappApi = RetrofitClient.getApi();
-    }
-
-    public void getPasosLaboratorioMock(
-            int asignacionId,
-            int laboratorioId,
-            RepositoryCallback<List<LaboratorioPasoItem>> callback
-    ) {
-        List<LaboratorioPasoItem> pasos = new ArrayList<>();
-
-        pasos.add(new LaboratorioPasoItem(
-                1,
-                "Leer conceptos",
-                "Revisa los conceptos básicos, fórmulas y marco teórico del tiro parabólico.",
-                LaboratorioPasoItem.TIPO_LECTURA,
-                true,
-                LaboratorioPasoItem.ESTADO_PENDIENTE
-        ));
-
-        pasos.add(new LaboratorioPasoItem(
-                2,
-                "Responder preguntas",
-                "Responde las preguntas de comprensión antes de iniciar la práctica.",
-                LaboratorioPasoItem.TIPO_PREGUNTAS,
-                true,
-                LaboratorioPasoItem.ESTADO_BLOQUEADO
-        ));
-
-        pasos.add(new LaboratorioPasoItem(
-                3,
-                "Práctica experimental",
-                "Realiza la práctica con materiales físicos o siguiendo el procedimiento indicado.",
-                LaboratorioPasoItem.TIPO_PRACTICA_EXPERIMENTAL,
-                true,
-                LaboratorioPasoItem.ESTADO_BLOQUEADO
-        ));
-
-        pasos.add(new LaboratorioPasoItem(
-                4,
-                "Registrar datos experimentales",
-                "Ingresa las mediciones y observaciones obtenidas en la práctica.",
-                LaboratorioPasoItem.TIPO_DATOS_EXPERIMENTALES,
-                true,
-                LaboratorioPasoItem.ESTADO_BLOQUEADO
-        ));
-
-        pasos.add(new LaboratorioPasoItem(
-                5,
-                "Práctica simulada AR",
-                "Ejecuta la práctica simulada en Unity y registra el resultado devuelto por la escena.",
-                LaboratorioPasoItem.TIPO_SIMULACION_AR,
-                true,
-                LaboratorioPasoItem.ESTADO_BLOQUEADO
-        ));
-
-        pasos.add(new LaboratorioPasoItem(
-                6,
-                "Comparar resultados",
-                "Compara los resultados experimentales con los resultados de la simulación.",
-                LaboratorioPasoItem.TIPO_COMPARACION,
-                true,
-                LaboratorioPasoItem.ESTADO_BLOQUEADO
-        ));
-
-        pasos.add(new LaboratorioPasoItem(
-                7,
-                "Informe y conclusiones",
-                "Revisa el resumen del laboratorio, escribe tus conclusiones y prepara la entrega.",
-                LaboratorioPasoItem.TIPO_INFORME,
-                true,
-                LaboratorioPasoItem.ESTADO_BLOQUEADO
-        ));
-
-        callback.onComplete(AppResult.success(pasos, 200));
     }
 
     public void getMisGruposEstudiante(
@@ -171,46 +101,37 @@ public class LaboratorioRepository {
             int grupoId,
             RepositoryCallback<List<LaboratorioAsignadoItem>> callback
     ) {
-        fisikappApi.getLaboratoriosPorGrupo(authHeader, grupoId)
-                .enqueue(new retrofit2.Callback<GrupoLaboratoriosResponse>() {
+        fisikappApi.getMobileGroupAssignments(authHeader, grupoId)
+                .enqueue(new retrofit2.Callback<MobileGroupAssignmentsResponse>() {
                     @Override
                     public void onResponse(
-                            retrofit2.Call<GrupoLaboratoriosResponse> call,
-                            retrofit2.Response<GrupoLaboratoriosResponse> response
+                            retrofit2.Call<MobileGroupAssignmentsResponse> call,
+                            retrofit2.Response<MobileGroupAssignmentsResponse> response
                     ) {
                         if (!response.isSuccessful()) {
                             callback.onComplete(AppResult.error(
-                                    "No se pudieron cargar los laboratorios. Código: " + response.code(),
+                                    buildLaboratoriosHttpErrorMessage(response.code()),
                                     response.code()
                             ));
                             return;
                         }
 
-                        GrupoLaboratoriosResponse body = response.body();
+                        MobileGroupAssignmentsResponse body = response.body();
 
                         if (body == null || body.getLaboratorios() == null) {
-                            callback.onComplete(AppResult.success(new java.util.ArrayList<>(), response.code()));
+                            callback.onComplete(AppResult.success(
+                                    new java.util.ArrayList<>(),
+                                    response.code()
+                            ));
                             return;
                         }
 
                         List<LaboratorioAsignadoItem> items = new java.util.ArrayList<>();
 
-                        for (LaboratorioGrupoResponse lab : body.getLaboratorios()) {
-                            items.add(new LaboratorioAsignadoItem(
-                                    lab.getAsignacionId(),
-                                    lab.getLaboratorioId(),
-                                    grupoId,
-                                    safe(lab.getTitulo()),
-                                    resolverLabKeyTemporal(lab.getTitulo()),
-                                    resolverUnitySceneTemporal(lab.getTitulo()),
-                                    safe(lab.getEstadoAsignacion()),
-                                    safe(lab.getEstadoEntrega()),
-                                    safe(lab.getFechaInicio()),
-                                    safe(lab.getFechaLimite()),
-                                    0,
-                                    4,
-                                    safe(lab.getCalificacionEstado())
-                            ));
+                        for (MobileAssignmentResponse lab : body.getLaboratorios()) {
+                            if (lab == null) continue;
+
+                            items.add(mapMobileAssignmentToItem(lab, grupoId));
                         }
 
                         callback.onComplete(AppResult.success(items, response.code()));
@@ -218,44 +139,134 @@ public class LaboratorioRepository {
 
                     @Override
                     public void onFailure(
-                            retrofit2.Call<GrupoLaboratoriosResponse> call,
+                            retrofit2.Call<MobileGroupAssignmentsResponse> call,
                             Throwable t
                     ) {
-                        callback.onComplete(AppResult.error(
-                                "Error de conexión cargando laboratorios: " + t.getMessage(),
-                                -1
-                        ));
+                        String mensaje = "No se pudo conectar con el servidor.";
+
+                        if (t instanceof java.net.SocketTimeoutException) {
+                            mensaje = "El servidor tardó demasiado en responder. Intenta de nuevo.";
+                        } else if (t instanceof java.net.UnknownHostException) {
+                            mensaje = "No hay conexión a internet o no se pudo resolver el servidor.";
+                        } else if (t instanceof java.net.ConnectException) {
+                            mensaje = "No se pudo conectar con el servidor.";
+                        } else if (t != null && t.getMessage() != null && !t.getMessage().trim().isEmpty()) {
+                            mensaje = "Error de conexión cargando laboratorios: " + t.getMessage();
+                        }
+
+                        callback.onComplete(AppResult.error(mensaje, -1));
                     }
                 });
     }
 
-    private String safe(String value) {
-        return value == null ? "" : value;
-    }
+    private LaboratorioAsignadoItem mapMobileAssignmentToItem(
+            MobileAssignmentResponse lab,
+            int grupoId
+    ) {
+        String labKey = "";
 
-    private String resolverLabKeyTemporal(String titulo) {
-        if (titulo == null) return "LAB-GENERICO";
+        if (lab.isTieneAr()) {
+            labKey = safe(lab.getLabKey());
 
-        String t = titulo.toLowerCase();
-
-        if (t.contains("parabólico")) return "PARABOLIC-001";
-        if (t.contains("hooke")) return "HOOKE-001";
-        if (t.contains("caída")) return "FREE-FALL-001";
-        if (t.contains("rectilíneo")) return "MRUV-001";
-
-        return "LAB-GENERICO";
-    }
-
-    private String resolverUnitySceneTemporal(String titulo) {
-        if (titulo == null) return "";
-
-        String t = titulo.toLowerCase();
-
-        if (t.contains("parabólico")) {
-            return "ParabolicMotionLab";
+            if (labKey.isEmpty()) {
+                labKey = "AR";
+            }
         }
 
-        return "";
+        String unitySceneName = "";
+        String estadoAsignacion = safe(lab.getEstadoAsignacion());
+        String estadoEntrega = safe(lab.getEstadoEntrega());
+        String calificacionEstado = safe(lab.getCalificacionEstado());
+
+        if (calificacionEstado.isEmpty()) {
+            calificacionEstado = "SIN_ENTREGA";
+        }
+
+        return new LaboratorioAsignadoItem(
+                lab.getAsignacionId(),
+                lab.getLaboratorioId(),
+                grupoId,
+                safe(lab.getTitulo()),
+                labKey,
+                unitySceneName,
+                estadoAsignacion,
+                estadoEntrega,
+                safe(lab.getFechaInicio()),
+                safe(lab.getFechaLimite()),
+                0,
+                0,
+                calificacionEstado
+        );
+    }
+
+    public void submitMobileAssignment(
+            String authHeader,
+            int assignmentId,
+            JsonObject body,
+            RepositoryCallback<SubmitLaboratorioResponse> callback
+    ) {
+        android.util.Log.d("SUBMIT_DEBUG", "Repository: llamando submitMobileAssignment");
+        android.util.Log.d("SUBMIT_DEBUG", "assignmentId=" + assignmentId);
+        android.util.Log.d("SUBMIT_DEBUG", "body=" + body.toString());
+        fisikappApi.submitMobileAssignment(authHeader, assignmentId, body)
+                .enqueue(new retrofit2.Callback<SubmitLaboratorioResponse>() {
+                    @Override
+                    public void onResponse(
+                            retrofit2.Call<SubmitLaboratorioResponse> call,
+                            retrofit2.Response<SubmitLaboratorioResponse> response
+                    ) {
+                        android.util.Log.d("SUBMIT_DEBUG", "HTTP code=" + response.code());
+                        android.util.Log.d("SUBMIT_DEBUG", "isSuccessful=" + response.isSuccessful());
+
+                        if (!response.isSuccessful()) {
+                            try {
+                                if (response.errorBody() != null) {
+                                    android.util.Log.e("SUBMIT_DEBUG", "errorBody=" + response.errorBody().string());
+                                }
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+
+                            callback.onComplete(AppResult.error(
+                                    buildSubmitHttpErrorMessage(response.code()),
+                                    response.code()
+                            ));
+                            return;
+                        }
+
+                        SubmitLaboratorioResponse responseBody = response.body();
+
+                        if (responseBody == null) {
+                            callback.onComplete(AppResult.error(
+                                    "El servidor respondió vacío.",
+                                    response.code()
+                            ));
+                            return;
+                        }
+
+                        callback.onComplete(AppResult.success(responseBody, response.code()));
+                    }
+
+                    @Override
+                    public void onFailure(
+                            retrofit2.Call<SubmitLaboratorioResponse> call,
+                            Throwable t
+                    ) {
+                        String mensaje = "No se pudo conectar con el servidor.";
+
+                        if (t instanceof java.net.SocketTimeoutException) {
+                            mensaje = "El servidor tardó demasiado en responder. Intenta de nuevo.";
+                        } else if (t instanceof java.net.UnknownHostException) {
+                            mensaje = "No hay conexión a internet o no se pudo resolver el servidor.";
+                        } else if (t instanceof java.net.ConnectException) {
+                            mensaje = "No se pudo conectar con el servidor.";
+                        } else if (t != null && t.getMessage() != null && !t.getMessage().trim().isEmpty()) {
+                            mensaje = "Error de conexión enviando laboratorio: " + t.getMessage();
+                        }
+
+                        callback.onComplete(AppResult.error(mensaje, -1));
+                    }
+                });
     }
 
     public void getMobileResource(
@@ -302,5 +313,48 @@ public class LaboratorioRepository {
                 });
     }
 
+    // heloers
+    private String buildLaboratoriosHttpErrorMessage(int statusCode) {
+        switch (statusCode) {
+            case 401:
+            case 403:
+                return "Sesión no válida. Inicia sesión nuevamente.";
+            case 404:
+                return "No se encontraron laboratorios para este grupo.";
+            case 500:
+                return "Error interno del servidor.";
+            case 502:
+            case 503:
+            case 504:
+                return "El servidor no está disponible en este momento.";
+            default:
+                return "No fue posible cargar los laboratorios. Código: " + statusCode;
+        }
+    }
 
+    private String buildSubmitHttpErrorMessage(int statusCode) {
+        switch (statusCode) {
+            case 400:
+                return "La entrega tiene datos incompletos o inválidos.";
+            case 401:
+            case 403:
+                return "Sesión no válida. Inicia sesión nuevamente.";
+            case 404:
+                return "No se encontró la asignación del laboratorio.";
+            case 409:
+                return "La entrega ya fue enviada.";
+            case 500:
+                return "Error interno del servidor.";
+            case 502:
+            case 503:
+            case 504:
+                return "El servidor no está disponible en este momento.";
+            default:
+                return "No fue posible enviar la entrega. Código: " + statusCode;
+        }
+    }
+
+    private String safe(String value) {
+        return value == null ? "" : value.trim();
+    }
 }
