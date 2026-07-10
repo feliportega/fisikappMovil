@@ -15,11 +15,12 @@
         android:background="@color/white"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:padding="12dp">
+        android:paddingHorizontal="20dp"
+        android:paddingVertical="18dp">
         <ImageView
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:src="@drawable/iconofisik" />
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/vector_main_logo" />
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -27,7 +28,7 @@
             android:layout_weight="1"
             android:text="Fisikapp"
             android:textColor="@color/colorPrimario"
-            android:textSize="16sp"
+            android:textSize="22sp"
             android:textStyle="bold" />
         <TextView
             android:layout_width="wrap_content"
@@ -35,10 +36,13 @@
             android:layout_marginEnd="8dp"
             android:text="CRISTHIAN"
             android:textColor="#7F8C8D"
-            android:textSize="12sp" />
+            android:textStyle="bold"
+            android:textSize="15sp" />
         <ImageView
-            android:layout_width="28dp"
-            android:layout_height="28dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@drawable/bg_circulo_gris"
+            android:padding="10dp"
             android:src="@drawable/iconousuario" />
     </LinearLayout>
 
@@ -47,13 +51,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorPrimario"
+        android:paddingHorizontal="24dp"
+        android:paddingBottom="26dp"
+        android:paddingTop="8dp"
         android:padding="16dp">
 
         <ImageView
             android:id="@+id/btnBack"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:src="@android:drawable/ic_menu_revert"
+            android:layout_width="42dp"
+            android:layout_height="42dp"
+            android:src="@drawable/outline_arrow_circle_left_24"
             app:tint="#FFFFFF"
             android:clickable="true"
             android:focusable="true"
@@ -67,7 +74,8 @@
             android:layout_centerInParent="true"
             android:text="Conceptos básicos"
             android:textColor="@color/white"
-            android:textSize="22sp"
+            android:textSize="24sp"
+            android:letterSpacing="0.02"
             android:textStyle="bold" />
     </RelativeLayout>
 
@@ -75,9 +83,9 @@
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="0dp"
         app:cardBackgroundColor="@color/white"
-        app:cardCornerRadius="30dp"
+        app:cardCornerRadius="28dp"
+        android:layout_marginTop="-18dp"
         app:cardElevation="0dp">
 
         <LinearLayout
@@ -101,8 +109,8 @@
                         android:layout_height="wrap_content"
                         android:text="@string/tiro_parabolico_desc"
                         android:textColor="#475569"
-                        android:textSize="17sp"
-                        android:lineSpacingExtra="4dp" />
+                        android:textSize="16sp"
+                        android:lineSpacingExtra="6dp" />
 
                     <TextView
                         android:layout_width="match_parent"
@@ -119,7 +127,7 @@
                         android:layout_marginTop="32dp"
                         android:text="Recursos"
                         android:textColor="@color/colorPrimario"
-                        android:textSize="20sp"
+                        android:textSize="18sp"
                         android:textStyle="bold" />
 
                     <!-- Recurso Video (Estilo Card Figma) -->
@@ -129,7 +137,7 @@
                         android:layout_marginTop="16dp"
                         app:cardBackgroundColor="#F1F5F9"
                         app:cardCornerRadius="16dp"
-                        app:cardElevation="0dp">
+                        app:cardElevation="2dp">
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -184,15 +192,15 @@
 
             <Button
                 android:id="@+id/btnSiguienteEtapa"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="end"
                 android:layout_margin="20dp"
                 android:text="@string/siguiente_etapa"
                 android:textAllCaps="false"
                 android:textColor="#FFFFFF"
-                android:backgroundTint="#2ECC71"
-                android:paddingStart="24dp" />
+                android:backgroundTint="@color/colorPrimario"
+                android:paddingStart="20dp" />
 
         </LinearLayout>
     </androidx.cardview.widget.CardView>
