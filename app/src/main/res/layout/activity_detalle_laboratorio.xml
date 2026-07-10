@@ -76,10 +76,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:paddingTop="32dp"
-                    android:paddingBottom="48dp"
                     android:paddingStart="24dp"
-                    android:paddingEnd="24dp">
+                    android:paddingTop="32dp"
+                    android:paddingEnd="24dp"
+                    android:paddingBottom="48dp">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -103,11 +103,11 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="24dp"
+                        android:backgroundTint="@android:color/white"
                         app:cardCornerRadius="16dp"
                         app:cardElevation="4dp"
                         app:cardMaxElevation="6dp"
-                        app:cardUseCompatPadding="true"
-                        android:backgroundTint="@android:color/white">
+                        app:cardUseCompatPadding="true">
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -119,11 +119,11 @@
                                 android:layout_height="wrap_content"
                                 android:background="@color/colorAdvertencia"
                                 android:gravity="center_horizontal"
-                                android:paddingTop="16dp"
-                                android:paddingBottom="16dp"
+                                android:orientation="horizontal"
                                 android:paddingStart="18dp"
+                                android:paddingTop="16dp"
                                 android:paddingEnd="18dp"
-                                android:orientation="horizontal">
+                                android:paddingBottom="16dp">
 
                                 <TextView
                                     android:layout_width="wrap_content"
@@ -138,10 +138,10 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:orientation="vertical"
-                                android:paddingBottom="18dp"
                                 android:paddingStart="18dp"
+                                android:paddingTop="16dp"
                                 android:paddingEnd="18dp"
-                                android:paddingTop="16dp">
+                                android:paddingBottom="18dp">
 
                                 <TextView
                                     android:id="@+id/tvDetalleGrupoLab"
@@ -194,10 +194,10 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
+                        android:backgroundTint="@android:color/white"
                         app:cardCornerRadius="16dp"
                         app:cardElevation="4dp"
-                        app:cardUseCompatPadding="true"
-                        android:backgroundTint="@android:color/white">
+                        app:cardUseCompatPadding="true">
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -209,11 +209,11 @@
                                 android:layout_height="wrap_content"
                                 android:background="@color/colorAdvertencia"
                                 android:gravity="center_horizontal"
-                                android:paddingTop="16dp"
-                                android:paddingBottom="16dp"
+                                android:orientation="horizontal"
                                 android:paddingStart="18dp"
+                                android:paddingTop="16dp"
                                 android:paddingEnd="18dp"
-                                android:orientation="horizontal">
+                                android:paddingBottom="16dp">
 
                                 <TextView
                                     android:layout_width="wrap_content"
@@ -228,45 +228,45 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:orientation="vertical"
-                                android:paddingBottom="18dp"
                                 android:paddingStart="18dp"
+                                android:paddingTop="16dp"
                                 android:paddingEnd="18dp"
-                                android:paddingTop="16dp">
+                                android:paddingBottom="18dp">
 
                                 <TextView
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
+                                    android:lineSpacingExtra="3dp"
                                     android:text="• Leerás conceptos y fórmulas del movimiento parabólico."
                                     android:textColor="#334155"
-                                    android:textSize="14sp"
-                                    android:lineSpacingExtra="3dp" />
+                                    android:textSize="14sp" />
 
                                 <TextView
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="8dp"
+                                    android:lineSpacingExtra="3dp"
                                     android:text="• Responderás preguntas de comprensión."
                                     android:textColor="#334155"
-                                    android:textSize="14sp"
-                                    android:lineSpacingExtra="3dp" />
+                                    android:textSize="14sp" />
 
                                 <TextView
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="8dp"
+                                    android:lineSpacingExtra="3dp"
                                     android:text="• Realizarás práctica experimental y práctica simulada AR."
                                     android:textColor="#334155"
-                                    android:textSize="14sp"
-                                    android:lineSpacingExtra="3dp" />
+                                    android:textSize="14sp" />
 
                                 <TextView
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="8dp"
+                                    android:lineSpacingExtra="3dp"
                                     android:text="• Registrarás datos, conclusiones y enviarás la entrega."
                                     android:textColor="#334155"
-                                    android:textSize="14sp"
-                                    android:lineSpacingExtra="3dp" />
+                                    android:textSize="14sp" />
                             </LinearLayout>
                         </LinearLayout>
                     </androidx.cardview.widget.CardView>
