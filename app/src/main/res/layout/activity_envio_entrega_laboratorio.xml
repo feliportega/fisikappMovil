@@ -16,7 +16,6 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <!-- HEADER CON BORDES INFERIORES REDONDEADOS -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="230dp"
@@ -40,10 +39,11 @@
                     android:layout_height="70dp"
                     android:layout_marginTop="6dp"
                     android:src="@drawable/vector_main_logo"/>
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="18dp"
+                    android:layout_marginTop="14dp"
                     android:text="Enviar entrega"
                     android:textColor="@android:color/white"
                     android:textStyle="bold"
@@ -57,166 +57,145 @@
                     android:textColor="#B4C6EF"
                     android:textSize="14sp"/>
 
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_weight="1"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Enviar entrega"
-                        android:textColor="@android:color/white"
-                        android:textSize="24sp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="4dp"
-                        android:text="Revisa y envía tu laboratorio"
-                        android:textColor="#B4C6EF"
-                        android:textSize="14sp" />
-
-                </LinearLayout>
-
             </LinearLayout>
 
-            <!-- CONTENIDO FLUIDO EN TARJETAS ESTILIZADAS -->
-            <LinearLayout
+            <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="20dp">
+                android:layout_marginTop="-30dp"
+                app:cardCornerRadius="28dp"
+                app:cardElevation="0dp"
+                app:cardBackgroundColor="@android:color/white">
 
-                <!-- ESTADO: LISTA PARA ENVIAR (Verde Suave) -->
-                <androidx.cardview.widget.CardView
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:cardBackgroundColor="#ECFDF5"
-                    app:cardCornerRadius="28dp"
-                    app:cardElevation="4dp">
+                    android:orientation="vertical"
+                    android:paddingHorizontal="20dp"
+                    android:paddingTop="30dp"
+                    android:paddingBottom="24dp">
 
-                    <LinearLayout
+                    <androidx.cardview.widget.CardView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:padding="20dp">
+                        app:cardBackgroundColor="#ECFDF5"
+                        app:cardCornerRadius="16dp"
+                        app:cardElevation="2dp">
 
-                        <TextView
-                            android:id="@+id/tvEstadoEnvio"
+                        <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Lista para enviar"
-                            android:textColor="#001B6B"
-                            android:textSize="18sp"
-                            android:textStyle="bold" />
+                            android:orientation="vertical"
+                            android:padding="16dp">
 
-                        <TextView
-                            android:id="@+id/tvCalificacionEstado"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="8dp"
-                            android:text="Calificación: pendiente"
-                            android:textColor="#166534"
-                            android:textSize="14sp" />
+                            <TextView
+                                android:id="@+id/tvEstadoEnvio"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Lista para enviar"
+                                android:textColor="#001B6B"
+                                android:textSize="18sp"
+                                android:textStyle="bold" />
 
-                    </LinearLayout>
+                            <TextView
+                                android:id="@+id/tvCalificacionEstado"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="8dp"
+                                android:text="Calificación: pendiente"
+                                android:textColor="#166534"
+                                android:textSize="14sp" />
 
-                </androidx.cardview.widget.CardView>
+                        </LinearLayout>
 
-                <!-- RESUMEN (Tarjeta Blanca Elegante) -->
-                <androidx.cardview.widget.CardView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    app:cardBackgroundColor="#FFFFFF"
-                    app:cardCornerRadius="24dp"
-                    app:cardElevation="4dp">
+                    </androidx.cardview.widget.CardView>
 
-                    <LinearLayout
+                    <androidx.cardview.widget.CardView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:padding="18dp">
+                        android:layout_marginTop="16dp"
+                        app:cardBackgroundColor="#FFFFFF"
+                        app:cardCornerRadius="16dp"
+                        app:cardElevation="3dp">
 
-                        <TextView
+                        <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Resumen"
-                            android:textColor="#001B6B"
-                            android:textSize="18sp"
-                            android:textStyle="bold" />
+                            android:orientation="vertical"
+                            android:padding="16dp">
 
-                        <TextView
-                            android:id="@+id/tvResumenEntrega"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="12dp"
-                            android:lineSpacingExtra="5dp"
-                            android:text="Resumen de entrega"
-                            android:textColor="#334155"
-                            android:textSize="15sp" />
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Resumen"
+                                android:textColor="#001B6B"
+                                android:textSize="18sp"
+                                android:textStyle="bold" />
 
-                    </LinearLayout>
+                            <TextView
+                                android:id="@+id/tvResumenEntrega"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="12dp"
+                                android:lineSpacingExtra="5dp"
+                                android:text="Resumen de entrega"
+                                android:textColor="#334155"
+                                android:textSize="15sp" />
 
-                </androidx.cardview.widget.CardView>
+                        </LinearLayout>
 
-                <!-- AVISO (Tarjeta de Advertencia Suave) -->
-                <androidx.cardview.widget.CardView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    app:cardBackgroundColor="#FFFDE7"
-                    app:cardCornerRadius="24dp"
-                    app:cardElevation="4dp">
+                    </androidx.cardview.widget.CardView>
 
-                    <LinearLayout
+                    <androidx.cardview.widget.CardView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:padding="18dp">
+                        android:layout_marginTop="16dp"
+                        app:cardBackgroundColor="#FFFDE7"
+                        app:cardCornerRadius="16dp"
+                        app:cardElevation="2dp">
 
-                        <TextView
+                        <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Aviso"
-                            android:textColor="#001B6B"
-                            android:textSize="18sp"
-                            android:textStyle="bold" />
+                            android:orientation="vertical"
+                            android:padding="16dp">
 
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="8dp"
-                            android:lineSpacingExtra="4dp"
-                            android:text="La app móvil no calcula la calificación. Solo envía la entrega al servidor. La calificación quedará pendiente hasta que sea revisada por IA/instructor."
-                            android:textColor="#475569"
-                            android:textSize="14sp" />
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Aviso"
+                                android:textColor="#001B6B"
+                                android:textSize="18sp"
+                                android:textStyle="bold" />
 
-                    </LinearLayout>
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="8dp"
+                                android:lineSpacingExtra="4dp"
+                                android:text="La app móvil no calcula la calificación. Solo envía la entrega al servidor. La calificación quedará pendiente hasta que sea revisada por IA/instructor."
+                                android:textColor="#475569"
+                                android:textSize="14sp" />
 
-                </androidx.cardview.widget.CardView>
+                        </LinearLayout>
 
-                <!-- BOTÓN PRINCIPAL ESTILO PÍLDORA -->
-                <Button
-                    android:id="@+id/btnEnviarEntrega"
-                    android:layout_width="match_parent"
-                    android:layout_height="56dp"
-                    android:layout_marginTop="28dp"
-                    android:layout_marginBottom="12dp"
-                    android:backgroundTint="@color/colorAdvertencia"
-                    android:text="Enviar entrega"
-                    android:textAllCaps="false"
-                    android:textColor="@android:color/black"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
-                    app:cornerRadius="28dp" />
+                    </androidx.cardview.widget.CardView>
 
-            </LinearLayout>
+                    <Button
+                        android:id="@+id/btnEnviarEntrega"
+                        android:layout_width="match_parent"
+                        android:layout_height="56dp"
+                        android:layout_marginTop="28dp"
+                        android:backgroundTint="@color/colorAdvertencia"
+                        android:text="Enviar entrega"
+                        android:textAllCaps="false"
+                        android:textColor="@android:color/black"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        app:cornerRadius="28dp" />
+
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
         </LinearLayout>
     </ScrollView>
 
