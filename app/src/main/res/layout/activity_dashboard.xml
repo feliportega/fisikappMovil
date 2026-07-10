@@ -4,12 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimario"
+    android:background="#EEF5FB"
+    android:fitsSystemWindows="true"
     tools:context=".ui.AccesoAlSistema.Dashboard">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="vertical">
         android:orientation="vertical">
         <ImageView
             android:layout_width="140dp"
@@ -133,6 +135,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:nestedScrollingEnabled="false"/>
+
 
         <Button
             android:id="@+id/btemp"
